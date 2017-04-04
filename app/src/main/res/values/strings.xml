@@ -1,3 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Action bar titles -->
     <string name="app_name">XA</string>
+    <string name="ab_title_game_list">Xbox Games</string>
+    <string name="ab_title_browse">Browse</string>
+    <string name="ab_game_details">Game Details</string>
+
+
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- API's Keys -->
+    <string name="parse_app_id">CSvImUmlTzE75oxhXCseP2Au8pcSjEkzmm08QuRz</string>
+    <string name="parse_secret_id">4anBWvIMSu9k36nb2D6vIc0uc8oBwNwRUQDxAgHT</string>
+    <string name="gb_api">60a1d643b4a4ad1ad1b424a040cbf3e8b5393e41</string>
+    <string name="ytv_api">AIzaSyC-W-RE3trkKpogcglhy4Mw0LUpEOp85sk</string>
+
+    <!-- misc -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign up</string>
+    <string name="register">Register</string>
+    <string name="logout">Logout</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="profile">Profile</string>
+    <string name="la_title">Latest Achievements</string>
+    <string name="browse">Browse</string>
+    <string name="game_details">Game Details</string>
+    <string name="push_to_parse">Push to Parse</string>
+    <string name="upload_game_details">Upload Game Details</string>
+    <string name="upload_achievements">Upload Achievements</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="gamertag">Gamertag</string>
+    <string name="screenshots">Screenshots</string>
+    <string name="game_summary">Game Summary</string>
+    <string name="add_comment">Add Comment</string>
+    <string name="submit">Submit</string>
+    <string name="enter_comment">Enter comment</string>
+    <string name="achievements">Achievements</string>
+    <string name="update">Update</string>
+    <string name="dialog_update_apk_message">Update now and enjoy the newest features!</string>
+    <string name="dialog_update_apk_title">New update available</string>
+    <string name="add_to_fave">Add to Favorites</string>
+    <string name="favorites">Favorites</string>
+    <string name="not_logged_in">You must be logged in to use this feature.</string>
+    <string name="not_logged_in_title">Please login</string>
+    <string name="mark_completed">Mark completed</string>
+    <string name="about">About</string>
+    <string name="mark_remove">Mark uncompleted</string>
+
 </resources>
