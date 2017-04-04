@@ -1,4 +1,4 @@
-package io.keypunchers.xa;
+package io.keypunchers.xa.app;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
