@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/margin_level_2">
+        android:layout_marginLeft="@dimen/activity_horizontal_margin">
 
         <TextView
             android:id="@+id/tv_drawer_title"
@@ -17,9 +17,11 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:maxLines="1"
+            android:fontFamily="sans-serif-light"
             android:paddingTop="@dimen/padding_level_2"
             android:paddingBottom="@dimen/padding_level_2"
+            android:textStyle="normal"
             android:textColor="@color/primary_text_dark"
-            android:textSize="@dimen/navigation_drawer_title_size" />
+            android:textSize="@dimen/drawer_title_size" />
     </LinearLayout>
 </LinearLayout>

@@ -51,7 +51,7 @@ public class NavigationDrawerAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.mTvTitle.setText(mTitles[position].toLowerCase());
+        viewHolder.mTvTitle.setText(mTitles[position]);
 
         return convertView;
     }

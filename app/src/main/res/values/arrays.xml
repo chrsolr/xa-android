@@ -2,11 +2,12 @@
 <resources>
     <!-- Drawer arrays -->
     <string-array name="drawer_titles">
-        <item>My Favorites</item>
-        <item>News Feed</item>
+        <item>News</item>
         <item>Latest Achievements</item>
         <item>Games</item>
-        <item>Settings</item>
+        <item>Screenshots</item>
+        <item>Upcoming Games</item>
+        <item>About</item>
     </string-array>
 
     <!-- Alphabet arrays -->
