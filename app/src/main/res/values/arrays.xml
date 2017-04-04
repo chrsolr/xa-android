@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Drawer arrays -->
-    <string-array name="drawer_titles">
-        <item>News</item>
-        <item>Latest Achievements</item>
-        <item>Games</item>
-        <item>Screenshots</item>
-        <item>Upcoming Games</item>
-        <item>About</item>
-    </string-array>
 
     <!-- Alphabet arrays -->
     <string-array name="browse_game_alphabet">
