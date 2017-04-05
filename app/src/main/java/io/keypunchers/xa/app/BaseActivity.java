@@ -13,12 +13,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.NetworkImageView;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.loaders.DrawerBannerLoader;
+import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.DrawerBanner;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
@@ -112,7 +117,16 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onLoadFinished(Loader<JSONObject> loader, JSONObject data) {
-        JSONObject banner = data;
+
+        try {
+            NetworkImageView mIvBannerImg = (NetworkImageView) findViewById(R.id.iv_drawer_banner);
+            mIvBannerImg.setImageUrl(data.getString("image_url"), SingletonVolley.getImageLoader());
+
+            TextView mTvTitle = (TextView) findViewById(R.id.tv_banner_title);
+            mTvTitle.setText(data.getString("title"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

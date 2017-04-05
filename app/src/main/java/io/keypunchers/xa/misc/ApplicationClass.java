@@ -7,6 +7,6 @@ public class ApplicationClass extends Application {
     public void onCreate(){
         super.onCreate();
 
-        //TODO: Instantiate Volley
+        SingletonVolley.initantiate(this);
     }
 }
