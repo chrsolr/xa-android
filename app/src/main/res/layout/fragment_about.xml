@@ -12,6 +12,6 @@
         android:layout_height="150dp"
         android:background="@color/color_primary"
         android:scaleType="center"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/ic_app_logo" />
 
 </LinearLayout>
