@@ -4,6 +4,16 @@
     <string name="app_name">XA</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="main_menu_donate">Donate</string>
+    <string name="menu_item_donate">Donate</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_item_news">News</string>
+    <string name="menu_item_games">Games</string>
+    <string name="menu_item_lastest_achievements">Lastest Achievements</string>
+    <string name="menu_item_screenshots">Screenshots</string>
+    <string name="menu_item_settings">Settings</string>
+    <string name="menu_item_upcoming_games">Upcoming Games</string>
+    <string name="menu_item_about">About</string>
 
 </resources>

@@ -3,24 +3,31 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_news"
-            android:title="News" />
+            android:icon="@drawable/ic_rss_feed_24dp"
+            android:title="@string/menu_item_news" />
         <item
             android:id="@+id/nav_games"
-            android:title="Games" />
+            android:icon="@drawable/ic_games_24dp"
+            android:title="@string/menu_item_games" />
         <item
             android:id="@+id/nav_latest_achievements"
-            android:title="Lastest Achievements" />
+            android:icon="@drawable/ic_new_releases_24dp"
+            android:title="@string/menu_item_lastest_achievements" />
         <item
             android:id="@+id/nav_screenshots"
-            android:title="Screenshots" />
+            android:icon="@drawable/ic_image_24dp"
+            android:title="@string/menu_item_screenshots" />
         <item
             android:id="@+id/nav_upcoming_games"
-            android:title="Upcoming Games" />
+            android:icon="@drawable/ic_videogame_asset_24dp"
+            android:title="@string/menu_item_upcoming_games" />
         <item
             android:id="@+id/nav_setting"
-            android:title="Setting" />
+            android:icon="@drawable/ic_settings_24dp"
+            android:title="@string/menu_item_settings" />
         <item
             android:id="@+id/nav_about"
-            android:title="About" />
+            android:icon="@drawable/ic_info_24dp"
+            android:title="@string/menu_item_about" />
     </group>
 </menu>
