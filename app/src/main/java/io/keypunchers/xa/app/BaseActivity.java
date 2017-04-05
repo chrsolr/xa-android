@@ -1,10 +1,11 @@
 package io.keypunchers.xa.app;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,9 +15,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import io.keypunchers.xa.R;
+import org.json.JSONObject;
 
-public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import io.keypunchers.xa.R;
+import io.keypunchers.xa.loaders.DrawerBannerLoader;
+import io.keypunchers.xa.models.DrawerBanner;
+
+public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+        LoaderManager.LoaderCallbacks<JSONObject> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +43,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().replace(R.id.main_layout, new GamesFragment()).commit();
+
+        getSupportLoaderManager().initLoader(1, null, this);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -95,5 +103,20 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public Loader<JSONObject> onCreateLoader(int id, Bundle args) {
+        return new DrawerBannerLoader(this);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<JSONObject> loader, JSONObject data) {
+        JSONObject banner = data;
+    }
+
+    @Override
+    public void onLoaderReset(Loader<JSONObject> loader) {
+
     }
 }
