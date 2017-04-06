@@ -35,5 +35,6 @@
     <dimen name="margin_level_8">72dp</dimen>
     <dimen name="margin_level_9">80dp</dimen>
     <dimen name="img_gradient_height">200dp</dimen>
+    <dimen name="screenshot_item_height">250dp</dimen>
 
 </resources>

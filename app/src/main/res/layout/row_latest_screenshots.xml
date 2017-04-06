@@ -9,7 +9,7 @@
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/iv_latest_screenshot_image"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/screenshot_item_height"
         android:background="@color/color_primary"
         android:cropToPadding="false"
         android:scaleType="centerCrop"

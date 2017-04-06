@@ -28,8 +28,7 @@ public class LatestScreenshotsFragment extends Fragment implements LoaderManager
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_latest_screenshots, container, false);
     }
 

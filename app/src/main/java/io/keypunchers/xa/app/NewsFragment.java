@@ -4,23 +4,22 @@ package io.keypunchers.xa.app;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+
 import io.keypunchers.xa.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class NewsFragment extends Fragment {
+public class NewsFragment extends Fragment implements LoaderManager.LoaderCallbacks<JSONArray> {
 
 
-    public NewsFragment() {
-        // Required empty public constructor
-    }
+    public NewsFragment() { }
 
 
     @Override
@@ -33,5 +32,20 @@ public class NewsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.ab_news_title);
+    }
+
+    @Override
+    public Loader<JSONArray> onCreateLoader(int id, Bundle args) {
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<JSONArray> loader, JSONArray data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<JSONArray> loader) {
+
     }
 }
