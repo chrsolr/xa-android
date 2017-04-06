@@ -2,9 +2,13 @@ package io.keypunchers.xa.app;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,15 +33,18 @@ public class LatestScreenshotsFragment extends Fragment implements LoaderManager
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_latest_screenshots, container, false);
+        return inflater.inflate(R.layout.fragment_latest_screenshots, container, false);
+    }
 
-        mLvContent = (ListView) view.findViewById(R.id.lv_latest_screenshot);
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-        Toast.makeText(getContext(), "@Upcoming Games Fragment", Toast.LENGTH_LONG).show();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.ab_latest_screenshots_title);
+
+        mLvContent = (ListView) getActivity().findViewById(R.id.lv_latest_screenshot);
 
         getData(savedInstanceState);
-
-        return view;
     }
 
     @Override
