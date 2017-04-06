@@ -22,12 +22,9 @@ import io.keypunchers.xa.adapters.LatestScreenshotsAdapter;
 import io.keypunchers.xa.loaders.LatestScreenshotsLoader;
 
 public class LatestScreenshotsFragment extends Fragment implements LoaderManager.LoaderCallbacks<JSONArray> {
-    private JSONArray mData;
     private ListView mLvContent;
 
-    public LatestScreenshotsFragment() {
-        // Required empty public constructor
-    }
+    public LatestScreenshotsFragment() { }
 
 
     @Override
