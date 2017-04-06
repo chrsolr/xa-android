@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="navigation_drawer_loader_id">1</integer>
+    <integer name="latest_screenshots_loader_id">2</integer>
+</resources>

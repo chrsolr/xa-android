@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/nav_header_height"
-    android:background="@color/color_primary"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/iv_drawer_banner"
+        android:id="@+id/iv_latest_screenshot_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:background="@color/color_primary"
+        android:cropToPadding="true"
         android:scaleType="centerCrop" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/img_gradient_height"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:background="@drawable/primary_gradient_bottom" />
 
     <LinearLayout
@@ -25,26 +30,23 @@
         android:layout_alignParentStart="true"
         android:orientation="vertical"
         android:paddingBottom="@dimen/padding_level_1"
-        android:paddingLeft="@dimen/nav_header_vertical_spacing"
-        android:paddingRight="@dimen/nav_header_vertical_spacing">
+        android:paddingLeft="@dimen/padding_level_1"
+        android:paddingStart="@dimen/padding_level_1">
 
         <TextView
-            android:id="@+id/tv_banner_title"
+            android:id="@+id/tv_latest_screenshot_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@color/color_white" />
 
         <TextView
-            android:id="@+id/tv_banner_subtitle"
+            android:id="@+id/tv_latest_screenshot_subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:maxLines="1"
-            android:text="@string/nav_header_subtitle"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/color_light_gray" />
 
     </LinearLayout>

@@ -2,8 +2,8 @@ package io.keypunchers.xa.app;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
@@ -24,7 +24,6 @@ import org.json.JSONObject;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.loaders.DrawerBannerLoader;
 import io.keypunchers.xa.misc.SingletonVolley;
-import io.keypunchers.xa.models.DrawerBanner;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         LoaderManager.LoaderCallbacks<JSONObject> {
@@ -49,33 +48,36 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().replace(R.id.main_layout, new GamesFragment()).commit();
 
-        getSupportLoaderManager().initLoader(1, null, this);
+        getData(savedInstanceState);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+        Fragment fragment = null;
 
         int id = item.getItemId();
 
         if (id == R.id.nav_news) {
-
+            fragment = new NewsFragment();
         } else if (id == R.id.nav_games) {
-            trans.replace(R.id.main_layout, new GamesFragment(), "GAMES_FRAGMENT")
-                    .commit();
+            fragment = new GamesFragment();
         } else if (id == R.id.nav_latest_achievements) {
-
+            fragment = new LatestAchievementFragment();
         } else if (id == R.id.nav_screenshots) {
-
+            fragment = new LatestScreenshotsFragment();
         } else if (id == R.id.nav_upcoming_games) {
-
+            fragment = new UpcomingGamesFragment();
         } else if (id == R.id.nav_setting) {
-
+            fragment = new SettingsFragment();
         } else if (id == R.id.nav_about) {
-            trans.replace(R.id.main_layout, new AboutFragment(), "ABOUT_FRAGMENT")
-                    .commit();
+            fragment = new AboutFragment();
         }
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_layout, fragment)
+                .commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -132,5 +134,15 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onLoaderReset(Loader<JSONObject> loader) {
 
+    }
+
+    private void getData(Bundle savedInstanceState) {
+        int LOADER_ID = getResources().getInteger(R.integer.navigation_drawer_loader_id);
+
+        if (getSupportLoaderManager().getLoader(LOADER_ID) == null){
+            getSupportLoaderManager().initLoader(LOADER_ID, savedInstanceState, BaseActivity.this);
+        } else {
+            getSupportLoaderManager().restartLoader(LOADER_ID, savedInstanceState, BaseActivity.this);
+        }
     }
 }
