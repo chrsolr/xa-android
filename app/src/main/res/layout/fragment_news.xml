@@ -11,14 +11,9 @@
         android:layout_height="match_parent"
         android:choiceMode="singleChoice"
         android:clipToPadding="false"
-        android:divider="@null"
-        android:dividerHeight="@dimen/padding_level_2"
+        android:divider="@color/color_light_gray"
+        android:dividerHeight="1dp"
         android:gravity="center"
-        android:paddingBottom="@dimen/padding_level_2"
-        android:paddingLeft="@dimen/padding_level_2"
-        android:paddingRight="@dimen/padding_level_2"
-        android:paddingTop="@dimen/padding_level_2"
         android:scrollbars="none" />
-
 
 </LinearLayout>

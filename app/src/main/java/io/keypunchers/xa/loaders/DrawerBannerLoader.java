@@ -4,6 +4,7 @@ package io.keypunchers.xa.loaders;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -16,10 +17,12 @@ import io.keypunchers.xa.models.DrawerBanner;
 
 
 public class DrawerBannerLoader extends AsyncTaskLoader<JSONObject> {
+    private final Context mContext;
     private final String BASE_URL = "http://www.xboxachievements.com";
 
     public DrawerBannerLoader(Context context) {
         super(context);
+        mContext = context;
     }
 
     @Override
@@ -52,6 +55,7 @@ public class DrawerBannerLoader extends AsyncTaskLoader<JSONObject> {
             return json;
         } catch (Exception ex) {
             Log.e("Drawer Loader", ex.getMessage());
+            Toast.makeText(mContext, ex.getMessage(), Toast.LENGTH_LONG).show();
             return null;
         }
     }

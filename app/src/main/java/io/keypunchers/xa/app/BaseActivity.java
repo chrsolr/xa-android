@@ -46,9 +46,11 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().replace(R.id.main_layout, new GamesFragment()).commit();
+        fm.beginTransaction().replace(R.id.main_layout, new NewsFragment()).commit();
 
         getData(savedInstanceState);
+
+        navigationView.setCheckedItem(R.id.nav_news);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -74,9 +76,11 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             fragment = new AboutFragment();
         }
 
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_layout, fragment)
+                .replace(R.id.main_layout, fragment, fragment.getClass().getSimpleName())
                 .commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

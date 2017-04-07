@@ -9,6 +9,9 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +28,6 @@ public class LatestScreenshotsFragment extends Fragment implements LoaderManager
     private ListView mLvContent;
 
     public LatestScreenshotsFragment() { }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class LatestScreenshotsFragment extends Fragment implements LoaderManager
 
     @Override
     public void onLoadFinished(Loader<JSONArray> loader, JSONArray data) {
-        displayData(data);
+        mLvContent.setAdapter(new LatestScreenshotsAdapter(getActivity(), data));
     }
 
     @Override
@@ -66,9 +68,5 @@ public class LatestScreenshotsFragment extends Fragment implements LoaderManager
         } else {
             getActivity().getSupportLoaderManager().restartLoader(LOADER_ID, savedInstanceState, LatestScreenshotsFragment.this);
         }
-    }
-
-    private void displayData(JSONArray data) {
-        mLvContent.setAdapter(new LatestScreenshotsAdapter(getActivity(), data));
     }
 }

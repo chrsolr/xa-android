@@ -11,4 +11,5 @@
     <color name="color_black">#000000</color>
     <color name="primary_text_dark">#5a5a5a</color>
     <color name="divider">#bababa</color>
+    <color name="primary_text_light">#999999</color>
 </resources>

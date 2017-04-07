@@ -14,11 +14,11 @@ import org.jsoup.select.Elements;
 
 import java.net.URL;
 
-public class LatestScreenshotsLoader extends AsyncTaskLoader<JSONArray> {
-
+public class NewsLoader extends AsyncTaskLoader<JSONArray> {
     private final Context mContext;
+    private final int COUNTER_PLUS = 3;
 
-    public LatestScreenshotsLoader(Context context) {
+    public NewsLoader(Context context) {
         super(context);
         mContext = context;
     }
@@ -39,41 +39,47 @@ public class LatestScreenshotsLoader extends AsyncTaskLoader<JSONArray> {
     @Override
     public JSONArray loadInBackground() {
         try {
-            String BASE_URL = "http://www.xboxachievements.com/";
+            String BASE_URL = "http://www.xboxachievements.com/archive/gaming-news/1/";
 
             JSONArray list = new JSONArray();
 
             Document document = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
 
-            Element root = document.getElementsByClass("bl_me_main").get(3);
+            Element root = document.getElementsByClass("divtext").first();
 
             if (!root.toString().equals("")) {
-                Elements elements = root.getElementsByTag("td");
 
-                for(Element el : elements) {
-                    String title = el.select("a b").first().text();
-                    String image_url = el.select("a img").first().attr("abs:src");
-                    String url = el.select("a").first().attr("abs:href");
-                    String date = el.ownText().trim();
+                int size = 25;
+                int offset_counter = 1;
 
-                    image_url = image_url.replace("thu", "med").replaceAll("\\s", "%20");
+                for(int i = 0; i < size; i++) {
+                    // extract element details
+                    String image_url = root.select("td[valign=top] a img").get(i).attr("abs:src");
+                    String title = root.getElementsByClass("newsTitle").get(i).text();
+                    String author = root.getElementsByClass("newsNFO").get(i).text();
+                    String desc = root.select("td").get(offset_counter).select("div").get(2).text();
+                    String page_url = root.getElementsByClass("newsTitle").get(i).select("a.linkB").attr("abs:href");
+
+                    // increase counters
+                    offset_counter += COUNTER_PLUS;
 
                     JSONObject json = new JSONObject();
-                    json.put("title", title);
                     json.put("image_url", image_url);
-                    json.put("url", url);
-                    json.put("date", date);
+                    json.put("title", title);
+                    json.put("author", author);
+                    json.put("desc", desc);
+                    json.put("page_url", page_url);
 
                     list.put(json);
                 }
             }
 
             return list;
-        } catch (Exception ex) {
-            Log.e("Drawer Loader", ex.getMessage());
+
+        } catch (Exception ex){
+            Log.e("News Loader", ex.getMessage());
             Toast.makeText(mContext, ex.getMessage(), Toast.LENGTH_LONG).show();
         }
-
         return null;
     }
 }

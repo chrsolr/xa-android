@@ -22,5 +22,6 @@
     <string name="ab_news_title">News</string>
     <string name="ab_settings_title">Settings</string>
     <string name="ab_upcoming_games_title">Upcoming Games</string>
+    <string name="menu_item_open_in_browser">Open in Browser</string>
 
 </resources>

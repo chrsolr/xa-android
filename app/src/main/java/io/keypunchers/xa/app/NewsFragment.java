@@ -10,14 +10,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.adapters.NewsAdapter;
+import io.keypunchers.xa.loaders.NewsLoader;
 
-public class NewsFragment extends Fragment implements LoaderManager.LoaderCallbacks<JSONArray> {
-
+public class NewsFragment extends Fragment implements LoaderManager.LoaderCallbacks<JSONArray>, AdapterView.OnItemClickListener {
+    private ListView mLvContent;
+    private NewsAdapter mAdapter;
 
     public NewsFragment() { }
 
@@ -32,20 +38,62 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         super.onActivityCreated(savedInstanceState);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.ab_news_title);
+
+        mLvContent = (ListView) getActivity().findViewById(R.id.lv_news);
+        mLvContent.setOnItemClickListener(this);
+
+        getData(savedInstanceState);
     }
 
     @Override
     public Loader<JSONArray> onCreateLoader(int id, Bundle args) {
-        return null;
+        return new NewsLoader(getActivity());
     }
 
     @Override
     public void onLoadFinished(Loader<JSONArray> loader, JSONArray data) {
-
+        displayData(data);
     }
 
     @Override
     public void onLoaderReset(Loader<JSONArray> loader) {
 
+    }
+
+    private void getData(Bundle savedInstanceState) {
+        int LOADER_ID = getActivity().getResources().getInteger(R.integer.news_loader_id);
+
+        if (getActivity().getSupportLoaderManager().getLoader(LOADER_ID) == null){
+            getActivity().getSupportLoaderManager().initLoader(LOADER_ID, savedInstanceState, NewsFragment.this);
+        } else {
+            getActivity().getSupportLoaderManager().restartLoader(LOADER_ID, savedInstanceState, NewsFragment.this);
+        }
+    }
+
+    private void displayData(JSONArray data) {
+        mAdapter = new NewsAdapter(getActivity(), data);
+        mLvContent.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        try {
+            String url = mAdapter.getItem(position).getString("page_url");
+
+            Bundle bundle = new Bundle();
+            bundle.putString("url", url);
+
+            ArticleFragment fragment = new ArticleFragment();
+            fragment.setArguments(bundle);
+
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_layout, fragment)
+                    .addToBackStack("NEWS")
+                    .commit();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
