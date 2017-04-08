@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +13,6 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,7 +42,7 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_article_frament);
+        setContentView(R.layout.activity_article);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -124,8 +122,12 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
     private void processData(Article data) {
         setArticleHeader(data);
         setArticleBody(data);
-        setArticleImages(data.getImageUrls());
-        setArticleVideos(data.getVideoUrls());
+
+        if (data.getImageUrls().size() > 0)
+            setArticleImages(data.getImageUrls());
+
+        if (data.getVideoUrls().size() > 0)
+            setArticleVideos(data.getVideoUrls());
     }
 
     private void setArticleHeader(Article data) {
@@ -144,13 +146,19 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
         TextView mTvBody = (TextView) findViewById(R.id.tv_article_body);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            text = Html.fromHtml(data.getBodyText(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM);
+            text = Html.fromHtml(data.getBodyText(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM, null, new Html.TagHandler() {
+                @Override
+                public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
+                    if (tag.equals("ul") && !opening) output.append("\n");
+                    if (tag.equals("li") && opening) output.append("\n\t•\t\t");
+                }
+            });
         } else {
             text = Html.fromHtml(data.getBodyText(), null, new Html.TagHandler() {
                 @Override
                 public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
                     if (tag.equals("ul") && !opening) output.append("\n");
-                    if (tag.equals("li") && opening) output.append("\n\t•<br>");
+                    if (tag.equals("li") && opening) output.append("\n\t•\t\t");
                 }
             });
         }
@@ -159,13 +167,16 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
         mTvBody.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    private void setArticleImages(ArrayList<String> links) {
+    private void setArticleImages(final ArrayList<String> links) {
+
         int px = Common.convertDpToPx(16, this);
+
+        LinearLayout mLayoutContainer = (LinearLayout) findViewById(R.id.ll_article_images);
 
         LinearLayout.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mLayoutParams.setMargins(px, px / 2, px, px / 2);
 
-        for (String url : links) {
+        for (int i = 0; i < links.size(); i++) {
             NetworkImageView mImageView = new NetworkImageView(this);
             mImageView.setId(links.size());
             mImageView.setAdjustViewBounds(true);
@@ -174,47 +185,65 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
             mImageView.setBackgroundResource(R.color.color_primary);
             mImageView.setLayoutParams(mLayoutParams);
 
-            mImageView.setImageUrl(url, SingletonVolley.getImageLoader());
-
-            mLlContent.addView(mImageView);
-        }
-    }
-
-    private void setArticleVideos(final ArrayList<String> links) {
-        if (links.size() > 0) {
-            int px = Common.convertDpToPx(16, this);
-
-            LinearLayout.LayoutParams mViewDividerParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 2);
-            mViewDividerParams.setMargins(0, px / 2, 0, px / 2);
-
-            View mViewDivider = new View(this);
-            mViewDivider.setBackgroundResource(R.color.color_light_gray);
-            mViewDivider.setLayoutParams(mViewDividerParams);
-
-            mLlContent.addView(mViewDivider);
-        }
-
-        int px = Common.convertDpToPx(16, this);
-        LinearLayout.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        mLayoutParams.setMargins(px, px / 2, px, px / 2);
-
-        for (int i = 0; i < links.size(); i++) {
-            TextView mVideoLinks = new TextView(this);
-            mVideoLinks.setId(links.size());
-            mVideoLinks.setText("Video #" + (i + 1));
-            mVideoLinks.setTextAppearance(this, android.R.style.TextAppearance_Material_Medium);
-            mVideoLinks.setPadding(px, px / 2, px, px / 2);
-
-            mLlContent.addView(mVideoLinks);
+            mImageView.setImageUrl(links.get(i), SingletonVolley.getImageLoader());
 
             final int finalI = i;
-            mVideoLinks.setOnClickListener(new View.OnClickListener() {
+            mImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(links.get(finalI)));
                     startActivity(mIntent);
                 }
             });
+
+            mLayoutContainer.addView(mImageView);
         }
+
+        mLayoutContainer.setVisibility(View.VISIBLE);
+    }
+
+    private void setArticleVideos(final ArrayList<String> links) {
+        LinearLayout mLayoutContainer = (LinearLayout) findViewById(R.id.ll_article_videos);
+
+        int px = Common.convertDpToPx(16, this);
+        LinearLayout.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mLayoutParams.setMargins(px, px / 2, px, px / 2);
+
+        for (int i = 0; i < links.size(); i++) {
+
+            String video_id = links.get(i)
+                    .replace("https://www.youtube.com/embed/", "")
+                    .replace("?ecver=1", "");
+
+            TextView mVideoLinks = new TextView(this);
+            mVideoLinks.setId(links.size());
+            mVideoLinks.setText("Video #" + (i + 1));
+            mVideoLinks.setTextAppearance(this, android.R.style.TextAppearance_Material_Medium);
+            mVideoLinks.setPadding(px, px / 2, px, px / 2);
+
+            NetworkImageView mImageView = new NetworkImageView(this);
+            mImageView.setId(links.size());
+            mImageView.setAdjustViewBounds(true);
+            mImageView.setScaleType(NetworkImageView.ScaleType.CENTER_CROP);
+            mImageView.setPadding(0, 0, 0, 0);
+            mImageView.setBackgroundResource(R.color.color_primary);
+            mImageView.setLayoutParams(mLayoutParams);
+
+            mImageView.setImageUrl("https://i3.ytimg.com/vi/" + video_id + "/0.jpg", SingletonVolley.getImageLoader());
+
+            final int finalI = i;
+            mImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(links.get(finalI).replace("embed/", "watch?v=")));
+                    startActivity(mIntent);
+                }
+            });
+
+            mLayoutContainer.addView(mVideoLinks);
+            mLayoutContainer.addView(mImageView);
+        }
+
+        mLayoutContainer.setVisibility(View.VISIBLE);
     }
 }

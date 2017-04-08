@@ -24,5 +24,6 @@
     <string name="ab_upcoming_games_title">Upcoming Games</string>
     <string name="menu_item_open_in_browser">Open in Browser</string>
     <string name="menu_item_share">Share</string>
+    <string name="ytp_api_key">AIzaSyCImy8dXg20m5hxdCBqCybZ4Q0KhRDc-Dg</string>
 
 </resources>
