@@ -24,9 +24,10 @@ import org.json.JSONObject;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.loaders.DrawerBannerLoader;
 import io.keypunchers.xa.misc.SingletonVolley;
+import io.keypunchers.xa.models.DrawerBanner;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-        LoaderManager.LoaderCallbacks<JSONObject> {
+        LoaderManager.LoaderCallbacks<DrawerBanner> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,33 +118,28 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public Loader<JSONObject> onCreateLoader(int id, Bundle args) {
+    public Loader<DrawerBanner> onCreateLoader(int id, Bundle args) {
         return new DrawerBannerLoader(this);
     }
 
     @Override
-    public void onLoadFinished(Loader<JSONObject> loader, JSONObject data) {
+    public void onLoadFinished(Loader<DrawerBanner> loader, DrawerBanner data) {
+        NetworkImageView mIvBannerImg = (NetworkImageView) findViewById(R.id.iv_drawer_banner);
+        mIvBannerImg.setImageUrl(data.getImage(), SingletonVolley.getImageLoader());
 
-        try {
-            NetworkImageView mIvBannerImg = (NetworkImageView) findViewById(R.id.iv_drawer_banner);
-            mIvBannerImg.setImageUrl(data.getString("image_url"), SingletonVolley.getImageLoader());
-
-            TextView mTvTitle = (TextView) findViewById(R.id.tv_banner_title);
-            mTvTitle.setText(data.getString("title"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        TextView mTvTitle = (TextView) findViewById(R.id.tv_banner_title);
+        mTvTitle.setText(data.getTitle());
     }
 
     @Override
-    public void onLoaderReset(Loader<JSONObject> loader) {
+    public void onLoaderReset(Loader<DrawerBanner> loader) {
 
     }
 
     private void getData(Bundle savedInstanceState) {
         int LOADER_ID = getResources().getInteger(R.integer.navigation_drawer_loader_id);
 
-        if (getSupportLoaderManager().getLoader(LOADER_ID) == null){
+        if (getSupportLoaderManager().getLoader(LOADER_ID) == null) {
             getSupportLoaderManager().initLoader(LOADER_ID, savedInstanceState, BaseActivity.this);
         } else {
             getSupportLoaderManager().restartLoader(LOADER_ID, savedInstanceState, BaseActivity.this);

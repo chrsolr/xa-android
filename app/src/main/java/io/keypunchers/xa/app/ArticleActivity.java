@@ -23,8 +23,6 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.xml.sax.XMLReader;
 
 import java.util.ArrayList;
@@ -32,14 +30,15 @@ import java.util.ArrayList;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.loaders.ArticleLoader;
 import io.keypunchers.xa.misc.SingletonVolley;
+import io.keypunchers.xa.models.Article;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ArticleActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<JSONObject> {
+public class ArticleActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Article> {
     private String BASE_URL;
     private LinearLayout mLlContent;
-    private JSONObject mData;
+    private Article mData;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,13 +48,11 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //getSupportActionBar().getThemedContext();
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mLlContent = (LinearLayout) findViewById(R.id.ll_article);
 
-        if(getIntent().getExtras() != null)
+        if (getIntent().getExtras() != null)
             BASE_URL = getIntent().getExtras().getString("url");
 
         getData(savedInstanceState);
@@ -85,117 +82,100 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
     }
 
     @Override
-    public Loader<JSONObject> onCreateLoader(int id, Bundle args) {
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelable("data", mData);
+    }
+
+    @Override
+    public Loader<Article> onCreateLoader(int id, Bundle args) {
         return new ArticleLoader(this, BASE_URL);
     }
 
     @Override
-    public void onLoadFinished(Loader<JSONObject> loader, JSONObject data) {
+    public void onLoadFinished(Loader<Article> loader, Article data) {
         bindData(data);
     }
 
     @Override
-    public void onLoaderReset(Loader<JSONObject> loader) {
+    public void onLoaderReset(Loader<Article> loader) {
 
     }
 
-    private void bindData(JSONObject data) {
-        try {
-            mData = data;
+    private void bindData(Article data) {
+        mData = data;
 
-            setArticleHeader(mData.getJSONObject("header"));
-            setArticleBody(mData.getJSONObject("body"));
-            setArticleImages(mData.getJSONObject("body"));
+        setArticleHeader(mData);
+        setArticleBody(mData);
+        setArticleImages(mData);
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+    }
+
+    private void setArticleHeader(Article data) {
+        ((NetworkImageView) findViewById(R.id.iv_article_author_avatar))
+                .setImageUrl(data.getAuthorProfileImageUrl(), SingletonVolley.getImageLoader());
+
+        ((TextView) findViewById(R.id.tv_article_title))
+                .setText(data.getHeaderTitle());
+
+        ((TextView) findViewById(R.id.tv_article_date))
+                .setText(data.getHeaderDate());
+    }
+
+    private void setArticleBody(Article data) {
+        Spanned text;
+        TextView mTvBody = (TextView) findViewById(R.id.tv_article_body);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            text = Html.fromHtml(data.getBodyText(), Html.FROM_HTML_MODE_LEGACY, null, new Html.TagHandler() {
+                @Override
+                public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
+                    if (tag.equals("ul") && !opening) output.append("\n");
+                    if (tag.equals("li") && opening) output.append("\n\t•<br>");
+                }
+            });
+        } else {
+            text = Html.fromHtml(data.getBodyText(), null, new Html.TagHandler() {
+                @Override
+                public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
+                    if (tag.equals("ul") && !opening) output.append("\n");
+                    if (tag.equals("li") && opening) output.append("\n\t•<br>");
+                }
+            });
         }
+
+        mTvBody.setText(text);
+        mTvBody.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    private void setArticleHeader(JSONObject data) {
-        try {
+    private void setArticleImages(Article data) {
+        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
+        LinearLayout.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mLayoutParams.setMargins(px, px / 2, px, px / 2);
 
-            ((NetworkImageView) findViewById(R.id.iv_article_author_avatar))
-                    .setImageUrl(data.getString("profile_image"), SingletonVolley.getImageLoader());
+        ArrayList<String> images = data.getImageUrls();
 
-            ((TextView) findViewById(R.id.tv_article_title))
-                    .setText(data.getString("header_title"));
+        for (String url : data.getImageUrls()) {
+            NetworkImageView mImageView = new NetworkImageView(this);
+            //mImageView.setId(images.s);
+            mImageView.setAdjustViewBounds(true);
+            mImageView.setScaleType(NetworkImageView.ScaleType.CENTER_CROP);
+            mImageView.setPadding(0, 0, 0, 0);
+            mImageView.setBackgroundResource(R.color.color_primary);
+            mImageView.setLayoutParams(mLayoutParams);
 
-            ((TextView) findViewById(R.id.tv_article_date))
-                    .setText(data.getString("header_date"));
+            mImageView.setImageUrl(url, SingletonVolley.getImageLoader());
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setArticleBody(JSONObject data) {
-        try {
-            Spanned text;
-            TextView mTvBody = (TextView) findViewById(R.id.tv_article_body);
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                text = Html.fromHtml(data.getString("body_text"), Html.FROM_HTML_MODE_LEGACY, null, new Html.TagHandler() {
-                    @Override
-                    public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
-                        if (tag.equals("ul") && !opening) output.append("\n");
-                        if (tag.equals("li") && opening) output.append("\n\t•<br>");
-                    }
-                });
-            } else {
-                text = Html.fromHtml(data.getString("body_text"), null, new Html.TagHandler() {
-                    @Override
-                    public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
-                        if (tag.equals("ul") && !opening) output.append("\n");
-                        if (tag.equals("li") && opening) output.append("\n\t•<br>");
-                    }
-                });
-            }
-
-            mTvBody.setText(text);
-            mTvBody.setMovementMethod(LinkMovementMethod.getInstance());
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setArticleImages(JSONObject data) {
-        try {
-            int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
-            LinearLayout.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            mLayoutParams.setMargins(px, px / 2, px, px / 2);
-
-            ArrayList<String> images = (ArrayList<String>) data.get("body_images");
-
-            for (String url : images) {
-                NetworkImageView mImageView = new NetworkImageView(this);
-                mImageView.setId(images.size());
-                mImageView.setAdjustViewBounds(true);
-                mImageView.setScaleType(NetworkImageView.ScaleType.CENTER_CROP);
-                mImageView.setPadding(0, 0, 0, 0);
-                mImageView.setBackgroundResource(R.color.color_primary);
-                mImageView.setLayoutParams(mLayoutParams);
-
-                mImageView.setImageUrl(url, SingletonVolley.getImageLoader());
-
-                mLlContent.addView(mImageView);
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+            mLlContent.addView(mImageView);
         }
     }
 
     private void getData(Bundle savedInstanceState) {
 
         if (savedInstanceState != null) {
-            try {
-                mData = new JSONObject(savedInstanceState.getString("json"));
-                bindData(mData);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            mData = savedInstanceState.getParcelable("data");
+            bindData(mData);
         } else {
             int LOADER_ID = getResources().getInteger(R.integer.article_loader_id);
 

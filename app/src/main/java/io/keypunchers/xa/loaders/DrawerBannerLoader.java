@@ -16,7 +16,7 @@ import java.net.URL;
 import io.keypunchers.xa.models.DrawerBanner;
 
 
-public class DrawerBannerLoader extends AsyncTaskLoader<JSONObject> {
+public class DrawerBannerLoader extends AsyncTaskLoader<DrawerBanner> {
     private final Context mContext;
     private final String BASE_URL = "http://www.xboxachievements.com";
 
@@ -32,10 +32,9 @@ public class DrawerBannerLoader extends AsyncTaskLoader<JSONObject> {
     }
 
     @Override
-    public JSONObject loadInBackground() {
+    public DrawerBanner loadInBackground() {
         try {
             DrawerBanner banner = new DrawerBanner();
-            JSONObject json = new JSONObject();
 
             Document document = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
             Element root = document.select(".bl_me_main").get(3).select("tr td").first();
@@ -47,12 +46,12 @@ public class DrawerBannerLoader extends AsyncTaskLoader<JSONObject> {
 
                 image_url = image_url.replace("thu", "med").replaceAll("\\s", "%20");
 
-                json.put("title", game_title);
-                json.put("image_url", image_url);
-                json.put("url", game_screenshots_url);
+                banner.setImage(image_url);
+                banner.setUrl(game_screenshots_url);
+                banner.setTitle(game_title);
             }
 
-            return json;
+            return banner;
         } catch (Exception ex) {
             Log.e("Drawer Loader", ex.getMessage());
             Toast.makeText(mContext, ex.getMessage(), Toast.LENGTH_LONG).show();
@@ -61,7 +60,7 @@ public class DrawerBannerLoader extends AsyncTaskLoader<JSONObject> {
     }
 
     @Override
-    public void deliverResult(JSONObject data) {
+    public void deliverResult(DrawerBanner data) {
         if (isStarted() && data != null) {
             super.deliverResult(data);
         }

@@ -14,18 +14,19 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+import java.util.List;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.NewsAdapter;
 import io.keypunchers.xa.loaders.NewsLoader;
+import io.keypunchers.xa.models.ArticleListItem;
 
-public class NewsFragment extends Fragment implements LoaderManager.LoaderCallbacks<JSONArray>, AdapterView.OnItemClickListener {
+public class NewsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<ArticleListItem>>, AdapterView.OnItemClickListener {
     private ListView mLvContent;
     private NewsAdapter mAdapter;
 
-    public NewsFragment() { }
+    public NewsFragment() {
+    }
 
 
     @Override
@@ -46,44 +47,38 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
     }
 
     @Override
-    public Loader<JSONArray> onCreateLoader(int id, Bundle args) {
+    public Loader<List<ArticleListItem>> onCreateLoader(int id, Bundle args) {
         return new NewsLoader(getActivity());
     }
 
     @Override
-    public void onLoadFinished(Loader<JSONArray> loader, JSONArray data) {
+    public void onLoadFinished(Loader<List<ArticleListItem>> loader, List<ArticleListItem> data) {
         displayData(data);
     }
 
     @Override
-    public void onLoaderReset(Loader<JSONArray> loader) {
+    public void onLoaderReset(Loader<List<ArticleListItem>> loader) {
 
     }
 
     private void getData(Bundle savedInstanceState) {
         int LOADER_ID = getActivity().getResources().getInteger(R.integer.news_loader_id);
 
-        if (getActivity().getSupportLoaderManager().getLoader(LOADER_ID) == null){
+        if (getActivity().getSupportLoaderManager().getLoader(LOADER_ID) == null) {
             getActivity().getSupportLoaderManager().initLoader(LOADER_ID, savedInstanceState, NewsFragment.this);
         } else {
             getActivity().getSupportLoaderManager().restartLoader(LOADER_ID, savedInstanceState, NewsFragment.this);
         }
     }
 
-    private void displayData(JSONArray data) {
+    private void displayData(List<ArticleListItem> data) {
         mAdapter = new NewsAdapter(getActivity(), data);
         mLvContent.setAdapter(mAdapter);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        try {
-            String url = mAdapter.getItem(position).getString("page_url");
-
-            startActivity(new Intent(getActivity(), ArticleActivity.class).putExtra("url", url));
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        String url = mAdapter.getItem(position).getPageUrl();
+        startActivity(new Intent(getActivity(), ArticleActivity.class).putExtra("url", url));
     }
 }

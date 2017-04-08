@@ -5,16 +5,17 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
-public class NewsLoader extends AsyncTaskLoader<JSONArray> {
+import io.keypunchers.xa.models.ArticleListItem;
+
+public class NewsLoader extends AsyncTaskLoader<List<ArticleListItem>> {
     private final Context mContext;
     private final int COUNTER_PLUS = 3;
 
@@ -30,18 +31,18 @@ public class NewsLoader extends AsyncTaskLoader<JSONArray> {
     }
 
     @Override
-    public void deliverResult(JSONArray data) {
+    public void deliverResult(List<ArticleListItem> data) {
         if (isStarted() && data != null) {
             super.deliverResult(data);
         }
     }
 
     @Override
-    public JSONArray loadInBackground() {
+    public List<ArticleListItem> loadInBackground() {
         try {
             String BASE_URL = "http://www.xboxachievements.com/archive/gaming-news/1/";
 
-            JSONArray list = new JSONArray();
+            List<ArticleListItem> items = new ArrayList<>();
 
             Document document = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
 
@@ -63,18 +64,18 @@ public class NewsLoader extends AsyncTaskLoader<JSONArray> {
                     // increase counters
                     offset_counter += COUNTER_PLUS;
 
-                    JSONObject json = new JSONObject();
-                    json.put("image_url", image_url);
-                    json.put("title", title);
-                    json.put("author", author);
-                    json.put("desc", desc);
-                    json.put("page_url", page_url);
+                    ArticleListItem item = new ArticleListItem();
+                    item.setTitle(title);
+                    item.setAuthor(author);
+                    item.setDesc(desc);
+                    item.setImageUrl(image_url);
+                    item.setPageUrl(page_url);
 
-                    list.put(json);
+                    items.add(item);
                 }
             }
 
-            return list;
+            return items;
 
         } catch (Exception ex){
             Log.e("News Loader", ex.getMessage());

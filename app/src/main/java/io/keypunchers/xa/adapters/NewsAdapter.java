@@ -9,36 +9,29 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.List;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.misc.SingletonVolley;
+import io.keypunchers.xa.models.ArticleListItem;
 
 public class NewsAdapter extends BaseAdapter {
     private Context mContext;
-    private JSONArray mData;
+    private List<ArticleListItem> mData;
 
-    public NewsAdapter(Context context, JSONArray data) {
+    public NewsAdapter(Context context, List<ArticleListItem> data) {
         mContext = context;
         mData = data;
     }
 
     @Override
     public int getCount() {
-        return mData.length();
+        return mData.size();
     }
 
     @Override
-    public JSONObject getItem(int position) {
-        try {
-            return mData.getJSONObject(position);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+    public ArticleListItem getItem(int position) {
+        return mData.get(position);
     }
 
     @Override
@@ -55,7 +48,7 @@ public class NewsAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.row_news, null);
 
             viewHolder = new ViewHolder();
-            assert  convertView != null;
+            assert convertView != null;
 
             viewHolder.mTvTitle = (TextView) convertView.findViewById(R.id.tv_news_title);
             viewHolder.mTvSubTitle = (TextView) convertView.findViewById(R.id.tv_news_subtitle);
@@ -66,16 +59,11 @@ public class NewsAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        try {
-            JSONObject json = mData.getJSONObject(position);
+        ArticleListItem item = mData.get(position);
 
-            viewHolder.mTvTitle.setText(json.getString("title"));
-            viewHolder.mTvSubTitle.setText(json.getString("desc"));
-            viewHolder.mIvImage.setImageUrl(json.getString("image_url"), SingletonVolley.getImageLoader());
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        viewHolder.mTvTitle.setText(item.getTitle());
+        viewHolder.mTvSubTitle.setText(item.getDesc());
+        viewHolder.mIvImage.setImageUrl(item.getImageUrl(), SingletonVolley.getImageLoader());
 
         return convertView;
     }

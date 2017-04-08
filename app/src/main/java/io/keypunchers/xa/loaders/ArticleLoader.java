@@ -16,7 +16,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArticleLoader extends AsyncTaskLoader<JSONObject> {
+import io.keypunchers.xa.models.Article;
+
+public class ArticleLoader extends AsyncTaskLoader<Article> {
     private final String BASE_URL;
     private final Context mContext;
 
@@ -33,14 +35,14 @@ public class ArticleLoader extends AsyncTaskLoader<JSONObject> {
     }
 
     @Override
-    public void deliverResult(JSONObject data) {
+    public void deliverResult(Article data) {
         if (isStarted() && data != null) {
             super.deliverResult(data);
         }
     }
 
     @Override
-    public JSONObject loadInBackground() {
+    public Article loadInBackground() {
 
         try {
             JSONObject json = new JSONObject();
@@ -61,6 +63,8 @@ public class ArticleLoader extends AsyncTaskLoader<JSONObject> {
             header.put("header_date", header_date);
             header.put("author_profile_url", author_profile_url);
 
+
+
             JSONObject body = new JSONObject();
 
             Elements article_contents = body_root.children();
@@ -70,30 +74,33 @@ public class ArticleLoader extends AsyncTaskLoader<JSONObject> {
             article_contents.select("img").remove();
             article_contents.select("iframe").remove();
 
-            List<String> images = new ArrayList<>();
+            ArrayList<String> images = new ArrayList<>();
 
             for (Element img : article_images) {
                 String src = img.attr("abs:src");
                 images.add(src);
             }
 
-//            List<JSONObject> iframes = new ArrayList<>();
-//
-//            for (Element iframe : article_iframes) {
-//                String src = iframe.attr("abs:src");
-//                iframes.add(new JSONObject().put("url", src));
-//            }
+            ArrayList<String> videos = new ArrayList<>();
 
-            body.put("body_text", article_contents.toString());
-            body.put("body_images", images);
-            //body.put("body_iframes", iframes.toArray());
+            for (Element video : article_iframes) {
+                String src = video.attr("abs:src");
+                videos.add(src);
+            }
 
-            json.put("header", header);
-            json.put("body", body);
+            Article article = new Article();
+            article.setAuthorProfileImageUrl(profile_image);
+            article.setHeaderTitle(header_title);
+            article.setHeaderDate(header_date);
+            article.setAuthorProfileUrl(author_profile_url);
+            article.setBodyText(article_contents.toString());
 
-            return json;
+            article.setImageUrls(images);
+            article.setVideoUrls(videos);
+
+            return article;
         } catch (Exception ex) {
-            Log.e("Article Loader", ex.getMessage());
+            Log.e("ArticleListItem Loader", ex.getMessage());
             Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
         }
         return null;

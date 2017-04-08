@@ -1,9 +1,5 @@
 package io.keypunchers.xa.models;
 
-/**
- * Created by christiansoler on 4/5/17.
- */
-
 public class DrawerBanner {
     private String mTitle;
     private String mImage;
