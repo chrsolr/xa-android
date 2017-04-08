@@ -1,6 +1,7 @@
 package io.keypunchers.xa.app;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -80,17 +80,7 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
         try {
             String url = mAdapter.getItem(position).getString("page_url");
 
-            Bundle bundle = new Bundle();
-            bundle.putString("url", url);
-
-            ArticleFragment fragment = new ArticleFragment();
-            fragment.setArguments(bundle);
-
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_layout, fragment)
-                    .addToBackStack("NEWS")
-                    .commit();
+            startActivity(new Intent(getActivity(), ArticleActivity.class).putExtra("url", url));
 
         } catch (JSONException e) {
             e.printStackTrace();

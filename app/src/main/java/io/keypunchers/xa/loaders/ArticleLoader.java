@@ -5,6 +5,7 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,6 +13,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ArticleLoader extends AsyncTaskLoader<JSONObject> {
     private final String BASE_URL;
@@ -67,8 +70,23 @@ public class ArticleLoader extends AsyncTaskLoader<JSONObject> {
             article_contents.select("img").remove();
             article_contents.select("iframe").remove();
 
+            List<String> images = new ArrayList<>();
+
+            for (Element img : article_images) {
+                String src = img.attr("abs:src");
+                images.add(src);
+            }
+
+//            List<JSONObject> iframes = new ArrayList<>();
+//
+//            for (Element iframe : article_iframes) {
+//                String src = iframe.attr("abs:src");
+//                iframes.add(new JSONObject().put("url", src));
+//            }
 
             body.put("body_text", article_contents.toString());
+            body.put("body_images", images);
+            //body.put("body_iframes", iframes.toArray());
 
             json.put("header", header);
             json.put("body", body);
@@ -76,7 +94,7 @@ public class ArticleLoader extends AsyncTaskLoader<JSONObject> {
             return json;
         } catch (Exception ex) {
             Log.e("Article Loader", ex.getMessage());
-            Toast.makeText(mContext, ex.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
         }
         return null;
     }
