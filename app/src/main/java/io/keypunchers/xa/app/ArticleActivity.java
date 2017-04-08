@@ -17,6 +17,7 @@ import android.text.method.LinkMovementMethod;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.loaders.ArticleLoader;
+import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.Article;
 
@@ -122,7 +124,8 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
     private void processData(Article data) {
         setArticleHeader(data);
         setArticleBody(data);
-        setArticleImages(data);
+        setArticleImages(data.getImageUrls());
+        setArticleVideos(data.getVideoUrls());
     }
 
     private void setArticleHeader(Article data) {
@@ -156,14 +159,15 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
         mTvBody.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    private void setArticleImages(Article data) {
-        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
+    private void setArticleImages(ArrayList<String> links) {
+        int px = Common.convertDpToPx(16, this);
+
         LinearLayout.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mLayoutParams.setMargins(px, px / 2, px, px / 2);
 
-        for (String url : data.getImageUrls()) {
+        for (String url : links) {
             NetworkImageView mImageView = new NetworkImageView(this);
-            mImageView.setId(data.getImageUrls().size());
+            mImageView.setId(links.size());
             mImageView.setAdjustViewBounds(true);
             mImageView.setScaleType(NetworkImageView.ScaleType.CENTER_CROP);
             mImageView.setPadding(0, 0, 0, 0);
@@ -173,6 +177,44 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
             mImageView.setImageUrl(url, SingletonVolley.getImageLoader());
 
             mLlContent.addView(mImageView);
+        }
+    }
+
+    private void setArticleVideos(final ArrayList<String> links) {
+        if (links.size() > 0) {
+            int px = Common.convertDpToPx(16, this);
+
+            LinearLayout.LayoutParams mViewDividerParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 2);
+            mViewDividerParams.setMargins(0, px / 2, 0, px / 2);
+
+            View mViewDivider = new View(this);
+            mViewDivider.setBackgroundResource(R.color.color_light_gray);
+            mViewDivider.setLayoutParams(mViewDividerParams);
+
+            mLlContent.addView(mViewDivider);
+        }
+
+        int px = Common.convertDpToPx(16, this);
+        LinearLayout.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mLayoutParams.setMargins(px, px / 2, px, px / 2);
+
+        for (int i = 0; i < links.size(); i++) {
+            TextView mVideoLinks = new TextView(this);
+            mVideoLinks.setId(links.size());
+            mVideoLinks.setText("Video #" + (i + 1));
+            mVideoLinks.setTextAppearance(this, android.R.style.TextAppearance_Material_Medium);
+            mVideoLinks.setPadding(px, px / 2, px, px / 2);
+
+            mLlContent.addView(mVideoLinks);
+
+            final int finalI = i;
+            mVideoLinks.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(links.get(finalI)));
+                    startActivity(mIntent);
+                }
+            });
         }
     }
 }

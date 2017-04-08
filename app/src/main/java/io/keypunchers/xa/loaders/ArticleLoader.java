@@ -48,8 +48,6 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
     public Article loadInBackground() {
 
         try {
-            JSONObject json = new JSONObject();
-
             Document document = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
 
             Elements header_root = document.getElementsByClass("bl_la_main").first().getElementsByTag("td");
@@ -60,14 +58,6 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
             String header_date = header_root.get(1).select(".newsNFO").text();
             String author_profile_url = header_root.get(1).select("a").first().attr("abs:href");
 
-            JSONObject header = new JSONObject();
-            header.put("profile_image", profile_image);
-            header.put("header_title", header_title);
-            header.put("header_date", header_date);
-            header.put("author_profile_url", author_profile_url);
-
-
-            JSONObject body = new JSONObject();
 
             Elements article_contents = body_root.children();
             Elements article_images = article_contents.select("img");
@@ -87,6 +77,7 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
 
             for (Element video : article_iframes) {
                 String src = video.attr("abs:src");
+                //String title = video.select("head title").first().text();
                 videos.add(src);
             }
 
