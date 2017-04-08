@@ -42,7 +42,7 @@
                 android:layout_marginLeft="@dimen/margin_level_1"
                 android:layout_toEndOf="@+id/iv_article_author_avatar"
                 android:layout_toRightOf="@+id/iv_article_author_avatar"
-                android:textColor="@color/primary_text_light" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         </RelativeLayout>
 
@@ -52,6 +52,15 @@
             android:layout_marginBottom="@dimen/margin_level_1"
             android:layout_marginTop="@dimen/margin_level_1"
             android:background="@color/color_light_gray" />
+
+        <TextView
+            android:id="@+id/tv_article_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_level_2"
+            android:layout_marginRight="@dimen/margin_level_2"
+            android:linksClickable="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
     </LinearLayout>
 </ScrollView>

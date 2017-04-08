@@ -3,11 +3,16 @@ package io.keypunchers.xa.app;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.text.Editable;
+import android.text.Html;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,6 +27,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xml.sax.XMLReader;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.NewsAdapter;
@@ -89,6 +95,7 @@ public class ArticleFragment extends Fragment implements LoaderManager.LoaderCal
     public void onLoadFinished(Loader<JSONObject> loader, JSONObject data) {
         try {
             setArticleHeader(data.getJSONObject("header"));
+            setArticleBody(data.getJSONObject("body"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -110,6 +117,37 @@ public class ArticleFragment extends Fragment implements LoaderManager.LoaderCal
 
             ((TextView) getActivity().findViewById(R.id.tv_article_date))
                     .setText(data.getString("header_date"));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setArticleBody(JSONObject data) {
+        try {
+            Spanned text;
+            TextView mTvBody = (TextView) getActivity().findViewById(R.id.tv_article_body);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                text = Html.fromHtml(data.getString("body_text"), Html.FROM_HTML_MODE_LEGACY, null, new Html.TagHandler() {
+                    @Override
+                    public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
+                        if(tag.equals("ul") && !opening) output.append("\n");
+                        if(tag.equals("li") && opening) output.append("\n\t•<br>");
+                    }
+                });
+            } else {
+                text = Html.fromHtml(data.getString("body_text"), null, new Html.TagHandler() {
+                    @Override
+                    public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
+                        if(tag.equals("ul") && !opening) output.append("\n");
+                        if(tag.equals("li") && opening) output.append("\n\t•<br>");
+                    }
+                });
+            }
+
+            mTvBody.setText(text);
+            mTvBody.setMovementMethod(LinkMovementMethod.getInstance());
 
         } catch (JSONException e) {
             e.printStackTrace();

@@ -45,6 +45,7 @@ public class ArticleLoader extends AsyncTaskLoader<JSONObject> {
             Document document = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
 
             Elements header_root = document.getElementsByClass("bl_la_main").first().getElementsByTag("td");
+            Element body_root = document.getElementsByClass("bl_la_main").first().select("span[itemprop=articleBody]").first();
 
             String profile_image = header_root.first().select("img").first().attr("abs:src");
             String header_title = header_root.get(1).select(".newsTitle").first().text();
@@ -57,7 +58,20 @@ public class ArticleLoader extends AsyncTaskLoader<JSONObject> {
             header.put("header_date", header_date);
             header.put("author_profile_url", author_profile_url);
 
+            JSONObject body = new JSONObject();
+
+            Elements article_contents = body_root.children();
+            Elements article_images = article_contents.select("img");
+            Elements article_iframes = article_contents.select("iframe");
+
+            article_contents.select("img").remove();
+            article_contents.select("iframe").remove();
+
+
+            body.put("body_text", article_contents.toString());
+
             json.put("header", header);
+            json.put("body", body);
 
             return json;
         } catch (Exception ex) {
