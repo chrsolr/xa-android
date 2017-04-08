@@ -5,7 +5,6 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,30 +13,34 @@ import org.jsoup.select.Elements;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 import io.keypunchers.xa.models.Article;
 
 public class ArticleLoader extends AsyncTaskLoader<Article> {
     private final String BASE_URL;
-    private final Context mContext;
+    private Article mData;
 
-    public ArticleLoader(Context context, String url) {
+    public ArticleLoader(Context context, String url, Article article) {
         super(context);
-        mContext = context;
         BASE_URL = url;
+        mData = article;
     }
 
     @Override
     protected void onStartLoading() {
         super.onStartLoading();
-        forceLoad();
+
+        if (mData != null)
+            super.deliverResult(mData);
+        else
+            forceLoad();
     }
 
     @Override
     public void deliverResult(Article data) {
-        if (isStarted() && data != null) {
-            super.deliverResult(data);
+        mData = data;
+        if (isStarted() && mData != null) {
+            super.deliverResult(mData);
         }
     }
 
@@ -62,7 +65,6 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
             header.put("header_title", header_title);
             header.put("header_date", header_date);
             header.put("author_profile_url", author_profile_url);
-
 
 
             JSONObject body = new JSONObject();

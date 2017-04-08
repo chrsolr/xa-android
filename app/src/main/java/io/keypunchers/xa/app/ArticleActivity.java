@@ -32,13 +32,12 @@ import io.keypunchers.xa.loaders.ArticleLoader;
 import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.Article;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ArticleActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Article> {
     private String BASE_URL;
+    private int LOADER_ID;
     private LinearLayout mLlContent;
     private Article mData;
+    private String TAG = ArticleActivity.class.getSimpleName();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,12 +49,7 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mLlContent = (LinearLayout) findViewById(R.id.ll_article);
-
-        if (getIntent().getExtras() != null)
-            BASE_URL = getIntent().getExtras().getString("url");
-
-        getData(savedInstanceState);
+        init(savedInstanceState);
     }
 
     @Override
@@ -66,6 +60,7 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
         int id = item.getItemId();
 
         switch (id) {
@@ -73,9 +68,15 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
                 onBackPressed();
                 break;
             case R.id.menu_item_open_in_browser:
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(BASE_URL));
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse(BASE_URL));
                 startActivity(intent);
                 break;
+            case R.id.menu_item_share:
+                intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Check it out!");
+                intent.putExtra(Intent.EXTRA_TEXT, "Check it out!: " + mData.getHeaderTitle() + "\n\n" + BASE_URL.replace(".html", "") + "\n\n" + "Shared via XA App.");
+                startActivity(Intent.createChooser(intent, "Share"));
         }
 
         return super.onOptionsItemSelected(item);
@@ -84,32 +85,44 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        outState.putParcelable("data", mData);
+        outState.putParcelable(TAG, mData);
     }
 
     @Override
     public Loader<Article> onCreateLoader(int id, Bundle args) {
-        return new ArticleLoader(this, BASE_URL);
+        return new ArticleLoader(this, BASE_URL, mData);
     }
 
     @Override
     public void onLoadFinished(Loader<Article> loader, Article data) {
-        bindData(data);
+        processData(mData = data);
     }
 
     @Override
     public void onLoaderReset(Loader<Article> loader) {
-
+        getSupportLoaderManager().destroyLoader(LOADER_ID);
     }
 
-    private void bindData(Article data) {
-        mData = data;
+    private void init(Bundle savedInstanceState) {
+        mLlContent = (LinearLayout) findViewById(R.id.ll_article);
 
-        setArticleHeader(mData);
-        setArticleBody(mData);
-        setArticleImages(mData);
+        LOADER_ID = getResources().getInteger(R.integer.article_loader_id);
 
+        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("url"))
+            BASE_URL = getIntent().getExtras().getString("url");
+
+        if (savedInstanceState != null && savedInstanceState.containsKey(TAG)) {
+            mData = savedInstanceState.getParcelable(TAG);
+            processData(mData);
+        } else {
+            getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
+        }
+    }
+
+    private void processData(Article data) {
+        setArticleHeader(data);
+        setArticleBody(data);
+        setArticleImages(data);
     }
 
     private void setArticleHeader(Article data) {
@@ -128,13 +141,7 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
         TextView mTvBody = (TextView) findViewById(R.id.tv_article_body);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            text = Html.fromHtml(data.getBodyText(), Html.FROM_HTML_MODE_LEGACY, null, new Html.TagHandler() {
-                @Override
-                public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
-                    if (tag.equals("ul") && !opening) output.append("\n");
-                    if (tag.equals("li") && opening) output.append("\n\t•<br>");
-                }
-            });
+            text = Html.fromHtml(data.getBodyText(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM);
         } else {
             text = Html.fromHtml(data.getBodyText(), null, new Html.TagHandler() {
                 @Override
@@ -154,11 +161,9 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
         LinearLayout.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mLayoutParams.setMargins(px, px / 2, px, px / 2);
 
-        ArrayList<String> images = data.getImageUrls();
-
         for (String url : data.getImageUrls()) {
             NetworkImageView mImageView = new NetworkImageView(this);
-            //mImageView.setId(images.s);
+            mImageView.setId(data.getImageUrls().size());
             mImageView.setAdjustViewBounds(true);
             mImageView.setScaleType(NetworkImageView.ScaleType.CENTER_CROP);
             mImageView.setPadding(0, 0, 0, 0);
@@ -168,22 +173,6 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
             mImageView.setImageUrl(url, SingletonVolley.getImageLoader());
 
             mLlContent.addView(mImageView);
-        }
-    }
-
-    private void getData(Bundle savedInstanceState) {
-
-        if (savedInstanceState != null) {
-            mData = savedInstanceState.getParcelable("data");
-            bindData(mData);
-        } else {
-            int LOADER_ID = getResources().getInteger(R.integer.article_loader_id);
-
-            if (getSupportLoaderManager().getLoader(LOADER_ID) == null) {
-                getSupportLoaderManager().initLoader(LOADER_ID, savedInstanceState, ArticleActivity.this);
-            } else {
-                getSupportLoaderManager().restartLoader(LOADER_ID, savedInstanceState, ArticleActivity.this);
-            }
         }
     }
 }
