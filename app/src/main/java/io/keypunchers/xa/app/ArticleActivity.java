@@ -18,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.fragments.ArticleFragment;
@@ -27,7 +26,6 @@ import io.keypunchers.xa.loaders.ArticleLoader;
 import io.keypunchers.xa.models.Article;
 
 public class ArticleActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Article> {
-    private ViewPager mViewPager;
     private String BASE_URL;
     private int LOADER_ID;
     private Article mData;
@@ -42,13 +40,7 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         getSupportActionBar().setTitle(R.string.ab_article);
-
-        mViewPager = (ViewPager) findViewById(R.id.vp_article);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tl_article);
-        tabLayout.setupWithViewPager(mViewPager);
 
         LOADER_ID = getResources().getInteger(R.integer.article_loader_id);
 
@@ -102,7 +94,7 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
     @Override
     public void onLoadFinished(Loader<Article> loader, Article data) {
         mData = data;
-        setupViewPager();
+        setupUI();
     }
 
     @Override
@@ -113,13 +105,18 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
     private void makeNetworkCall(Bundle savedInstanceState) {
         if (savedInstanceState != null && savedInstanceState.containsKey(TAG)) {
             mData = savedInstanceState.getParcelable(TAG);
-            setupViewPager();
+            setupUI();
         } else {
             getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
         }
     }
 
-    private void setupViewPager() {
+    private void setupUI() {
+        ViewPager mViewPager = (ViewPager) findViewById(R.id.vp_article);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tl_article);
+        tabLayout.setupWithViewPager(mViewPager);
+
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new ArticleFragment().newInstance(mData), "Article");
         adapter.addFragment(new ImageListFragment().newInstance(mData), "Images");

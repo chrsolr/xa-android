@@ -18,9 +18,6 @@ import android.widget.Toast;
 
 import com.android.volley.toolbox.NetworkImageView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.loaders.DrawerBannerLoader;
 import io.keypunchers.xa.misc.SingletonVolley;
@@ -28,6 +25,8 @@ import io.keypunchers.xa.models.DrawerBanner;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         LoaderManager.LoaderCallbacks<DrawerBanner> {
+
+    private int LOADER_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,11 +132,11 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onLoaderReset(Loader<DrawerBanner> loader) {
-
+        getSupportLoaderManager().destroyLoader(LOADER_ID);
     }
 
     private void getData(Bundle savedInstanceState) {
-        int LOADER_ID = getResources().getInteger(R.integer.navigation_drawer_loader_id);
+        LOADER_ID = getResources().getInteger(R.integer.navigation_drawer_loader_id);
 
         if (getSupportLoaderManager().getLoader(LOADER_ID) == null) {
             getSupportLoaderManager().initLoader(LOADER_ID, savedInstanceState, BaseActivity.this);

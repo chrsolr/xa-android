@@ -1,6 +1,5 @@
 package io.keypunchers.xa.fragments;
 
-
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,15 +21,18 @@ import io.keypunchers.xa.R;
 import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.Article;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ArticleFragment extends Fragment {
-    private Article mData;
     private final String TAG = ArticleFragment.class.getSimpleName();
+    private Article mData;
 
-    public ArticleFragment(){}
+    public ArticleFragment() {
+    }
 
+    public static Fragment newInstance(Article data) {
+        ArticleFragment fragment = new ArticleFragment();
+        fragment.mData = data;
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,7 +63,7 @@ public class ArticleFragment extends Fragment {
         ((TextView) getActivity().findViewById(R.id.tv_article_date))
                 .setText(mData.getHeaderDate());
 
-                Spanned text;
+        Spanned text;
         TextView mTvBody = (TextView) getActivity().findViewById(R.id.tv_article_body);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -90,11 +92,5 @@ public class ArticleFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(TAG, mData);
-    }
-
-    public static Fragment newInstance(Article data) {
-        ArticleFragment fragment = new ArticleFragment();
-        fragment.mData = data;
-        return fragment;
     }
 }

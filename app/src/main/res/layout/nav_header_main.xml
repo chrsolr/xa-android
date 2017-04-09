@@ -6,11 +6,11 @@
     android:background="@color/color_primary"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <com.android.volley.toolbox.NetworkImageView
+    <io.keypunchers.xa.views.ScaledNetworkImageView
         android:id="@+id/iv_drawer_banner"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
+        android:adjustViewBounds="true"/>
 
     <View
         android:layout_width="match_parent"

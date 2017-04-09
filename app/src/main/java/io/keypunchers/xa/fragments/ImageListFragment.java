@@ -1,7 +1,8 @@
 package io.keypunchers.xa.fragments;
 
-
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,29 +11,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.keypunchers.xa.R;
-import io.keypunchers.xa.adapters.NewsAdapter;
 import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.Article;
-import io.keypunchers.xa.models.ArticleListItem;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ImageListFragment extends Fragment {
-    private Article mData;
     private final String TAG = ImageListFragment.class.getSimpleName();
-    private ListView mLvContent;
-    private ImageListAdapter mAdapter;
+    private Article mData;
 
-    public ImageListFragment() {}
+    public ImageListFragment() {
+    }
+
+    public static Fragment newInstance(Article data) {
+        ImageListFragment fragment = new ImageListFragment();
+        fragment.mData = data;
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,8 +53,8 @@ public class ImageListFragment extends Fragment {
     }
 
     private void setupUI() {
-        mAdapter = new ImageListAdapter(getActivity(), mData.getImageUrls());
-        mLvContent = (ListView) getActivity().findViewById(R.id.lv_image_list);
+        ImageListAdapter mAdapter = new ImageListAdapter(getActivity(), mData.getImageUrls());
+        ListView mLvContent = (ListView) getActivity().findViewById(R.id.lv_image_list);
         mLvContent.setAdapter(mAdapter);
     }
 
@@ -65,17 +64,11 @@ public class ImageListFragment extends Fragment {
         outState.putParcelable(TAG, mData);
     }
 
-    public static Fragment newInstance(Article data) {
-        ImageListFragment fragment = new ImageListFragment();
-        fragment.mData = data;
-        return fragment;
-    }
-
     private class ImageListAdapter extends BaseAdapter {
         private final Context mContext;
         private final ArrayList<String> mData;
 
-        public ImageListAdapter(Context context, ArrayList<String> data) {
+        ImageListAdapter(Context context, ArrayList<String> data) {
             mContext = context;
             mData = data;
         }
@@ -96,12 +89,12 @@ public class ImageListFragment extends Fragment {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             ViewHolder viewHolder;
 
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.row_image_list, null);
+                convertView = inflater.inflate(R.layout.row_image_list, parent, false);
 
                 viewHolder = new ViewHolder();
                 assert convertView != null;
@@ -114,6 +107,13 @@ public class ImageListFragment extends Fragment {
             }
 
             viewHolder.mIvImage.setImageUrl(mData.get(position), SingletonVolley.getImageLoader());
+            viewHolder.mIvImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mData.get(position)));
+                    startActivity(mIntent);
+                }
+            });
 
             return convertView;
         }
