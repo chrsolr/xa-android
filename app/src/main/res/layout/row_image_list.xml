@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="io.keypunchers.xa.fragments.ImageListFragment">
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/iv_image_list"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/screenshot_item_height"
+        android:layout_marginLeft="@dimen/margin_level_2"
+        android:layout_marginRight="@dimen/margin_level_2"
+        android:layout_marginBottom="@dimen/margin_level_2"
+        android:background="@color/color_primary"
+        android:scaleType="centerCrop" />
+
+</LinearLayout>

@@ -3,44 +3,38 @@ package io.keypunchers.xa.app;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.Html;
-import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.android.volley.toolbox.NetworkImageView;
-
-import org.xml.sax.XMLReader;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.fragments.ArticleFragment;
+import io.keypunchers.xa.fragments.ImageListFragment;
 import io.keypunchers.xa.loaders.ArticleLoader;
-import io.keypunchers.xa.misc.Common;
-import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.Article;
 
 public class ArticleActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Article> {
+    private ViewPager mViewPager;
     private String BASE_URL;
     private int LOADER_ID;
-    private LinearLayout mLlContent;
     private Article mData;
-    private String TAG = ArticleActivity.class.getSimpleName();
+    private String TAG = ArticleActivity_Old.class.getSimpleName();
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
 
@@ -49,7 +43,19 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        init(savedInstanceState);
+        getSupportActionBar().setTitle(R.string.ab_article);
+
+        mViewPager = (ViewPager) findViewById(R.id.vp_article);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tl_article);
+        tabLayout.setupWithViewPager(mViewPager);
+
+        LOADER_ID = getResources().getInteger(R.integer.article_loader_id);
+
+        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("url"))
+            BASE_URL = getIntent().getExtras().getString("url");
+
+        makeNetworkCall(savedInstanceState);
     }
 
     @Override
@@ -95,7 +101,8 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
 
     @Override
     public void onLoadFinished(Loader<Article> loader, Article data) {
-        processData(mData = data);
+        mData = data;
+        setupViewPager();
     }
 
     @Override
@@ -103,147 +110,50 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
         getSupportLoaderManager().destroyLoader(LOADER_ID);
     }
 
-    private void init(Bundle savedInstanceState) {
-        mLlContent = (LinearLayout) findViewById(R.id.ll_article);
-
-        LOADER_ID = getResources().getInteger(R.integer.article_loader_id);
-
-        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("url"))
-            BASE_URL = getIntent().getExtras().getString("url");
-
+    private void makeNetworkCall(Bundle savedInstanceState) {
         if (savedInstanceState != null && savedInstanceState.containsKey(TAG)) {
             mData = savedInstanceState.getParcelable(TAG);
-            processData(mData);
+            setupViewPager();
         } else {
             getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
         }
     }
 
-    private void processData(Article data) {
-        setArticleHeader(data);
-        setArticleBody(data);
-
-        if (data.getImageUrls().size() > 0)
-            setArticleImages(data.getImageUrls());
-
-        if (data.getVideoUrls().size() > 0)
-            setArticleVideos(data.getVideoUrls());
+    private void setupViewPager() {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new ArticleFragment().newInstance(mData), "Article");
+        adapter.addFragment(new ImageListFragment().newInstance(mData), "Images");
+        adapter.addFragment(new ArticleFragment().newInstance(mData), "Videos");
+        adapter.addFragment(new ArticleFragment().newInstance(mData), "Comments");
+        mViewPager.setAdapter(adapter);
     }
 
-    private void setArticleHeader(Article data) {
-        ((NetworkImageView) findViewById(R.id.iv_article_author_avatar))
-                .setImageUrl(data.getAuthorProfileImageUrl(), SingletonVolley.getImageLoader());
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final ArrayList<Fragment> mFragmentList = new ArrayList<>();
+        private final ArrayList<String> mFragmentTitleList = new ArrayList<>();
 
-        ((TextView) findViewById(R.id.tv_article_title))
-                .setText(data.getHeaderTitle());
-
-        ((TextView) findViewById(R.id.tv_article_date))
-                .setText(data.getHeaderDate());
-    }
-
-    private void setArticleBody(Article data) {
-        Spanned text;
-        TextView mTvBody = (TextView) findViewById(R.id.tv_article_body);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            text = Html.fromHtml(data.getBodyText(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM, null, new Html.TagHandler() {
-                @Override
-                public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
-                    if (tag.equals("ul") && !opening) output.append("\n");
-                    if (tag.equals("li") && opening) output.append("\n\t•\t\t");
-                }
-            });
-        } else {
-            text = Html.fromHtml(data.getBodyText(), null, new Html.TagHandler() {
-                @Override
-                public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
-                    if (tag.equals("ul") && !opening) output.append("\n");
-                    if (tag.equals("li") && opening) output.append("\n\t•\t\t");
-                }
-            });
+        ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
         }
 
-        mTvBody.setText(text);
-        mTvBody.setMovementMethod(LinkMovementMethod.getInstance());
-    }
-
-    private void setArticleImages(final ArrayList<String> links) {
-
-        int px = Common.convertDpToPx(16, this);
-
-        LinearLayout mLayoutContainer = (LinearLayout) findViewById(R.id.ll_article_images);
-
-        LinearLayout.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        mLayoutParams.setMargins(px, px / 2, px, px / 2);
-
-        for (int i = 0; i < links.size(); i++) {
-            NetworkImageView mImageView = new NetworkImageView(this);
-            mImageView.setId(links.size());
-            mImageView.setAdjustViewBounds(true);
-            mImageView.setScaleType(NetworkImageView.ScaleType.CENTER_CROP);
-            mImageView.setPadding(0, 0, 0, 0);
-            mImageView.setBackgroundResource(R.color.color_primary);
-            mImageView.setLayoutParams(mLayoutParams);
-
-            mImageView.setImageUrl(links.get(i), SingletonVolley.getImageLoader());
-
-            final int finalI = i;
-            mImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(links.get(finalI)));
-                    startActivity(mIntent);
-                }
-            });
-
-            mLayoutContainer.addView(mImageView);
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
         }
 
-        mLayoutContainer.setVisibility(View.VISIBLE);
-    }
-
-    private void setArticleVideos(final ArrayList<String> links) {
-        LinearLayout mLayoutContainer = (LinearLayout) findViewById(R.id.ll_article_videos);
-
-        int px = Common.convertDpToPx(16, this);
-        LinearLayout.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        mLayoutParams.setMargins(px, px / 2, px, px / 2);
-
-        for (int i = 0; i < links.size(); i++) {
-
-            String video_id = links.get(i)
-                    .replace("https://www.youtube.com/embed/", "")
-                    .replace("?ecver=1", "");
-
-            TextView mVideoLinks = new TextView(this);
-            mVideoLinks.setId(links.size());
-            mVideoLinks.setText("Video #" + (i + 1));
-            mVideoLinks.setTextAppearance(this, android.R.style.TextAppearance_Material_Medium);
-            mVideoLinks.setPadding(px, px / 2, px, px / 2);
-
-            NetworkImageView mImageView = new NetworkImageView(this);
-            mImageView.setId(links.size());
-            mImageView.setAdjustViewBounds(true);
-            mImageView.setScaleType(NetworkImageView.ScaleType.CENTER_CROP);
-            mImageView.setPadding(0, 0, 0, 0);
-            mImageView.setBackgroundResource(R.color.color_primary);
-            mImageView.setLayoutParams(mLayoutParams);
-
-            mImageView.setImageUrl("https://i3.ytimg.com/vi/" + video_id + "/0.jpg", SingletonVolley.getImageLoader());
-
-            final int finalI = i;
-            mImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(links.get(finalI).replace("embed/", "watch?v=")));
-                    startActivity(mIntent);
-                }
-            });
-
-            mLayoutContainer.addView(mVideoLinks);
-            mLayoutContainer.addView(mImageView);
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
         }
 
-        mLayoutContainer.setVisibility(View.VISIBLE);
+        void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
 }

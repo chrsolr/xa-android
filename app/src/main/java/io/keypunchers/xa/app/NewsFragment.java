@@ -24,6 +24,7 @@ import io.keypunchers.xa.models.ArticleListItem;
 public class NewsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<ArticleListItem>>, AdapterView.OnItemClickListener {
     private ListView mLvContent;
     private NewsAdapter mAdapter;
+    private String TAG = NewsFragment.class.getSimpleName();
 
     public NewsFragment() {
     }
@@ -40,10 +41,17 @@ public class NewsFragment extends Fragment implements LoaderManager.LoaderCallba
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.ab_news_title);
 
+        setRetainInstance(true);
+
         mLvContent = (ListView) getActivity().findViewById(R.id.lv_news);
         mLvContent.setOnItemClickListener(this);
 
         getData(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     @Override
