@@ -58,7 +58,6 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
             String header_date = header_root.get(1).select(".newsNFO").text();
             String author_profile_url = header_root.get(1).select("a").first().attr("abs:href");
 
-
             Elements article_contents = body_root.children();
             Elements article_images = article_contents.select("img");
             Elements article_iframes = article_contents.select("iframe");
@@ -77,7 +76,6 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
 
             for (Element video : article_iframes) {
                 String src = video.attr("abs:src");
-                //String title = video.select("head title").first().text();
                 videos.add(src);
             }
 

@@ -20,22 +20,22 @@ import io.keypunchers.xa.R;
 import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.Article;
 
-public class ImageListFragment extends Fragment {
-    private final String TAG = ImageListFragment.class.getSimpleName();
+public class VideoListFragment extends Fragment {
+    private final String TAG = VideoListFragment.class.getSimpleName();
     private ArrayList<String> mData;
 
-    public ImageListFragment() {
+    public VideoListFragment() {
     }
 
     public static Fragment newInstance(ArrayList<String> data) {
-        ImageListFragment fragment = new ImageListFragment();
+        VideoListFragment fragment = new VideoListFragment();
         fragment.mData = data;
         return fragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_image_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_video_list, container, false);
 
         setRetainInstance(true);
 
@@ -53,8 +53,8 @@ public class ImageListFragment extends Fragment {
     }
 
     private void setupUI() {
-        ImageListAdapter mAdapter = new ImageListAdapter(getActivity(), mData);
-        ListView mLvContent = (ListView) getActivity().findViewById(R.id.lv_image_list);
+        VideoListAdapter mAdapter = new VideoListAdapter(getActivity(), mData);
+        ListView mLvContent = (ListView) getActivity().findViewById(R.id.lv_video_list);
         mLvContent.setAdapter(mAdapter);
     }
 
@@ -64,11 +64,11 @@ public class ImageListFragment extends Fragment {
         outState.putStringArrayList(TAG, mData);
     }
 
-    private class ImageListAdapter extends BaseAdapter {
+    private class VideoListAdapter extends BaseAdapter {
         private final Context mContext;
         private final ArrayList<String> mData;
 
-        ImageListAdapter(Context context, ArrayList<String> data) {
+        VideoListAdapter(Context context, ArrayList<String> data) {
             mContext = context;
             mData = data;
         }
@@ -94,23 +94,27 @@ public class ImageListFragment extends Fragment {
 
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.row_image_list, parent, false);
+                convertView = inflater.inflate(R.layout.row_video_list, parent, false);
 
                 viewHolder = new ViewHolder();
                 assert convertView != null;
 
-                viewHolder.mIvImage = (NetworkImageView) convertView.findViewById(R.id.iv_image_list);
+                viewHolder.mIvImage = (NetworkImageView) convertView.findViewById(R.id.iv_video_list);
 
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
-            viewHolder.mIvImage.setImageUrl(mData.get(position), SingletonVolley.getImageLoader());
+            String video_id = mData.get(position)
+                    .replace("https://www.youtube.com/embed/", "")
+                    .replace("?ecver=1", "");
+
+            viewHolder.mIvImage.setImageUrl("https://i3.ytimg.com/vi/" + video_id + "/0.jpg", SingletonVolley.getImageLoader());
             viewHolder.mIvImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mData.get(position)));
+                    Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mData.get(position).replace("embed/", "watch?v=")));
                     startActivity(mIntent);
                 }
             });

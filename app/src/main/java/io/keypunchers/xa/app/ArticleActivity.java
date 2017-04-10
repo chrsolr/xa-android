@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.fragments.ArticleFragment;
 import io.keypunchers.xa.fragments.ImageListFragment;
+import io.keypunchers.xa.fragments.VideoListFragment;
 import io.keypunchers.xa.loaders.ArticleLoader;
 import io.keypunchers.xa.models.Article;
 
@@ -29,7 +30,7 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
     private String BASE_URL;
     private int LOADER_ID;
     private Article mData;
-    private String TAG = ArticleActivity_Old.class.getSimpleName();
+    private String TAG = ArticleActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,9 +120,9 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new ArticleFragment().newInstance(mData), "Article");
-        adapter.addFragment(new ImageListFragment().newInstance(mData), "Images");
-        adapter.addFragment(new ArticleFragment().newInstance(mData), "Videos");
-        adapter.addFragment(new ArticleFragment().newInstance(mData), "Comments");
+        adapter.addFragment(new ImageListFragment().newInstance(mData.getImageUrls()), "Images");
+        adapter.addFragment(new VideoListFragment().newInstance(mData.getVideoUrls()), "Videos");
+//        adapter.addFragment(new ArticleFragment().newInstance(mData), "Comments");
         mViewPager.setAdapter(adapter);
     }
 
