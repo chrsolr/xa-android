@@ -30,6 +30,8 @@ import io.keypunchers.xa.models.ArticleListItem;
 
 public class ArticleListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<ArticleListItem>>, AdapterView.OnItemClickListener {
     private String BASE_URL;
+    private int COUNTER_PLUS;
+    private String AB_TITLE;
     private final String TAG = ArticleListFragment.class.getSimpleName();
     private int LOADER_ID;
     private ArrayList<ArticleListItem> mData;
@@ -47,14 +49,17 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.ab_news_title);
+
 
         setRetainInstance(true);
 
         LOADER_ID = getActivity().getResources().getInteger(R.integer.news_loader_id);
 
-        if (getArguments() != null && getArguments().containsKey("url")) {
+        if (getArguments() != null) {
             BASE_URL = getArguments().getString("url");
+            COUNTER_PLUS = getArguments().getInt("counter");
+            AB_TITLE = getArguments().getString("ab_title");
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(AB_TITLE);
         }
 
         if (savedInstanceState != null && savedInstanceState.containsKey(TAG)) {
@@ -72,7 +77,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public Loader<ArrayList<ArticleListItem>> onCreateLoader(int id, Bundle args) {
-        return new ArticleListLoader(getActivity(), BASE_URL, mData);
+        return new ArticleListLoader(getActivity(), BASE_URL, mData, COUNTER_PLUS);
     }
 
     @Override

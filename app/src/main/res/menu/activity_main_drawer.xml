@@ -5,6 +5,17 @@
             android:id="@+id/nav_news"
             android:icon="@drawable/ic_rss_feed_24dp"
             android:title="@string/menu_item_news" />
+
+        <item
+            android:id="@+id/nav_previews"
+            android:icon="@drawable/ic_receipt_24dp"
+            android:title="@string/menu_item_previews" />
+
+        <item
+            android:id="@+id/nav_interviews"
+            android:icon="@drawable/ic_grain_24dp"
+            android:title="@string/menu_item_interviews" />
+
         <item
             android:id="@+id/nav_games"
             android:icon="@drawable/ic_games_24dp"

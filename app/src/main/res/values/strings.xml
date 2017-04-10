@@ -22,9 +22,13 @@
     <string name="ab_news_title">News</string>
     <string name="ab_settings_title">Settings</string>
     <string name="ab_upcoming_games_title">Upcoming Games</string>
+    <string name="ab_previews_title">Previews</string>
     <string name="menu_item_open_in_browser">Open in Browser</string>
     <string name="menu_item_share">Share</string>
     <string name="ytp_api_key">AIzaSyCImy8dXg20m5hxdCBqCybZ4Q0KhRDc-Dg</string>
     <string name="ab_article">Article</string>
+    <string name="menu_item_previews">Previews</string>
+    <string name="ab_interviews_title">Interviews</string>
+    <string name="menu_item_interviews">Interviews</string>
 
 </resources>

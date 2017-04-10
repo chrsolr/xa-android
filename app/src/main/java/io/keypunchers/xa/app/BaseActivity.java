@@ -50,6 +50,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         Bundle bundle = new Bundle();
         bundle.putString("url", "http://www.xboxachievements.com/archive/gaming-news/1/");
+        bundle.putInt("counter", 3);
+        bundle.putString("ab_title", getResources().getString(R.string.ab_news_title));
 
         Fragment fragment = new ArticleListFragment();
         fragment.setArguments(bundle);
@@ -71,6 +73,22 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_news) {
             Bundle bundle = new Bundle();
             bundle.putString("url", "http://www.xboxachievements.com/archive/gaming-news/1/");
+            bundle.putInt("counter", 3);
+            bundle.putString("ab_title", getResources().getString(R.string.ab_news_title));
+            fragment = new ArticleListFragment();
+            fragment.setArguments(bundle);
+        } else if (id == R.id.nav_previews) {
+            Bundle bundle = new Bundle();
+            bundle.putString("url", "http://www.xboxachievements.com/news/previews/1/");
+            bundle.putInt("counter", 2);
+            bundle.putString("ab_title", getResources().getString(R.string.ab_previews_title));
+            fragment = new ArticleListFragment();
+            fragment.setArguments(bundle);
+        } else if (id == R.id.nav_interviews) {
+            Bundle bundle = new Bundle();
+            bundle.putString("url", "http://www.xboxachievements.com/news/interviews/1/");
+            bundle.putInt("counter", 2);
+            bundle.putString("ab_title", getResources().getString(R.string.ab_interviews_title));
             fragment = new ArticleListFragment();
             fragment.setArguments(bundle);
         } else if (id == R.id.nav_games) {

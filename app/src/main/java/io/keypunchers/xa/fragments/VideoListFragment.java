@@ -106,11 +106,15 @@ public class VideoListFragment extends Fragment {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
-            String video_id = mData.get(position)
-                    .substring(0, mData.get(position).indexOf("?"))
-                    .replace("https://www.youtube.com/embed/", "");
+            String videoUrl = mData.get(position);
 
-            viewHolder.mIvImage.setImageUrl("https://i3.ytimg.com/vi/" + video_id + "/0.jpg", SingletonVolley.getImageLoader());
+            if (videoUrl.contains("?")) {
+                videoUrl = videoUrl.substring(0, videoUrl.indexOf("?"));
+            }
+
+            String videoId = videoUrl.replace("https://www.youtube.com/embed/", "");
+
+            viewHolder.mIvImage.setImageUrl("https://i3.ytimg.com/vi/" + videoId + "/0.jpg", SingletonVolley.getImageLoader());
             viewHolder.mIvImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

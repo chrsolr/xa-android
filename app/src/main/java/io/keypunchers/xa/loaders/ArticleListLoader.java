@@ -17,14 +17,15 @@ import io.keypunchers.xa.models.Article;
 import io.keypunchers.xa.models.ArticleListItem;
 
 public class ArticleListLoader extends AsyncTaskLoader<ArrayList<ArticleListItem>> {
-    private final int COUNTER_PLUS = 3;
+    private final int COUNTER_PLUS;
     private final String BASE_URL;
     private ArrayList<ArticleListItem> mData;
 
-    public ArticleListLoader(Context context, String url, ArrayList<ArticleListItem> data) {
+    public ArticleListLoader(Context context, String url, ArrayList<ArticleListItem> data, int counter) {
         super(context);
         BASE_URL = url;
         mData = data;
+        COUNTER_PLUS = counter;
     }
 
     @Override
