@@ -12,36 +12,48 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.Serializable;
 import java.net.URL;
+import java.util.ArrayList;
 
-public class LatestScreenshotsLoader extends AsyncTaskLoader<JSONArray> {
+import io.keypunchers.xa.models.ArticleListItem;
+import io.keypunchers.xa.models.Screenshot;
+
+public class ScreenshotsLoader extends AsyncTaskLoader<ArrayList<Screenshot>> {
 
     private final Context mContext;
+    private final String BASE_URL;
+    private ArrayList<Screenshot> mData;
 
-    public LatestScreenshotsLoader(Context context) {
+    public ScreenshotsLoader(Context context, String url, ArrayList<Screenshot> data) {
         super(context);
         mContext = context;
+        BASE_URL = url;
+        mData = data;
     }
 
     @Override
     protected void onStartLoading() {
         super.onStartLoading();
-        forceLoad();
+
+        if (mData != null)
+            super.deliverResult(mData);
+        else
+            forceLoad();
     }
 
     @Override
-    public void deliverResult(JSONArray data) {
-        if (isStarted() && data != null) {
-            super.deliverResult(data);
+    public void deliverResult(ArrayList<Screenshot> data) {
+        mData = data;
+        if (isStarted() && mData != null) {
+            super.deliverResult(mData);
         }
     }
 
     @Override
-    public JSONArray loadInBackground() {
+    public ArrayList<Screenshot> loadInBackground() {
         try {
-            String BASE_URL = "http://www.xboxachievements.com/";
-
-            JSONArray list = new JSONArray();
+            ArrayList<Screenshot> items = new ArrayList<>();
 
             Document document = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
 
@@ -58,17 +70,17 @@ public class LatestScreenshotsLoader extends AsyncTaskLoader<JSONArray> {
 
                     image_url = image_url.replace("thu", "med").replaceAll("\\s", "%20");
 
-                    JSONObject json = new JSONObject();
-                    json.put("title", title);
-                    json.put("image_url", image_url);
-                    json.put("url", url);
-                    json.put("date", date);
+                    Screenshot obj = new Screenshot();
+                    obj.setTitle(title);
+                    obj.setSubtitle(date);
+                    obj.setImageUrl(image_url);
+                    obj.setGameUrl(url);
 
-                    list.put(json);
+                    items.add(obj);
                 }
             }
 
-            return list;
+            return items;
         } catch (Exception ex) {
             Log.e("Drawer Loader", ex.getMessage());
             Toast.makeText(mContext, ex.getMessage(), Toast.LENGTH_LONG).show();

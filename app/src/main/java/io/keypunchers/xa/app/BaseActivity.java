@@ -1,6 +1,5 @@
 package io.keypunchers.xa.app;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -20,100 +19,73 @@ import android.widget.Toast;
 import com.android.volley.toolbox.NetworkImageView;
 
 import io.keypunchers.xa.R;
-import io.keypunchers.xa.fragments.ArticleFragment;
 import io.keypunchers.xa.fragments.ArticleListFragment;
+import io.keypunchers.xa.fragments.ScreenshotsFragment;
 import io.keypunchers.xa.loaders.DrawerBannerLoader;
 import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.DrawerBanner;
 
-public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-        LoaderManager.LoaderCallbacks<DrawerBanner> {
-
+public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<DrawerBanner> {
+    private int mDrawerCurrentSelectedPosition = 0;
     private int LOADER_ID;
+    private Toolbar mToolbar;
+    private NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if(savedInstanceState != null) {
+            mDrawerCurrentSelectedPosition = savedInstanceState.getInt("current_selected_position");
+        }
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        Bundle bundle = new Bundle();
-        bundle.putString("url", "http://www.xboxachievements.com/archive/gaming-news/1/");
-        bundle.putInt("counter", 3);
-        bundle.putString("ab_title", getResources().getString(R.string.ab_news_title));
-
-        Fragment fragment = new ArticleListFragment();
-        fragment.setArguments(bundle);
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().replace(R.id.main_layout, fragment).commit();
+        setupUI();
 
         getData(savedInstanceState);
-
-        navigationView.setCheckedItem(R.id.nav_news);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        Fragment fragment = null;
 
         int id = item.getItemId();
 
-        if (id == R.id.nav_news) {
-            Bundle bundle = new Bundle();
-            bundle.putString("url", "http://www.xboxachievements.com/archive/gaming-news/1/");
-            bundle.putInt("counter", 3);
-            bundle.putString("ab_title", getResources().getString(R.string.ab_news_title));
-            fragment = new ArticleListFragment();
-            fragment.setArguments(bundle);
-        } else if (id == R.id.nav_previews) {
-            Bundle bundle = new Bundle();
-            bundle.putString("url", "http://www.xboxachievements.com/news/previews/1/");
-            bundle.putInt("counter", 2);
-            bundle.putString("ab_title", getResources().getString(R.string.ab_previews_title));
-            fragment = new ArticleListFragment();
-            fragment.setArguments(bundle);
-        } else if (id == R.id.nav_interviews) {
-            Bundle bundle = new Bundle();
-            bundle.putString("url", "http://www.xboxachievements.com/news/interviews/1/");
-            bundle.putInt("counter", 2);
-            bundle.putString("ab_title", getResources().getString(R.string.ab_interviews_title));
-            fragment = new ArticleListFragment();
-            fragment.setArguments(bundle);
-        } else if (id == R.id.nav_games) {
-            fragment = new GamesFragment();
-        } else if (id == R.id.nav_latest_achievements) {
-            fragment = new LatestAchievementFragment();
-        } else if (id == R.id.nav_screenshots) {
-            fragment = new LatestScreenshotsFragment();
-        } else if (id == R.id.nav_upcoming_games) {
-            fragment = new UpcomingGamesFragment();
-        } else if (id == R.id.nav_setting) {
-            fragment = new SettingsFragment();
-        } else if (id == R.id.nav_about) {
-            fragment = new AboutFragment();
+        mNavigationView.setCheckedItem(id);
+
+        switch (id) {
+            case R.id.nav_news:
+                selectDrawerItem(0);
+                break;
+            case R.id.nav_previews:
+                selectDrawerItem(1);
+                break;
+            case R.id.nav_interviews:
+                selectDrawerItem(2);
+                break;
+            case R.id.nav_games:
+                selectDrawerItem(3);
+                break;
+            case R.id.nav_latest_achievements:
+                selectDrawerItem(4);
+                break;
+            case R.id.nav_screenshots:
+                selectDrawerItem(5);
+                break;
+            case R.id.nav_upcoming_games:
+                selectDrawerItem(6);
+                break;
+            case R.id.nav_setting:
+                selectDrawerItem(7);
+                break;
+            case R.id.nav_about:
+                selectDrawerItem(8);
+                break;
         }
 
-        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_layout, fragment, fragment.getClass().getSimpleName())
-                .commit();
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -164,6 +136,25 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         getSupportLoaderManager().destroyLoader(LOADER_ID);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("current_selected_position", mDrawerCurrentSelectedPosition);
+    }
+
+    private void setupUI() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
+
+        selectDrawerItem(mDrawerCurrentSelectedPosition);
+    }
+
     private void getData(Bundle savedInstanceState) {
         LOADER_ID = getResources().getInteger(R.integer.navigation_drawer_loader_id);
 
@@ -172,5 +163,56 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         } else {
             getSupportLoaderManager().restartLoader(LOADER_ID, savedInstanceState, BaseActivity.this);
         }
+    }
+
+    private void selectDrawerItem(int position) {
+        Fragment fragment = null;
+        Bundle bundle = new Bundle();
+
+        if (position == 0) {
+            bundle.putString("url", "http://www.xboxachievements.com/archive/gaming-news/1/");
+            bundle.putInt("counter", 3);
+            bundle.putString("ab_title", getResources().getString(R.string.ab_news_title));
+
+            fragment = new ArticleListFragment();
+            fragment.setArguments(bundle);
+        }
+
+        if (position == 1) {
+            bundle.putString("url", "http://www.xboxachievements.com/news/previews/1/");
+            bundle.putInt("counter", 2);
+            bundle.putString("ab_title", getResources().getString(R.string.ab_previews_title));
+
+            fragment = new ArticleListFragment();
+            fragment.setArguments(bundle);
+        }
+
+        if (position == 2) {
+            bundle.putString("url", "http://www.xboxachievements.com/news/interviews/1/");
+            bundle.putInt("counter", 2);
+            bundle.putString("ab_title", getResources().getString(R.string.ab_interviews_title));
+
+            fragment = new ArticleListFragment();
+            fragment.setArguments(bundle);
+        }
+
+        if (position == 5) {
+            bundle.putString("url", "http://www.xboxachievements.com/");
+            bundle.putString("ab_title", getResources().getString(R.string.ab_screenshots_title));
+
+            fragment = new ScreenshotsFragment();
+            fragment.setArguments(bundle);
+        }
+
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_layout, fragment, fragment.getClass().getSimpleName())
+                .commit();
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        mDrawerCurrentSelectedPosition = position;
     }
 }

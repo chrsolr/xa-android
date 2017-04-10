@@ -2,7 +2,6 @@ package io.keypunchers.xa.fragments;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,29 +18,26 @@ import android.widget.TextView;
 import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.keypunchers.xa.R;
-import io.keypunchers.xa.app.ArticleActivity;
-import io.keypunchers.xa.loaders.ArticleListLoader;
+import io.keypunchers.xa.loaders.ScreenshotsLoader;
 import io.keypunchers.xa.misc.SingletonVolley;
-import io.keypunchers.xa.models.ArticleListItem;
+import io.keypunchers.xa.models.Screenshot;
 
-public class ArticleListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<ArticleListItem>>, AdapterView.OnItemClickListener {
-    private String BASE_URL;
-    private int COUNTER_PLUS;
-    private String AB_TITLE;
-    private final String TAG = ArticleListFragment.class.getSimpleName();
+public class ScreenshotsFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<Screenshot>> {
+    private ListView mLvContent;
+    private ArrayList<Screenshot> mData;
+    private String TAG = ScreenshotsFragment.class.getSimpleName();
     private int LOADER_ID;
-    private ArrayList<ArticleListItem> mData;
-    private NewsAdapter mAdapter;
+    private String BASE_URL;
+    private String AB_TITLE;
 
-    public ArticleListFragment() {
+    public ScreenshotsFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_article_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_screenshots, container, false);
 
         setRetainInstance(true);
 
@@ -57,11 +52,10 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        LOADER_ID = getActivity().getResources().getInteger(R.integer.news_loader_id);
+        LOADER_ID = getActivity().getResources().getInteger(R.integer.latest_screenshots_loader_id);
 
         if (getArguments() != null) {
             BASE_URL = getArguments().getString("url");
-            COUNTER_PLUS = getArguments().getInt("counter");
             AB_TITLE = getArguments().getString("ab_title");
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(AB_TITLE);
         }
@@ -70,25 +64,30 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(TAG, mData);
+    public Loader<ArrayList<Screenshot>> onCreateLoader(int id, Bundle args) {
+        return new ScreenshotsLoader(getActivity(), BASE_URL, mData);
     }
 
     @Override
-    public Loader<ArrayList<ArticleListItem>> onCreateLoader(int id, Bundle args) {
-        return new ArticleListLoader(getActivity(), BASE_URL, mData, COUNTER_PLUS);
-    }
-
-    @Override
-    public void onLoadFinished(Loader<ArrayList<ArticleListItem>> loader, ArrayList<ArticleListItem> data) {
+    public void onLoadFinished(Loader<ArrayList<Screenshot>> loader, ArrayList<Screenshot> data) {
         mData = data;
         setupUI();
     }
 
     @Override
-    public void onLoaderReset(Loader<ArrayList<ArticleListItem>> loader) {
+    public void onLoaderReset(Loader<ArrayList<Screenshot>> loader) {
         //getLoaderManager().destroyLoader(LOADER_ID);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(TAG, mData);
+    }
+
+    private void setupUI() {
+        mLvContent = (ListView) getActivity().findViewById(R.id.lv_latest_screenshot);
+        mLvContent.setAdapter(new ScreenshotsAdapter(getActivity(), mData));
     }
 
     private void getData(Bundle savedInstanceState) {
@@ -100,25 +99,11 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
         }
     }
 
-    private void setupUI() {
-        ListView mLvContent = (ListView) getActivity().findViewById(R.id.lv_news);
-        mLvContent.setOnItemClickListener(this);
-
-        mAdapter = new NewsAdapter(getActivity(), mData);
-        mLvContent.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String url = mAdapter.getItem(position).getPageUrl();
-        startActivity(new Intent(getActivity(), ArticleActivity.class).putExtra("url", url));
-    }
-
-    private class NewsAdapter extends BaseAdapter {
+    private class ScreenshotsAdapter extends BaseAdapter {
         private Context mContext;
-        private List<ArticleListItem> mData;
+        private ArrayList<Screenshot> mData;
 
-        NewsAdapter(Context context, List<ArticleListItem> data) {
+        ScreenshotsAdapter(Context context, ArrayList<Screenshot> data) {
             mContext = context;
             mData = data;
         }
@@ -129,7 +114,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
         }
 
         @Override
-        public ArticleListItem getItem(int position) {
+        public Screenshot getItem(int position) {
             return mData.get(position);
         }
 
@@ -144,25 +129,24 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.row_news, parent, false);
+                convertView = inflater.inflate(R.layout.row_screenshots, parent, false);
 
                 viewHolder = new ViewHolder();
                 assert convertView != null;
-
-                viewHolder.mTvTitle = (TextView) convertView.findViewById(R.id.tv_news_title);
-                viewHolder.mTvSubTitle = (TextView) convertView.findViewById(R.id.tv_news_subtitle);
-                viewHolder.mIvImage = (NetworkImageView) convertView.findViewById(R.id.iv_news_image);
+                viewHolder.mTvTitle = (TextView) convertView.findViewById(R.id.tv_latest_screenshot_title);
+                viewHolder.mTvSubTitle = (TextView) convertView.findViewById(R.id.tv_latest_screenshot_subtitle);
+                viewHolder.mIvScreenshot = (NetworkImageView) convertView.findViewById(R.id.iv_latest_screenshot_image);
 
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
-            ArticleListItem item = mData.get(position);
+            Screenshot screenshot = mData.get(position);
 
-            viewHolder.mTvTitle.setText(item.getTitle());
-            viewHolder.mTvSubTitle.setText(item.getDesc());
-            viewHolder.mIvImage.setImageUrl(item.getImageUrl(), SingletonVolley.getImageLoader());
+            viewHolder.mTvTitle.setText(screenshot.getTitle());
+            viewHolder.mTvSubTitle.setText(screenshot.getSubtitle());
+            viewHolder.mIvScreenshot.setImageUrl(screenshot.getImageUrl(), SingletonVolley.getImageLoader());
 
             return convertView;
         }
@@ -170,7 +154,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
         private class ViewHolder {
             TextView mTvTitle;
             TextView mTvSubTitle;
-            NetworkImageView mIvImage;
+            NetworkImageView mIvScreenshot;
         }
     }
 }

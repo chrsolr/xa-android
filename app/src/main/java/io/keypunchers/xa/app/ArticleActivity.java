@@ -120,9 +120,13 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new ArticleFragment().newInstance(mData), "Article");
-        adapter.addFragment(new ImageListFragment().newInstance(mData.getImageUrls()), "Images");
-        adapter.addFragment(new VideoListFragment().newInstance(mData.getVideoUrls()), "Videos");
-//        adapter.addFragment(new ArticleFragment().newInstance(mData), "Comments");
+
+        if (mData.getImageUrls().size() > 0)
+            adapter.addFragment(new ImageListFragment().newInstance(mData.getImageUrls()), "Images");
+
+        if (mData.getVideoUrls().size() > 0)
+            adapter.addFragment(new VideoListFragment().newInstance(mData.getVideoUrls()), "Videos");
+
         mViewPager.setAdapter(adapter);
     }
 

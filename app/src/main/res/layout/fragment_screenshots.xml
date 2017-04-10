@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="io.keypunchers.xa.app.LatestScreenshotsFragment">
+    tools:context="io.keypunchers.xa.fragments.ScreenshotsFragment">
 
     <ListView
         android:id="@+id/lv_latest_screenshot"
@@ -13,7 +13,11 @@
         android:clipToPadding="false"
         android:divider="@color/color_light_gray"
         android:dividerHeight="1dp"
+        android:paddingLeft="@dimen/padding_level_2"
+        android:paddingRight="@dimen/padding_level_2"
         android:gravity="center"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
         android:scrollbars="none" />
 
 </LinearLayout>
