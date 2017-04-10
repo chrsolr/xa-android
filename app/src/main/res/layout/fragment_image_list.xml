@@ -12,6 +12,8 @@
         android:clipToPadding="false"
         android:divider="@color/color_light_gray"
         android:dividerHeight="1dp"
+        android:paddingLeft="@dimen/padding_level_2"
+        android:paddingRight="@dimen/padding_level_2"
         android:gravity="center"
         android:scrollbars="none" />
 

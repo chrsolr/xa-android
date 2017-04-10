@@ -40,7 +40,7 @@ public class VideoListFragment extends Fragment {
         setRetainInstance(true);
 
         if (savedInstanceState != null && savedInstanceState.containsKey(TAG)) {
-            mData = savedInstanceState.getParcelable(TAG);
+            mData = savedInstanceState.getStringArrayList(TAG);
         }
 
         return view;
