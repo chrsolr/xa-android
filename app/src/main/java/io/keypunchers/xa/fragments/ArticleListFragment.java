@@ -1,6 +1,7 @@
 package io.keypunchers.xa.fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,18 +13,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.keypunchers.xa.R;
-import io.keypunchers.xa.adapters.NewsAdapter;
 import io.keypunchers.xa.app.ArticleActivity;
 import io.keypunchers.xa.loaders.ArticleListLoader;
+import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.ArticleListItem;
 
 public class ArticleListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<ArticleListItem>>, AdapterView.OnItemClickListener {
-    private final String BASE_URL = "http://www.xboxachievements.com/archive/gaming-news/1/";
+    private String BASE_URL;
     private final String TAG = ArticleListFragment.class.getSimpleName();
     private int LOADER_ID;
     private ArrayList<ArticleListItem> mData;
@@ -46,6 +52,10 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
         setRetainInstance(true);
 
         LOADER_ID = getActivity().getResources().getInteger(R.integer.news_loader_id);
+
+        if (getArguments() != null && getArguments().containsKey("url")) {
+            BASE_URL = getArguments().getString("url");
+        }
 
         if (savedInstanceState != null && savedInstanceState.containsKey(TAG)) {
             mData = savedInstanceState.getParcelableArrayList(TAG);
@@ -97,5 +107,65 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         String url = mAdapter.getItem(position).getPageUrl();
         startActivity(new Intent(getActivity(), ArticleActivity.class).putExtra("url", url));
+    }
+
+    private class NewsAdapter extends BaseAdapter {
+        private Context mContext;
+        private List<ArticleListItem> mData;
+
+        NewsAdapter(Context context, List<ArticleListItem> data) {
+            mContext = context;
+            mData = data;
+        }
+
+        @Override
+        public int getCount() {
+            return mData.size();
+        }
+
+        @Override
+        public ArticleListItem getItem(int position) {
+            return mData.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder viewHolder;
+
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.row_news, parent, false);
+
+                viewHolder = new ViewHolder();
+                assert convertView != null;
+
+                viewHolder.mTvTitle = (TextView) convertView.findViewById(R.id.tv_news_title);
+                viewHolder.mTvSubTitle = (TextView) convertView.findViewById(R.id.tv_news_subtitle);
+                viewHolder.mIvImage = (NetworkImageView) convertView.findViewById(R.id.iv_news_image);
+
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+
+            ArticleListItem item = mData.get(position);
+
+            viewHolder.mTvTitle.setText(item.getTitle());
+            viewHolder.mTvSubTitle.setText(item.getDesc());
+            viewHolder.mIvImage.setImageUrl(item.getImageUrl(), SingletonVolley.getImageLoader());
+
+            return convertView;
+        }
+
+        private class ViewHolder {
+            TextView mTvTitle;
+            TextView mTvSubTitle;
+            NetworkImageView mIvImage;
+        }
     }
 }

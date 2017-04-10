@@ -16,6 +16,8 @@
         android:gravity="center"
         android:paddingLeft="@dimen/padding_level_2"
         android:paddingRight="@dimen/padding_level_2"
+        android:headerDividersEnabled="false"
+        android:footerDividersEnabled="false"
         android:scrollbars="none" />
 
 </LinearLayout>

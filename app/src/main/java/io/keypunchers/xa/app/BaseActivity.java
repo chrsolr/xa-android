@@ -1,5 +1,6 @@
 package io.keypunchers.xa.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.android.volley.toolbox.NetworkImageView;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.fragments.ArticleFragment;
 import io.keypunchers.xa.fragments.ArticleListFragment;
 import io.keypunchers.xa.loaders.DrawerBannerLoader;
 import io.keypunchers.xa.misc.SingletonVolley;
@@ -46,8 +48,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        Bundle bundle = new Bundle();
+        bundle.putString("url", "http://www.xboxachievements.com/archive/gaming-news/1/");
+
+        Fragment fragment = new ArticleListFragment();
+        fragment.setArguments(bundle);
         FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().replace(R.id.main_layout, new ArticleListFragment()).commit();
+        fm.beginTransaction().replace(R.id.main_layout, fragment).commit();
 
         getData(savedInstanceState);
 
@@ -62,7 +69,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_news) {
+            Bundle bundle = new Bundle();
+            bundle.putString("url", "http://www.xboxachievements.com/archive/gaming-news/1/");
             fragment = new ArticleListFragment();
+            fragment.setArguments(bundle);
         } else if (id == R.id.nav_games) {
             fragment = new GamesFragment();
         } else if (id == R.id.nav_latest_achievements) {
