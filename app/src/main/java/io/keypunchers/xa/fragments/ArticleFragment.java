@@ -71,7 +71,8 @@ public class ArticleFragment extends Fragment {
                 @Override
                 public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
                     if (tag.equals("ul") && !opening) output.append("\n");
-                    if (tag.equals("li") && opening) output.append("\n\t•\t\t");
+                    if (tag.equals("li") && opening) output.append("\n\t•\t");
+                    if (tag.equals("blockquote")) output.append("\t\t");
                 }
             });
         } else {
@@ -79,7 +80,8 @@ public class ArticleFragment extends Fragment {
                 @Override
                 public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
                     if (tag.equals("ul") && !opening) output.append("\n");
-                    if (tag.equals("li") && opening) output.append("\n\t•\t\t");
+                    if (tag.equals("li") && opening) output.append("\n\t•\t");
+                    if (tag.equals("blockquote")) output.append("\n\t\t");
                 }
             });
         }

@@ -13,7 +13,6 @@
         android:divider="@color/color_light_gray"
         android:dividerHeight="1dp"
         android:gravity="center"
-        android:paddingTop="@dimen/padding_level_2"
         android:scrollbars="none" />
 
 </FrameLayout>

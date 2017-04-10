@@ -2,30 +2,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/padding_level_2">
+    tools:context="io.keypunchers.xa.fragments.ArticleFragment">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:orientation="vertical"
-
-        android:scrollbars="none"
-        tools:context="io.keypunchers.xa.fragments.ArticleFragment">
+        android:padding="@dimen/padding_level_2"
+        android:scrollbars="none">
 
         <LinearLayout
             android:id="@+id/ll_article"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/padding_level_3"
-            android:paddingTop="@dimen/padding_level_2">
+            android:orientation="vertical" >
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/padding_level_2"
-                android:paddingRight="@dimen/padding_level_2">
+                android:layout_height="wrap_content">
 
                 <com.android.volley.toolbox.NetworkImageView
                     android:id="@+id/iv_article_author_avatar"
@@ -66,11 +61,8 @@
                 android:id="@+id/tv_article_body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_level_2"
-                android:layout_marginRight="@dimen/margin_level_2"
                 android:linksClickable="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
-
 
         </LinearLayout>
     </ScrollView>
