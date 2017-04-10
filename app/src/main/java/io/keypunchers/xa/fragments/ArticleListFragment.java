@@ -48,7 +48,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
         LOADER_ID = getActivity().getResources().getInteger(R.integer.news_loader_id);
 
         if (savedInstanceState != null && savedInstanceState.containsKey(TAG)) {
-            mData = savedInstanceState.getParcelable(TAG);
+            mData = savedInstanceState.getParcelableArrayList(TAG);
         }
 
         getData(savedInstanceState);
@@ -78,7 +78,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
     private void getData(Bundle savedInstanceState) {
         if (savedInstanceState != null && savedInstanceState.containsKey(TAG)) {
-            mData = savedInstanceState.getParcelable(TAG);
+            mData = savedInstanceState.getParcelableArrayList(TAG);
             setupUI();
         } else {
             getActivity().getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
