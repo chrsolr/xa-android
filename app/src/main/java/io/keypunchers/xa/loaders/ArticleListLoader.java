@@ -13,36 +13,42 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.keypunchers.xa.models.Article;
 import io.keypunchers.xa.models.ArticleListItem;
 
-public class NewsLoader extends AsyncTaskLoader<List<ArticleListItem>> {
-    private final Context mContext;
+public class ArticleListLoader extends AsyncTaskLoader<ArrayList<ArticleListItem>> {
     private final int COUNTER_PLUS = 3;
+    private final String BASE_URL;
+    private ArrayList<ArticleListItem> mData;
 
-    public NewsLoader(Context context) {
+    public ArticleListLoader(Context context, String url, ArrayList<ArticleListItem> data) {
         super(context);
-        mContext = context;
+        BASE_URL = url;
+        mData = data;
     }
 
     @Override
     protected void onStartLoading() {
         super.onStartLoading();
-        forceLoad();
+
+        if (mData != null)
+            super.deliverResult(mData);
+        else
+            forceLoad();
     }
 
     @Override
-    public void deliverResult(List<ArticleListItem> data) {
-        if (isStarted() && data != null) {
-            super.deliverResult(data);
+    public void deliverResult(ArrayList<ArticleListItem> data) {
+        mData = data;
+        if (isStarted() && mData != null) {
+            super.deliverResult(mData);
         }
     }
 
     @Override
-    public List<ArticleListItem> loadInBackground() {
+    public ArrayList<ArticleListItem> loadInBackground() {
         try {
-            String BASE_URL = "http://www.xboxachievements.com/archive/gaming-news/1/";
-
-            List<ArticleListItem> items = new ArrayList<>();
+            ArrayList<ArticleListItem> items = new ArrayList<>();
 
             Document document = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
 
@@ -54,14 +60,12 @@ public class NewsLoader extends AsyncTaskLoader<List<ArticleListItem>> {
                 int offset_counter = 1;
 
                 for(int i = 0; i < size; i++) {
-                    // extract element details
                     String image_url = root.select("td[valign=top] a img").get(i).attr("abs:src");
                     String title = root.getElementsByClass("newsTitle").get(i).text();
                     String author = root.getElementsByClass("newsNFO").get(i).text();
                     String desc = root.select("td").get(offset_counter).select("div").get(2).text();
                     String page_url = root.getElementsByClass("newsTitle").get(i).select("a.linkB").attr("abs:href");
 
-                    // increase counters
                     offset_counter += COUNTER_PLUS;
 
                     ArticleListItem item = new ArticleListItem();
@@ -78,8 +82,8 @@ public class NewsLoader extends AsyncTaskLoader<List<ArticleListItem>> {
             return items;
 
         } catch (Exception ex){
-            Log.e("News Loader", ex.getMessage());
-            Toast.makeText(mContext, ex.getMessage(), Toast.LENGTH_LONG).show();
+            Log.e("Article Loader", ex.getMessage());
+            Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
         }
         return null;
     }

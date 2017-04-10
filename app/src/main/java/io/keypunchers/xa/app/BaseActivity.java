@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.android.volley.toolbox.NetworkImageView;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.fragments.ArticleListFragment;
 import io.keypunchers.xa.loaders.DrawerBannerLoader;
 import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.DrawerBanner;
@@ -46,7 +47,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().replace(R.id.main_layout, new NewsFragment()).commit();
+        fm.beginTransaction().replace(R.id.main_layout, new ArticleListFragment()).commit();
 
         getData(savedInstanceState);
 
@@ -61,7 +62,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_news) {
-            fragment = new NewsFragment();
+            fragment = new ArticleListFragment();
         } else if (id == R.id.nav_games) {
             fragment = new GamesFragment();
         } else if (id == R.id.nav_latest_achievements) {

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="io.keypunchers.xa.app.NewsFragment">
+    tools:context="io.keypunchers.xa.fragments.ArticleListFragment">
 
     <ListView
         android:id="@+id/lv_news"
