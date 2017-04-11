@@ -1,6 +1,7 @@
-package io.keypunchers.xa.app;
+package io.keypunchers.xa.fragments;
 
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import io.keypunchers.xa.R;
 
@@ -32,5 +34,18 @@ public class AboutFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.ab_about_title);
+
+        setupUI();
+    }
+
+    private void setupUI() {
+        try {
+            String app_version = getActivity().getPackageManager()
+                    .getPackageInfo(getActivity().getPackageName(), 0).versionName;
+
+            ((TextView) getActivity().findViewById(R.id.tv_about_version)).setText(app_version);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

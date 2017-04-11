@@ -4,9 +4,7 @@ package io.keypunchers.xa.loaders;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
-import android.widget.Toast;
 
-import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -54,7 +52,6 @@ public class DrawerBannerLoader extends AsyncTaskLoader<DrawerBanner> {
             return banner;
         } catch (Exception ex) {
             Log.e("Drawer Loader", ex.getMessage());
-            Toast.makeText(mContext, ex.getMessage(), Toast.LENGTH_LONG).show();
             return null;
         }
     }

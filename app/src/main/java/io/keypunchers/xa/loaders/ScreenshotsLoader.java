@@ -3,20 +3,15 @@ package io.keypunchers.xa.loaders;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
-import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 
-import io.keypunchers.xa.models.ArticleListItem;
 import io.keypunchers.xa.models.Screenshot;
 
 public class ScreenshotsLoader extends AsyncTaskLoader<ArrayList<Screenshot>> {
@@ -62,7 +57,7 @@ public class ScreenshotsLoader extends AsyncTaskLoader<ArrayList<Screenshot>> {
             if (!root.toString().equals("")) {
                 Elements elements = root.getElementsByTag("td");
 
-                for(Element el : elements) {
+                for (Element el : elements) {
                     String title = el.select("a b").first().text();
                     String image_url = el.select("a img").first().attr("abs:src");
                     String url = el.select("a").first().attr("abs:href");
@@ -83,9 +78,8 @@ public class ScreenshotsLoader extends AsyncTaskLoader<ArrayList<Screenshot>> {
             return items;
         } catch (Exception ex) {
             Log.e("Drawer Loader", ex.getMessage());
-            Toast.makeText(mContext, ex.getMessage(), Toast.LENGTH_LONG).show();
+            return null;
         }
 
-        return null;
     }
 }

@@ -3,7 +3,6 @@ package io.keypunchers.xa.loaders;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,9 +10,7 @@ import org.jsoup.nodes.Element;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
-import io.keypunchers.xa.models.Article;
 import io.keypunchers.xa.models.ArticleListItem;
 
 public class ArticleListLoader extends AsyncTaskLoader<ArrayList<ArticleListItem>> {
@@ -60,7 +57,7 @@ public class ArticleListLoader extends AsyncTaskLoader<ArrayList<ArticleListItem
                 int size = 25;
                 int offset_counter = 1;
 
-                for(int i = 0; i < size; i++) {
+                for (int i = 0; i < size; i++) {
                     String image_url = root.select("td[valign=top] a img").get(i).attr("abs:src");
                     String title = root.getElementsByClass("newsTitle").get(i).text();
                     String author = root.getElementsByClass("newsNFO").get(i).text();
@@ -82,10 +79,9 @@ public class ArticleListLoader extends AsyncTaskLoader<ArrayList<ArticleListItem
 
             return items;
 
-        } catch (Exception ex){
+        } catch (Exception ex) {
             Log.e("Article Loader", ex.getMessage());
-            Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
+            return null;
         }
-        return null;
     }
 }

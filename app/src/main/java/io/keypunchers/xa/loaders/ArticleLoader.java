@@ -3,7 +3,6 @@ package io.keypunchers.xa.loaders;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -97,7 +96,7 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
 
                     image_url = image_url.replaceAll(" ", "%20");
 
-                    Element text_root = comments_rows.get(i+1).select("td").first();
+                    Element text_root = comments_rows.get(i + 1).select("td").first();
 
                     if (text_root.textNodes().size() > 0) {
                         for (int j = 0; j < text_root.textNodes().size(); j++) {
@@ -135,8 +134,7 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
             return article;
         } catch (Exception ex) {
             Log.e("ArticleListItem Loader", ex.getMessage());
-            Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
+            return null;
         }
-        return null;
     }
 }

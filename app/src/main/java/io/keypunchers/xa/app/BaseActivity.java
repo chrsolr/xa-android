@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.android.volley.toolbox.NetworkImageView;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.fragments.AboutFragment;
 import io.keypunchers.xa.fragments.ArticleListFragment;
 import io.keypunchers.xa.fragments.ScreenshotsFragment;
 import io.keypunchers.xa.loaders.DrawerBannerLoader;
@@ -201,6 +202,11 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             bundle.putString("ab_title", getResources().getString(R.string.ab_screenshots_title));
 
             fragment = new ScreenshotsFragment();
+            fragment.setArguments(bundle);
+        }
+
+        if (position == 8) {
+            fragment = new AboutFragment();
             fragment.setArguments(bundle);
         }
 
