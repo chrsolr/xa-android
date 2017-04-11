@@ -17,6 +17,8 @@
         android:paddingRight="@dimen/padding_level_2"
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
+        android:listSelector="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
         android:scrollbars="none" />
 
 </FrameLayout>

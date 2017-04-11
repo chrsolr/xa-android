@@ -104,7 +104,7 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
                             text += text_root.textNodes().get(j).text();
 
                             if (j != (text_root.textNodes().size() - 1)) {
-                                text += "\n\n";
+                                text += "\n";
                             }
                         }
                     }

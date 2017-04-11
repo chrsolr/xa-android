@@ -18,6 +18,8 @@
         android:gravity="center"
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
+        android:listSelector="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
         android:scrollbars="none" />
 
 </LinearLayout>
