@@ -144,7 +144,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.row_news, parent, false);
+                convertView = inflater.inflate(R.layout.row_article_list, parent, false);
 
                 viewHolder = new ViewHolder();
                 assert convertView != null;

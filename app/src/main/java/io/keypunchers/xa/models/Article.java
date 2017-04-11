@@ -13,6 +13,7 @@ public class Article implements Parcelable {
     private String bodyText;
     private ArrayList<String> imageUrls;
     private ArrayList<String> videoUrls;
+    private ArrayList<Comment> comments;
 
     public Article() {
 
@@ -26,6 +27,7 @@ public class Article implements Parcelable {
         bodyText = in.readString();
         imageUrls = in.readArrayList(null);
         videoUrls = in.readArrayList(null);
+        comments = in.readArrayList(null);
     }
 
     public static final Creator<Article> CREATOR = new Creator<Article>() {
@@ -54,6 +56,7 @@ public class Article implements Parcelable {
         dest.writeString(bodyText);
         dest.writeStringList(imageUrls);
         dest.writeStringList(videoUrls);
+        dest.writeTypedList(comments);
     }
 
     public String getAuthorProfileUrl() {
@@ -110,5 +113,13 @@ public class Article implements Parcelable {
 
     public void setBodyText(String bodyText) {
         this.bodyText = bodyText;
+    }
+
+    public ArrayList<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(ArrayList<Comment> comments) {
+        this.comments = comments;
     }
 }

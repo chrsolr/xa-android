@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.fragments.ArticleFragment;
+import io.keypunchers.xa.fragments.CommentListFragment;
 import io.keypunchers.xa.fragments.ImageListFragment;
 import io.keypunchers.xa.fragments.VideoListFragment;
 import io.keypunchers.xa.loaders.ArticleLoader;
@@ -126,6 +127,9 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
 
         if (mData.getVideoUrls().size() > 0)
             adapter.addFragment(new VideoListFragment().newInstance(mData.getVideoUrls()), "Videos");
+
+        if (mData.getComments().size() > 0)
+            adapter.addFragment(new CommentListFragment().newInstance(mData.getComments()), "Comments");
 
         mViewPager.setAdapter(adapter);
     }
