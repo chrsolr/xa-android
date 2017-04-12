@@ -54,6 +54,7 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
         if (getArguments() != null) {
             BASE_URL = getArguments().getString("url");
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getArguments().getString("ab_title"));
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setElevation(0);
         }
 
         mViewPager = (ViewPager) view.findViewById(R.id.vp_upcoming_games);
