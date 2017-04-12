@@ -1,6 +1,8 @@
 package io.keypunchers.xa.app;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -27,10 +30,14 @@ import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.DrawerBanner;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<DrawerBanner> {
+    private final String DRAWER_LEARNED_TAG = "DRAWER_LEARNED";
     private int mDrawerCurrentSelectedPosition = 0;
     private int LOADER_ID;
+    private boolean mIsDrawerLearned;
     private Toolbar mToolbar;
     private NavigationView mNavigationView;
+    private DrawerLayout mDrawer;
+    private SharedPreferences mPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +46,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        mIsDrawerLearned = mPrefs.getBoolean(DRAWER_LEARNED_TAG, false);
 
         if(savedInstanceState != null) {
             mDrawerCurrentSelectedPosition = savedInstanceState.getInt("current_selected_position");
@@ -144,10 +154,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setupUI() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -217,8 +227,16 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 .replace(R.id.main_layout, fragment, fragment.getClass().getSimpleName())
                 .commit();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        if (mIsDrawerLearned) {
+            mDrawer.closeDrawer(GravityCompat.START);
+        }
+
+        if (!mIsDrawerLearned){
+            mDrawer.openDrawer(GravityCompat.START);
+            mIsDrawerLearned = true;
+            mPrefs.edit().putBoolean(DRAWER_LEARNED_TAG, true).apply();
+        }
+
         mDrawerCurrentSelectedPosition = position;
     }
 }
