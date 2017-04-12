@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <integer name="navigation_drawer_loader_id">1</integer>
+    <integer name="latest_screenshots_loader_id">2</integer>
+    <integer name="news_loader_id">3</integer>
     <integer name="article_loader_id">4</integer>
+    <integer name="upcoming_games_loader_id">5</integer>
 </resources>

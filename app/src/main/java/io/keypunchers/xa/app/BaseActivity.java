@@ -1,5 +1,6 @@
 package io.keypunchers.xa.app;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -13,7 +14,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -50,7 +50,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         mIsDrawerLearned = mPrefs.getBoolean(DRAWER_LEARNED_TAG, false);
 
-        if(savedInstanceState != null) {
+        if (savedInstanceState != null) {
             mDrawerCurrentSelectedPosition = savedInstanceState.getInt("current_selected_position");
         }
 
@@ -215,23 +215,29 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             fragment.setArguments(bundle);
         }
 
+        if (position == 6) {
+            startActivity(new Intent(this, UpcomingGamesActivity.class).putExtra("url", "http://www.xboxachievements.com/upcoming/"));
+        }
+
         if (position == 8) {
             fragment = new AboutFragment();
             fragment.setArguments(bundle);
         }
 
-        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        if (fragment != null) {
+            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_layout, fragment, fragment.getClass().getSimpleName())
-                .commit();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_layout, fragment, fragment.getClass().getSimpleName())
+                    .commit();
+        }
 
         if (mIsDrawerLearned) {
             mDrawer.closeDrawer(GravityCompat.START);
         }
 
-        if (!mIsDrawerLearned){
+        if (!mIsDrawerLearned) {
             mDrawer.openDrawer(GravityCompat.START);
             mIsDrawerLearned = true;
             mPrefs.edit().putBoolean(DRAWER_LEARNED_TAG, true).apply();
