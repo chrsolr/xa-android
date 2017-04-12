@@ -1,34 +1,44 @@
 package io.keypunchers.xa.fragments;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.loaders.UpcomingGamesLoader;
 import io.keypunchers.xa.models.UpcomingGame;
 
-public class UpcomingGamesFragment extends Fragment {
-    private ArrayList<UpcomingGame> mData;
-    private String TAG = UpcomingGamesFragment.class.getSimpleName();
+public class UpcomingGamesFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<UpcomingGame>> {
+    private String BASE_URL;
+    private ViewPager mViewPager;
+    private ViewPagerAdapter mAdapter;
+    private Map<String, ArrayList<UpcomingGame>> mData = new HashMap<>();
+    private int mLoaderCounter = 0;
+    private ArrayList<UpcomingGame> mNTSCData;
+    private ArrayList<UpcomingGame> mPALData;
+    private ArrayList<UpcomingGame> mArcadeData;
+    private ArrayList<UpcomingGame> mXoneData;
+    private ArrayList<UpcomingGame> mX360Data;
 
-    public UpcomingGamesFragment() { }
-
-    public static Fragment newInstance(ArrayList<UpcomingGame> data) {
-        UpcomingGamesFragment fragment = new UpcomingGamesFragment();
-        fragment.mData = data;
-        return fragment;
+    public UpcomingGamesFragment() {
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,86 +51,146 @@ public class UpcomingGamesFragment extends Fragment {
 
         setRetainInstance(true);
 
-        UpcomingGamesAdapter mAdapter = new UpcomingGamesAdapter(getActivity(), mData);
-        ListView mLvContent = (ListView) view.findViewById(R.id.lv_upcoming_games);
-        mLvContent.setAdapter(mAdapter);
+        if (getArguments() != null) {
+            BASE_URL = getArguments().getString("url");
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getArguments().getString("ab_title"));
+        }
+
+        mViewPager = (ViewPager) view.findViewById(R.id.vp_upcoming_games);
+
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tl_upcoming_games);
+        tabLayout.setupWithViewPager(mViewPager);
+
+        mAdapter = new ViewPagerAdapter(getChildFragmentManager());
+
+        makeNetworkCall(savedInstanceState);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
 
-        if (getArguments() != null) {
-            mData = getArguments().getParcelableArrayList("data");
+    @Override
+    public Loader<ArrayList<UpcomingGame>> onCreateLoader(int id, Bundle args) {
+        AsyncTaskLoader loader = null;
+        switch (id) {
+            case 0:
+                loader = new UpcomingGamesLoader(getActivity(), BASE_URL, mNTSCData);
+                break;
+            case 1:
+                loader = new UpcomingGamesLoader(getActivity(), BASE_URL + "PAL/", mPALData);
+                break;
+            case 2:
+                loader = new UpcomingGamesLoader(getActivity(), BASE_URL + "Arcade/", mArcadeData);
+                break;
+            case 3:
+                loader = new UpcomingGamesLoader(getActivity(), BASE_URL + "xbox-one/", mXoneData);
+                break;
+            case 4:
+                loader = new UpcomingGamesLoader(getActivity(), BASE_URL + "xbox-360/", mX360Data);
+                break;
         }
 
-        if (savedInstanceState != null && savedInstanceState.containsKey(TAG)) {
-            mData = savedInstanceState.getParcelableArrayList(TAG);
+        return loader;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<ArrayList<UpcomingGame>> loader, ArrayList<UpcomingGame> data) {
+        String key = "";
+
+        int id = loader.getId();
+
+        switch (id) {
+            case 0:
+                key = "NTSC";
+                break;
+            case 1:
+                key = "PAL";
+                break;
+            case 2:
+                key = "Arcade";
+                break;
+            case 3:
+                key = "Xbox One";
+                break;
+            case 4:
+                key = "Xbox 360";
+                break;
+        }
+
+        mData.put(key, data);
+
+        mLoaderCounter++;
+
+        if (mLoaderCounter == 5) {
+            setupUI();
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<ArrayList<UpcomingGame>> loader) {
+
+    }
+
+    private void makeNetworkCall(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            mNTSCData = savedInstanceState.getParcelableArrayList("NTSC");
+            mPALData = savedInstanceState.getParcelableArrayList("PAL");
+            mArcadeData = savedInstanceState.getParcelableArrayList("ARCADE");
+            mXoneData = savedInstanceState.getParcelableArrayList("XONE");
+            mX360Data = savedInstanceState.getParcelableArrayList("X360");
+            //setupUI();
+        } else {
+            getActivity().getSupportLoaderManager().restartLoader(0, null, this);
+            getActivity().getSupportLoaderManager().restartLoader(1, null, this);
+            getActivity().getSupportLoaderManager().restartLoader(2, null, this);
+            getActivity().getSupportLoaderManager().restartLoader(3, null, this);
+            getActivity().getSupportLoaderManager().restartLoader(4, null, this);
         }
     }
 
     private void setupUI() {
+        if (!mData.get("Xbox One").isEmpty())
+            mAdapter.addFragment(new UpcomingGamesChildFragment().newInstance(mData.get("Xbox One")), "Xbox One");
+        if (!mData.get("Xbox 360").isEmpty())
+            mAdapter.addFragment(new UpcomingGamesChildFragment().newInstance(mData.get("Xbox 360")), "Xbox 360");
+        if (!mData.get("NTSC").isEmpty())
+            mAdapter.addFragment(new UpcomingGamesChildFragment().newInstance(mData.get("NTSC")), "NTSC");
+        if (!mData.get("PAL").isEmpty())
+            mAdapter.addFragment(new UpcomingGamesChildFragment().newInstance(mData.get("PAL")), "PAL");
+        if (!mData.get("Arcade").isEmpty())
+            mAdapter.addFragment(new UpcomingGamesChildFragment().newInstance(mData.get("Arcade")), "Arcade");
 
+        mViewPager.setAdapter(mAdapter);
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(TAG, mData);
-    }
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final ArrayList<Fragment> mFragmentList = new ArrayList<>();
+        private final ArrayList<String> mFragmentTitleList = new ArrayList<>();
 
-    private class UpcomingGamesAdapter extends BaseAdapter {
-        private final Context mContext;
-        private final ArrayList<UpcomingGame> mData;
+        ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
 
-        UpcomingGamesAdapter(Context context, ArrayList<UpcomingGame> data) {
-            mContext = context;
-            mData = data;
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
         }
 
         @Override
         public int getCount() {
-            return mData.size();
+            return mFragmentList.size();
+        }
+
+        void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
         }
 
         @Override
-        public UpcomingGame getItem(int position) {
-            return mData.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder;
-
-            if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.row_upcoming_games, parent, false);
-
-                viewHolder = new ViewHolder();
-                assert convertView != null;
-
-                viewHolder.mTitle = (TextView) convertView.findViewById(R.id.tv_upcoming_games_title);
-                viewHolder.mDate = (TextView) convertView.findViewById(R.id.tv_upcoming_games_date);
-
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-
-            viewHolder.mTitle.setText(mData.get(position).getTitle());
-            viewHolder.mDate.setText(mData.get(position).getDate());
-
-            return convertView;
-        }
-
-        private class ViewHolder {
-            TextView mTitle;
-            TextView mDate;
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
         }
     }
 }

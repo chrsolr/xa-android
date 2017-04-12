@@ -1,6 +1,5 @@
 package io.keypunchers.xa.app;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -25,6 +24,7 @@ import io.keypunchers.xa.R;
 import io.keypunchers.xa.fragments.AboutFragment;
 import io.keypunchers.xa.fragments.ArticleListFragment;
 import io.keypunchers.xa.fragments.ScreenshotsFragment;
+import io.keypunchers.xa.fragments.UpcomingGamesFragment;
 import io.keypunchers.xa.loaders.DrawerBannerLoader;
 import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.DrawerBanner;
@@ -216,7 +216,11 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
 
         if (position == 6) {
-            startActivity(new Intent(this, UpcomingGamesActivity.class).putExtra("url", "http://www.xboxachievements.com/upcoming/"));
+            bundle.putString("url", "http://www.xboxachievements.com/upcoming/");
+            bundle.putString("ab_title", getResources().getString(R.string.ab_upcoming_games_title));
+
+            fragment = new UpcomingGamesFragment();
+            fragment.setArguments(bundle);
         }
 
         if (position == 8) {
@@ -224,14 +228,12 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             fragment.setArguments(bundle);
         }
 
-        if (fragment != null) {
-            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_layout, fragment, fragment.getClass().getSimpleName())
-                    .commit();
-        }
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_layout, fragment, fragment.getClass().getSimpleName())
+                .commit();
 
         if (mIsDrawerLearned) {
             mDrawer.closeDrawer(GravityCompat.START);
