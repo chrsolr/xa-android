@@ -41,7 +41,6 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
     public UpcomingGamesFragment() {
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_upcoming_games, container, false);
@@ -53,19 +52,12 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
 
         setRetainInstance(true);
 
-        if (getArguments() != null) {
-            BASE_URL = getArguments().getString("url");
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getArguments().getString("ab_title"));
-        }
-
         mViewPager = (ViewPager) view.findViewById(R.id.vp_upcoming_games);
 
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tl_upcoming_games);
         tabLayout.setupWithViewPager(mViewPager);
 
         mAdapter = new ViewPagerAdapter(getChildFragmentManager());
-
-        makeNetworkCall(savedInstanceState);
     }
 
     @Override
@@ -75,6 +67,13 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getActivity().findViewById(R.id.apl_main).setElevation(0);
         }
+
+        if (mData.isEmpty() && getArguments() != null) {
+            BASE_URL = getArguments().getString("url");
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getArguments().getString("ab_title"));
+        }
+
+        makeNetworkCall();
     }
 
     @Override
@@ -118,10 +117,10 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
                 key = "Arcade";
                 break;
             case 3:
-                key = "Xbox One";
+                key = "XOne";
                 break;
             case 4:
-                key = "Xbox 360";
+                key = "X360";
                 break;
         }
 
@@ -139,14 +138,9 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
 
     }
 
-    private void makeNetworkCall(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            mNTSCData = savedInstanceState.getParcelableArrayList("NTSC");
-            mPALData = savedInstanceState.getParcelableArrayList("PAL");
-            mArcadeData = savedInstanceState.getParcelableArrayList("ARCADE");
-            mXoneData = savedInstanceState.getParcelableArrayList("XONE");
-            mX360Data = savedInstanceState.getParcelableArrayList("X360");
-            //setupUI();
+    private void makeNetworkCall() {
+        if (!mData.isEmpty()) {
+            setupUI();
         } else {
             getActivity().getSupportLoaderManager().restartLoader(0, null, this);
             getActivity().getSupportLoaderManager().restartLoader(1, null, this);
@@ -157,10 +151,10 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
     }
 
     private void setupUI() {
-        if (!mData.get("Xbox One").isEmpty())
-            mAdapter.addFragment(new UpcomingGamesChildFragment().newInstance(mData.get("Xbox One")), "Xbox One");
-        if (!mData.get("Xbox 360").isEmpty())
-            mAdapter.addFragment(new UpcomingGamesChildFragment().newInstance(mData.get("Xbox 360")), "Xbox 360");
+        if (!mData.get("XOne").isEmpty())
+            mAdapter.addFragment(new UpcomingGamesChildFragment().newInstance(mData.get("XOne")), "Xbox One");
+        if (!mData.get("X360").isEmpty())
+            mAdapter.addFragment(new UpcomingGamesChildFragment().newInstance(mData.get("X360")), "Xbox 360");
         if (!mData.get("NTSC").isEmpty())
             mAdapter.addFragment(new UpcomingGamesChildFragment().newInstance(mData.get("NTSC")), "NTSC");
         if (!mData.get("PAL").isEmpty())

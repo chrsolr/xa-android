@@ -31,7 +31,7 @@ public class ScreenshotsLoader extends AsyncTaskLoader<ArrayList<Screenshot>> {
     protected void onStartLoading() {
         super.onStartLoading();
 
-        if (mData != null)
+        if (!mData.isEmpty())
             super.deliverResult(mData);
         else
             forceLoad();
@@ -40,7 +40,7 @@ public class ScreenshotsLoader extends AsyncTaskLoader<ArrayList<Screenshot>> {
     @Override
     public void deliverResult(ArrayList<Screenshot> data) {
         mData = data;
-        if (isStarted() && mData != null) {
+        if (isStarted() && !mData.isEmpty()) {
             super.deliverResult(mData);
         }
     }
@@ -48,8 +48,6 @@ public class ScreenshotsLoader extends AsyncTaskLoader<ArrayList<Screenshot>> {
     @Override
     public ArrayList<Screenshot> loadInBackground() {
         try {
-            ArrayList<Screenshot> items = new ArrayList<>();
-
             Document document = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
 
             Element root = document.getElementsByClass("bl_me_main").get(3);
@@ -71,11 +69,11 @@ public class ScreenshotsLoader extends AsyncTaskLoader<ArrayList<Screenshot>> {
                     obj.setImageUrl(image_url);
                     obj.setGameUrl(url);
 
-                    items.add(obj);
+                    mData.add(obj);
                 }
             }
 
-            return items;
+            return mData;
         } catch (Exception ex) {
             Log.e("Drawer Loader", ex.getMessage());
             return null;

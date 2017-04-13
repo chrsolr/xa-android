@@ -15,11 +15,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.adapters.GenericAdapter;
 import io.keypunchers.xa.models.UpcomingGame;
 
 public class UpcomingGamesChildFragment extends Fragment {
     private ArrayList<UpcomingGame> mData;
     private String TAG = UpcomingGamesChildFragment.class.getSimpleName();
+    private GenericAdapter<UpcomingGame> mAdapter;
 
     public UpcomingGamesChildFragment() { }
 
@@ -40,82 +42,52 @@ public class UpcomingGamesChildFragment extends Fragment {
 
         setRetainInstance(true);
 
-        UpcomingGamesAdapter mAdapter = new UpcomingGamesAdapter(getActivity(), mData);
+        setAdapter();
+
         ListView mLvContent = (ListView) view.findViewById(R.id.lv_upcoming_games_child);
         mLvContent.setAdapter(mAdapter);
+    }
+
+    private void setAdapter() {
+        mAdapter = new GenericAdapter<>(getActivity(), mData, new GenericAdapter.onSetGetView() {
+            @Override
+            public View onGetView(int position, View convertView, ViewGroup parent, Context context, ArrayList<?> data) {
+                ViewHolder viewHolder;
+
+                if (convertView == null) {
+                    LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    convertView = inflater.inflate(R.layout.row_upcoming_games_child, parent, false);
+
+                    viewHolder = new ViewHolder();
+                    assert convertView != null;
+
+                    viewHolder.mTitle = (TextView) convertView.findViewById(R.id.tv_upcoming_games_title);
+                    viewHolder.mDate = (TextView) convertView.findViewById(R.id.tv_upcoming_games_date);
+
+                    convertView.setTag(viewHolder);
+                } else {
+                    viewHolder = (ViewHolder) convertView.getTag();
+                }
+
+                viewHolder.mTitle.setText(mData.get(position).getTitle());
+                viewHolder.mDate.setText(mData.get(position).getDate());
+
+                return convertView;
+            }
+        });
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (getArguments() != null) {
+        if (mData.isEmpty() && getArguments() != null) {
             mData = getArguments().getParcelableArrayList("data");
         }
-
-        if (savedInstanceState != null && savedInstanceState.containsKey(TAG)) {
-            mData = savedInstanceState.getParcelableArrayList(TAG);
-        }
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(TAG, mData);
-    }
-
-    private class UpcomingGamesAdapter extends BaseAdapter {
-        private final Context mContext;
-        private final ArrayList<UpcomingGame> mData;
-
-        UpcomingGamesAdapter(Context context, ArrayList<UpcomingGame> data) {
-            mContext = context;
-            mData = data;
-        }
-
-        @Override
-        public int getCount() {
-            return mData.size();
-        }
-
-        @Override
-        public UpcomingGame getItem(int position) {
-            return mData.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder;
-
-            if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.row_upcoming_games_child, parent, false);
-
-                viewHolder = new ViewHolder();
-                assert convertView != null;
-
-                viewHolder.mTitle = (TextView) convertView.findViewById(R.id.tv_upcoming_games_title);
-                viewHolder.mDate = (TextView) convertView.findViewById(R.id.tv_upcoming_games_date);
-
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-
-            viewHolder.mTitle.setText(mData.get(position).getTitle());
-            viewHolder.mDate.setText(mData.get(position).getDate());
-
-            return convertView;
-        }
-
-        private class ViewHolder {
-            TextView mTitle;
-            TextView mDate;
-        }
+    private class ViewHolder {
+        TextView mTitle;
+        TextView mDate;
     }
 }

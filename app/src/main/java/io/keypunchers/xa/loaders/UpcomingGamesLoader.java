@@ -9,12 +9,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import io.keypunchers.xa.models.Article;
 import io.keypunchers.xa.models.UpcomingGame;
 
 
@@ -49,16 +46,16 @@ public class UpcomingGamesLoader extends AsyncTaskLoader<ArrayList<UpcomingGame>
 
     @Override
     public ArrayList<UpcomingGame> loadInBackground() {
-            ArrayList<UpcomingGame> games = new ArrayList<>();
-        try {
+        ArrayList<UpcomingGame> games = new ArrayList<>();
 
+        try {
             Document document = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
 
             Element root = document.getElementsByClass("divtext").first();
 
             Elements rows = root.select("table tbody tr");
 
-            for(int i = 2; i < rows.size(); i++) {
+            for (int i = 2; i < rows.size(); i++) {
                 String title = rows.get(i).select("a").text();
                 String date = rows.get(i).select("td").first().text();
                 String url = rows.get(i).select("a").attr("abs:href");

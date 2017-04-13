@@ -182,23 +182,20 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void selectDrawerItem(int position) {
-        Fragment fragment = null;
+        String FRAGMENT_TAG = "FRAGMENT_TAG_" + position;
         Bundle bundle = new Bundle();
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 
-        if (position == 0) {
-            fragment = getSupportFragmentManager().findFragmentByTag(ArticleListFragment.class.getSimpleName());
+        if (position == 0 && fragment == null) {
+            bundle.putString("url", "http://www.xboxachievements.com/archive/gaming-news/1/");
+            bundle.putInt("counter", 3);
+            bundle.putString("ab_title", getResources().getString(R.string.ab_news_title));
 
-            if (fragment == null) {
-                bundle.putString("url", "http://www.xboxachievements.com/archive/gaming-news/1/");
-                bundle.putInt("counter", 3);
-                bundle.putString("ab_title", getResources().getString(R.string.ab_news_title));
-
-                fragment = new ArticleListFragment();
-                fragment.setArguments(bundle);
-            }
+            fragment = new ArticleListFragment();
+            fragment.setArguments(bundle);
         }
 
-        if (position == 1) {
+        if (position == 1 && fragment == null) {
             bundle.putString("url", "http://www.xboxachievements.com/news/previews/1/");
             bundle.putInt("counter", 2);
             bundle.putString("ab_title", getResources().getString(R.string.ab_previews_title));
@@ -207,7 +204,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             fragment.setArguments(bundle);
         }
 
-        if (position == 2) {
+        if (position == 2 && fragment == null) {
             bundle.putString("url", "http://www.xboxachievements.com/news/interviews/1/");
             bundle.putInt("counter", 2);
             bundle.putString("ab_title", getResources().getString(R.string.ab_interviews_title));
@@ -216,7 +213,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             fragment.setArguments(bundle);
         }
 
-        if (position == 5) {
+        if (position == 5 && fragment == null) {
             bundle.putString("url", "http://www.xboxachievements.com/");
             bundle.putString("ab_title", getResources().getString(R.string.ab_screenshots_title));
 
@@ -224,7 +221,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             fragment.setArguments(bundle);
         }
 
-        if (position == 6) {
+        if (position == 6 && fragment == null) {
             bundle.putString("url", "http://www.xboxachievements.com/upcoming/");
             bundle.putString("ab_title", getResources().getString(R.string.ab_upcoming_games_title));
 
@@ -232,7 +229,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             fragment.setArguments(bundle);
         }
 
-        if (position == 8) {
+        if (position == 8 && fragment == null) {
             fragment = new AboutFragment();
             fragment.setArguments(bundle);
         }
@@ -241,7 +238,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_layout, fragment, fragment.getClass().getSimpleName())
+                .replace(R.id.main_layout, fragment, FRAGMENT_TAG)
                 .commit();
 
         if (mIsDrawerLearned) {
