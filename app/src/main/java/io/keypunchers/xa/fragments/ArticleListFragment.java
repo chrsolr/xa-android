@@ -13,16 +13,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.adapters.GenericAdapter;
 import io.keypunchers.xa.app.ArticleActivity;
 import io.keypunchers.xa.loaders.ArticleListLoader;
 import io.keypunchers.xa.misc.SingletonVolley;
@@ -31,10 +30,8 @@ import io.keypunchers.xa.models.ArticleListItem;
 public class ArticleListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<ArticleListItem>>, AdapterView.OnItemClickListener {
     private String BASE_URL;
     private int COUNTER_PLUS;
-    private final String TAG = ArticleListFragment.class.getSimpleName();
     private ArrayList<ArticleListItem> mData = new ArrayList<>();
-    private NewsAdapter mAdapter;
-    private ListView mLvContent;
+    private GenericAdapter<ArticleListItem> mAdapter;
 
     public ArticleListFragment() {
     }
@@ -50,11 +47,44 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
         setRetainInstance(true);
 
-        mLvContent = (ListView) view.findViewById(R.id.lv_news);
-        mLvContent.setOnItemClickListener(this);
+        setAdapter();
 
-        mAdapter = new NewsAdapter(getActivity(), mData);
+        ListView mLvContent = (ListView) view.findViewById(R.id.lv_news);
+        mLvContent.setOnItemClickListener(this);
         mLvContent.setAdapter(mAdapter);
+    }
+
+    private void setAdapter() {
+        mAdapter = new GenericAdapter<>(getContext(), mData, new GenericAdapter.onSetGetView() {
+            @Override
+            public View onGetView(int position, View convertView, ViewGroup parent, Context context, ArrayList data) {
+                ViewHolder viewHolder;
+
+                if (convertView == null) {
+                    LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    convertView = inflater.inflate(R.layout.row_article_list, parent, false);
+
+                    viewHolder = new ViewHolder();
+                    assert convertView != null;
+
+                    viewHolder.mTvTitle = (TextView) convertView.findViewById(R.id.tv_news_title);
+                    viewHolder.mTvSubTitle = (TextView) convertView.findViewById(R.id.tv_news_subtitle);
+                    viewHolder.mIvImage = (NetworkImageView) convertView.findViewById(R.id.iv_news_image);
+
+                    convertView.setTag(viewHolder);
+                } else {
+                    viewHolder = (ViewHolder) convertView.getTag();
+                }
+
+                ArticleListItem item = (ArticleListItem) data.get(position);
+
+                viewHolder.mTvTitle.setText(item.getTitle());
+                viewHolder.mTvSubTitle.setText(item.getDesc());
+                viewHolder.mIvImage.setImageUrl(item.getImageUrl(), SingletonVolley.getImageLoader());
+
+                return convertView;
+            }
+        });
     }
 
     @Override
@@ -87,7 +117,8 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
     }
 
     @Override
-    public void onLoaderReset(Loader<ArrayList<ArticleListItem>> loader) { }
+    public void onLoaderReset(Loader<ArrayList<ArticleListItem>> loader) {
+    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -95,63 +126,9 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
         startActivity(new Intent(getActivity(), ArticleActivity.class).putExtra("url", url));
     }
 
-    private class NewsAdapter extends BaseAdapter {
-        private Context mContext;
-        private List<ArticleListItem> mData;
-
-        NewsAdapter(Context context, List<ArticleListItem> data) {
-            mContext = context;
-            mData = data;
-        }
-
-        @Override
-        public int getCount() {
-            return mData.size();
-        }
-
-        @Override
-        public ArticleListItem getItem(int position) {
-            return mData.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder;
-
-            if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.row_article_list, parent, false);
-
-                viewHolder = new ViewHolder();
-                assert convertView != null;
-
-                viewHolder.mTvTitle = (TextView) convertView.findViewById(R.id.tv_news_title);
-                viewHolder.mTvSubTitle = (TextView) convertView.findViewById(R.id.tv_news_subtitle);
-                viewHolder.mIvImage = (NetworkImageView) convertView.findViewById(R.id.iv_news_image);
-
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-
-            ArticleListItem item = mData.get(position);
-
-            viewHolder.mTvTitle.setText(item.getTitle());
-            viewHolder.mTvSubTitle.setText(item.getDesc());
-            viewHolder.mIvImage.setImageUrl(item.getImageUrl(), SingletonVolley.getImageLoader());
-
-            return convertView;
-        }
-
-        private class ViewHolder {
-            TextView mTvTitle;
-            TextView mTvSubTitle;
-            NetworkImageView mIvImage;
-        }
+    private class ViewHolder {
+        TextView mTvTitle;
+        TextView mTvSubTitle;
+        NetworkImageView mIvImage;
     }
 }

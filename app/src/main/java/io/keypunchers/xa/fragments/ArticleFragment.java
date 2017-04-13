@@ -22,8 +22,8 @@ import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.Article;
 
 public class ArticleFragment extends Fragment {
-    private final String TAG = ArticleFragment.class.getSimpleName();
     private Article mData;
+    private TextView mTvBody;
 
     public ArticleFragment() {
     }
@@ -36,35 +36,31 @@ public class ArticleFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_article, container, false);
-
-        setRetainInstance(true);
-
-        if (savedInstanceState != null && savedInstanceState.containsKey(TAG)) {
-            mData = savedInstanceState.getParcelable(TAG);
-        }
-
-        return view;
+        return inflater.inflate(R.layout.fragment_article, container, false);
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        setRetainInstance(true);
+
+        ((NetworkImageView) view.findViewById(R.id.iv_article_author_avatar))
+                .setImageUrl(mData.getAuthorProfileImageUrl(), SingletonVolley.getImageLoader());
+
+        ((TextView) view.findViewById(R.id.tv_article_title))
+                .setText(mData.getHeaderTitle());
+
+        ((TextView) view.findViewById(R.id.tv_article_date))
+                .setText(mData.getHeaderDate());
+
+        mTvBody = (TextView) view.findViewById(R.id.tv_article_body);
+
         setupUI();
     }
 
     private void setupUI() {
-        ((NetworkImageView) getActivity().findViewById(R.id.iv_article_author_avatar))
-                .setImageUrl(mData.getAuthorProfileImageUrl(), SingletonVolley.getImageLoader());
-
-        ((TextView) getActivity().findViewById(R.id.tv_article_title))
-                .setText(mData.getHeaderTitle());
-
-        ((TextView) getActivity().findViewById(R.id.tv_article_date))
-                .setText(mData.getHeaderDate());
-
         Spanned text;
-        TextView mTvBody = (TextView) getActivity().findViewById(R.id.tv_article_body);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             text = Html.fromHtml(mData.getBodyText(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM, null, new Html.TagHandler() {
@@ -88,11 +84,5 @@ public class ArticleFragment extends Fragment {
 
         mTvBody.setText(text);
         mTvBody.setMovementMethod(LinkMovementMethod.getInstance());
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelable(TAG, mData);
     }
 }

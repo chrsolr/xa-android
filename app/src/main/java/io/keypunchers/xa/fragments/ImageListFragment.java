@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.android.volley.toolbox.NetworkImageView;
@@ -17,12 +16,13 @@ import com.android.volley.toolbox.NetworkImageView;
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.adapters.GenericAdapter;
 import io.keypunchers.xa.misc.SingletonVolley;
-import io.keypunchers.xa.models.Article;
 
 public class ImageListFragment extends Fragment {
-    private final String TAG = ImageListFragment.class.getSimpleName();
     private ArrayList<String> mData;
+    private GenericAdapter<String> mAdapter;
+
 
     public ImageListFragment() {
     }
@@ -35,91 +35,56 @@ public class ImageListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_image_list, container, false);
+        return inflater.inflate(R.layout.fragment_image_list, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         setRetainInstance(true);
 
-        if (savedInstanceState != null && savedInstanceState.containsKey(TAG)) {
-            mData = savedInstanceState.getStringArrayList(TAG);
-        }
+        setAdapter();
 
-        return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        setupUI();
-    }
-
-    private void setupUI() {
-        ImageListAdapter mAdapter = new ImageListAdapter(getActivity(), mData);
-        ListView mLvContent = (ListView) getActivity().findViewById(R.id.lv_image_list);
+        ListView mLvContent = (ListView) view.findViewById(R.id.lv_image_list);
         mLvContent.setAdapter(mAdapter);
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putStringArrayList(TAG, mData);
+    private void setAdapter() {
+        mAdapter = new GenericAdapter<>(getActivity(), mData, new GenericAdapter.onSetGetView() {
+            @Override
+            public View onGetView(final int position, View convertView, ViewGroup parent, Context context, ArrayList<?> data) {
+                ViewHolder viewHolder;
+
+                if (convertView == null) {
+                    LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    convertView = inflater.inflate(R.layout.row_image_list, parent, false);
+
+                    viewHolder = new ViewHolder();
+                    assert convertView != null;
+
+                    viewHolder.mIvImage = (NetworkImageView) convertView.findViewById(R.id.iv_image_list);
+
+                    convertView.setTag(viewHolder);
+                } else {
+                    viewHolder = (ViewHolder) convertView.getTag();
+                }
+
+                viewHolder.mIvImage.setImageUrl(mData.get(position), SingletonVolley.getImageLoader());
+                viewHolder.mIvImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mData.get(position)));
+                        startActivity(mIntent);
+                    }
+                });
+
+                return convertView;
+            }
+        });
     }
 
-    private class ImageListAdapter extends BaseAdapter {
-        private final Context mContext;
-        private final ArrayList<String> mData;
-
-        ImageListAdapter(Context context, ArrayList<String> data) {
-            mContext = context;
-            mData = data;
-        }
-
-        @Override
-        public int getCount() {
-            return mData.size();
-        }
-
-        @Override
-        public String getItem(int position) {
-            return mData.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder;
-
-            if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.row_image_list, parent, false);
-
-                viewHolder = new ViewHolder();
-                assert convertView != null;
-
-                viewHolder.mIvImage = (NetworkImageView) convertView.findViewById(R.id.iv_image_list);
-
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-
-            viewHolder.mIvImage.setImageUrl(mData.get(position), SingletonVolley.getImageLoader());
-            viewHolder.mIvImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mData.get(position)));
-                    startActivity(mIntent);
-                }
-            });
-
-            return convertView;
-        }
-
-        private class ViewHolder {
-            NetworkImageView mIvImage;
-        }
+    private class ViewHolder {
+        NetworkImageView mIvImage;
     }
 }
