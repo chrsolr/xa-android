@@ -6,9 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
@@ -17,9 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
-
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.adapters.ViewPagerAdapter;
 import io.keypunchers.xa.fragments.ArticleFragment;
 import io.keypunchers.xa.fragments.CommentListFragment;
 import io.keypunchers.xa.fragments.ImageListFragment;
@@ -132,34 +128,5 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
             adapter.addFragment(new CommentListFragment().newInstance(mData.getComments()), "Comments");
 
         mViewPager.setAdapter(adapter);
-    }
-
-    private class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final ArrayList<Fragment> mFragmentList = new ArrayList<>();
-        private final ArrayList<String> mFragmentTitleList = new ArrayList<>();
-
-        ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
     }
 }

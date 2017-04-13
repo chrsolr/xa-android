@@ -1,15 +1,11 @@
 package io.keypunchers.xa.fragments;
 
 
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -24,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.adapters.ViewPagerAdapter;
 import io.keypunchers.xa.loaders.UpcomingGamesLoader;
 import io.keypunchers.xa.models.UpcomingGame;
 
@@ -51,6 +48,7 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+/**/
         setRetainInstance(true);
 
         mViewPager = (ViewPager) view.findViewById(R.id.vp_upcoming_games);
@@ -173,34 +171,5 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
             mAdapter.addFragment(new UpcomingGamesChildFragment().newInstance(mData.get("Arcade")), "Arcade");
 
         mViewPager.setAdapter(mAdapter);
-    }
-
-    private class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final ArrayList<Fragment> mFragmentList = new ArrayList<>();
-        private final ArrayList<String> mFragmentTitleList = new ArrayList<>();
-
-        ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
     }
 }
