@@ -1,6 +1,7 @@
 package io.keypunchers.xa.fragments;
 
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -74,6 +75,15 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
         }
 
         makeNetworkCall();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getActivity().findViewById(R.id.apl_main).setElevation(12);
+        }
     }
 
     @Override

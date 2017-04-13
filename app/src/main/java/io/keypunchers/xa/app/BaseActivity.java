@@ -98,10 +98,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            this.findViewById(R.id.apl_main).setElevation(12);
-        }
-
         return true;
     }
 
