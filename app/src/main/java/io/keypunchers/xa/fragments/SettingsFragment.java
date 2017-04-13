@@ -1,4 +1,4 @@
-package io.keypunchers.xa.app;
+package io.keypunchers.xa.fragments;
 
 
 import android.os.Bundle;
