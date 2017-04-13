@@ -31,48 +31,48 @@ import io.keypunchers.xa.models.ArticleListItem;
 public class ArticleListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<ArticleListItem>>, AdapterView.OnItemClickListener {
     private String BASE_URL;
     private int COUNTER_PLUS;
-    private String AB_TITLE;
     private final String TAG = ArticleListFragment.class.getSimpleName();
-    private int LOADER_ID;
-    private ArrayList<ArticleListItem> mData;
+    private ArrayList<ArticleListItem> mData = new ArrayList<>();
     private NewsAdapter mAdapter;
+    private ListView mLvContent;
 
     public ArticleListFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_article_list, container, false);
+        return inflater.inflate(R.layout.fragment_article_list, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         setRetainInstance(true);
 
-        if (savedInstanceState != null && savedInstanceState.containsKey(TAG)) {
-            mData = savedInstanceState.getParcelableArrayList(TAG);
-        }
+        mLvContent = (ListView) view.findViewById(R.id.lv_news);
+        mLvContent.setOnItemClickListener(this);
 
-        return view;
+        mAdapter = new NewsAdapter(getActivity(), mData);
+        mLvContent.setAdapter(mAdapter);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        LOADER_ID = getActivity().getResources().getInteger(R.integer.news_loader_id);
+        int LOADER_ID = getActivity().getResources().getInteger(R.integer.news_loader_id);
 
         if (getArguments() != null) {
             BASE_URL = getArguments().getString("url");
             COUNTER_PLUS = getArguments().getInt("counter");
-            AB_TITLE = getArguments().getString("ab_title");
+            String AB_TITLE = getArguments().getString("ab_title");
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(AB_TITLE);
         }
 
-        getData(savedInstanceState);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(TAG, mData);
+        if (mData.isEmpty()) {
+            getActivity().getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
+        }
     }
 
     @Override
@@ -83,30 +83,11 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
     @Override
     public void onLoadFinished(Loader<ArrayList<ArticleListItem>> loader, ArrayList<ArticleListItem> data) {
         mData = data;
-        setupUI();
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onLoaderReset(Loader<ArrayList<ArticleListItem>> loader) {
-        //getLoaderManager().destroyLoader(LOADER_ID);
-    }
-
-    private void getData(Bundle savedInstanceState) {
-        if (savedInstanceState != null && savedInstanceState.containsKey(TAG)) {
-            mData = savedInstanceState.getParcelableArrayList(TAG);
-            setupUI();
-        } else {
-            getActivity().getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
-        }
-    }
-
-    private void setupUI() {
-        ListView mLvContent = (ListView) getActivity().findViewById(R.id.lv_news);
-        mLvContent.setOnItemClickListener(this);
-
-        mAdapter = new NewsAdapter(getActivity(), mData);
-        mLvContent.setAdapter(mAdapter);
-    }
+    public void onLoaderReset(Loader<ArrayList<ArticleListItem>> loader) { }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

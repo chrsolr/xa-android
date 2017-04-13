@@ -1,6 +1,7 @@
 package io.keypunchers.xa.app;
 
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
@@ -97,6 +98,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            this.findViewById(R.id.apl_main).setElevation(12);
+        }
+
         return true;
     }
 
@@ -181,12 +186,16 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         Bundle bundle = new Bundle();
 
         if (position == 0) {
-            bundle.putString("url", "http://www.xboxachievements.com/archive/gaming-news/1/");
-            bundle.putInt("counter", 3);
-            bundle.putString("ab_title", getResources().getString(R.string.ab_news_title));
+            fragment = getSupportFragmentManager().findFragmentByTag(ArticleListFragment.class.getSimpleName());
 
-            fragment = new ArticleListFragment();
-            fragment.setArguments(bundle);
+            if (fragment == null) {
+                bundle.putString("url", "http://www.xboxachievements.com/archive/gaming-news/1/");
+                bundle.putInt("counter", 3);
+                bundle.putString("ab_title", getResources().getString(R.string.ab_news_title));
+
+                fragment = new ArticleListFragment();
+                fragment.setArguments(bundle);
+            }
         }
 
         if (position == 1) {

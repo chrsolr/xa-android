@@ -1,8 +1,10 @@
 package io.keypunchers.xa.fragments;
 
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -54,7 +56,6 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
         if (getArguments() != null) {
             BASE_URL = getArguments().getString("url");
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getArguments().getString("ab_title"));
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setElevation(0);
         }
 
         mViewPager = (ViewPager) view.findViewById(R.id.vp_upcoming_games);
@@ -70,6 +71,10 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getActivity().findViewById(R.id.apl_main).setElevation(0);
+        }
     }
 
     @Override

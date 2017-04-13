@@ -29,7 +29,7 @@ public class ArticleListLoader extends AsyncTaskLoader<ArrayList<ArticleListItem
     protected void onStartLoading() {
         super.onStartLoading();
 
-        if (mData != null)
+        if (!mData.isEmpty())
             super.deliverResult(mData);
         else
             forceLoad();
@@ -46,8 +46,6 @@ public class ArticleListLoader extends AsyncTaskLoader<ArrayList<ArticleListItem
     @Override
     public ArrayList<ArticleListItem> loadInBackground() {
         try {
-            ArrayList<ArticleListItem> items = new ArrayList<>();
-
             Document document = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
 
             Element root = document.getElementsByClass("divtext").first();
@@ -73,11 +71,11 @@ public class ArticleListLoader extends AsyncTaskLoader<ArrayList<ArticleListItem
                     item.setImageUrl(image_url);
                     item.setPageUrl(page_url);
 
-                    items.add(item);
+                    mData.add(item);
                 }
             }
 
-            return items;
+            return mData;
 
         } catch (Exception ex) {
             Log.e("Article Loader", ex.getMessage());
