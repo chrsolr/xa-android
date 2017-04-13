@@ -48,7 +48,9 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
 
         try {
             String nID = BASE_URL.substring(BASE_URL.indexOf("-") + 1, BASE_URL.length() - 1);
-            nID = nID.substring(0, nID.indexOf("-"));
+
+            if (nID.contains("-"))
+                nID = nID.substring(0, nID.indexOf("-"));
 
             Document document = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
             Document comments_doc = Jsoup.connect("http://www.xboxachievements.com/news2-loadcomments.php")
