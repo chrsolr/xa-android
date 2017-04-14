@@ -2,14 +2,14 @@
 <resources>
     <color name="color_primary">#107c10</color>
     <color name="color_primary_dark">#1B5E20</color>
-    <color name="color_primary_accent">#107c10</color>
+    <color name="color_primary_accent">#FF5722</color>
     <color name="color_drawer_background">#ffffff</color>
     <color name="color_drawer_background_pressed">#f1f1f1</color>
     <color name="color_overlay_black">#ee107c10</color>
     <color name="color_light_gray">#dddddd</color>
     <color name="color_white">#ffffff</color>
     <color name="color_black">#000000</color>
-    <color name="primary_text_dark">#5a5a5a</color>
-    <color name="divider">#bababa</color>
-    <color name="primary_text_light">#999999</color>
+    <color name="primary_text_dark">#212121</color>
+    <color name="divider">#bdbdbd</color>
+    <color name="primary_text_light">#757575</color>
 </resources>
