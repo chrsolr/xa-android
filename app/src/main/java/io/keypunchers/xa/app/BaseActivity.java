@@ -24,6 +24,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.fragments.AboutFragment;
 import io.keypunchers.xa.fragments.ArticleListFragment;
+import io.keypunchers.xa.fragments.LatestAchievementFragment;
 import io.keypunchers.xa.fragments.ScreenshotsFragment;
 import io.keypunchers.xa.fragments.UpcomingGamesFragment;
 import io.keypunchers.xa.loaders.DrawerBannerLoader;
@@ -206,6 +207,14 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             bundle.putString("ab_title", getResources().getString(R.string.ab_interviews_title));
 
             fragment = new ArticleListFragment();
+            fragment.setArguments(bundle);
+        }
+
+        if (position == 4 && fragment == null) {
+            bundle.putString("url", "http://www.xboxachievements.com/archive/achievements/1/");
+            bundle.putString("ab_title", getResources().getString(R.string.ab_latest_achievements_title));
+
+            fragment = new LatestAchievementFragment();
             fragment.setArguments(bundle);
         }
 
