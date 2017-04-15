@@ -1,37 +1,31 @@
 package io.keypunchers.xa.fragments;
 
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
-import io.keypunchers.xa.adapters.GenericAdapter;
-import io.keypunchers.xa.app.ArticleActivity;
+import io.keypunchers.xa.adapters.ArticleListAdapter;
 import io.keypunchers.xa.loaders.ArticleListLoader;
-import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.ArticleListItem;
 
-public class ArticleListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<ArticleListItem>>, AdapterView.OnItemClickListener {
+public class ArticleListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<ArticleListItem>> {
     private String BASE_URL;
     private int COUNTER_PLUS;
     private ArrayList<ArticleListItem> mData = new ArrayList<>();
-    private GenericAdapter<ArticleListItem> mAdapter;
+    private ArticleListAdapter mAdapter;
+    //private GenericAdapter<ArticleListItem> mAdapter;
 
     public ArticleListFragment() {
     }
@@ -47,44 +41,10 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
         setRetainInstance(true);
 
-        setAdapter();
-
-        ListView mLvContent = (ListView) view.findViewById(R.id.lv_news);
-        mLvContent.setOnItemClickListener(this);
-        mLvContent.setAdapter(mAdapter);
-    }
-
-    private void setAdapter() {
-        mAdapter = new GenericAdapter<>(getContext(), mData, new GenericAdapter.onSetGetView() {
-            @Override
-            public View onGetView(int position, View convertView, ViewGroup parent, Context context, ArrayList data) {
-                ViewHolder viewHolder;
-
-                if (convertView == null) {
-                    LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    convertView = inflater.inflate(R.layout.row_article_list, parent, false);
-
-                    viewHolder = new ViewHolder();
-                    assert convertView != null;
-
-                    viewHolder.mTvTitle = (TextView) convertView.findViewById(R.id.tv_news_title);
-                    viewHolder.mTvSubTitle = (TextView) convertView.findViewById(R.id.tv_news_subtitle);
-                    viewHolder.mIvImage = (NetworkImageView) convertView.findViewById(R.id.iv_news_image);
-
-                    convertView.setTag(viewHolder);
-                } else {
-                    viewHolder = (ViewHolder) convertView.getTag();
-                }
-
-                ArticleListItem item = (ArticleListItem) data.get(position);
-
-                viewHolder.mTvTitle.setText(item.getTitle());
-                viewHolder.mTvSubTitle.setText(item.getDesc());
-                viewHolder.mIvImage.setImageUrl(item.getImageUrl(), SingletonVolley.getImageLoader());
-
-                return convertView;
-            }
-        });
+        mAdapter = new ArticleListAdapter(mData);
+        RecyclerView mRvContent = (RecyclerView) view.findViewById(R.id.rv_news);
+        mRvContent.setAdapter(mAdapter);
+        mRvContent.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     @Override
@@ -112,23 +72,11 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public void onLoadFinished(Loader<ArrayList<ArticleListItem>> loader, ArrayList<ArticleListItem> data) {
-        mData = data;
-        mAdapter.notifyDataSetChanged();
+        mData.addAll(data);
+        mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), mData.size());
     }
 
     @Override
     public void onLoaderReset(Loader<ArrayList<ArticleListItem>> loader) {
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String url = mAdapter.getItem(position).getPageUrl();
-        startActivity(new Intent(getActivity(), ArticleActivity.class).putExtra("url", url));
-    }
-
-    private class ViewHolder {
-        TextView mTvTitle;
-        TextView mTvSubTitle;
-        NetworkImageView mIvImage;
     }
 }

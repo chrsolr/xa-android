@@ -1,25 +1,16 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="io.keypunchers.xa.fragments.ArticleListFragment">
 
-    <ListView
-        android:id="@+id/lv_news"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_news"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:choiceMode="singleChoice"
-        android:clipToPadding="false"
-        android:divider="@color/color_light_gray"
-        android:dividerHeight="1dp"
-        android:gravity="center"
-        android:paddingLeft="@dimen/padding_level_2"
-        android:paddingRight="@dimen/padding_level_2"
-        android:headerDividersEnabled="false"
-        android:footerDividersEnabled="false"
-        android:listSelector="@android:color/transparent"
-        android:cacheColorHint="@android:color/transparent"
-        android:scrollbars="none" />
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_level_1"
+        android:paddingBottom="@dimen/padding_level_1"
+        android:clipToPadding="false"/>
 
-</LinearLayout>
+</RelativeLayout>
