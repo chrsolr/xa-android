@@ -31,4 +31,24 @@
         <item name="android:textColor">@color/primary_text_dark</item>
     </style>
 
+    <style name="AppTheme.TextAppearance.Title" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/primary_text_dark</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance.Subtitle" parent="@style/TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/primary_text_light</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance.Medium" parent="@style/TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">@color/primary_text_light</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance.Small" parent="@style/TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/primary_text_dark</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>

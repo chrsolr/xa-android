@@ -8,6 +8,8 @@
 
     <dimen name="divider">1dp</dimen>
 
+    <dimen name="recycler_view_evelation">2dp</dimen>
+
     <!-- TextView sizes -->
     <dimen name="drawer_title_size">20sp</dimen>
 
