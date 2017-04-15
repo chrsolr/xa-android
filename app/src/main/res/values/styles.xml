@@ -51,4 +51,8 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="AppTheme.TextAppearance.Small.Light" parent="AppTheme.TextAppearance.Small">
+        <item name="android:textColor">@color/primary_text_light</item>
+    </style>
+
 </resources>

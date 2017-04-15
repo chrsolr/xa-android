@@ -25,8 +25,6 @@ import io.keypunchers.xa.models.Comment;
 
 public class CommentListFragment extends Fragment {
     private ArrayList<Comment> mData;
-    private CommentListAdapter mAdapter;
-    private RecyclerView mRvContent;
 
     public CommentListFragment() {
     }
@@ -48,51 +46,9 @@ public class CommentListFragment extends Fragment {
 
         setRetainInstance(true);
 
-        mAdapter = new CommentListAdapter(mData);
-        mRvContent = (RecyclerView) view.findViewById(R.id.rv_comment_list);
+        CommentListAdapter mAdapter = new CommentListAdapter(mData);
+        RecyclerView mRvContent = (RecyclerView) view.findViewById(R.id.rv_comment_list);
         mRvContent.setAdapter(mAdapter);
         mRvContent.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
-
-//    private void setAdapter() {
-//        mAdapter = new GenericAdapter<>(getActivity(), mData, new GenericAdapter.onSetGetView() {
-//            @Override
-//            public View onGetView(int position, View convertView, ViewGroup parent, Context context, ArrayList<?> data) {
-//                ViewHolder viewHolder;
-//
-//                if (convertView == null) {
-//                    LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//                    convertView = inflater.inflate(R.layout.row_comment_list, parent, false);
-//
-//                    viewHolder = new ViewHolder();
-//                    assert convertView != null;
-//
-//                    viewHolder.mIvImage = (ImageView) convertView.findViewById(R.id.iv_comment_list);
-//                    viewHolder.mTitle = (TextView) convertView.findViewById(R.id.tv_comment_title);
-//                    viewHolder.mDate = (TextView) convertView.findViewById(R.id.tv_comment_date);
-//                    viewHolder.mText = (TextView) convertView.findViewById(R.id.tv_comment_text);
-//
-//                    convertView.setTag(viewHolder);
-//                } else {
-//                    viewHolder = (ViewHolder) convertView.getTag();
-//                }
-//
-//                viewHolder.mTitle.setText(mData.get(position).getTitle());
-//                viewHolder.mDate.setText(mData.get(position).getDate());
-//                viewHolder.mText.setText(mData.get(position).getText());
-//
-//                ImageLoader mImageLoader = SingletonVolley.getImageLoader();
-//                mImageLoader.get(mData.get(position).getImageUrl(), ImageLoader.getImageListener(viewHolder.mIvImage, R.drawable.x360a_comments_notag, R.drawable.x360a_comments_notag));
-//
-//                return convertView;
-//            }
-//        });
-//    }
-//
-//    private class ViewHolder {
-//        ImageView mIvImage;
-//        TextView mTitle;
-//        TextView mDate;
-//        TextView mText;
-//    }
 }

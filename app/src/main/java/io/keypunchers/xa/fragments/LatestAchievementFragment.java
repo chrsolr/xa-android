@@ -40,7 +40,7 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
 
         setRetainInstance(true);
 
-        ListView mLvContent = (ListView) view.findViewById(R.id.lv_image_list);
+        //ListView mLvContent = (ListView) view.findViewById(R.id.v_image_list);
         //mLvContent.setAdapter(mAdapter);
     }
 
