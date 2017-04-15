@@ -3,6 +3,7 @@ package io.keypunchers.xa.app;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,8 @@ import android.widget.Toast;
 
 import com.android.volley.toolbox.NetworkImageView;
 
+import java.util.ArrayList;
+
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.fragments.AboutFragment;
 import io.keypunchers.xa.fragments.ArticleListFragment;
@@ -31,15 +34,15 @@ import io.keypunchers.xa.loaders.DrawerBannerLoader;
 import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.DrawerBanner;
 
-public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<DrawerBanner> {
+public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<ArrayList<DrawerBanner>> {
     private final String DRAWER_LEARNED_TAG = "DRAWER_LEARNED";
     private int mDrawerCurrentSelectedPosition = 0;
-    private int LOADER_ID;
     private boolean mIsDrawerLearned;
     private Toolbar mToolbar;
     private NavigationView mNavigationView;
     private DrawerLayout mDrawer;
     private SharedPreferences mPrefs;
+    private ArrayList<DrawerBanner> mBanners;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,22 +134,31 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public Loader<DrawerBanner> onCreateLoader(int id, Bundle args) {
+    public Loader<ArrayList<DrawerBanner>> onCreateLoader(int id, Bundle args) {
         return new DrawerBannerLoader(this);
     }
 
     @Override
-    public void onLoadFinished(Loader<DrawerBanner> loader, DrawerBanner data) {
+    public void onLoadFinished(Loader<ArrayList<DrawerBanner>> loader, ArrayList<DrawerBanner> data) {
+        mBanners = data;
+
         NetworkImageView mIvBannerImg = (NetworkImageView) findViewById(R.id.iv_drawer_banner);
-        mIvBannerImg.setImageUrl(data.getImage(), SingletonVolley.getImageLoader());
+        mIvBannerImg.setImageUrl(mBanners.get(0).getImage(), SingletonVolley.getImageLoader());
 
         TextView mTvTitle = (TextView) findViewById(R.id.tv_banner_title);
-        mTvTitle.setText(data.getTitle());
+        mTvTitle.setText(mBanners.get(0).getTitle());
+
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                selectDrawerItem(mDrawerCurrentSelectedPosition);
+            }
+        });
     }
 
     @Override
-    public void onLoaderReset(Loader<DrawerBanner> loader) {
-        getSupportLoaderManager().destroyLoader(LOADER_ID);
+    public void onLoaderReset(Loader<ArrayList<DrawerBanner>> loader) {
+        //getSupportLoaderManager().destroyLoader(LOADER_ID);
     }
 
     @Override
@@ -164,12 +176,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
-
-        selectDrawerItem(mDrawerCurrentSelectedPosition);
     }
 
     private void getData(Bundle savedInstanceState) {
-        LOADER_ID = getResources().getInteger(R.integer.navigation_drawer_loader_id);
+        int LOADER_ID = getResources().getInteger(R.integer.navigation_drawer_loader_id);
 
         if (getSupportLoaderManager().getLoader(LOADER_ID) == null) {
             getSupportLoaderManager().initLoader(LOADER_ID, savedInstanceState, BaseActivity.this);
@@ -187,6 +197,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             bundle.putString("url", "http://www.xboxachievements.com/archive/gaming-news/1/");
             bundle.putInt("counter", 3);
             bundle.putString("ab_title", getResources().getString(R.string.ab_news_title));
+            bundle.putString("header_image_url", mBanners.get(1).getImage());
 
             fragment = new ArticleListFragment();
             fragment.setArguments(bundle);
@@ -196,6 +207,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             bundle.putString("url", "http://www.xboxachievements.com/news/previews/1/");
             bundle.putInt("counter", 2);
             bundle.putString("ab_title", getResources().getString(R.string.ab_previews_title));
+            bundle.putString("header_image_url", mBanners.get(2).getImage());
 
             fragment = new ArticleListFragment();
             fragment.setArguments(bundle);
@@ -205,6 +217,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             bundle.putString("url", "http://www.xboxachievements.com/news/interviews/1/");
             bundle.putInt("counter", 2);
             bundle.putString("ab_title", getResources().getString(R.string.ab_interviews_title));
+            bundle.putString("header_image_url", mBanners.get(3).getImage());
 
             fragment = new ArticleListFragment();
             fragment.setArguments(bundle);

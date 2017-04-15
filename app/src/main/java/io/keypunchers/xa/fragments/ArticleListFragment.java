@@ -13,11 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.toolbox.NetworkImageView;
+
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.ArticleListAdapter;
 import io.keypunchers.xa.loaders.ArticleListLoader;
+import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.ArticleListItem;
 
 public class ArticleListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<ArticleListItem>> {
@@ -25,7 +28,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
     private int COUNTER_PLUS;
     private ArrayList<ArticleListItem> mData = new ArrayList<>();
     private ArticleListAdapter mAdapter;
-    //private GenericAdapter<ArticleListItem> mAdapter;
+    private NetworkImageView mIvBanner;
 
     public ArticleListFragment() {
     }
@@ -40,6 +43,8 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
         super.onViewCreated(view, savedInstanceState);
 
         setRetainInstance(true);
+
+        mIvBanner = (NetworkImageView) view.findViewById(R.id.iv_banner);
 
         mAdapter = new ArticleListAdapter(mData);
         RecyclerView mRvContent = (RecyclerView) view.findViewById(R.id.rv_news);
@@ -57,7 +62,11 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
             BASE_URL = getArguments().getString("url");
             COUNTER_PLUS = getArguments().getInt("counter");
             String AB_TITLE = getArguments().getString("ab_title");
+            String mHeaderImageUrl = getArguments().getString("header_image_url");
+
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(AB_TITLE);
+
+            mIvBanner.setImageUrl(mHeaderImageUrl, SingletonVolley.getImageLoader());
         }
 
         if (mData.isEmpty()) {
