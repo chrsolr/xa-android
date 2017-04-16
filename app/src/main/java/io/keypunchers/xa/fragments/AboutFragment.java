@@ -34,18 +34,5 @@ public class AboutFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.ab_about_title);
-
-        setupUI();
-    }
-
-    private void setupUI() {
-        try {
-            String app_version = getActivity().getPackageManager()
-                    .getPackageInfo(getActivity().getPackageName(), 0).versionName;
-
-            ((TextView) getActivity().findViewById(R.id.tv_about_version)).setText(app_version);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 }

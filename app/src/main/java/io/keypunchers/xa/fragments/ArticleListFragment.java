@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ import java.util.ArrayList;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.ArticleListAdapter;
 import io.keypunchers.xa.loaders.ArticleListLoader;
-import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.ArticleListItem;
 
 public class ArticleListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<ArticleListItem>> {

@@ -1,22 +1,17 @@
 package io.keypunchers.xa.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
-import io.keypunchers.xa.app.ArticleActivity;
-import io.keypunchers.xa.misc.SingletonVolley;
-import io.keypunchers.xa.models.ArticleListItem;
 import io.keypunchers.xa.models.Screenshot;
 import io.keypunchers.xa.views.ScaledImageView;
 

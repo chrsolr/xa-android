@@ -6,7 +6,5 @@ public class ApplicationClass extends Application {
     @Override
     public void onCreate(){
         super.onCreate();
-
-        SingletonVolley.initantiate(this);
     }
 }

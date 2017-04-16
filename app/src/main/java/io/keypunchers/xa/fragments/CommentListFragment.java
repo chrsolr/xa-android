@@ -1,6 +1,5 @@
 package io.keypunchers.xa.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,18 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import com.android.volley.toolbox.ImageLoader;
 
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.CommentListAdapter;
-import io.keypunchers.xa.adapters.GenericAdapter;
-import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.Comment;
 
 public class CommentListFragment extends Fragment {

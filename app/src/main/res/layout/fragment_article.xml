@@ -23,7 +23,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <io.keypunchers.xa.views.CircularImageView
+                    <ImageView
                         android:id="@+id/iv_article_author_avatar"
                         android:layout_width="65dp"
                         android:layout_height="65dp"

@@ -1,7 +1,6 @@
 package io.keypunchers.xa.app;
 
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -21,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -33,7 +31,6 @@ import io.keypunchers.xa.fragments.LatestAchievementFragment;
 import io.keypunchers.xa.fragments.ScreenshotsFragment;
 import io.keypunchers.xa.fragments.UpcomingGamesFragment;
 import io.keypunchers.xa.loaders.DrawerBannerLoader;
-import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.DrawerBanner;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<ArrayList<DrawerBanner>> {

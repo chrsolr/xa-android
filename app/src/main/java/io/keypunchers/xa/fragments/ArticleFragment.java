@@ -14,16 +14,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.squareup.picasso.Picasso;
 
 import org.xml.sax.XMLReader;
 
 import io.keypunchers.xa.R;
-import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.Article;
-import io.keypunchers.xa.views.CircularNetworkImageView;
-import io.keypunchers.xa.views.ScaledNetworkImageView;
+import io.keypunchers.xa.views.CircularTransform;
 
 public class ArticleFragment extends Fragment {
     private Article mData;
@@ -51,6 +48,7 @@ public class ArticleFragment extends Fragment {
 
         Picasso.with(getActivity())
                 .load(mData.getAuthorProfileImageUrl())
+                .transform(new CircularTransform())
                 .noFade()
                 .into(((ImageView) view.findViewById(R.id.iv_article_author_avatar)));
 
