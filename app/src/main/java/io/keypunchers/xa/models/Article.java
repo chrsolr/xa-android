@@ -10,6 +10,8 @@ public class Article implements Parcelable {
     private String headerTitle;
     private String headerDate;
     private String authorProfileImageUrl;
+    private String authorFirstName;
+    private String authorLastName;
     private String bodyText;
     private ArrayList<String> imageUrls;
     private ArrayList<String> videoUrls;
@@ -25,6 +27,8 @@ public class Article implements Parcelable {
         headerDate = in.readString();
         authorProfileImageUrl = in.readString();
         bodyText = in.readString();
+        authorFirstName = in.readString();
+        authorLastName = in.readString();
         imageUrls = in.readArrayList(null);
         videoUrls = in.readArrayList(null);
         comments = in.readArrayList(null);
@@ -54,6 +58,8 @@ public class Article implements Parcelable {
         dest.writeString(headerDate);
         dest.writeString(authorProfileImageUrl);
         dest.writeString(bodyText);
+        dest.writeString(authorFirstName);
+        dest.writeString(authorLastName);
         dest.writeStringList(imageUrls);
         dest.writeStringList(videoUrls);
         dest.writeTypedList(comments);
@@ -121,5 +127,21 @@ public class Article implements Parcelable {
 
     public void setComments(ArrayList<Comment> comments) {
         this.comments = comments;
+    }
+
+    public String getAuthorFirstName() {
+        return authorFirstName;
+    }
+
+    public void setAuthorFirstName(String authorFirstName) {
+        this.authorFirstName = authorFirstName;
+    }
+
+    public String getAuthorLastName() {
+        return authorLastName;
+    }
+
+    public void setAuthorLastName(String authorLastName) {
+        this.authorLastName = authorLastName;
     }
 }

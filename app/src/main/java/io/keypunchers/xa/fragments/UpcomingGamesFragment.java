@@ -48,7 +48,6 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-/**/
         setRetainInstance(true);
 
         mViewPager = (ViewPager) view.findViewById(R.id.vp_upcoming_games);

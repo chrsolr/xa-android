@@ -65,6 +65,8 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
             String header_title = header_root.get(1).select(".newsTitle").first().text();
             String header_date = header_root.get(1).select(".newsNFO").text().split("By ")[1];
             String author_profile_url = header_root.get(1).select("a").first().attr("abs:href");
+            String author_first_name = header_date.split(" ")[0];
+            String author_last_name = header_date.split(" ")[1];
 
             Elements article_contents = body_root.children();
             Elements article_images = article_contents.select("img");
@@ -127,6 +129,8 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
             article.setHeaderTitle(header_title);
             article.setHeaderDate(header_date);
             article.setAuthorProfileUrl(author_profile_url);
+            article.setAuthorFirstName(author_first_name);
+            article.setAuthorLastName(author_last_name);
             article.setBodyText(article_contents.toString());
 
             article.setImageUrls(images);
