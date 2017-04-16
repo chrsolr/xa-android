@@ -55,8 +55,11 @@ public class ArticleFragment extends Fragment {
         ((TextView) view.findViewById(R.id.tv_article_title))
                 .setText(mData.getHeaderTitle());
 
-        ((TextView) view.findViewById(R.id.tv_article_date))
-                .setText(mData.getHeaderDate());
+        ((TextView) view.findViewById(R.id.tv_article_author_firstname))
+                .setText(mData.getAuthorFirstName());
+
+        ((TextView) view.findViewById(R.id.tv_article_author_lastname))
+                .setText(mData.getAuthorLastName());
 
         mTvBody = (TextView) view.findViewById(R.id.tv_article_body);
 

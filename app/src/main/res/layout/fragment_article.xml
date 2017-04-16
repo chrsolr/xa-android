@@ -25,39 +25,52 @@
 
                     <ImageView
                         android:id="@+id/iv_article_author_avatar"
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
-                        android:layout_centerVertical="false"/>
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="false" />
 
                     <TextView
-                        android:id="@+id/tv_article_title"
-                        android:layout_width="match_parent"
+                        android:id="@+id/tv_article_author_firstname"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/margin_level_1"
                         android:layout_toEndOf="@+id/iv_article_author_avatar"
                         android:layout_toRightOf="@+id/iv_article_author_avatar"
-                        android:textAppearance="@style/AppTheme.TextAppearance.Title"
-                        android:textColor="@null" />
+                        android:fontFamily="sans-serif-light"
+                        android:textAllCaps="true"
+                        android:textSize="24sp" />
 
                     <TextView
-                        android:id="@+id/tv_article_date"
+                        android:id="@+id/tv_article_author_lastname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_article_title"
-                        android:layout_marginLeft="@dimen/margin_level_1"
-                        android:layout_toEndOf="@+id/iv_article_author_avatar"
-                        android:layout_toRightOf="@+id/iv_article_author_avatar"
-                        android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
-                        android:textColor="@null" />
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/tv_article_author_firstname"
+                        android:layout_toRightOf="@+id/tv_article_author_firstname"
+                        android:fontFamily="sans-serif-bold"
+                        android:textAllCaps="true"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_article_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/margin_level_1"
+                    android:layout_toEndOf="@+id/iv_article_author_avatar"
+                    android:layout_toRightOf="@+id/iv_article_author_avatar"
+                    android:textAppearance="@style/AppTheme.TextAppearance.Title"
+                    android:textColor="@null" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginBottom="@dimen/margin_level_1"
-                    android:layout_marginTop="@dimen/margin_level_1"
+                    android:layout_marginBottom="@dimen/margin_level_2"
+                    android:layout_marginTop="@dimen/margin_level_2"
                     android:background="@color/divider" />
 
                 <TextView
@@ -66,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:linksClickable="true"
                     android:lineSpacingExtra="3dp"
-                    android:textAppearance="@style/AppTheme.TextAppearance.Small"
+                    android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
                     android:textColor="@null" />
 
             </LinearLayout>
