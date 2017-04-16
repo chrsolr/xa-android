@@ -81,6 +81,7 @@
                 android:layout_below="@+id/view_divider"
                 android:autoLink="web"
                 android:clickable="true"
+                android:lineSpacingExtra="3dp"
                 android:textAppearance="@style/AppTheme.TextAppearance.Small"
                 android:textColor="@null"
                 app:layout_constraintHorizontal_bias="0.0"
