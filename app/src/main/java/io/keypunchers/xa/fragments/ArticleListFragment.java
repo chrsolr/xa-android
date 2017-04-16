@@ -81,7 +81,6 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public void onLoadFinished(Loader<ArrayList<ArticleListItem>> loader, ArrayList<ArticleListItem> data) {
-        mData.addAll(data);
         mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), mData.size());
     }
 

@@ -5,14 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/padding_level_2"
-    android:paddingTop="@dimen/padding_level_2">
+    android:padding="@dimen/padding_level_2">
 
     <io.keypunchers.xa.views.ScaledNetworkImageView
         android:id="@+id/iv_latest_screenshot_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
         android:background="@color/color_primary" />
 
     <View

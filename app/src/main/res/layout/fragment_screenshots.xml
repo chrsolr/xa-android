@@ -1,25 +1,9 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rv_latest_screenshot"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="io.keypunchers.xa.fragments.ScreenshotsFragment">
-
-    <ListView
-        android:id="@+id/lv_latest_screenshot"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:choiceMode="singleChoice"
-        android:clipToPadding="false"
-        android:divider="@color/color_light_gray"
-        android:dividerHeight="1dp"
-        android:paddingLeft="@dimen/padding_level_2"
-        android:paddingRight="@dimen/padding_level_2"
-        android:gravity="center"
-        android:footerDividersEnabled="false"
-        android:headerDividersEnabled="false"
-        android:listSelector="@android:color/transparent"
-        android:cacheColorHint="@android:color/transparent"
-        android:scrollbars="none" />
-
-</LinearLayout>
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:fitsSystemWindows="true"
+    android:scrollbars="none"
+    tools:context="io.keypunchers.xa.fragments.ScreenshotsFragment" />
