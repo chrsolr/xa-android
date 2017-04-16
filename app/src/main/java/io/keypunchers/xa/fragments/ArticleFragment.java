@@ -20,6 +20,8 @@ import org.xml.sax.XMLReader;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.Article;
+import io.keypunchers.xa.views.CircularNetworkImageView;
+import io.keypunchers.xa.views.ScaledNetworkImageView;
 
 public class ArticleFragment extends Fragment {
     private Article mData;
@@ -45,7 +47,7 @@ public class ArticleFragment extends Fragment {
 
         setRetainInstance(true);
 
-        ((NetworkImageView) view.findViewById(R.id.iv_article_author_avatar))
+        ((CircularNetworkImageView) view.findViewById(R.id.iv_article_author_avatar))
                 .setImageUrl(mData.getAuthorProfileImageUrl(), SingletonVolley.getImageLoader());
 
         ((TextView) view.findViewById(R.id.tv_article_title))

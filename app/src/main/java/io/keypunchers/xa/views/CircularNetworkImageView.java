@@ -38,7 +38,7 @@ public class CircularNetworkImageView extends NetworkImageView {
     }
     public void setImageBitmap(Bitmap bitmap) {
         if (bitmap != null) {
-            super.setImageBitmap(Common.getCircleImage(bitmap, ContextCompat.getColor(mContext, R.color.color_light_gray), 0));
+            super.setImageBitmap(Common.getCircleImage(bitmap, ContextCompat.getColor(mContext, android.R.color.transparent), 0));
         } else {
             super.setImageBitmap(bitmap);
         }

@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.android.volley.toolbox.NetworkImageView;
 
@@ -43,14 +44,25 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             item = item.substring(0, item.indexOf("?"));
         }
 
-        String videoId = item.replace("https://www.youtube.com/embed/", "");
+        final String videoId = item.replace("https://www.youtube.com/embed/", "");
 
         holder.mIvImage.setImageUrl("https://i3.ytimg.com/vi/" + videoId + "/0.jpg", SingletonVolley.getImageLoader());
-        holder.mIvImage.setOnClickListener(new View.OnClickListener() {
+        holder.mIvPlayIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mData.get(position).replace("embed/", "watch?v=")));
+                Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=" + videoId));
                 mContext.startActivity(mIntent);
+            }
+        });
+
+        holder.mIvShareIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Check it out!");
+                intent.putExtra(Intent.EXTRA_TEXT, "Check it out! \n\nhttps://www.youtube.com/watch?v=" + videoId + "\n\nShared via XA App.");
+                mContext.startActivity(Intent.createChooser(intent, "Share"));
             }
         });
 
@@ -63,11 +75,15 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         NetworkImageView mIvImage;
+        ImageView mIvPlayIcon;
+        ImageView mIvShareIcon;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             mIvImage = (NetworkImageView) itemView.findViewById(R.id.iv_video_list);
+            mIvPlayIcon = (ImageView) itemView.findViewById(R.id.iv_video_list_play_icon);
+            mIvShareIcon = (ImageView) itemView.findViewById(R.id.iv_video_list_share_icon);
         }
     }
 }

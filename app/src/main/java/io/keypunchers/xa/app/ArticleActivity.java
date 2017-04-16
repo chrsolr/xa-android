@@ -71,7 +71,7 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
                 intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Check it out!");
-                intent.putExtra(Intent.EXTRA_TEXT, "Check it out!: " + mData.getHeaderTitle() + "\n\n" + BASE_URL.replace(".html", "") + "\n\n" + "Shared via XA App.");
+                intent.putExtra(Intent.EXTRA_TEXT, "Check it out! " + mData.getHeaderTitle() + "\n\n" + BASE_URL.replace(".html", "") + "\n\n" + "Shared via XA App.");
                 startActivity(Intent.createChooser(intent, "Share"));
         }
 

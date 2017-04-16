@@ -63,7 +63,7 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
 
             String profile_image = header_root.first().select("img").first().attr("abs:src");
             String header_title = header_root.get(1).select(".newsTitle").first().text();
-            String header_date = header_root.get(1).select(".newsNFO").text();
+            String header_date = header_root.get(1).select(".newsNFO").text().split("By ")[1];
             String author_profile_url = header_root.get(1).select("a").first().attr("abs:href");
 
             Elements article_contents = body_root.children();

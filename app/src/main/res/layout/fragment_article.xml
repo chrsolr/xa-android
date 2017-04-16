@@ -10,19 +10,8 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:orientation="vertical"
-        android:paddingTop="@dimen/padding_level_1"
-        android:paddingBottom="@dimen/padding_level_2"
-        android:paddingLeft="@dimen/padding_level_1"
-        android:paddingRight="@dimen/padding_level_1"
+        android:padding="@dimen/padding_level_2"
         android:scrollbars="none">
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/color_white"
-            app:cardElevation="@dimen/recycler_view_evelation"
-            app:cardUseCompatPadding="true"
-            app:contentPadding="@dimen/padding_level_1">
 
             <LinearLayout
                 android:id="@+id/ll_article"
@@ -36,9 +25,9 @@
 
                     <io.keypunchers.xa.views.CircularNetworkImageView
                         android:id="@+id/iv_article_author_avatar"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_centerVertical="true"/>
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:layout_centerVertical="false"/>
 
                     <TextView
                         android:id="@+id/tv_article_title"
@@ -76,13 +65,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:linksClickable="true"
-                    android:textAppearance="@style/AppTheme.TextAppearance.Medium"
+                    android:textAppearance="@style/AppTheme.TextAppearance.Small"
                     android:textColor="@null" />
 
             </LinearLayout>
 
-
-        </android.support.v7.widget.CardView>
     </ScrollView>
 
 </FrameLayout>

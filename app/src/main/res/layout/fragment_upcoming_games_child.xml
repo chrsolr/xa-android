@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:choiceMode="singleChoice"
         android:clipToPadding="false"
-        android:divider="@color/color_light_gray"
+        android:divider="@color/divider"
         android:dividerHeight="1dp"
         android:paddingLeft="@dimen/padding_level_2"
         android:paddingRight="@dimen/padding_level_2"

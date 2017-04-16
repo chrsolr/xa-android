@@ -2,7 +2,7 @@
 <resources>
     <color name="color_primary">#FFFFFF</color>
     <color name="color_primary_dark">#BDBDBD</color>
-    <color name="color_primary_accent">#388E3C</color>
+    <color name="color_primary_accent">#212121</color>
     <color name="color_drawer_background">#ffffff</color>
     <color name="color_drawer_background_pressed">#f1f1f1</color>
     <color name="color_overlay_black">#ee107c10</color>
@@ -14,4 +14,5 @@
     <color name="primary_text_small_light">#bdbdbd</color>
     <color name="tab_strip">#bdbdbd</color>
     <color name="divider">#33bdbdbd</color>
+    <color name="color_transparent">#00000000</color>
 </resources>
