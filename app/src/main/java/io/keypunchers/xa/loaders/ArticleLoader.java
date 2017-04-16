@@ -99,7 +99,7 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
                 for (int i = 0; i < comments_rows.size(); i++) {
                     String image_url = comments_rows.get(i).select("td img").attr("abs:src");
                     String title = comments_rows.get(i).select("td b").first().text().trim();
-                    String date = comments_rows.get(i).select(".newsNFO").first().text();
+                    String date = comments_rows.get(i).select(".newsNFO").first().text().split(" @")[0].trim();
                     String text = "";
 
                     image_url = image_url.replaceAll(" ", "%20");
