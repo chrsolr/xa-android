@@ -39,7 +39,7 @@ public class ScreenshotsFragment extends Fragment implements LoaderManager.Loade
 
         setRetainInstance(true);
 
-        mAdapter = new ScreenshotsAdapter(mData);
+        mAdapter = new ScreenshotsAdapter(getActivity(), mData);
         RecyclerView mRvContent = (RecyclerView) getActivity().findViewById(R.id.rv_latest_screenshot);
         mRvContent.setAdapter(mAdapter);
         mRvContent.setLayoutManager(new LinearLayoutManager(getActivity()));

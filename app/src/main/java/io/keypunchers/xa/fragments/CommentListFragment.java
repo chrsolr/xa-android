@@ -46,7 +46,7 @@ public class CommentListFragment extends Fragment {
 
         setRetainInstance(true);
 
-        CommentListAdapter mAdapter = new CommentListAdapter(mData);
+        CommentListAdapter mAdapter = new CommentListAdapter(getActivity(), mData);
         RecyclerView mRvContent = (RecyclerView) view.findViewById(R.id.rv_comment_list);
         mRvContent.setAdapter(mAdapter);
         mRvContent.setLayoutManager(new LinearLayoutManager(getActivity()));

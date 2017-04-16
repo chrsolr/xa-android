@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -46,7 +47,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
         final String videoId = item.replace("https://www.youtube.com/embed/", "");
 
-        holder.mIvImage.setImageUrl("https://i3.ytimg.com/vi/" + videoId + "/0.jpg", SingletonVolley.getImageLoader());
+        Picasso.with(mContext).load("https://i3.ytimg.com/vi/" + videoId + "/0.jpg").noFade().into(holder.mIvImage);
         holder.mIvPlayIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,14 +75,14 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        NetworkImageView mIvImage;
+        ImageView mIvImage;
         ImageView mIvPlayIcon;
         ImageView mIvShareIcon;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            mIvImage = (NetworkImageView) itemView.findViewById(R.id.iv_video_list);
+            mIvImage = (ImageView) itemView.findViewById(R.id.iv_video_list);
             mIvPlayIcon = (ImageView) itemView.findViewById(R.id.iv_video_list_play_icon);
             mIvShareIcon = (ImageView) itemView.findViewById(R.id.iv_video_list_share_icon);
         }

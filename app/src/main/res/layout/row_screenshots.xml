@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="@dimen/padding_level_2">
 
-    <io.keypunchers.xa.views.ScaledNetworkImageView
+    <io.keypunchers.xa.views.ScaledImageView
         android:id="@+id/iv_latest_screenshot_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

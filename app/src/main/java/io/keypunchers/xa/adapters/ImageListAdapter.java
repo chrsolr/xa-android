@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -43,7 +44,7 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final String item = mData.get(position);
 
-        holder.mIvImage.setImageUrl(item, SingletonVolley.getImageLoader());
+        Picasso.with(mContext).load(item).noFade().into(holder.mIvImage);
         holder.mIvImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,12 +60,12 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        NetworkImageView mIvImage;
+        ImageView mIvImage;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            mIvImage = (NetworkImageView) itemView.findViewById(R.id.iv_image_list);
+            mIvImage = (ImageView) itemView.findViewById(R.id.iv_image_list);
         }
     }
 }

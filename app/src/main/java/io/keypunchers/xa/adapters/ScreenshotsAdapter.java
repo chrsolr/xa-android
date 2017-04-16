@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -17,12 +18,15 @@ import io.keypunchers.xa.app.ArticleActivity;
 import io.keypunchers.xa.misc.SingletonVolley;
 import io.keypunchers.xa.models.ArticleListItem;
 import io.keypunchers.xa.models.Screenshot;
+import io.keypunchers.xa.views.ScaledImageView;
 
 
 public class ScreenshotsAdapter extends RecyclerView.Adapter<ScreenshotsAdapter.ViewHolder> {
+    private Context mContext;
     private ArrayList<Screenshot> mData;
 
-    public ScreenshotsAdapter(ArrayList<Screenshot> data) {
+    public ScreenshotsAdapter(Context context, ArrayList<Screenshot> data) {
+        mContext = context;
         mData = data;
     }
 
@@ -42,7 +46,7 @@ public class ScreenshotsAdapter extends RecyclerView.Adapter<ScreenshotsAdapter.
 
         holder.mTvTitle.setText(screenshot.getTitle());
         holder.mTvSubTitle.setText(screenshot.getSubtitle());
-        holder.mIvScreenshot.setImageUrl(screenshot.getImageUrl(), SingletonVolley.getImageLoader());
+        Picasso.with(mContext).load(screenshot.getImageUrl()).into(holder.mIvScreenshot);
     }
 
     @Override
@@ -53,14 +57,14 @@ public class ScreenshotsAdapter extends RecyclerView.Adapter<ScreenshotsAdapter.
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView mTvTitle;
         TextView mTvSubTitle;
-        NetworkImageView mIvScreenshot;
+        ScaledImageView mIvScreenshot;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             mTvTitle = (TextView) itemView.findViewById(R.id.tv_latest_screenshot_title);
             mTvSubTitle = (TextView) itemView.findViewById(R.id.tv_latest_screenshot_subtitle);
-            mIvScreenshot = (NetworkImageView) itemView.findViewById(R.id.iv_latest_screenshot_image);
+            mIvScreenshot = (ScaledImageView) itemView.findViewById(R.id.iv_latest_screenshot_image);
         }
     }
 }

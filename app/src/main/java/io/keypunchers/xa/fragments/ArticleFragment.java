@@ -11,9 +11,11 @@ import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.squareup.picasso.Picasso;
 
 import org.xml.sax.XMLReader;
 
@@ -47,8 +49,10 @@ public class ArticleFragment extends Fragment {
 
         setRetainInstance(true);
 
-        ((CircularNetworkImageView) view.findViewById(R.id.iv_article_author_avatar))
-                .setImageUrl(mData.getAuthorProfileImageUrl(), SingletonVolley.getImageLoader());
+        Picasso.with(getActivity())
+                .load(mData.getAuthorProfileImageUrl())
+                .noFade()
+                .into(((ImageView) view.findViewById(R.id.iv_article_author_avatar)));
 
         ((TextView) view.findViewById(R.id.tv_article_title))
                 .setText(mData.getHeaderTitle());

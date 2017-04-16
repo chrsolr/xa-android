@@ -17,10 +17,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -142,8 +144,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     public void onLoadFinished(Loader<ArrayList<DrawerBanner>> loader, ArrayList<DrawerBanner> data) {
         mBanners = data;
 
-        NetworkImageView mIvBannerImg = (NetworkImageView) findViewById(R.id.iv_drawer_banner);
-        mIvBannerImg.setImageUrl(mBanners.get(0).getImage(), SingletonVolley.getImageLoader());
+        Picasso.with(this)
+                .load(mBanners.get(0).getImage())
+                .noFade()
+                .into((ImageView) findViewById(R.id.iv_drawer_banner));
 
         TextView mTvTitle = (TextView) findViewById(R.id.tv_banner_title);
         mTvTitle.setText(mBanners.get(0).getTitle());

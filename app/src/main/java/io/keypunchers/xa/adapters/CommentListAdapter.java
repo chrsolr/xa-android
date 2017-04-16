@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -18,9 +19,11 @@ import io.keypunchers.xa.models.Comment;
 
 
 public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.ViewHolder> {
+    private Context mContext;
     private ArrayList<Comment> mData;
 
-    public CommentListAdapter(ArrayList<Comment> data) {
+    public CommentListAdapter(Context context, ArrayList<Comment> data) {
+        mContext = context;
         mData = data;
     }
 
@@ -42,8 +45,12 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
         holder.mDate.setText(item.getDate());
         holder.mText.setText(item.getText());
 
-        ImageLoader mImageLoader = SingletonVolley.getImageLoader();
-        mImageLoader.get(mData.get(position).getImageUrl(), ImageLoader.getImageListener(holder.mIvImage, R.drawable.x360a_comments_notag, R.drawable.x360a_comments_notag));
+        Picasso.with(mContext)
+                .load(item.getImageUrl())
+                .placeholder(R.drawable.x360a_comments_notag)
+                .error(R.drawable.x360a_comments_notag)
+                .noFade()
+                .into(holder.mIvImage);
     }
 
     @Override

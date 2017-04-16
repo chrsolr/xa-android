@@ -6,9 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -19,9 +21,11 @@ import io.keypunchers.xa.models.ArticleListItem;
 
 
 public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.ViewHolder> {
+    private Context mContext;
     private ArrayList<ArticleListItem> mData;
 
-    public ArticleListAdapter(ArrayList<ArticleListItem> data) {
+    public ArticleListAdapter(Context context, ArrayList<ArticleListItem> data) {
+        mContext = context;
         mData = data;
     }
 
@@ -41,7 +45,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
 
         holder.mTvTitle.setText(item.getTitle());
         holder.mTvSubTitle.setText(item.getDesc());
-        holder.mIvImage.setImageUrl(item.getImageUrl(), SingletonVolley.getImageLoader());
+        Picasso.with(mContext).load(item.getImageUrl()).noFade().into(holder.mIvImage);
     }
 
     @Override
@@ -55,7 +59,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
 
         TextView mTvTitle;
         TextView mTvSubTitle;
-        NetworkImageView mIvImage;
+        ImageView mIvImage;
 
         public ViewHolder(View itemView, ArrayList<ArticleListItem> data, Context context) {
             super(itemView);
@@ -64,7 +68,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
 
             mTvTitle = (TextView) itemView.findViewById(R.id.tv_news_title);
             mTvSubTitle = (TextView) itemView.findViewById(R.id.tv_news_subtitle);
-            mIvImage = (NetworkImageView) itemView.findViewById(R.id.iv_news_image);
+            mIvImage = (ImageView) itemView.findViewById(R.id.iv_news_image);
 
             itemView.setOnClickListener(this);
         }

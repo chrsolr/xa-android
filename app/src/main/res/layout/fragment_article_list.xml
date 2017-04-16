@@ -22,7 +22,7 @@
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp">
 
-            <io.keypunchers.xa.views.ScaledNetworkImageView
+            <io.keypunchers.xa.views.ScaledImageView
                 android:id="@+id/iv_banner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

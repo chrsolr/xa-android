@@ -12,8 +12,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -28,7 +30,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
     private int COUNTER_PLUS;
     private ArrayList<ArticleListItem> mData = new ArrayList<>();
     private ArticleListAdapter mAdapter;
-    private NetworkImageView mIvBanner;
+    private ImageView mIvBanner;
 
     public ArticleListFragment() {
     }
@@ -44,9 +46,9 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
         setRetainInstance(true);
 
-        mIvBanner = (NetworkImageView) view.findViewById(R.id.iv_banner);
+        mIvBanner = (ImageView) view.findViewById(R.id.iv_banner);
 
-        mAdapter = new ArticleListAdapter(mData);
+        mAdapter = new ArticleListAdapter(getActivity(), mData);
         RecyclerView mRvContent = (RecyclerView) view.findViewById(R.id.rv_news);
         mRvContent.setAdapter(mAdapter);
         mRvContent.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -66,7 +68,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(AB_TITLE);
 
-            mIvBanner.setImageUrl(mHeaderImageUrl, SingletonVolley.getImageLoader());
+            Picasso.with(getActivity()).load(mHeaderImageUrl).noFade().into(mIvBanner);
         }
 
         if (mData.isEmpty()) {
