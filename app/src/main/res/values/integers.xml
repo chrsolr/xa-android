@@ -6,4 +6,5 @@
     <integer name="article_loader_id">4</integer>
     <integer name="upcoming_games_loader_id">5</integer>
     <integer name="latest_achievements_loader_id">6</integer>
+    <integer name="games_loader_id">7</integer>
 </resources>

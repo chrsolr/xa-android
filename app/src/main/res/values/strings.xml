@@ -30,5 +30,6 @@
     <string name="menu_item_previews">Previews</string>
     <string name="ab_interviews_title">Interviews</string>
     <string name="menu_item_interviews">Interviews</string>
+    <string name="menu_item_browse">Browse</string>
 
 </resources>

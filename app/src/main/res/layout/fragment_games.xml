@@ -1,31 +1,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="@dimen/activity_horizontal_margin"
-    tools:context="io.keypunchers.xa.fragments.GamesFragment">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <android.support.v4.widget.SlidingPaneLayout
+        android:id="@+id/slp_game_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="@android:color/white">
 
-        <TextView
-            android:id="@+id/textView4"
+        <ListView
+            android:id="@+id/lv_alphabet_content"
+            android:layout_width="65dp"
+            android:layout_height="match_parent"
+            android:background="@color/color_white"
+            android:choiceMode="singleChoice"
+            android:scrollbars="none"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_games_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-    </LinearLayout>
+            android:clipToPadding="false"
+            android:fitsSystemWindows="true"
+            android:scrollbars="none"
+            tools:context="io.keypunchers.xa.fragments.GamesFragment" />
+    </android.support.v4.widget.SlidingPaneLayout>
 </RelativeLayout>
+
