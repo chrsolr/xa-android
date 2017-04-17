@@ -62,7 +62,7 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<LatestAc
                     String submittedBy = "";
                     String comment_count = "";
 
-                    title = title.replace("Game Added: ", "").replace("DLC Added: ", "");
+                    title = title.replace("Game Added: ", "").replace("DLC Added: ", "").replace("DLCs Added: ", "");
                     dateAdded = dateAdded.replace("Added: ", "");
 
                     if (rows.get(i+1).select("td:eq(1) > p").isEmpty()) {

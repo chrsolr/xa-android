@@ -27,31 +27,51 @@
                         android:id="@+id/iv_article_author_avatar"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_centerHorizontal="false"
+                        android:layout_centerInParent="false"
                         android:layout_centerVertical="false" />
 
-                    <TextView
-                        android:id="@+id/tv_article_author_firstname"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/margin_level_1"
-                        android:layout_toEndOf="@+id/iv_article_author_avatar"
-                        android:layout_toRightOf="@+id/iv_article_author_avatar"
-                        android:fontFamily="sans-serif-light"
-                        android:textAllCaps="true"
-                        android:textSize="24sp" />
-
-                    <TextView
-                        android:id="@+id/tv_article_author_lastname"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/tv_article_author_firstname"
-                        android:layout_toRightOf="@+id/tv_article_author_firstname"
-                        android:fontFamily="sans-serif-bold"
-                        android:textAllCaps="true"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="false"
+                        android:layout_toEndOf="@+id/iv_article_author_avatar"
+                        android:layout_toRightOf="@+id/iv_article_author_avatar">
+
+                        <TextView
+                            android:id="@+id/tv_article_author_firstname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="false"
+                            android:layout_marginLeft="@dimen/margin_level_1"
+                            android:fontFamily="sans-serif-light"
+                            android:textAllCaps="true"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/tv_article_author_lastname"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="false"
+                            android:layout_toEndOf="@+id/tv_article_author_firstname"
+                            android:layout_toRightOf="@+id/tv_article_author_firstname"
+                            android:fontFamily="sans-serif-bold"
+                            android:textAllCaps="true"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_article_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_article_author_firstname"
+                            android:layout_marginLeft="@dimen/margin_level_1"
+                            android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
+                            android:layout_marginTop="-8dp"
+                            android:textColor="@null"
+                            android:textStyle="italic" />
+                    </RelativeLayout>
 
                 </RelativeLayout>
 

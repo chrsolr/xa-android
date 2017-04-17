@@ -12,8 +12,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -28,6 +31,7 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
     private String BASE_URL;
     private RecyclerView mRvContent;
     private LatestAchievementsListAdapter mAdapter;
+    private ImageView mIvBanner;
 
     public LatestAchievementFragment() {
     }
@@ -42,6 +46,8 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
         super.onViewCreated(view, savedInstanceState);
 
         setRetainInstance(true);
+
+        mIvBanner = (ImageView) view.findViewById(R.id.iv_la_banner);
 
         mAdapter = new LatestAchievementsListAdapter(getActivity(), mData);
         mRvContent = (RecyclerView) view.findViewById(R.id.rv_la_achievements_list);
@@ -58,7 +64,11 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
         if (getArguments() != null) {
             BASE_URL = getArguments().getString("url");
             String AB_TITLE = getArguments().getString("ab_title");
+            String mHeaderImageUrl = getArguments().getString("header_image_url");
+
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(AB_TITLE);
+
+            Picasso.with(getActivity()).load(mHeaderImageUrl).noFade().into(mIvBanner);
         }
 
         if (mData.isEmpty()) {
