@@ -1,4 +1,4 @@
-package io.keypunchers.xa.views;
+package io.keypunchers.xa.misc;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;

@@ -1,6 +1,7 @@
 package io.keypunchers.xa.fragments;
 
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,11 +22,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.GameListAdapter;
+import io.keypunchers.xa.adapters.GenericAdapter;
 import io.keypunchers.xa.loaders.GamesListLoader;
 import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.misc.GridLayoutItemOffsetDecoration;
@@ -59,7 +63,30 @@ public class GamesFragment extends Fragment implements LoaderManager.LoaderCallb
         mSlidingPane.setParallaxDistance(30);
 
         mLvAlphabet = (ListView) view.findViewById(R.id.lv_alphabet_content);
-        mLvAlphabet.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, alphabet));
+        mLvAlphabet.setAdapter(new GenericAdapter<>(getActivity(), new ArrayList<>(Arrays.asList(alphabet)), new GenericAdapter.onSetGetView() {
+            @Override
+            public View onGetView(int position, View convertView, ViewGroup parent, Context context, ArrayList<?> data) {
+                ViewHolder viewHolder;
+
+                if (convertView == null) {
+                    LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    convertView = inflater.inflate(R.layout.row_alphabet, parent, false);
+
+                    viewHolder = new ViewHolder();
+                    assert convertView != null;
+
+                    viewHolder.mTvTitle = (TextView) convertView.findViewById(R.id.tv_alphabet_title);
+
+                    convertView.setTag(viewHolder);
+                } else {
+                    viewHolder = (ViewHolder) convertView.getTag();
+                }
+
+                viewHolder.mTvTitle.setText(data.get(position).toString());
+
+                return convertView;
+            }
+        }));
 
         mAdapter = new GameListAdapter(getActivity(), mData);
         RecyclerView mRvContent = (RecyclerView) view.findViewById(R.id.rv_games_list);
@@ -130,4 +157,9 @@ public class GamesFragment extends Fragment implements LoaderManager.LoaderCallb
     public void onLoaderReset(Loader<ArrayList<Game>> loader) {
 
     }
+
+    private class ViewHolder {
+        TextView mTvTitle;
+    }
+
 }

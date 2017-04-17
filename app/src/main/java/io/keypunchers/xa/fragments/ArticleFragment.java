@@ -20,7 +20,7 @@ import org.xml.sax.XMLReader;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.models.Article;
-import io.keypunchers.xa.views.CircularTransform;
+import io.keypunchers.xa.misc.CircularTransform;
 
 public class ArticleFragment extends Fragment {
     private Article mData;
