@@ -6,7 +6,8 @@ import android.os.Parcelable;
 public class LatestAchievement implements Parcelable {
     private String imageUrl;
     private String title;
-    private String subtitle;
+    private String achievementsCount;
+    private String gamerscoreCount;
     private String submittedBy;
     private String url;
     private String commentCount;
@@ -18,22 +19,24 @@ public class LatestAchievement implements Parcelable {
     protected LatestAchievement(Parcel in) {
         imageUrl = in.readString();
         title = in.readString();
-        subtitle = in.readString();
+        achievementsCount = in.readString();
         submittedBy = in.readString();
         url = in.readString();
         commentCount = in.readString();
         dateAdded = in.readString();
+        gamerscoreCount = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(imageUrl);
         dest.writeString(title);
-        dest.writeString(subtitle);
+        dest.writeString(achievementsCount);
         dest.writeString(submittedBy);
         dest.writeString(url);
         dest.writeString(commentCount);
         dest.writeString(dateAdded);
+        dest.writeString(gamerscoreCount);
     }
 
     @Override
@@ -69,12 +72,12 @@ public class LatestAchievement implements Parcelable {
         this.title = title;
     }
 
-    public String getSubtitle() {
-        return subtitle;
+    public String getAchievementsCount() {
+        return achievementsCount;
     }
 
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
+    public void setAchievementsCount(String achievementsCount) {
+        this.achievementsCount = achievementsCount;
     }
 
     public String getSubmittedBy() {
@@ -107,5 +110,13 @@ public class LatestAchievement implements Parcelable {
 
     public void setDateAdded(String dateAdded) {
         this.dateAdded = dateAdded;
+    }
+
+    public String getGamerscoreCount() {
+        return gamerscoreCount;
+    }
+
+    public void setGamerscoreCount(String gamerscoreCount) {
+        this.gamerscoreCount = gamerscoreCount;
     }
 }

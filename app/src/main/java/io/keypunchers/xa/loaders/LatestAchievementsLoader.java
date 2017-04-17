@@ -76,7 +76,8 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<LatestAc
                     LatestAchievement item = new LatestAchievement();
                     item.setImageUrl(imageUrl);
                     item.setTitle(title);
-                    item.setSubtitle(subtitle);
+                    item.setAchievementsCount(subtitle.split(", ")[0].trim());
+                    item.setGamerscoreCount(subtitle.split(", ")[1].replace(".", "").trim());
                     item.setSubmittedBy(submittedBy);
                     item.setDateAdded(dateAdded);
                     item.setUrl(url);
@@ -85,6 +86,8 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<LatestAc
 
                     i = i + 2;
                 }
+
+                return mData;
             }
 
         } catch (Exception ex) {

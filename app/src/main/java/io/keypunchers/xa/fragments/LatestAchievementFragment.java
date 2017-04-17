@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,16 +19,17 @@ import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.GenericAdapter;
+import io.keypunchers.xa.adapters.LatestAchievementsListAdapter;
 import io.keypunchers.xa.loaders.LatestAchievementsLoader;
 import io.keypunchers.xa.models.LatestAchievement;
 
 public class LatestAchievementFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<LatestAchievement>> {
     private ArrayList<LatestAchievement> mData = new ArrayList<>();
-    private GenericAdapter<String> mAdapter;
     private String BASE_URL;
+    private RecyclerView mRvContent;
+    private LatestAchievementsListAdapter mAdapter;
 
     public LatestAchievementFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -40,8 +43,10 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
 
         setRetainInstance(true);
 
-        //ListView mLvContent = (ListView) view.findViewById(R.id.v_image_list);
-        //mLvContent.setAdapter(mAdapter);
+        mAdapter = new LatestAchievementsListAdapter(getActivity(), mData);
+        mRvContent = (RecyclerView) view.findViewById(R.id.rv_la_achievements_list);
+        mRvContent.setAdapter(mAdapter);
+        mRvContent.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     @Override
@@ -68,7 +73,7 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
 
     @Override
     public void onLoadFinished(Loader<ArrayList<LatestAchievement>> loader, ArrayList<LatestAchievement> data) {
-
+        mAdapter.notifyItemRangeChanged(mAdapter.getItemCount(), mData.size());
     }
 
     @Override
