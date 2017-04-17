@@ -28,16 +28,11 @@ public class ArticleListLoader extends AsyncTaskLoader<ArrayList<ArticleListItem
     @Override
     protected void onStartLoading() {
         super.onStartLoading();
-
-        if (!mData.isEmpty())
-            super.deliverResult(mData);
-        else
-            forceLoad();
+        forceLoad();
     }
 
     @Override
     public void deliverResult(ArrayList<ArticleListItem> data) {
-        mData = data;
         if (isStarted() && mData != null) {
             super.deliverResult(mData);
         }

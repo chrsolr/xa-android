@@ -196,7 +196,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 
         if (position == 0 && fragment == null) {
-            bundle.putString("url", "http://www.xboxachievements.com/archive/gaming-news/1/");
+            bundle.putString("url", "http://www.xboxachievements.com/archive/gaming-news/");
             bundle.putInt("counter", 3);
             bundle.putString("ab_title", getResources().getString(R.string.ab_news_title));
             bundle.putString("header_image_url", mBanners.get(1).getImage());
@@ -206,7 +206,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
 
         if (position == 1 && fragment == null) {
-            bundle.putString("url", "http://www.xboxachievements.com/news/previews/1/");
+            bundle.putString("url", "http://www.xboxachievements.com/news/previews/");
             bundle.putInt("counter", 2);
             bundle.putString("ab_title", getResources().getString(R.string.ab_previews_title));
             bundle.putString("header_image_url", mBanners.get(2).getImage());
@@ -216,7 +216,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
 
         if (position == 2 && fragment == null) {
-            bundle.putString("url", "http://www.xboxachievements.com/news/interviews/1/");
+            bundle.putString("url", "http://www.xboxachievements.com/news/interviews/");
             bundle.putInt("counter", 2);
             bundle.putString("ab_title", getResources().getString(R.string.ab_interviews_title));
             bundle.putString("header_image_url", mBanners.get(3).getImage());
@@ -234,7 +234,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
 
         if (position == 4 && fragment == null) {
-            bundle.putString("url", "http://www.xboxachievements.com/archive/achievements/1/");
+            bundle.putString("url", "http://www.xboxachievements.com/archive/achievements/");
             bundle.putString("ab_title", getResources().getString(R.string.ab_latest_achievements_title));
             bundle.putString("header_image_url", mBanners.get(4).getImage());
 

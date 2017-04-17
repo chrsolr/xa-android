@@ -1,7 +1,9 @@
 package io.keypunchers.xa.fragments;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.ArticleListAdapter;
 import io.keypunchers.xa.loaders.ArticleListLoader;
+import io.keypunchers.xa.misc.EndlessRecyclerViewScrollListener;
 import io.keypunchers.xa.models.ArticleListItem;
 
 public class ArticleListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<ArticleListItem>> {
@@ -29,6 +32,8 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
     private ArrayList<ArticleListItem> mData = new ArrayList<>();
     private ArticleListAdapter mAdapter;
     private ImageView mIvBanner;
+    private int LOADER_ID;
+    private int mCurrentPage = 1;
 
     public ArticleListFragment() {
     }
@@ -44,19 +49,35 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
         setRetainInstance(true);
 
+        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        final int mMaxItems = mPrefs.getInt("MAX_SCROLLING_ITEMS", 100);
+
         mIvBanner = (ImageView) view.findViewById(R.id.iv_banner);
 
         mAdapter = new ArticleListAdapter(getActivity(), mData);
+
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        EndlessRecyclerViewScrollListener mScroller = new EndlessRecyclerViewScrollListener(mLinearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                if (totalItemsCount < mMaxItems) {
+                    mCurrentPage = page + 1;
+                    makeNetworkCall();
+                }
+            }
+        };
+
         RecyclerView mRvContent = (RecyclerView) view.findViewById(R.id.rv_news);
         mRvContent.setAdapter(mAdapter);
-        mRvContent.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRvContent.setLayoutManager(mLinearLayoutManager);
+        mRvContent.addOnScrollListener(mScroller);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        int LOADER_ID = getActivity().getResources().getInteger(R.integer.news_loader_id);
+        LOADER_ID = getActivity().getResources().getInteger(R.integer.news_loader_id);
 
         if (getArguments() != null) {
             BASE_URL = getArguments().getString("url");
@@ -76,7 +97,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public Loader<ArrayList<ArticleListItem>> onCreateLoader(int id, Bundle args) {
-        return new ArticleListLoader(getActivity(), BASE_URL, mData, COUNTER_PLUS);
+        return new ArticleListLoader(getActivity(), BASE_URL + mCurrentPage + "/", mData, COUNTER_PLUS);
     }
 
     @Override
@@ -86,5 +107,9 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public void onLoaderReset(Loader<ArrayList<ArticleListItem>> loader) {
+    }
+
+    private void makeNetworkCall() {
+        getActivity().getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 }

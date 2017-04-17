@@ -1,7 +1,9 @@
 package io.keypunchers.xa.fragments;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -24,14 +26,16 @@ import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.GenericAdapter;
 import io.keypunchers.xa.adapters.LatestAchievementsListAdapter;
 import io.keypunchers.xa.loaders.LatestAchievementsLoader;
+import io.keypunchers.xa.misc.EndlessRecyclerViewScrollListener;
 import io.keypunchers.xa.models.LatestAchievement;
 
 public class LatestAchievementFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<LatestAchievement>> {
     private ArrayList<LatestAchievement> mData = new ArrayList<>();
     private String BASE_URL;
-    private RecyclerView mRvContent;
     private LatestAchievementsListAdapter mAdapter;
     private ImageView mIvBanner;
+    private int LOADER_ID;
+    private int mCurrentPage = 1;
 
     public LatestAchievementFragment() {
     }
@@ -47,19 +51,35 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
 
         setRetainInstance(true);
 
+        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        final int mMaxItems = mPrefs.getInt("MAX_SCROLLING_ITEMS", 100);
+
         mIvBanner = (ImageView) view.findViewById(R.id.iv_la_banner);
 
         mAdapter = new LatestAchievementsListAdapter(getActivity(), mData);
-        mRvContent = (RecyclerView) view.findViewById(R.id.rv_la_achievements_list);
+
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        EndlessRecyclerViewScrollListener mScroller = new EndlessRecyclerViewScrollListener(mLinearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                if (totalItemsCount < mMaxItems) {
+                    mCurrentPage = page + 1;
+                    makeNetworkCall();
+                }
+            }
+        };
+
+        RecyclerView mRvContent = (RecyclerView) view.findViewById(R.id.rv_la_achievements_list);
         mRvContent.setAdapter(mAdapter);
-        mRvContent.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRvContent.setLayoutManager(mLinearLayoutManager);
+        mRvContent.addOnScrollListener(mScroller);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        int LOADER_ID = getActivity().getResources().getInteger(R.integer.latest_achievements_loader_id);
+        LOADER_ID = getActivity().getResources().getInteger(R.integer.latest_achievements_loader_id);
 
         if (getArguments() != null) {
             BASE_URL = getArguments().getString("url");
@@ -78,7 +98,7 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
 
     @Override
     public Loader<ArrayList<LatestAchievement>> onCreateLoader(int id, Bundle args) {
-        return new LatestAchievementsLoader(getActivity(), BASE_URL, mData);
+        return new LatestAchievementsLoader(getActivity(), BASE_URL + mCurrentPage + "/", mData);
     }
 
     @Override
@@ -89,5 +109,9 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
     @Override
     public void onLoaderReset(Loader<ArrayList<LatestAchievement>> loader) {
 
+    }
+
+    private void makeNetworkCall() {
+        getActivity().getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 }

@@ -26,16 +26,11 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<LatestAc
     @Override
     protected void onStartLoading() {
         super.onStartLoading();
-
-        if (!mData.isEmpty())
-            super.deliverResult(mData);
-        else
-            forceLoad();
+        forceLoad();
     }
 
     @Override
     public void deliverResult(ArrayList<LatestAchievement> data) {
-        mData = data;
         if (isStarted() && mData != null) {
             super.deliverResult(mData);
         }
@@ -54,9 +49,9 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<LatestAc
 
             if (!rows.isEmpty()) {
                 for (int i = 0; i < rows.size(); i++) {
-                    String imageUrl = rows.get(i+1).select("td:eq(0) > img").attr("abs:src");
+                    String imageUrl = rows.get(i + 1).select("td:eq(0) > img").attr("abs:src");
                     String title = rows.get(i).select(".newsTitle").text().trim();
-                    String url = rows.get(i+1).select("td:eq(1) > a").attr("abs:href");
+                    String url = rows.get(i + 1).select("td:eq(1) > a").attr("abs:href");
                     String dateAdded = rows.get(i).select(".newsNFO").text().trim();
                     String subtitle = "";
                     String submittedBy = "";
@@ -65,12 +60,12 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<LatestAc
                     title = title.replace("Game Added: ", "").replace("DLC Added: ", "").replace("DLCs Added: ", "");
                     dateAdded = dateAdded.replace("Added: ", "");
 
-                    if (rows.get(i+1).select("td:eq(1) > p").isEmpty()) {
-                        subtitle = rows.get(i+1).select("td:eq(1)").get(0).textNodes().get(0).text().trim();
-                        submittedBy = rows.get(i+1).select("td:eq(1) > strong").eq(0).text().trim();
+                    if (rows.get(i + 1).select("td:eq(1) > p").isEmpty()) {
+                        subtitle = rows.get(i + 1).select("td:eq(1)").get(0).textNodes().get(0).text().trim();
+                        submittedBy = rows.get(i + 1).select("td:eq(1) > strong").eq(0).text().trim();
                     } else {
-                        subtitle = rows.get(i+1).select("td:eq(1) > p").get(0).textNodes().get(0).text().trim();
-                        submittedBy = rows.get(i+1).select("td:eq(1) > p > strong").eq(0).text().trim();
+                        subtitle = rows.get(i + 1).select("td:eq(1) > p").get(0).textNodes().get(0).text().trim();
+                        submittedBy = rows.get(i + 1).select("td:eq(1) > p > strong").eq(0).text().trim();
                     }
 
                     LatestAchievement item = new LatestAchievement();
