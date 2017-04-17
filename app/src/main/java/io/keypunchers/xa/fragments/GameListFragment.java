@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -19,7 +20,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,14 +38,14 @@ import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.misc.GridLayoutItemOffsetDecoration;
 import io.keypunchers.xa.models.Game;
 
-public class GamesFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<Game>> {
+public class GameListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<Game>> {
     private String BASE_URL;
     private ArrayList<Game> mData = new ArrayList<>();
     private GameListAdapter mAdapter;
     private ListView mLvAlphabet;
     private SlidingPaneLayout mSlidingPane;
 
-    public GamesFragment() {
+    public GameListFragment() {
         // Required empty public constructor
     }
 
@@ -57,13 +60,13 @@ public class GamesFragment extends Fragment implements LoaderManager.LoaderCallb
 
         setRetainInstance(true);
 
-        String[] alphabet = getActivity().getResources().getStringArray(R.array.browse_game_alphabet);
+        final ArrayList<String> alphabet = new ArrayList<>(Arrays.asList(getActivity().getResources().getStringArray(R.array.browse_game_alphabet)));
 
         mSlidingPane = (SlidingPaneLayout) view.findViewById(R.id.slp_game_list);
         mSlidingPane.setParallaxDistance(30);
 
         mLvAlphabet = (ListView) view.findViewById(R.id.lv_alphabet_content);
-        mLvAlphabet.setAdapter(new GenericAdapter<>(getActivity(), new ArrayList<>(Arrays.asList(alphabet)), new GenericAdapter.onSetGetView() {
+        mLvAlphabet.setAdapter(new GenericAdapter<>(getActivity(), alphabet, new GenericAdapter.onSetGetView() {
             @Override
             public View onGetView(int position, View convertView, ViewGroup parent, Context context, ArrayList<?> data) {
                 ViewHolder viewHolder;
@@ -87,6 +90,12 @@ public class GamesFragment extends Fragment implements LoaderManager.LoaderCallb
                 return convertView;
             }
         }));
+        mLvAlphabet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Snackbar.make(view, alphabet.get(position), Snackbar.LENGTH_LONG).show();
+            }
+        });
 
         mAdapter = new GameListAdapter(getActivity(), mData);
         RecyclerView mRvContent = (RecyclerView) view.findViewById(R.id.rv_games_list);

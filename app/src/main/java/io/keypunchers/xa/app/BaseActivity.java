@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.fragments.AboutFragment;
 import io.keypunchers.xa.fragments.ArticleListFragment;
-import io.keypunchers.xa.fragments.GamesFragment;
+import io.keypunchers.xa.fragments.GameListFragment;
 import io.keypunchers.xa.fragments.LatestAchievementFragment;
 import io.keypunchers.xa.fragments.ScreenshotsFragment;
 import io.keypunchers.xa.fragments.UpcomingGamesFragment;
@@ -230,7 +230,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             bundle.putString("url", "http://www.xboxachievements.com/browsegames/xbox-one/");
             bundle.putString("ab_title", getResources().getString(R.string.ab_games_title));
 
-            fragment = new GamesFragment();
+            fragment = new GameListFragment();
             fragment.setArguments(bundle);
         }
 
