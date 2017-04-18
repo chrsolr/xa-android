@@ -23,7 +23,7 @@
         <item
             android:id="@+id/nav_latest_achievements"
             android:icon="@drawable/ic_new_releases_24dp"
-            android:title="@string/menu_item_lastest_achievements" />
+            android:title="@string/menu_item_latest_achievements" />
         <item
             android:id="@+id/nav_screenshots"
             android:icon="@drawable/ic_image_24dp"
