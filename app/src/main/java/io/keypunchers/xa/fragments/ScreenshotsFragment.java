@@ -4,32 +4,24 @@ package io.keypunchers.xa.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.ScreenshotsAdapter;
-import io.keypunchers.xa.misc.VolleySingleton;
-import io.keypunchers.xa.models.LatestScreenshot;
+import io.keypunchers.xa.loaders.ScreenshotsLoader;
+import io.keypunchers.xa.models.Screenshot;
 
-public class ScreenshotsFragment extends Fragment {
-    private ArrayList<LatestScreenshot> mData = new ArrayList<>();
+public class ScreenshotsFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<Screenshot>> {
+    private ArrayList<Screenshot> mData = new ArrayList<>();
     private String BASE_URL;
     private ScreenshotsAdapter mAdapter;
 
@@ -57,6 +49,8 @@ public class ScreenshotsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        int LOADER_ID = getActivity().getResources().getInteger(R.integer.latest_screenshots_loader_id);
+
         if (mData.isEmpty() && getArguments() != null) {
             BASE_URL = getArguments().getString("url");
             String AB_TITLE = getArguments().getString("ab_title");
@@ -64,48 +58,21 @@ public class ScreenshotsFragment extends Fragment {
         }
 
         if (mData.isEmpty()) {
-            makeNetworkCall();
+            getActivity().getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
         }
     }
 
-    private void makeNetworkCall() {
-        RequestQueue mQueue = VolleySingleton.getRequestQueque();
+    @Override
+    public Loader<ArrayList<Screenshot>> onCreateLoader(int id, Bundle args) {
+        return new ScreenshotsLoader(getActivity(), BASE_URL, mData);
+    }
 
-        JsonArrayRequest mRequest = new JsonArrayRequest
-                (Request.Method.GET, BASE_URL, null, new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        try {
+    @Override
+    public void onLoadFinished(Loader<ArrayList<Screenshot>> loader, ArrayList<Screenshot> data) {
+        mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), mData.size());
+    }
 
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject json = response.getJSONObject(i);
-
-                                String title = json.getString("title");
-                                String date = json.getString("date");
-                                String image_url = json.getJSONObject("image_urls").getString("med");
-                                String game_permalink = json.getString("game_permalink");
-
-                                LatestScreenshot screenshot = new LatestScreenshot();
-                                screenshot.setTitle(title);
-                                screenshot.setDate(date);
-                                screenshot.setImageUrl(image_url);
-                                screenshot.setGamePermalink(game_permalink);
-
-                                mData.add(screenshot);
-                            }
-
-                            mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), mData.size());
-                        } catch (Exception e) {
-                            Log.e("Error: ", e.getMessage());
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("Error", error.getMessage());
-                    }
-                });
-
-        mQueue.add(mRequest);
+    @Override
+    public void onLoaderReset(Loader<ArrayList<Screenshot>> loader) {
     }
 }

@@ -244,7 +244,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
 
         if (position == 5 && fragment == null) {
-            bundle.putString("url", getResources().getString(R.string.api_latest_screenshots));
+            bundle.putString("url", "http://www.xboxachievements.com/");
             bundle.putString("ab_title", getResources().getString(R.string.ab_screenshots_title));
 
             fragment = new ScreenshotsFragment();
