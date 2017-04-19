@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:resizeableActivity="false"
         android:theme="@style/AppTheme"
+		tools:ignore="UnusedAttribute"
         tools:targetApi="n">
 
         <activity
