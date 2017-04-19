@@ -75,8 +75,4 @@ public class Screenshot implements Parcelable {
     public void setGamePermalink(String url) {
         this.mGamePermalink = url.replace("/game/", "").replace("/screenshots/", "");
     }
-
-	public String getGameScreenshotsUrl(){
-		return String.format("/game/%s/screenshots/", mGamePermalink);
-	}
 }

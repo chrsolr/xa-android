@@ -5,24 +5,24 @@ import android.os.Parcelable;
 
 
 public class UpcomingGame implements Parcelable {
-    private String title;
-    private String date;
-    private String url;
+    private String mTitle;
+    private String mReleaseDate;
+    private String mGamePermalink;
 
     public UpcomingGame() {
     }
 
     protected UpcomingGame(Parcel in) {
-        title = in.readString();
-        date = in.readString();
-        url = in.readString();
+        mTitle = in.readString();
+        mReleaseDate = in.readString();
+        mGamePermalink = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
-        dest.writeString(date);
-        dest.writeString(url);
+        dest.writeString(mTitle);
+        dest.writeString(mReleaseDate);
+        dest.writeString(mGamePermalink);
     }
 
     @Override
@@ -43,26 +43,26 @@ public class UpcomingGame implements Parcelable {
     };
 
     public String getTitle() {
-        return title;
+        return mTitle;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.mTitle = title;
     }
 
-    public String getDate() {
-        return date;
+    public String getReleaseDate() {
+        return mReleaseDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setReleaseDate(String date) {
+        this.mReleaseDate = date;
     }
 
-    public String getUrl() {
-        return url;
+    public String getGamePermalink() {
+        return mGamePermalink;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setGamePermalink(String url) {
+        this.mGamePermalink = url.replace("/game/", "").replace("/overview/", "");
     }
 }

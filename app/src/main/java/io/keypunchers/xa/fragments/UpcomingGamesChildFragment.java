@@ -70,7 +70,7 @@ public class UpcomingGamesChildFragment extends Fragment {
                 }
 
                 viewHolder.mTitle.setText(mData.get(position).getTitle());
-                viewHolder.mDate.setText(mData.get(position).getDate());
+                viewHolder.mDate.setText(mData.get(position).getReleaseDate());
 
                 return convertView;
             }

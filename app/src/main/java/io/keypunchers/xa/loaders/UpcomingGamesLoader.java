@@ -57,13 +57,13 @@ public class UpcomingGamesLoader extends AsyncTaskLoader<ArrayList<UpcomingGame>
 
             for (int i = 2; i < rows.size(); i++) {
                 String title = rows.get(i).select("a").text();
-                String date = rows.get(i).select("td").first().text();
+                String date = rows.get(i).select("td:first-child").text();
                 String url = rows.get(i).select("a").attr("abs:href");
 
                 UpcomingGame game = new UpcomingGame();
                 game.setTitle(title);
-                game.setDate(date);
-                game.setUrl(url);
+                game.setReleaseDate(date);
+                game.setGamePermalink(url);
 
                 games.add(game);
             }
