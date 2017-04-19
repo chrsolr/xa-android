@@ -4,19 +4,19 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Screenshot implements Parcelable {
-    private String title;
-    private String subtitle;
-    private String imageUrl;
-    private String gameUrl;
+    private String mTitle;
+    private String mDateAdded;
+    private String mImageUrl;
+    private String mGamePermalink;
 
     public Screenshot() {
     }
 
     public Screenshot(Parcel in) {
-        title = in.readString();
-        subtitle = in.readString();
-        imageUrl = in.readString();
-        gameUrl = in.readString();
+        mTitle = in.readString();
+        mDateAdded = in.readString();
+        mImageUrl = in.readString();
+        mGamePermalink = in.readString();
     }
 
     public static final Creator<Screenshot> CREATOR = new Creator<Screenshot>() {
@@ -38,41 +38,45 @@ public class Screenshot implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
-        dest.writeString(subtitle);
-        dest.writeString(imageUrl);
-        dest.writeString(gameUrl);
+        dest.writeString(mTitle);
+        dest.writeString(mDateAdded);
+        dest.writeString(mImageUrl);
+        dest.writeString(mGamePermalink);
     }
 
     public String getTitle() {
-        return title;
+        return mTitle;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.mTitle = title;
     }
 
-    public String getSubtitle() {
-        return subtitle;
+    public String getDateAdded() {
+        return mDateAdded;
     }
 
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
+    public void setDateAdded(String date) {
+        this.mDateAdded = date;
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        return mImageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageUrl(String url) {
+        this.mImageUrl = url;
+    }
+	
+	public String getGamePermalink() {
+        return mGamePermalink;
     }
 
-    public String getGameUrl() {
-        return gameUrl;
+    public void setGamePermalink(String url) {
+        this.mGamePermalink = url.replace("/game/", "").replace("/screenshots/", "");
     }
 
-    public void setGameUrl(String gameUrl) {
-        this.gameUrl = gameUrl;
-    }
+	public String getGameScreenshotsUrl(){
+		return String.format("/game/%s/screenshots/", mGamePermalink);
+	}
 }

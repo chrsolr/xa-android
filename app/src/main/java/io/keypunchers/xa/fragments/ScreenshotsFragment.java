@@ -17,12 +17,11 @@ import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.ScreenshotsAdapter;
-import io.keypunchers.xa.loaders.ScreenshotsLoader;
+import io.keypunchers.xa.loaders.LatestScreenshotsLoader;
 import io.keypunchers.xa.models.Screenshot;
 
 public class ScreenshotsFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<Screenshot>> {
     private ArrayList<Screenshot> mData = new ArrayList<>();
-    private String BASE_URL;
     private ScreenshotsAdapter mAdapter;
 
     public ScreenshotsFragment() {
@@ -52,7 +51,6 @@ public class ScreenshotsFragment extends Fragment implements LoaderManager.Loade
         int LOADER_ID = getActivity().getResources().getInteger(R.integer.latest_screenshots_loader_id);
 
         if (mData.isEmpty() && getArguments() != null) {
-            BASE_URL = getArguments().getString("url");
             String AB_TITLE = getArguments().getString("ab_title");
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(AB_TITLE);
         }
@@ -64,7 +62,7 @@ public class ScreenshotsFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public Loader<ArrayList<Screenshot>> onCreateLoader(int id, Bundle args) {
-        return new ScreenshotsLoader(getActivity(), BASE_URL, mData);
+        return new LatestScreenshotsLoader(getActivity(), mData);
     }
 
     @Override

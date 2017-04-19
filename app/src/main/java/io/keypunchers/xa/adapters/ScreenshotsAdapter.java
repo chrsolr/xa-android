@@ -40,7 +40,7 @@ public class ScreenshotsAdapter extends RecyclerView.Adapter<ScreenshotsAdapter.
         Screenshot screenshot = mData.get(position);
 
         holder.mTvTitle.setText(screenshot.getTitle());
-        holder.mTvSubTitle.setText(screenshot.getSubtitle());
+        holder.mTvSubTitle.setText(screenshot.getDateAdded());
         Picasso.with(mContext).load(screenshot.getImageUrl()).into(holder.mIvScreenshot);
     }
 

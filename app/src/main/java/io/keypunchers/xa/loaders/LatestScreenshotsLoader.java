@@ -13,17 +13,13 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import io.keypunchers.xa.models.Screenshot;
+import io.keypunchers.xa.misc.*;
 
-public class ScreenshotsLoader extends AsyncTaskLoader<ArrayList<Screenshot>> {
-
-    private final Context mContext;
-    private final String BASE_URL;
+public class LatestScreenshotsLoader extends AsyncTaskLoader<ArrayList<Screenshot>> {
     private ArrayList<Screenshot> mData;
 
-    public ScreenshotsLoader(Context context, String url, ArrayList<Screenshot> data) {
+    public LatestScreenshotsLoader(Context context, ArrayList<Screenshot> data) {
         super(context);
-        mContext = context;
-        BASE_URL = url;
         mData = data;
     }
 
@@ -48,7 +44,7 @@ public class ScreenshotsLoader extends AsyncTaskLoader<ArrayList<Screenshot>> {
     @Override
     public ArrayList<Screenshot> loadInBackground() {
         try {
-            Document document = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
+            Document document = Jsoup.parse(new URL(Common.BASE_URL).openStream(), "UTF-8", Common.BASE_URL);
 
             Element root = document.getElementsByClass("bl_me_main").get(3);
 
@@ -56,18 +52,18 @@ public class ScreenshotsLoader extends AsyncTaskLoader<ArrayList<Screenshot>> {
                 Elements elements = root.getElementsByTag("td");
 
                 for (Element el : elements) {
-                    String title = el.select("a b").first().text();
-                    String image_url = el.select("a img").first().attr("abs:src");
-                    String url = el.select("a").first().attr("abs:href");
+                    String title = el.select("a b:first-child").text().trim();
+                    String image_url = el.select("a img:first-child").attr("abs:src");
+                    String game_screenshots_url = el.select("a:first-child").attr("abs:href");
                     String date = el.ownText().trim();
 
-                    image_url = image_url.replace("thu", "med").replaceAll("\\s", "%20");
+                    image_url = Common.imageUrlthumbToMed(image_url);
 
                     Screenshot obj = new Screenshot();
                     obj.setTitle(title);
-                    obj.setSubtitle(date);
+                    obj.setDateAdded(date);
                     obj.setImageUrl(image_url);
-                    obj.setGameUrl(url);
+                    obj.setGamePermalink(game_screenshots_url);
 
                     mData.add(obj);
                 }
@@ -75,7 +71,7 @@ public class ScreenshotsLoader extends AsyncTaskLoader<ArrayList<Screenshot>> {
 
             return mData;
         } catch (Exception ex) {
-            Log.e("Drawer Loader", ex.getMessage());
+            Log.e("LatestScreenshots Loader", ex.getMessage());
             return null;
         }
 

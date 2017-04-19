@@ -31,10 +31,10 @@ import io.keypunchers.xa.fragments.GameListFragment;
 import io.keypunchers.xa.fragments.LatestAchievementFragment;
 import io.keypunchers.xa.fragments.ScreenshotsFragment;
 import io.keypunchers.xa.fragments.UpcomingGamesFragment;
-import io.keypunchers.xa.loaders.DrawerBannerLoader;
-import io.keypunchers.xa.models.DrawerBanner;
+import io.keypunchers.xa.models.Screenshot;
+import io.keypunchers.xa.loaders.*;
 
-public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<ArrayList<DrawerBanner>> {
+public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<ArrayList<Screenshot>> {
     private final String DRAWER_LEARNED_TAG = "DRAWER_LEARNED";
     private int mDrawerCurrentSelectedPosition = 0;
     private boolean mIsDrawerLearned;
@@ -42,7 +42,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView mNavigationView;
     private DrawerLayout mDrawer;
     private SharedPreferences mPrefs;
-    private ArrayList<DrawerBanner> mBanners;
+    private ArrayList<Screenshot> mBanners = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +61,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         setupUI();
 
-        getData(savedInstanceState);
+        makeNetworkCall(savedInstanceState);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -135,16 +135,16 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public Loader<ArrayList<DrawerBanner>> onCreateLoader(int id, Bundle args) {
-        return new DrawerBannerLoader(this);
+    public Loader<ArrayList<Screenshot>> onCreateLoader(int id, Bundle args) {
+        return new LatestScreenshotsLoader(this, mBanners);
     }
 
     @Override
-    public void onLoadFinished(Loader<ArrayList<DrawerBanner>> loader, ArrayList<DrawerBanner> data) {
+    public void onLoadFinished(Loader<ArrayList<Screenshot>> loader, ArrayList<Screenshot> data) {
         mBanners = data;
 
         Picasso.with(this)
-                .load(mBanners.get(0).getImage())
+                .load(mBanners.get(0).getImageUrl())
                 .noFade()
                 .into((ImageView) findViewById(R.id.iv_drawer_banner));
 
@@ -160,8 +160,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void onLoaderReset(Loader<ArrayList<DrawerBanner>> loader) {
-        //getSupportLoaderManager().destroyLoader(LOADER_ID);
+    public void onLoaderReset(Loader<ArrayList<Screenshot>> loader) {
     }
 
     @Override
@@ -181,7 +180,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void getData(Bundle savedInstanceState) {
+    private void makeNetworkCall(Bundle savedInstanceState) {
         int LOADER_ID = getResources().getInteger(R.integer.navigation_drawer_loader_id);
 
         if (getSupportLoaderManager().getLoader(LOADER_ID) == null) {
@@ -200,7 +199,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             bundle.putString("url", "http://www.xboxachievements.com/archive/gaming-news/");
             bundle.putInt("counter", 3);
             bundle.putString("ab_title", getResources().getString(R.string.ab_news_title));
-            bundle.putString("header_image_url", mBanners.get(1).getImage());
+            bundle.putString("header_image_url", mBanners.get(1).getImageUrl());
 
             fragment = new ArticleListFragment();
             fragment.setArguments(bundle);
@@ -210,7 +209,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             bundle.putString("url", "http://www.xboxachievements.com/news/previews/");
             bundle.putInt("counter", 2);
             bundle.putString("ab_title", getResources().getString(R.string.ab_previews_title));
-            bundle.putString("header_image_url", mBanners.get(2).getImage());
+            bundle.putString("header_image_url", mBanners.get(2).getImageUrl());
 
             fragment = new ArticleListFragment();
             fragment.setArguments(bundle);
@@ -220,7 +219,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             bundle.putString("url", "http://www.xboxachievements.com/news/interviews/");
             bundle.putInt("counter", 2);
             bundle.putString("ab_title", getResources().getString(R.string.ab_interviews_title));
-            bundle.putString("header_image_url", mBanners.get(3).getImage());
+            bundle.putString("header_image_url", mBanners.get(3).getImageUrl());
 
             fragment = new ArticleListFragment();
             fragment.setArguments(bundle);
@@ -237,14 +236,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         if (position == 4 && fragment == null) {
             bundle.putString("url", "http://www.xboxachievements.com/archive/achievements/");
             bundle.putString("ab_title", getResources().getString(R.string.ab_latest_achievements_title));
-            bundle.putString("header_image_url", mBanners.get(4).getImage());
+            bundle.putString("header_image_url", mBanners.get(4).getImageUrl());
 
             fragment = new LatestAchievementFragment();
             fragment.setArguments(bundle);
         }
 
         if (position == 5 && fragment == null) {
-            bundle.putString("url", "http://www.xboxachievements.com/");
             bundle.putString("ab_title", getResources().getString(R.string.ab_screenshots_title));
 
             fragment = new ScreenshotsFragment();
