@@ -11,11 +11,12 @@
 
         <ListView
             android:id="@+id/lv_alphabet_content"
-            android:layout_width="65dp"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
             android:background="@color/color_white"
             android:paddingTop="@dimen/padding_level_1"
-            android:paddingBottom="@dimen/padding_level_1"
+			android:paddingBottom="@dimen/padding_level_1"
+			android:paddingLeft="@dimen/padding_level_1"
             android:choiceMode="singleChoice"
             android:clipToPadding="false"
             android:scrollbars="none"/>
@@ -27,6 +28,7 @@
             android:clipToPadding="false"
             android:fitsSystemWindows="true"
             android:scrollbars="none"
+			android:padding="12dp"
             tools:context="io.keypunchers.xa.fragments.GameListFragment" />
     </android.support.v4.widget.SlidingPaneLayout>
 </RelativeLayout>

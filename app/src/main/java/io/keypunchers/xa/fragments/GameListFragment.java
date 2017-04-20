@@ -101,7 +101,7 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
         RecyclerView mRvContent = (RecyclerView) view.findViewById(R.id.rv_games_list);
         mRvContent.setAdapter(mAdapter);
         mRvContent.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        mRvContent.addItemDecoration(new GridLayoutItemOffsetDecoration(getActivity(), Common.convertDpToPx(16, getActivity())));
+        mRvContent.addItemDecoration(new GridLayoutItemOffsetDecoration(getActivity(), Common.convertDpToPx(4, getActivity())));
     }
 
     @Override
