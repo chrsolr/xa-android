@@ -13,29 +13,33 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import io.keypunchers.xa.models.ArticleListItem;
+import android.widget.*;
 
 public class ArticleListLoader extends AsyncTaskLoader<ArrayList<ArticleListItem>> {
     private final int COUNTER_PLUS;
     private final String BASE_URL;
-    private ArrayList<ArticleListItem> mData;
+    private ArrayList<ArticleListItem> mData = new ArrayList<>();
 
-    public ArticleListLoader(Context context, String url, ArrayList<ArticleListItem> data, int counter) {
+    public ArticleListLoader(Context context, String url, int counter) {
         super(context);
         BASE_URL = url;
-        mData = data;
         COUNTER_PLUS = counter;
     }
 
     @Override
     protected void onStartLoading() {
         super.onStartLoading();
-        forceLoad();
+
+		if (!mData.isEmpty())
+        	deliverResult(mData);
+		else
+			forceLoad();
     }
 
     @Override
     public void deliverResult(ArrayList<ArticleListItem> data) {
-        if (isStarted() && mData != null) {
-            super.deliverResult(mData);
+        if (isStarted() && data != null) {
+            super.deliverResult(data);
         }
     }
 
@@ -47,7 +51,7 @@ public class ArticleListLoader extends AsyncTaskLoader<ArrayList<ArticleListItem
             Elements root = document.select(".divtext").first().select("table tbody tr");
 
             if (!root.isEmpty()) {
-
+				
                 final int size = root.size() - 1;
 
                 for (int i = 0; i < size; i++) {

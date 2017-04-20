@@ -25,6 +25,8 @@ import io.keypunchers.xa.adapters.ArticleListAdapter;
 import io.keypunchers.xa.loaders.ArticleListLoader;
 import io.keypunchers.xa.misc.EndlessRecyclerViewScrollListener;
 import io.keypunchers.xa.models.ArticleListItem;
+import android.widget.*;
+import com.squareup.okhttp.internal.http.*;
 
 public class ArticleListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<ArticleListItem>> {
     private String BASE_URL;
@@ -91,17 +93,18 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
         }
 
         if (mData.isEmpty()) {
-            getActivity().getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
+            makeNetworkCall();
         }
     }
 
     @Override
     public Loader<ArrayList<ArticleListItem>> onCreateLoader(int id, Bundle args) {
-        return new ArticleListLoader(getActivity(), BASE_URL + mCurrentPage + "/", mData, COUNTER_PLUS);
+        return new ArticleListLoader(getActivity(), BASE_URL + mCurrentPage + "/", COUNTER_PLUS);
     }
 
     @Override
     public void onLoadFinished(Loader<ArrayList<ArticleListItem>> loader, ArrayList<ArticleListItem> data) {
+		mData.addAll(data);
         mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), mData.size());
     }
 

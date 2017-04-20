@@ -98,11 +98,12 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
 
     @Override
     public Loader<ArrayList<LatestAchievement>> onCreateLoader(int id, Bundle args) {
-        return new LatestAchievementsLoader(getActivity(), BASE_URL + mCurrentPage + "/", mData);
+        return new LatestAchievementsLoader(getActivity(), BASE_URL + mCurrentPage + "/");
     }
 
     @Override
     public void onLoadFinished(Loader<ArrayList<LatestAchievement>> loader, ArrayList<LatestAchievement> data) {
+		mData.addAll(data);
         mAdapter.notifyItemRangeChanged(mAdapter.getItemCount(), mData.size());
     }
 

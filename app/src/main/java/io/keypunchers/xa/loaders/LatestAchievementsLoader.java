@@ -15,24 +15,27 @@ import io.keypunchers.xa.models.LatestAchievement;
 
 public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<LatestAchievement>> {
     private final String BASE_URL;
-    private ArrayList<LatestAchievement> mData;
+    private ArrayList<LatestAchievement> mData = new ArrayList<>();
 
-    public LatestAchievementsLoader(Context context, String url, ArrayList<LatestAchievement> data) {
+    public LatestAchievementsLoader(Context context, String url) {
         super(context);
         BASE_URL = url;
-        mData = data;
     }
 
     @Override
     protected void onStartLoading() {
         super.onStartLoading();
-        forceLoad();
+		
+		if (!mData.isEmpty())
+			deliverResult(mData);
+		else
+        	forceLoad();
     }
 
     @Override
     public void deliverResult(ArrayList<LatestAchievement> data) {
-        if (isStarted() && mData != null) {
-            super.deliverResult(mData);
+        if (isStarted() && data != null) {
+            super.deliverResult(data);
         }
     }
 
