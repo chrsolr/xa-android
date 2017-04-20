@@ -7,6 +7,7 @@ import android.util.Log;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -43,19 +44,19 @@ public class ArticleListLoader extends AsyncTaskLoader<ArrayList<ArticleListItem
         try {
             Document document = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
 
-            Element root = document.getElementsByClass("divtext").first();
+            Elements root = document.select(".divtext:first-child tr");
 
-            if (!root.toString().equals("")) {
+            if (!root.isEmpty()) {
 
-                int size = 25;
+                int size = 50;
                 int offset_counter = 1;
 
                 for (int i = 0; i < size; i++) {
-                    String image_url = root.select("td[valign=top] a img").get(i).attr("abs:src");
-                    String title = root.getElementsByClass("newsTitle").get(i).text();
-                    String author = root.getElementsByClass("newsNFO").get(i).text();
-                    String desc = root.select("td").get(offset_counter).select("div").get(2).text();
-                    String page_url = root.getElementsByClass("newsTitle").get(i).select("a.linkB").attr("abs:href");
+                    String image_url = root.get(i).select("td:first-child a img").first().attr("abs:src");
+                    String title = root.get(i).select("td:nth-child(2) a").first().text().trim();
+                    String author = root.get(i).select("td:nth-child(2) .newsNFO").first().text().trim();
+                    String desc = root.get(i).select("td:nth-child(2) div:nth-child(3)").text().trim();
+                    String page_url = root.get(i).select("td:nth-child(2) a").first().attr("abs:href");
 
                     offset_counter += COUNTER_PLUS;
 
@@ -67,6 +68,8 @@ public class ArticleListLoader extends AsyncTaskLoader<ArrayList<ArticleListItem
                     item.setPageUrl(page_url);
 
                     mData.add(item);
+
+                    i++;
                 }
             }
 
