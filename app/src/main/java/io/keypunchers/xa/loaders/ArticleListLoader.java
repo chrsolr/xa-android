@@ -44,12 +44,11 @@ public class ArticleListLoader extends AsyncTaskLoader<ArrayList<ArticleListItem
         try {
             Document document = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
 
-            Elements root = document.select(".divtext:first-child tr");
+            Elements root = document.select(".divtext").first().select("table tbody tr");
 
             if (!root.isEmpty()) {
 
-                int size = 50;
-                int offset_counter = 1;
+                final int size = root.size() - 1;
 
                 for (int i = 0; i < size; i++) {
                     String image_url = root.get(i).select("td:first-child a img").first().attr("abs:src");
@@ -57,8 +56,6 @@ public class ArticleListLoader extends AsyncTaskLoader<ArrayList<ArticleListItem
                     String author = root.get(i).select("td:nth-child(2) .newsNFO").first().text().trim();
                     String desc = root.get(i).select("td:nth-child(2) div:nth-child(3)").text().trim();
                     String page_url = root.get(i).select("td:nth-child(2) a").first().attr("abs:href");
-
-                    offset_counter += COUNTER_PLUS;
 
                     ArticleListItem item = new ArticleListItem();
                     item.setTitle(title);
@@ -69,7 +66,7 @@ public class ArticleListLoader extends AsyncTaskLoader<ArrayList<ArticleListItem
 
                     mData.add(item);
 
-                    i++;
+                    i += COUNTER_PLUS;
                 }
             }
 
