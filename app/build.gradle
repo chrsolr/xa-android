@@ -19,12 +19,12 @@ android {
     }
 }
 
-//repositories {
-//    mavenCentral()
-//	maven {
-//		url 'http://central.maven.org/maven2'
-//	}
-//} 
+repositories {
+    mavenCentral()
+	maven {
+		url 'http://central.maven.org/maven2'
+	}
+} 
 
 dependencies {
 	compile 'com.android.support:design:+'
