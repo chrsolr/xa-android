@@ -98,7 +98,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:linksClickable="true"
-                    android:lineSpacingExtra="3dp"
+                    android:lineSpacingExtra="4dp"
                     android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
                     android:textColor="@null" />
 
