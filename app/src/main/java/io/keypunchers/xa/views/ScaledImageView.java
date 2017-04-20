@@ -22,10 +22,6 @@ public class ScaledImageView extends ImageView {
         super(context, attrs, defStyleAttr);
     }
 
-    public ScaledImageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         Drawable d = getDrawable();

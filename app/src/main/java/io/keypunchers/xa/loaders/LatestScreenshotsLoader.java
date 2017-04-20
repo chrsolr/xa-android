@@ -57,7 +57,7 @@ public class LatestScreenshotsLoader extends AsyncTaskLoader<ArrayList<Screensho
                     String game_screenshots_url = el.select("a:first-child").attr("abs:href");
                     String date = el.ownText().trim();
 
-                    image_url = Common.imageUrlthumbToMed(image_url);
+                    image_url = Common.imageUrlThumbToMed(image_url);
 
                     Screenshot obj = new Screenshot();
                     obj.setTitle(title);
