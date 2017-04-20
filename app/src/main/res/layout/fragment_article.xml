@@ -66,9 +66,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/tv_article_author_firstname"
-                            android:layout_marginLeft="@dimen/margin_level_1"
+                            android:layout_marginLeft="@dimen/margin_level_1_italic"
                             android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
-                            android:layout_marginTop="-8dp"
+                            android:layout_marginTop="-7dp"
                             android:textColor="@null"
                             android:textStyle="italic" />
                     </RelativeLayout>
