@@ -21,10 +21,12 @@ import org.xml.sax.XMLReader;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.models.Article;
 import io.keypunchers.xa.misc.CircularTransform;
+import io.keypunchers.xa.views.*;
 
 public class ArticleFragment extends Fragment {
     private Article mData;
     private TextView mTvBody;
+	private ScaledImageView mIvArticleBanner;
 
     public ArticleFragment() {
     }
@@ -68,6 +70,12 @@ public class ArticleFragment extends Fragment {
                 .setText(mData.getHeaderDate());
 
         mTvBody = (TextView) view.findViewById(R.id.tv_article_body);
+		
+		mIvArticleBanner = (ScaledImageView) view.findViewById(R.id.iv_article_banner);
+		Picasso.with(getActivity())
+				.load(mData.getImageUrls().get(0))
+				.noFade()
+				.into(mIvArticleBanner);
 
         setupUI();
     }
