@@ -26,7 +26,6 @@ import io.keypunchers.xa.views.*;
 public class ArticleFragment extends Fragment {
     private Article mData;
     private TextView mTvBody;
-	private ScaledImageView mIvArticleBanner;
 
     public ArticleFragment() {
     }
@@ -43,41 +42,48 @@ public class ArticleFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         setRetainInstance(true);
 
         Picasso.with(getActivity())
-                .load(mData.getAuthorProfileImageUrl())
-                .transform(new CircularTransform())
-                .noFade()
-                .into(((ImageView) view.findViewById(R.id.iv_article_author_avatar)));
+			.load(mData.getImageUrls().get(0))
+			.noFade()
+			.into(((ImageView) view.findViewById(R.id.iv_article_banner)), new com.squareup.picasso.Callback() {
+				@Override
+				public void onSuccess() {
+					//do smth when picture is loaded successfully
+					Picasso.with(getActivity())
+						.load(mData.getAuthorProfileImageUrl())
+						.noFade()
+						.transform(new CircularTransform())
+						.into(((ImageView) view.findViewById(R.id.iv_article_author_avatar)));
 
-        ((TextView) view.findViewById(R.id.tv_article_title))
-                .setText(mData.getHeaderTitle());
+					((TextView) view.findViewById(R.id.tv_article_title))
+						.setText(mData.getHeaderTitle());
 
-        ((TextView) view.findViewById(R.id.tv_article_author_firstname))
-                .setText(mData.getAuthorFirstName());
+					((TextView) view.findViewById(R.id.tv_article_author_firstname))
+						.setText(mData.getAuthorFirstName());
 
-        ((TextView) view.findViewById(R.id.tv_article_author_lastname))
-                .setText(mData.getAuthorLastName());
+					((TextView) view.findViewById(R.id.tv_article_author_lastname))
+						.setText(mData.getAuthorLastName());
 
-        ((TextView) view.findViewById(R.id.tv_article_author_firstname))
-                .setText(mData.getAuthorFirstName());
+					((TextView) view.findViewById(R.id.tv_article_author_firstname))
+						.setText(mData.getAuthorFirstName());
 
-        ((TextView) view.findViewById(R.id.tv_article_date))
-                .setText(mData.getHeaderDate());
+					((TextView) view.findViewById(R.id.tv_article_date))
+						.setText(mData.getHeaderDate());
 
-        mTvBody = (TextView) view.findViewById(R.id.tv_article_body);
-		
-		mIvArticleBanner = (ScaledImageView) view.findViewById(R.id.iv_article_banner);
-		Picasso.with(getActivity())
-				.load(mData.getImageUrls().get(0))
-				.noFade()
-				.into(mIvArticleBanner);
+					mTvBody = (TextView) view.findViewById(R.id.tv_article_body);
+					setupUI();
+				}
 
-        setupUI();
+				@Override
+				public void onError() {
+					//do smth when there is picture loading error
+				}
+			});
     }
 
     private void setupUI() {
@@ -85,22 +91,22 @@ public class ArticleFragment extends Fragment {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             text = Html.fromHtml(mData.getBodyText(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM, null, new Html.TagHandler() {
-                @Override
-                public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
-                    if (tag.equals("ul") && !opening) output.append("\n");
-                    if (tag.equals("li") && opening) output.append("\n\t•\t");
-                    if (tag.equals("blockquote")) output.append("\t\t");
-                }
-            });
+					@Override
+					public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
+						if (tag.equals("ul") && !opening) output.append("\n");
+						if (tag.equals("li") && opening) output.append("\n\t•\t");
+						if (tag.equals("blockquote")) output.append("\t\t");
+					}
+				});
         } else {
             text = Html.fromHtml(mData.getBodyText(), null, new Html.TagHandler() {
-                @Override
-                public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
-                    if (tag.equals("ul") && !opening) output.append("\n");
-                    if (tag.equals("li") && opening) output.append("\n\t•\t");
-                    if (tag.equals("blockquote")) output.append("\n\t\t");
-                }
-            });
+					@Override
+					public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
+						if (tag.equals("ul") && !opening) output.append("\n");
+						if (tag.equals("li") && opening) output.append("\n\t•\t");
+						if (tag.equals("blockquote")) output.append("\n\t\t");
+					}
+				});
         }
 
         mTvBody.setText(text);
