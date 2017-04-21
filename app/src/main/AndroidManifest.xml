@@ -19,6 +19,9 @@
         android:theme="@style/AppTheme"
 		tools:ignore="UnusedAttribute"
         tools:targetApi="n">
+		
+		<meta-data android:name="android.max_aspect"
+		android:value="2.1"/>
 
         <activity
             android:name=".app.MainActivity"
