@@ -6,4 +6,20 @@
         android:orderInCategory="90"
         android:title="@string/menu_item_browse"
         app:showAsAction="never" />
+	
+	<item
+        android:id="@+id/menu_browse_games_platforms"
+        android:orderInCategory="100"
+        android:title="Platforms"
+        app:showAsAction="never" >
+	
+	
+	<menu>
+		<item
+			android:id="@+id/menu_browse_games_xone"
+			android:orderInCategory="110"
+			android:title="Xbox One"
+			app:showAsAction="never" />
+	</menu>
+	</item>
 </menu>

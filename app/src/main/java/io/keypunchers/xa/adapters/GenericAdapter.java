@@ -6,13 +6,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
+import java.util.*;
 
 public class GenericAdapter<T> extends BaseAdapter {
     private Context mContext;
-    private ArrayList<T> mData;
+    private List<T> mData;
     private onSetGetView mAdapter;
 
-    public GenericAdapter(Context mContext, ArrayList<T> mData, onSetGetView adapter) {
+    public GenericAdapter(Context mContext, List<T> mData, onSetGetView adapter) {
         this.mContext = mContext;
         this.mData = mData;
         this.mAdapter = adapter;
@@ -39,6 +40,6 @@ public class GenericAdapter<T> extends BaseAdapter {
     }
 
     public interface onSetGetView {
-        View onGetView(int position, View convertView, ViewGroup parent, Context context, ArrayList<?> data);
+        View onGetView(int position, View convertView, ViewGroup parent, Context context, List<?> data);
     }
 }

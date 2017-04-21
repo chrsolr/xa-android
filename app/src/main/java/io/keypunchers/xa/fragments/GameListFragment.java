@@ -37,6 +37,7 @@ import io.keypunchers.xa.loaders.GamesListLoader;
 import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.misc.GridLayoutItemOffsetDecoration;
 import io.keypunchers.xa.models.Game;
+import java.util.*;
 
 public class GameListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<Game>> {
     private String BASE_URL;
@@ -60,15 +61,15 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
 
         setRetainInstance(true);
 
-        final ArrayList<String> alphabet = new ArrayList<>(Arrays.asList(getActivity().getResources().getStringArray(R.array.browse_game_alphabet)));
+        final String[] mAlphabetTitles = getActivity().getResources().getStringArray(R.array.browse_game_alphabet);
 
         mSlidingPane = (SlidingPaneLayout) view.findViewById(R.id.slp_game_list);
-        mSlidingPane.setParallaxDistance(30);
+        mSlidingPane.setParallaxDistance(50);
 
         mLvAlphabet = (ListView) view.findViewById(R.id.lv_alphabet_content);
-        mLvAlphabet.setAdapter(new GenericAdapter<>(getActivity(), alphabet, new GenericAdapter.onSetGetView() {
+        mLvAlphabet.setAdapter(new GenericAdapter<>(getActivity(), Arrays.asList(mAlphabetTitles), new GenericAdapter.onSetGetView() {
             @Override
-            public View onGetView(int position, View convertView, ViewGroup parent, Context context, ArrayList<?> data) {
+            public View onGetView(int position, View convertView, ViewGroup parent, Context context, List<?> data) {
                 ViewHolder viewHolder;
 
                 if (convertView == null) {
@@ -90,10 +91,11 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
                 return convertView;
             }
         }));
+		
         mLvAlphabet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Snackbar.make(view, alphabet.get(position), Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view, mAlphabetTitles[position], Snackbar.LENGTH_LONG).show();
             }
         });
 

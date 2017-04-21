@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.GenericAdapter;
 import io.keypunchers.xa.models.UpcomingGame;
+import java.util.*;
 
 public class UpcomingGamesChildFragment extends Fragment {
     private ArrayList<UpcomingGame> mData;
@@ -51,7 +52,7 @@ public class UpcomingGamesChildFragment extends Fragment {
     private void setAdapter() {
         mAdapter = new GenericAdapter<>(getActivity(), mData, new GenericAdapter.onSetGetView() {
             @Override
-            public View onGetView(int position, View convertView, ViewGroup parent, Context context, ArrayList<?> data) {
+            public View onGetView(int position, View convertView, ViewGroup parent, Context context, List<?> data) {
                 ViewHolder viewHolder;
 
                 if (convertView == null) {
