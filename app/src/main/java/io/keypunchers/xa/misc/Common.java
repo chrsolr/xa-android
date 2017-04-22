@@ -16,7 +16,7 @@ public class Common extends Application {
         return url.replace("thu", "med").replaceAll("\\s", "%20");
     }
 
-    public static String getGameScreenshotsUrl(String permalink) {
+    public static String getGameScreenshotsUrlByPermalink(String permalink) {
         return String.format("/game/%s/screenshots/", permalink);
     }
 }

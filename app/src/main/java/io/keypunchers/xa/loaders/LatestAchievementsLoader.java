@@ -52,7 +52,7 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<LatestAc
 
             if (!rows.isEmpty()) {
                 for (int i = 0; i < rows.size(); i++) {
-                    String imageUrl = rows.get(i + 1).select("td:eq(0) > img").attr("abs:src");
+                    String imageUrl = rows.get(i + 1).select("td:eq(0) > img").attr("abs:src").replace("/game/", "/achievements/");
                     String title = rows.get(i).select(".newsTitle").text().trim();
                     String url = rows.get(i + 1).select("td:eq(1) > a").attr("abs:href");
                     String dateAdded = rows.get(i).select(".newsNFO").text().trim();
