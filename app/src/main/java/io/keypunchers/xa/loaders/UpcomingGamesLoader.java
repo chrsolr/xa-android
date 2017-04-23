@@ -49,16 +49,16 @@ public class UpcomingGamesLoader extends AsyncTaskLoader<ArrayList<UpcomingGame>
         ArrayList<UpcomingGame> games = new ArrayList<>();
 
         try {
-            Document document = Jsoup.connect(BASE_URL).get();
+            Elements elements = Jsoup.connect(BASE_URL)
+                    .get()
+                    .getElementsByClass("divtext")
+                    .eq(0)
+                    .select("tr:gt(1)");
 
-            Element root = document.getElementsByClass("divtext").first();
-
-            Elements rows = root.select("table tbody tr");
-
-            for (int i = 2; i < rows.size(); i++) {
-                String title = rows.get(i).select("a").text();
-                String date = rows.get(i).select("td:first-child").text();
-                String url = rows.get(i).select("a").attr("abs:href");
+            for (Element element : elements) {
+                String title = element.select("a").text();
+                String date = element.select("td:first-child").text();
+                String url = element.select("a").attr("abs:href");
 
                 UpcomingGame game = new UpcomingGame();
                 game.setTitle(title);

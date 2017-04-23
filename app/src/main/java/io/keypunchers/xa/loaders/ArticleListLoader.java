@@ -46,21 +46,21 @@ public class ArticleListLoader extends AsyncTaskLoader<ArrayList<ArticleListItem
     @Override
     public ArrayList<ArticleListItem> loadInBackground() {
         try {
-			Document document = Jsoup.connect(BASE_URL).get();
-            //Document document = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
+			Elements elements = Jsoup.connect(BASE_URL)
+                    .get()
+                    .getElementsByClass("divtext")
+                    .eq(0)
+                    .select("tr");
 
-            Elements root = document.select(".divtext").first().select("table tbody tr");
+            if (!elements.isEmpty()) {
+                for (Element element : elements) {
+                    if (element.children().size() < 2) continue;
 
-            if (!root.isEmpty()) {
-				
-                final int size = root.size() - 1;
-
-                for (int i = 0; i < size; i++) {
-                    String image_url = root.get(i).select("td:first-child a img").first().attr("abs:src");
-                    String title = root.get(i).select("td:nth-child(2) a").first().text().trim();
-                    String author = root.get(i).select("td:nth-child(2) .newsNFO").first().text().trim();
-                    String desc = root.get(i).select("td:nth-child(2) div:nth-child(3)").text().trim();
-                    String page_url = root.get(i).select("td:nth-child(2) a").first().attr("abs:href");
+                    String image_url = element.select("td:first-child a img:eq(0)").attr("abs:src");
+                    String title = element.select("td:nth-child(2) a:eq(0)").text().trim();
+                    String author = element.select("td:nth-child(2) .newsNFO:eq(0)").text().trim();
+                    String desc = element.select("td:nth-child(2) div:nth-child(3)").text().trim();
+                    String page_url = element.select("td:nth-child(2) a:eq(0)").attr("abs:href");
 
                     ArticleListItem item = new ArticleListItem();
                     item.setTitle(title);
@@ -70,8 +70,6 @@ public class ArticleListLoader extends AsyncTaskLoader<ArrayList<ArticleListItem
                     item.setPageUrl(page_url);
 
                     mData.add(item);
-
-                    i += COUNTER_PLUS;
                 }
             }
 
