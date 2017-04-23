@@ -30,11 +30,6 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
     private ViewPagerAdapter mAdapter;
     private Map<String, ArrayList<UpcomingGame>> mData = new HashMap<>();
     private int mLoaderCounter = 0;
-    private ArrayList<UpcomingGame> mNTSCData;
-    private ArrayList<UpcomingGame> mPALData;
-    private ArrayList<UpcomingGame> mArcadeData;
-    private ArrayList<UpcomingGame> mXoneData;
-    private ArrayList<UpcomingGame> mX360Data;
 
     public UpcomingGamesFragment() {
     }
@@ -88,19 +83,19 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
         AsyncTaskLoader loader = null;
         switch (id) {
             case 0:
-                loader = new UpcomingGamesLoader(getActivity(), BASE_URL, mNTSCData);
+                loader = new UpcomingGamesLoader(getActivity(), BASE_URL);
                 break;
             case 1:
-                loader = new UpcomingGamesLoader(getActivity(), BASE_URL + "PAL/", mPALData);
+                loader = new UpcomingGamesLoader(getActivity(), BASE_URL + "PAL/");
                 break;
             case 2:
-                loader = new UpcomingGamesLoader(getActivity(), BASE_URL + "Arcade/", mArcadeData);
+                loader = new UpcomingGamesLoader(getActivity(), BASE_URL + "Arcade/");
                 break;
             case 3:
-                loader = new UpcomingGamesLoader(getActivity(), BASE_URL + "xbox-one/", mXoneData);
+                loader = new UpcomingGamesLoader(getActivity(), BASE_URL + "xbox-one/");
                 break;
             case 4:
-                loader = new UpcomingGamesLoader(getActivity(), BASE_URL + "xbox-360/", mX360Data);
+                loader = new UpcomingGamesLoader(getActivity(), BASE_URL + "xbox-360/");
                 break;
         }
 
@@ -142,7 +137,6 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
 
     @Override
     public void onLoaderReset(Loader<ArrayList<UpcomingGame>> loader) {
-
     }
 
     private void makeNetworkCall() {
@@ -170,5 +164,6 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
             mAdapter.addFragment(new UpcomingGamesChildFragment().newInstance(mData.get("Arcade")), "Arcade");
 
         mViewPager.setAdapter(mAdapter);
+		mAdapter.notifyDataSetChanged();
     }
 }

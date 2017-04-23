@@ -18,12 +18,11 @@ import io.keypunchers.xa.models.UpcomingGame;
 public class UpcomingGamesLoader extends AsyncTaskLoader<ArrayList<UpcomingGame>> {
 
     private final String BASE_URL;
-    private ArrayList<UpcomingGame> mData;
+    private ArrayList<UpcomingGame> mData = new ArrayList<>();
 
-    public UpcomingGamesLoader(Context context, String url, ArrayList<UpcomingGame> data) {
+    public UpcomingGamesLoader(Context context, String url) {
         super(context);
         BASE_URL = url;
-        mData = data;
     }
 
     @Override
@@ -38,16 +37,13 @@ public class UpcomingGamesLoader extends AsyncTaskLoader<ArrayList<UpcomingGame>
 
     @Override
     public void deliverResult(ArrayList<UpcomingGame> data) {
-        mData = data;
-        if (isStarted() && mData != null) {
-            super.deliverResult(mData);
+        if (isStarted() && data != null) {
+            super.deliverResult(data);
         }
     }
 
     @Override
     public ArrayList<UpcomingGame> loadInBackground() {
-        ArrayList<UpcomingGame> games = new ArrayList<>();
-
         try {
             Elements elements = Jsoup.connect(BASE_URL)
                     .get()
@@ -65,10 +61,10 @@ public class UpcomingGamesLoader extends AsyncTaskLoader<ArrayList<UpcomingGame>
                 game.setReleaseDate(date);
                 game.setGamePermalink(url);
 
-                games.add(game);
+                mData.add(game);
             }
 
-            return games;
+            return mData;
         } catch (Exception e) {
             Log.e("Upcoming Games Loader", e.getMessage());
             return null;

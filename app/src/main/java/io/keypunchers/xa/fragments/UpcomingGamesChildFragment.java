@@ -18,10 +18,10 @@ import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.GenericAdapter;
 import io.keypunchers.xa.models.UpcomingGame;
 import java.util.*;
+import android.util.*;
 
 public class UpcomingGamesChildFragment extends Fragment {
     private ArrayList<UpcomingGame> mData;
-    private String TAG = UpcomingGamesChildFragment.class.getSimpleName();
     private GenericAdapter<UpcomingGame> mAdapter;
 
     public UpcomingGamesChildFragment() { }
@@ -83,6 +83,7 @@ public class UpcomingGamesChildFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         if (mData.isEmpty() && getArguments() != null) {
+			Log.i("***********", mData.get(0).getTitle());
             mData = getArguments().getParcelableArrayList("data");
         }
     }

@@ -16,11 +16,10 @@ import io.keypunchers.xa.models.Screenshot;
 import io.keypunchers.xa.misc.*;
 
 public class LatestScreenshotsLoader extends AsyncTaskLoader<ArrayList<Screenshot>> {
-    private ArrayList<Screenshot> mData;
+    private ArrayList<Screenshot> mData = new ArrayList<>();
 
-    public LatestScreenshotsLoader(Context context, ArrayList<Screenshot> data) {
+    public LatestScreenshotsLoader(Context context) {
         super(context);
-        mData = data;
     }
 
     @Override
@@ -35,45 +34,41 @@ public class LatestScreenshotsLoader extends AsyncTaskLoader<ArrayList<Screensho
 
     @Override
     public void deliverResult(ArrayList<Screenshot> data) {
-        mData = data;
-        if (isStarted() && !mData.isEmpty()) {
-            super.deliverResult(mData);
+        if (isStarted() && !data.isEmpty()) {
+            super.deliverResult(data);
         }
     }
 
     @Override
     public ArrayList<Screenshot> loadInBackground() {
         try {
-            Document document = Jsoup.connect(Common.BASE_URL).get();
+			Elements elements = Jsoup.connect(Common.BASE_URL)
+				.get()
+				.getElementsByClass("bl_me_main")
+				.get(3)
+				.getElementsByTag("td");
 
-            Element root = document.getElementsByClass("bl_me_main").get(3);
+			for (Element el : elements) {
+				String title = el.select("a b:first-child").text().trim();
+				String image_url = el.select("a img:first-child").attr("abs:src");
+				String game_screenshots_url = el.select("a:first-child").attr("abs:href");
+				String date = el.ownText().trim();
 
-            if (!root.toString().equals("")) {
-                Elements elements = root.getElementsByTag("td");
+				image_url = Common.imageUrlThumbToMed(image_url);
 
-                for (Element el : elements) {
-                    String title = el.select("a b:first-child").text().trim();
-                    String image_url = el.select("a img:first-child").attr("abs:src");
-                    String game_screenshots_url = el.select("a:first-child").attr("abs:href");
-                    String date = el.ownText().trim();
+				Screenshot obj = new Screenshot();
+				obj.setTitle(title);
+				obj.setDateAdded(date);
+				obj.setImageUrl(image_url);
+				obj.setGamePermalink(game_screenshots_url);
 
-                    image_url = Common.imageUrlThumbToMed(image_url);
-
-                    Screenshot obj = new Screenshot();
-                    obj.setTitle(title);
-                    obj.setDateAdded(date);
-                    obj.setImageUrl(image_url);
-                    obj.setGamePermalink(game_screenshots_url);
-
-                    mData.add(obj);
-                }
-            }
-
+				mData.add(obj);
+			}
+            
             return mData;
         } catch (Exception ex) {
             Log.e("LatestScreenshots Loader", ex.getMessage());
             return null;
         }
-
     }
 }

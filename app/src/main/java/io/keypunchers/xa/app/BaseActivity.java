@@ -136,7 +136,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public Loader<ArrayList<Screenshot>> onCreateLoader(int id, Bundle args) {
-        return new LatestScreenshotsLoader(this, mBanners);
+        return new LatestScreenshotsLoader(this);
     }
 
     @Override

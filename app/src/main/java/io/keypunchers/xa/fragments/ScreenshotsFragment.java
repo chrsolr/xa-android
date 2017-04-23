@@ -39,7 +39,7 @@ public class ScreenshotsFragment extends Fragment implements LoaderManager.Loade
         setRetainInstance(true);
 
         mAdapter = new ScreenshotsAdapter(getActivity(), mData);
-        RecyclerView mRvContent = (RecyclerView) getActivity().findViewById(R.id.rv_latest_screenshot);
+        RecyclerView mRvContent = (RecyclerView) view.findViewById(R.id.rv_latest_screenshot);
         mRvContent.setAdapter(mAdapter);
         mRvContent.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
@@ -62,12 +62,13 @@ public class ScreenshotsFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public Loader<ArrayList<Screenshot>> onCreateLoader(int id, Bundle args) {
-        return new LatestScreenshotsLoader(getActivity(), mData);
+        return new LatestScreenshotsLoader(getActivity());
     }
 
     @Override
     public void onLoadFinished(Loader<ArrayList<Screenshot>> loader, ArrayList<Screenshot> data) {
-        mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), mData.size());
+		mData.addAll(data);
+        mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), data.size());
     }
 
     @Override
