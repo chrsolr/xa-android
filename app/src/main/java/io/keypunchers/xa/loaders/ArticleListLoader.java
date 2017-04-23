@@ -46,7 +46,8 @@ public class ArticleListLoader extends AsyncTaskLoader<ArrayList<ArticleListItem
     @Override
     public ArrayList<ArticleListItem> loadInBackground() {
         try {
-            Document document = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
+			Document document = Jsoup.connect(BASE_URL).get();
+            //Document document = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
 
             Elements root = document.select(".divtext").first().select("table tbody tr");
 

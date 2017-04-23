@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import io.keypunchers.xa.models.Article;
 import io.keypunchers.xa.models.Comment;
+import io.keypunchers.xa.misc.*;
 
 public class ArticleLoader extends AsyncTaskLoader<Article> {
     private final String BASE_URL;
@@ -47,14 +48,9 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
     public Article loadInBackground() {
 
         try {
-            String nID = BASE_URL.substring(BASE_URL.indexOf("-") + 1, BASE_URL.length() - 1);
-
-            if (nID.contains("-"))
-                nID = nID.substring(0, nID.indexOf("-"));
-
-            Document document = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
-            Document comments_doc = Jsoup.connect("http://www.xboxachievements.com/news2-loadcomments.php")
-                    .data("nID", nID)
+            Document document = Jsoup.connect(BASE_URL).get();
+			Document comments_doc = Jsoup.connect("http://www.xboxachievements.com/news2-loadcomments.php")
+                    .data("nID", Common.getNewsCommentId(BASE_URL))
                     .post();
 
             Elements header_root = document.getElementsByClass("bl_la_main").first().getElementsByTag("td");

@@ -49,7 +49,7 @@ public class UpcomingGamesLoader extends AsyncTaskLoader<ArrayList<UpcomingGame>
         ArrayList<UpcomingGame> games = new ArrayList<>();
 
         try {
-            Document document = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
+            Document document = Jsoup.connect(BASE_URL).get();
 
             Element root = document.getElementsByClass("divtext").first();
 

@@ -44,7 +44,7 @@ public class LatestScreenshotsLoader extends AsyncTaskLoader<ArrayList<Screensho
     @Override
     public ArrayList<Screenshot> loadInBackground() {
         try {
-            Document document = Jsoup.parse(new URL(Common.BASE_URL).openStream(), "UTF-8", Common.BASE_URL);
+            Document document = Jsoup.connect(Common.BASE_URL).get();
 
             Element root = document.getElementsByClass("bl_me_main").get(3);
 

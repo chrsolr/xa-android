@@ -42,13 +42,15 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<LatestAc
     @Override
     public ArrayList<LatestAchievement> loadInBackground() {
         try {
-            Document document = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
+            Document document = Jsoup.connect(BASE_URL).get();
 
-            Elements rows = document.getElementsByClass("divtext")
-                    .first()
-                    .getElementsByTag("table")
-                    .first()
-                    .getElementsByTag("tr");
+			Elements rows = document.select(".divtext:eq(1) table:eq(1) tr");
+			
+//            Elements rows = document.getElementsByClass("divtext")
+//                    .first()
+//                    .getElementsByTag("table")
+//                    .first()
+//                    .getElementsByTag("tr");
 
             if (!rows.isEmpty()) {
                 for (int i = 0; i < rows.size(); i++) {

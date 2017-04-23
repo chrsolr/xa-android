@@ -25,7 +25,6 @@ import io.keypunchers.xa.views.*;
 
 public class ArticleFragment extends Fragment {
     private Article mData;
-    private TextView mTvBody;
 
     public ArticleFragment() {
     }
@@ -55,13 +54,11 @@ public class ArticleFragment extends Fragment {
 				.into(((ImageView) view.findViewById(R.id.iv_article_banner)), new com.squareup.picasso.Callback() {
 					@Override
 					public void onSuccess() {
-						//do smth when picture is loaded successfully
 						setupUI(view);
 					}
 
 					@Override
 					public void onError() {
-						//do smth when there is picture loading error
 					}
 				});
 		} else {
@@ -70,8 +67,7 @@ public class ArticleFragment extends Fragment {
     }
 
     private void setupUI(View view) {
-        Spanned text;
-		
+
 		Picasso.with(getActivity())
 			.load(mData.getAuthorProfileImageUrl())
 			.noFade()
@@ -93,7 +89,7 @@ public class ArticleFragment extends Fragment {
 		((TextView) view.findViewById(R.id.tv_article_date))
 			.setText(mData.getHeaderDate());
 
-		mTvBody = (TextView) view.findViewById(R.id.tv_article_body);
+		Spanned text;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             text = Html.fromHtml(mData.getBodyText(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM, null, new Html.TagHandler() {
@@ -114,7 +110,8 @@ public class ArticleFragment extends Fragment {
 					}
 				});
         }
-
+		
+		TextView mTvBody = (TextView) view.findViewById(R.id.tv_article_body);
         mTvBody.setText(text);
         mTvBody.setMovementMethod(LinkMovementMethod.getInstance());
     }

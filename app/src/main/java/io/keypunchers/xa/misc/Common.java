@@ -19,4 +19,13 @@ public class Common extends Application {
     public static String getGameScreenshotsUrlByPermalink(String permalink) {
         return String.format("/game/%s/screenshots/", permalink);
     }
+
+	public static String getNewsCommentId(String url){
+		String nID = url.substring(url.indexOf("-") + 1, url.length() - 1);
+
+		if (nID.contains("-"))
+			nID = nID.substring(0, nID.indexOf("-"));
+
+		return nID;
+	}
 }
