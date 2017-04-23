@@ -16,7 +16,6 @@ import io.keypunchers.xa.models.UpcomingGame;
 
 
 public class UpcomingGamesLoader extends AsyncTaskLoader<ArrayList<UpcomingGame>> {
-
     private final String BASE_URL;
     private ArrayList<UpcomingGame> mData = new ArrayList<>();
 
@@ -29,7 +28,7 @@ public class UpcomingGamesLoader extends AsyncTaskLoader<ArrayList<UpcomingGame>
     protected void onStartLoading() {
         super.onStartLoading();
 
-        if (mData != null)
+        if (!mData.isEmpty())
             super.deliverResult(mData);
         else
             forceLoad();
