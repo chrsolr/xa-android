@@ -28,7 +28,6 @@ import io.keypunchers.xa.models.ArticleListItem;
 
 public class ArticleListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<ArticleListItem>> {
     private String BASE_URL;
-    private int COUNTER_PLUS;
     private ArrayList<ArticleListItem> mData = new ArrayList<>();
     private ArticleListAdapter mAdapter;
     private ImageView mIvBanner;
@@ -81,7 +80,6 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
         if (getArguments() != null) {
             BASE_URL = getArguments().getString("url");
-            COUNTER_PLUS = getArguments().getInt("counter");
             String AB_TITLE = getArguments().getString("ab_title");
             String mHeaderImageUrl = getArguments().getString("header_image_url");
 
@@ -97,7 +95,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public Loader<ArrayList<ArticleListItem>> onCreateLoader(int id, Bundle args) {
-        return new ArticleListLoader(getActivity(), BASE_URL + mCurrentPage + "/", COUNTER_PLUS);
+        return new ArticleListLoader(getActivity(), BASE_URL + mCurrentPage + "/");
     }
 
     @Override

@@ -3,31 +3,31 @@ package io.keypunchers.xa.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Screenshot implements Parcelable {
+public class LatestScreenshot implements Parcelable {
     private String mTitle;
     private String mDateAdded;
     private String mImageUrl;
     private String mGamePermalink;
 
-    public Screenshot() {
+    public LatestScreenshot() {
     }
 
-    public Screenshot(Parcel in) {
+    public LatestScreenshot(Parcel in) {
         mTitle = in.readString();
         mDateAdded = in.readString();
         mImageUrl = in.readString();
         mGamePermalink = in.readString();
     }
 
-    public static final Creator<Screenshot> CREATOR = new Creator<Screenshot>() {
+    public static final Creator<LatestScreenshot> CREATOR = new Creator<LatestScreenshot>() {
         @Override
-        public Screenshot createFromParcel(Parcel in) {
-            return new Screenshot(in);
+        public LatestScreenshot createFromParcel(Parcel in) {
+            return new LatestScreenshot(in);
         }
 
         @Override
-        public Screenshot[] newArray(int size) {
-            return new Screenshot[size];
+        public LatestScreenshot[] newArray(int size) {
+            return new LatestScreenshot[size];
         }
     };
 

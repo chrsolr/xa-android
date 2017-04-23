@@ -49,7 +49,7 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
 
         try {
             Document document = Jsoup.connect(BASE_URL).get();
-			Document comments_doc = Jsoup.connect("http://www.xboxachievements.com/news2-loadcomments.php")
+			Document comments_doc = Jsoup.connect(Common.NEWS_COMMENTS_URL)
                     .data("nID", Common.getNewsCommentId(BASE_URL))
                     .post();
 

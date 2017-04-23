@@ -12,15 +12,15 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
-import io.keypunchers.xa.models.Screenshot;
+import io.keypunchers.xa.models.LatestScreenshot;
 import io.keypunchers.xa.views.ScaledImageView;
 
 
 public class ScreenshotsAdapter extends RecyclerView.Adapter<ScreenshotsAdapter.ViewHolder> {
     private Context mContext;
-    private ArrayList<Screenshot> mData;
+    private ArrayList<LatestScreenshot> mData;
 
-    public ScreenshotsAdapter(Context context, ArrayList<Screenshot> data) {
+    public ScreenshotsAdapter(Context context, ArrayList<LatestScreenshot> data) {
         mContext = context;
         mData = data;
     }
@@ -30,14 +30,14 @@ public class ScreenshotsAdapter extends RecyclerView.Adapter<ScreenshotsAdapter.
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        View view = inflater.inflate(R.layout.row_screenshots, parent, false);
+        View view = inflater.inflate(R.layout.row_latest_screenshots, parent, false);
 
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Screenshot screenshot = mData.get(position);
+        LatestScreenshot screenshot = mData.get(position);
 
         holder.mTvTitle.setText(screenshot.getTitle());
         holder.mTvSubTitle.setText(screenshot.getDateAdded());

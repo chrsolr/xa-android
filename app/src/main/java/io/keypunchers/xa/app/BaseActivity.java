@@ -31,10 +31,10 @@ import io.keypunchers.xa.fragments.GameListFragment;
 import io.keypunchers.xa.fragments.LatestAchievementFragment;
 import io.keypunchers.xa.fragments.ScreenshotsFragment;
 import io.keypunchers.xa.fragments.UpcomingGamesFragment;
-import io.keypunchers.xa.models.Screenshot;
+import io.keypunchers.xa.models.LatestScreenshot;
 import io.keypunchers.xa.loaders.*;
 
-public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<ArrayList<Screenshot>> {
+public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<ArrayList<LatestScreenshot>> {
     private final String DRAWER_LEARNED_TAG = "DRAWER_LEARNED";
     private int mDrawerCurrentSelectedPosition = 0;
     private boolean mIsDrawerLearned;
@@ -42,7 +42,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView mNavigationView;
     private DrawerLayout mDrawer;
     private SharedPreferences mPrefs;
-    private ArrayList<Screenshot> mBanners = new ArrayList<>();
+    private ArrayList<LatestScreenshot> mBanners = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +88,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_latest_achievements:
                 selectDrawerItem(4);
                 break;
-            case R.id.nav_screenshots:
+            case R.id.nav_latest_screenshots:
                 selectDrawerItem(5);
                 break;
             case R.id.nav_upcoming_games:
@@ -135,12 +135,12 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public Loader<ArrayList<Screenshot>> onCreateLoader(int id, Bundle args) {
+    public Loader<ArrayList<LatestScreenshot>> onCreateLoader(int id, Bundle args) {
         return new LatestScreenshotsLoader(this);
     }
 
     @Override
-    public void onLoadFinished(Loader<ArrayList<Screenshot>> loader, ArrayList<Screenshot> data) {
+    public void onLoadFinished(Loader<ArrayList<LatestScreenshot>> loader, ArrayList<LatestScreenshot> data) {
         mBanners = data;
 
         Picasso.with(this)
@@ -160,7 +160,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void onLoaderReset(Loader<ArrayList<Screenshot>> loader) {
+    public void onLoaderReset(Loader<ArrayList<LatestScreenshot>> loader) {
     }
 
     @Override
@@ -197,7 +197,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         if (position == 0 && fragment == null) {
             bundle.putString("url", "http://www.xboxachievements.com/archive/gaming-news/");
-            bundle.putInt("counter", 1);
             bundle.putString("ab_title", getResources().getString(R.string.ab_news_title));
             bundle.putString("header_image_url", mBanners.get(1).getImageUrl());
 
@@ -207,7 +206,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         if (position == 1 && fragment == null) {
             bundle.putString("url", "http://www.xboxachievements.com/news/previews/");
-            bundle.putInt("counter", 0);
             bundle.putString("ab_title", getResources().getString(R.string.ab_previews_title));
             bundle.putString("header_image_url", mBanners.get(2).getImageUrl());
 
@@ -217,7 +215,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         if (position == 2 && fragment == null) {
             bundle.putString("url", "http://www.xboxachievements.com/news/interviews/");
-            bundle.putInt("counter", 0);
             bundle.putString("ab_title", getResources().getString(R.string.ab_interviews_title));
             bundle.putString("header_image_url", mBanners.get(3).getImageUrl());
 
@@ -243,7 +240,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
 
         if (position == 5 && fragment == null) {
-            bundle.putString("ab_title", getResources().getString(R.string.ab_screenshots_title));
+            bundle.putString("ab_title", getResources().getString(R.string.ab_latest_screenshots_title));
 
             fragment = new ScreenshotsFragment();
             fragment.setArguments(bundle);

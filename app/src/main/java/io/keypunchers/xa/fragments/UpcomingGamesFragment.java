@@ -164,6 +164,5 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
             mAdapter.addFragment(new UpcomingGamesChildFragment().newInstance(mData.get("Arcade")), "Arcade");
 
         mViewPager.setAdapter(mAdapter);
-		mAdapter.notifyDataSetChanged();
     }
 }

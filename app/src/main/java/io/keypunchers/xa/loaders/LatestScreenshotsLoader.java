@@ -12,11 +12,11 @@ import org.jsoup.select.Elements;
 import java.net.URL;
 import java.util.ArrayList;
 
-import io.keypunchers.xa.models.Screenshot;
+import io.keypunchers.xa.models.LatestScreenshot;
 import io.keypunchers.xa.misc.*;
 
-public class LatestScreenshotsLoader extends AsyncTaskLoader<ArrayList<Screenshot>> {
-    private ArrayList<Screenshot> mData = new ArrayList<>();
+public class LatestScreenshotsLoader extends AsyncTaskLoader<ArrayList<LatestScreenshot>> {
+    private ArrayList<LatestScreenshot> mData = new ArrayList<>();
 
     public LatestScreenshotsLoader(Context context) {
         super(context);
@@ -33,14 +33,14 @@ public class LatestScreenshotsLoader extends AsyncTaskLoader<ArrayList<Screensho
     }
 
     @Override
-    public void deliverResult(ArrayList<Screenshot> data) {
+    public void deliverResult(ArrayList<LatestScreenshot> data) {
         if (isStarted() && !data.isEmpty()) {
             super.deliverResult(data);
         }
     }
 
     @Override
-    public ArrayList<Screenshot> loadInBackground() {
+    public ArrayList<LatestScreenshot> loadInBackground() {
         try {
 			Elements elements = Jsoup.connect(Common.BASE_URL)
 				.get()
@@ -56,7 +56,7 @@ public class LatestScreenshotsLoader extends AsyncTaskLoader<ArrayList<Screensho
 
 				image_url = Common.imageUrlThumbToMed(image_url);
 
-				Screenshot obj = new Screenshot();
+				LatestScreenshot obj = new LatestScreenshot();
 				obj.setTitle(title);
 				obj.setDateAdded(date);
 				obj.setImageUrl(image_url);
@@ -67,7 +67,7 @@ public class LatestScreenshotsLoader extends AsyncTaskLoader<ArrayList<Screensho
             
             return mData;
         } catch (Exception ex) {
-            Log.e("LatestScreenshots Loader", ex.getMessage());
+            Log.e("Latest Screenshots Loader", ex.getMessage());
             return null;
         }
     }

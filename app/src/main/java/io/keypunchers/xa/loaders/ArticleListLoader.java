@@ -16,14 +16,12 @@ import io.keypunchers.xa.models.ArticleListItem;
 import android.widget.*;
 
 public class ArticleListLoader extends AsyncTaskLoader<ArrayList<ArticleListItem>> {
-    private final int COUNTER_PLUS;
     private final String BASE_URL;
     private ArrayList<ArticleListItem> mData = new ArrayList<>();
 
-    public ArticleListLoader(Context context, String url, int counter) {
+    public ArticleListLoader(Context context, String url) {
         super(context);
         BASE_URL = url;
-        COUNTER_PLUS = counter;
     }
 
     @Override

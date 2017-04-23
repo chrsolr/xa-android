@@ -83,7 +83,6 @@ public class UpcomingGamesChildFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         if (mData.isEmpty() && getArguments() != null) {
-			Log.i("***********", mData.get(0).getTitle());
             mData = getArguments().getParcelableArrayList("data");
         }
     }

@@ -7,7 +7,8 @@ import android.util.TypedValue;
 public class Common extends Application {
 
     public static final String BASE_URL = "http://www.xboxachievements.com";
-
+	public static final String NEWS_COMMENTS_URL = "http://www.xboxachievements.com/news2-loadcomments.php";
+	
     public static int convertDpToPx(int dp, Context context) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
     }

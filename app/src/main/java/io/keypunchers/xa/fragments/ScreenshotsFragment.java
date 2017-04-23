@@ -18,10 +18,10 @@ import java.util.ArrayList;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.ScreenshotsAdapter;
 import io.keypunchers.xa.loaders.LatestScreenshotsLoader;
-import io.keypunchers.xa.models.Screenshot;
+import io.keypunchers.xa.models.LatestScreenshot;
 
-public class ScreenshotsFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<Screenshot>> {
-    private ArrayList<Screenshot> mData = new ArrayList<>();
+public class ScreenshotsFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<LatestScreenshot>> {
+    private ArrayList<LatestScreenshot> mData = new ArrayList<>();
     private ScreenshotsAdapter mAdapter;
 
     public ScreenshotsFragment() {
@@ -29,7 +29,7 @@ public class ScreenshotsFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_screenshots, container, false);
+        return inflater.inflate(R.layout.fragment_latest_screenshots, container, false);
     }
 
     @Override
@@ -61,17 +61,17 @@ public class ScreenshotsFragment extends Fragment implements LoaderManager.Loade
     }
 
     @Override
-    public Loader<ArrayList<Screenshot>> onCreateLoader(int id, Bundle args) {
+    public Loader<ArrayList<LatestScreenshot>> onCreateLoader(int id, Bundle args) {
         return new LatestScreenshotsLoader(getActivity());
     }
 
     @Override
-    public void onLoadFinished(Loader<ArrayList<Screenshot>> loader, ArrayList<Screenshot> data) {
+    public void onLoadFinished(Loader<ArrayList<LatestScreenshot>> loader, ArrayList<LatestScreenshot> data) {
 		mData.addAll(data);
         mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), data.size());
     }
 
     @Override
-    public void onLoaderReset(Loader<ArrayList<Screenshot>> loader) {
+    public void onLoaderReset(Loader<ArrayList<LatestScreenshot>> loader) {
     }
 }
