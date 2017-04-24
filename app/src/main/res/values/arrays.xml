@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="browse_game_alphabet">
-        <item>All</item>
         <item>0&#45;9</item>
         <item>A</item>
         <item>B</item>

@@ -29,7 +29,7 @@ import io.keypunchers.xa.fragments.AboutFragment;
 import io.keypunchers.xa.fragments.ArticleListFragment;
 import io.keypunchers.xa.fragments.GameListFragment;
 import io.keypunchers.xa.fragments.LatestAchievementFragment;
-import io.keypunchers.xa.fragments.ScreenshotsFragment;
+import io.keypunchers.xa.fragments.LatestScreenshotsFragment;
 import io.keypunchers.xa.fragments.UpcomingGamesFragment;
 import io.keypunchers.xa.models.LatestScreenshot;
 import io.keypunchers.xa.loaders.*;
@@ -223,7 +223,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
 
         if (position == 3 && fragment == null) {
-            bundle.putString("url", "http://www.xboxachievements.com/browsegames/xbox-one/");
+            bundle.putString("url", "http://www.xboxachievements.com/browsegames/");
             bundle.putString("ab_title", getResources().getString(R.string.ab_games_title));
 
             fragment = new GameListFragment();
@@ -242,7 +242,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         if (position == 5 && fragment == null) {
             bundle.putString("ab_title", getResources().getString(R.string.ab_latest_screenshots_title));
 
-            fragment = new ScreenshotsFragment();
+            fragment = new LatestScreenshotsFragment();
             fragment.setArguments(bundle);
         }
 

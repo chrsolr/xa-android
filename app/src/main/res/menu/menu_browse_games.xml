@@ -16,9 +16,45 @@
 	
 	<menu>
 		<item
-			android:id="@+id/menu_browse_games_xone"
+			android:id="@+id/menu_browse_games_arcade"
+			android:orderInCategory="100"
+			android:title="Arcade"
+			app:showAsAction="never" />
+		
+		<item
+			android:id="@+id/menu_browse_games_x360"
 			android:orderInCategory="110"
+			android:title="Xbox 360"
+			app:showAsAction="never" />
+		
+		<item
+			android:id="@+id/menu_browse_games_xone"
+			android:orderInCategory="120"
 			android:title="Xbox One"
+			app:showAsAction="never" />
+		
+		<item
+			android:id="@+id/menu_browse_games_japanese"
+			android:orderInCategory="130"
+			android:title="Japanese"
+			app:showAsAction="never" />
+		
+		<item
+			android:id="@+id/menu_browse_games_gfwl"
+			android:orderInCategory="140"
+			android:title="GFWL"
+			app:showAsAction="never" />
+		
+		<item
+			android:id="@+id/menu_browse_games_win8"
+			android:orderInCategory="150"
+			android:title="Windows 8"
+			app:showAsAction="never" />
+		
+		<item
+			android:id="@+id/menu_browse_games_mobile"
+			android:orderInCategory="160"
+			android:title="Mobile"
 			app:showAsAction="never" />
 	</menu>
 	</item>

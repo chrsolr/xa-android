@@ -20,11 +20,11 @@ import io.keypunchers.xa.adapters.ScreenshotsAdapter;
 import io.keypunchers.xa.loaders.LatestScreenshotsLoader;
 import io.keypunchers.xa.models.LatestScreenshot;
 
-public class ScreenshotsFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<LatestScreenshot>> {
+public class LatestScreenshotsFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<LatestScreenshot>> {
     private ArrayList<LatestScreenshot> mData = new ArrayList<>();
     private ScreenshotsAdapter mAdapter;
 
-    public ScreenshotsFragment() {
+    public LatestScreenshotsFragment() {
     }
 
     @Override

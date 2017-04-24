@@ -15,12 +15,11 @@ import io.keypunchers.xa.models.Game;
 
 public class GamesListLoader extends AsyncTaskLoader<ArrayList<Game>> {
     private final String BASE_URL;
-    private ArrayList<Game> mData;
+    private ArrayList<Game> mData = new ArrayList<>();
 
-    public GamesListLoader(Context context, String base_url, ArrayList<Game> data) {
+    public GamesListLoader(Context context, String base_url) {
         super(context);
         BASE_URL = base_url;
-        mData = data;
     }
 
     @Override
