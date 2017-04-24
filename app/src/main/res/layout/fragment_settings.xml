@@ -1,20 +1,137 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:padding="@dimen/padding_level_2"
 	tools:context="io.keypunchers.xa.fragments.SettingsFragment">
-	
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-		
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		android:weightSum="1">
+
 		<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="Settings"/>
+			android:layout_marginBottom="@dimen/margin_level_4"
+			android:fontFamily="sans-serif-bold"
+			android:text="Settings"
+			android:textAppearance="@style/AppTheme.TextAppearance.Title"
+			android:textColor="@color/color_primary_accent"
+			android:textStyle="bold" />
 
-    </LinearLayout>
+		<RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/margin_level_2">
+
+            <TextView
+                android:id="@+id/tv_settings_default_home_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-bold"
+                android:text="Default Home"
+                android:textAppearance="@style/AppTheme.TextAppearance.Title"
+                android:textColor="@null"
+                android:textStyle="bold" />
+
+			<Spinner
+				android:id="@+id/spinner_settings_default_home"
+				android:layout_width="150dp"
+				android:layout_height="wrap_content"
+				android:layout_alignParentEnd="true"
+				android:layout_alignParentRight="true"
+				android:entries="@array/spinner_home"
+				android:gravity="end"
+				android:textAlignment="textEnd" />
+
+            <TextView
+                android:id="@+id/tv_settings_default_home_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tv_settings_default_home_title"
+                android:text="Default section when opening the app"
+                android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
+                android:textColor="@null" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_level_2">
+
+            <TextView
+                android:id="@+id/tv_settings_default_platform_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-bold"
+                android:text="Default Platform"
+                android:textAppearance="@style/AppTheme.TextAppearance.Title"
+                android:textColor="@null"
+                android:textStyle="bold" />
+
+			<Spinner
+				android:id="@+id/spinner_settings_default_platform"
+				android:layout_width="150dp"
+				android:layout_height="wrap_content"
+				android:layout_alignParentEnd="true"
+				android:layout_alignParentRight="true"
+				android:entries="@array/spinner_platforms" />
+
+            <TextView
+                android:id="@+id/tv_settings_default_platform_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tv_settings_default_platform_title"
+                android:text="Default platform when in Browse Game"
+                android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
+                android:textColor="@null" />
+
+        </RelativeLayout>
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_marginBottom="@dimen/margin_level_2">
+
+			<TextView
+				android:id="@+id/tv_settings_scroll_max_items_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:fontFamily="sans-serif-bold"
+				android:text="Endless Scroller"
+				android:textAppearance="@style/AppTheme.TextAppearance.Title"
+				android:textColor="@null"
+				android:textStyle="bold" />
+
+			<Spinner
+				android:id="@+id/spinner_settings_scroll_max_items_title"
+				android:layout_width="150dp"
+				android:layout_height="wrap_content"
+				android:layout_alignParentEnd="true"
+				android:layout_alignParentRight="true"
+				android:entries="@array/spinner_max_scroller_items" />
+
+			<TextView
+				android:id="@+id/tv_settings_scroll_max_items_subtitle"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_alignParentLeft="true"
+				android:layout_alignParentStart="true"
+				android:layout_below="@+id/tv_settings_scroll_max_items_title"
+				android:text="Max item to load"
+				android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
+				android:textColor="@null" />
+
+		</RelativeLayout>
+
+	</LinearLayout>
 </ScrollView>

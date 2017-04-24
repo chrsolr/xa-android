@@ -29,4 +29,31 @@
         <item>Y</item>
         <item>Z</item>
     </string-array>
+
+    <string-array name="spinner_platforms">
+        <item>Xbox One</item>
+        <item>Xbox 360</item>
+        <item>Arcade</item>
+        <item>Japanese</item>
+        <item>Windows 8</item>
+        <item>Mobile</item>
+        <item>GFWL</item>
+    </string-array>
+
+    <string-array name="spinner_home">
+        <item>News</item>
+        <item>Previews</item>
+        <item>Interviews</item>
+        <item>Games</item>
+        <item>Latest Achievements</item>
+        <item>Latest Screenshots</item>
+        <item>Upcoming Games</item>
+    </string-array>
+
+    <string-array name="spinner_max_scroller_items">
+        <item>50</item>
+        <item>100</item>
+        <item>500</item>
+        <item>1000</item>
+    </string-array>
 </resources>
