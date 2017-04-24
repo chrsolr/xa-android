@@ -24,8 +24,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/margin_level_2">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/tv_settings_default_home_title"
@@ -59,11 +58,17 @@
                 android:textColor="@null" />
 
         </RelativeLayout>
+		
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:layout_marginTop="@dimen/margin_level_2"
+			android:layout_marginBottom="@dimen/margin_level_2"
+			android:background="@color/divider"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_level_2">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/tv_settings_default_platform_title"
@@ -97,11 +102,17 @@
                 android:textColor="@null" />
 
         </RelativeLayout>
+		
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:layout_marginTop="@dimen/margin_level_2"
+			android:layout_marginBottom="@dimen/margin_level_2"
+			android:background="@color/divider"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/margin_level_2">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/tv_settings_scroll_max_items_title"
@@ -136,6 +147,13 @@
 
         </RelativeLayout>
 
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:layout_marginTop="@dimen/margin_level_2"
+			android:layout_marginBottom="@dimen/margin_level_2"
+			android:background="@color/divider"/>
+		
         <Button
             android:id="@+id/btn_settings_reset_default"
             style="@style/Widget.AppCompat.Button.Borderless"
@@ -144,7 +162,6 @@
             android:layout_gravity="end"
 			android:textColor="@color/color_primary_accent"
             android:text="Reset" />
-
 
     </LinearLayout>
 </ScrollView>
