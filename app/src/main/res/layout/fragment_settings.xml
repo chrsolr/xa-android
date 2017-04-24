@@ -44,7 +44,6 @@
                 android:layout_alignParentRight="true"
                 android:entries="@array/spinner_home"
                 android:gravity="end"
-                style="@style/AppTheme.Spinner"
                 android:textAlignment="textEnd"
                 tools:ignore="UnusedAttribute" />
 
@@ -90,7 +89,6 @@
                 android:layout_alignParentRight="true"
                 android:entries="@array/spinner_platforms"
                 android:gravity="end"
-                style="@style/AppTheme.Spinner"
                 android:textAlignment="textEnd" />
 
             <TextView
@@ -133,7 +131,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                style="@style/AppTheme.Spinner"
                 android:entries="@array/spinner_max_scroller_items"
                 android:gravity="end"
                 android:textAlignment="textEnd" />
