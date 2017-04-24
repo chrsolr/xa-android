@@ -6,14 +6,13 @@
                 <shape>
                     <solid android:color="@color/color_white" />
                     <corners android:radius="0dp" />
-                    <padding android:right="16dp" />
+                    <padding android:right="16dp" android:left="16dp" />
                 </shape>
             </item>
             <item>
                 <bitmap
                     android:gravity="right"
-                    android:src="@drawable/ic_arrow_drop_down_24dp"
-                    android:tint="@color/color_primary_accent"/>
+                    android:src="@drawable/ic_arrow_drop_down_24dp"/>
             </item>
         </layer-list>
     </item>
