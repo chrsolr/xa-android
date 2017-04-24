@@ -134,7 +134,7 @@ public class SettingsFragment extends Fragment {
                         platform = "wp7";
                         break;
                     case 6:
-                        platform = "gfwl";
+                        platform = "pc";
                         break;
                 }
 
