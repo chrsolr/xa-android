@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/padding_level_2">
+
+    <ImageView
+        android:id="@+id/iv_games_cover"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/color_black"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/tv_games_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="@dimen/margin_level_1"
+        android:layout_marginStart="@dimen/margin_level_1"
+        android:layout_toEndOf="@+id/iv_games_cover"
+        android:layout_toRightOf="@+id/iv_games_cover"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textAppearance="@style/AppTheme.TextAppearance.Title"
+        android:textColor="@null" />
+
+    <TextView
+        android:id="@+id/tv_games_ach"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_games_title"
+        android:layout_marginLeft="@dimen/margin_level_1"
+        android:layout_marginStart="@dimen/margin_level_1"
+        android:layout_toEndOf="@+id/iv_games_cover"
+        android:layout_toRightOf="@+id/iv_games_cover"
+        android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
+        android:textColor="@null" />
+
+    <TextView
+        android:id="@+id/tv_games_gs_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_games_ach"
+        android:layout_marginLeft="@dimen/margin_level_1"
+        android:layout_marginStart="@dimen/margin_level_1"
+        android:layout_toEndOf="@+id/iv_games_cover"
+        android:layout_toRightOf="@+id/iv_games_cover"
+        android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
+        android:textColor="@null" />
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_la_submitted_by"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/tv_la_gs_count"-->
+        <!--android:layout_marginLeft="@dimen/margin_level_1"-->
+        <!--android:layout_toEndOf="@+id/iv_la_cover"-->
+        <!--android:layout_toRightOf="@+id/iv_la_cover"-->
+        <!--android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"-->
+        <!--android:textColor="@null"-->
+        <!--android:textStyle="italic" />-->
+
+</RelativeLayout>

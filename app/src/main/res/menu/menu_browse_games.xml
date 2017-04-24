@@ -10,51 +10,50 @@
 	<item
         android:id="@+id/menu_browse_games_platforms"
         android:orderInCategory="100"
-        android:title="Platforms"
+        android:title="@string/menu_item_platforms"
         app:showAsAction="never" >
-	
-	
+
 	<menu>
 		<item
 			android:id="@+id/menu_browse_games_arcade"
 			android:orderInCategory="100"
-			android:title="Arcade"
+			android:title="@string/menu_item_arcade"
 			app:showAsAction="never" />
 		
 		<item
 			android:id="@+id/menu_browse_games_x360"
 			android:orderInCategory="110"
-			android:title="Xbox 360"
+			android:title="@string/menu_item_xbox_360"
 			app:showAsAction="never" />
 		
 		<item
 			android:id="@+id/menu_browse_games_xone"
 			android:orderInCategory="120"
-			android:title="Xbox One"
+			android:title="@string/menu_item_xbox_one"
 			app:showAsAction="never" />
 		
 		<item
 			android:id="@+id/menu_browse_games_japanese"
 			android:orderInCategory="130"
-			android:title="Japanese"
+			android:title="@string/menu_item_japanese"
 			app:showAsAction="never" />
 		
 		<item
 			android:id="@+id/menu_browse_games_gfwl"
 			android:orderInCategory="140"
-			android:title="GFWL"
+			android:title="@string/menu_item_gfwl"
 			app:showAsAction="never" />
 		
 		<item
 			android:id="@+id/menu_browse_games_win8"
 			android:orderInCategory="150"
-			android:title="Windows 8"
+			android:title="@string/menu_item_windows_8"
 			app:showAsAction="never" />
 		
 		<item
 			android:id="@+id/menu_browse_games_mobile"
 			android:orderInCategory="160"
-			android:title="Mobile"
+			android:title="@string/menu_item_mobile"
 			app:showAsAction="never" />
 	</menu>
 	</item>

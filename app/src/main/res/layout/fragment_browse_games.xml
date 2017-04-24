@@ -29,8 +29,8 @@
             android:clipToPadding="false"
             android:fitsSystemWindows="true"
             android:scrollbars="none"
-			android:padding="12dp"
             tools:context="io.keypunchers.xa.fragments.GameListFragment" />
+
     </android.support.v4.widget.SlidingPaneLayout>
 </RelativeLayout>
 

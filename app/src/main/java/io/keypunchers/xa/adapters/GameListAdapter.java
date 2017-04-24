@@ -1,8 +1,6 @@
 package io.keypunchers.xa.adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +30,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        View view = inflater.inflate(R.layout.row_games, parent, false);
+        View view = inflater.inflate(R.layout.row_browse_games, parent, false);
 
         return new ViewHolder(view);
     }
@@ -48,6 +46,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
 
         holder.mTvTitle.setText(item.getTitle());
         holder.mTvAchCount.setText(item.getAchCount() + " Achievements");
+        holder.mTvGsCount.setText(item.getGsCount() + " Points");
     }
 
     @Override
@@ -59,6 +58,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
         ImageView mIvImage;
         TextView mTvTitle;
         TextView mTvAchCount;
+        TextView mTvGsCount;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -66,6 +66,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
             mIvImage = (ImageView) itemView.findViewById(R.id.iv_games_cover);
             mTvTitle = (TextView) itemView.findViewById(R.id.tv_games_title);
             mTvAchCount = (TextView) itemView.findViewById(R.id.tv_games_ach);
+            mTvGsCount = (TextView) itemView.findViewById(R.id.tv_games_gs_count);
         }
     }
 }

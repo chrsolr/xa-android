@@ -21,6 +21,16 @@ public class Common extends Application {
         return String.format("/game/%s/screenshots/", permalink);
     }
 
+    public static String createPermalink(String url, UrlTypeEnum type) {
+        String permalink = null;
+
+        if (type == UrlTypeEnum.BROWSE_GAMES) {
+            permalink = url.replace("/game/", "").replace("/achievements/", "");
+        }
+
+        return permalink;
+    }
+
 	public static String getNewsCommentId(String url){
 		String nID = url.substring(url.indexOf("-") + 1, url.length() - 1);
 
@@ -29,4 +39,8 @@ public class Common extends Application {
 
 		return nID;
 	}
+
+	public enum UrlTypeEnum {
+        BROWSE_GAMES
+    }
 }

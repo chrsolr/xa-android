@@ -2,17 +2,16 @@ package io.keypunchers.xa.fragments;
 
 
 import android.content.Context;
-import android.os.Build;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.ListViewCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,50 +20,40 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.GameListAdapter;
 import io.keypunchers.xa.adapters.GenericAdapter;
 import io.keypunchers.xa.loaders.GamesListLoader;
-import io.keypunchers.xa.misc.Common;
-import io.keypunchers.xa.misc.GridLayoutItemOffsetDecoration;
+import io.keypunchers.xa.misc.EndlessRecyclerViewScrollListener;
 import io.keypunchers.xa.models.Game;
-import java.util.*;
-import android.preference.*;
-import android.content.*;
-import android.widget.*;
-import io.keypunchers.xa.misc.*;
 
 public class GameListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<Game>> {
     private String BASE_URL;
     private ArrayList<Game> mData = new ArrayList<>();
     private GameListAdapter mAdapter;
-    private ListView mLvAlphabet;
     private SlidingPaneLayout mSlidingPane;
-	private String mSelectedPlatform;
-	private String mCurrentSelectedLetter = "a";
-	private int mCurrentPage = 1;
-	private SharedPreferences mPrefs;
+    private String mSelectedPlatform;
+    private String mCurrentSelectedLetter = "a";
+    private int mCurrentPage = 1;
 
-	private int LOADER_ID;
+    private int LOADER_ID;
 
-	private String[] mAlphabetTitles;
+    private String[] mAlphabetTitles;
 
     public GameListFragment() {
-        // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_games, container, false);
+        return inflater.inflate(R.layout.fragment_browse_games, container, false);
     }
 
     @Override
@@ -77,20 +66,19 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
 
         mAdapter = new GameListAdapter(getActivity(), mData);
 
-		GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
-		EndlessRecyclerViewScrollListener mScroller = new EndlessRecyclerViewScrollListener(mLayoutManager) {
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        EndlessRecyclerViewScrollListener mScroller = new EndlessRecyclerViewScrollListener(mLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-				mCurrentPage = page + 1;
-				makeNetworkCall();
+                mCurrentPage = page + 1;
+                makeNetworkCall();
             }
         };
 
         RecyclerView mRvContent = (RecyclerView) view.findViewById(R.id.rv_games_list);
         mRvContent.setAdapter(mAdapter);
         mRvContent.setLayoutManager(mLayoutManager);
-        mRvContent.addItemDecoration(new GridLayoutItemOffsetDecoration(getActivity(), Common.convertDpToPx(4, getActivity())));
-		mRvContent.addOnScrollListener(mScroller);
+        mRvContent.addOnScrollListener(mScroller);
     }
 
     @Override
@@ -99,10 +87,8 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
 
         setHasOptionsMenu(true);
 
-		mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mSelectedPlatform = mPrefs.getString("DEFAULT_PLATFORM", "xbox-one");
-
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.ab_games_title);
 
         LOADER_ID = getActivity().getResources().getInteger(R.integer.games_loader_id);
 
@@ -138,43 +124,50 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
                     mSlidingPane.closePane();
                 else
                     mSlidingPane.openPane();
-				break;
-			case R.id.menu_browse_games_xone:
-				mSelectedPlatform = "xbox-one";
-				cleanFetch();
-				break;
-			case R.id.menu_browse_games_x360:
-				mSelectedPlatform = "retail";
-				cleanFetch();
-				break;
-			case R.id.menu_browse_games_arcade:
-				mSelectedPlatform = "arcade";
-				cleanFetch();
-				break;
-			case R.id.menu_browse_games_japanese:
-				mSelectedPlatform = "japanese";
-				cleanFetch();
-				break;
-			case R.id.menu_browse_games_gfwl:
-				mSelectedPlatform = "pc";
-				cleanFetch();
-				break;
-			case R.id.menu_browse_games_mobile:
-				mSelectedPlatform = "wp7";
-				cleanFetch();
-				break;
-			case R.id.menu_browse_games_win8:
-				mSelectedPlatform = "win8";
-				cleanFetch();
-				break;
+                break;
+            case R.id.menu_browse_games_xone:
+                mSelectedPlatform = "xbox-one";
+                mCurrentSelectedLetter = "a";
+                cleanFetch();
+                break;
+            case R.id.menu_browse_games_x360:
+                mSelectedPlatform = "retail";
+                mCurrentSelectedLetter = "a";
+                cleanFetch();
+                break;
+            case R.id.menu_browse_games_arcade:
+                mSelectedPlatform = "arcade";
+                mCurrentSelectedLetter = "a";
+                cleanFetch();
+                break;
+            case R.id.menu_browse_games_japanese:
+                mSelectedPlatform = "japanese";
+                mCurrentSelectedLetter = "a";
+                cleanFetch();
+                break;
+            case R.id.menu_browse_games_gfwl:
+                mSelectedPlatform = "pc";
+                mCurrentSelectedLetter = "a";
+                cleanFetch();
+                break;
+            case R.id.menu_browse_games_mobile:
+                mSelectedPlatform = "wp7";
+                mCurrentSelectedLetter = "a";
+                cleanFetch();
+                break;
+            case R.id.menu_browse_games_win8:
+                mSelectedPlatform = "win8";
+                mCurrentSelectedLetter = "a";
+                cleanFetch();
+                break;
         }
-		
+
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public Loader<ArrayList<Game>> onCreateLoader(int id, Bundle args) {
-        return new GamesListLoader(getActivity(), String.format("%s%s/%s/%d", BASE_URL, mSelectedPlatform, mCurrentSelectedLetter, mCurrentPage));
+        return new GamesListLoader(getActivity(), String.format(Locale.US, "%s%s/%s/%d", BASE_URL, mSelectedPlatform, mCurrentSelectedLetter, mCurrentPage));
     }
 
     @Override
@@ -187,66 +180,65 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
     public void onLoaderReset(Loader<ArrayList<Game>> loader) {
     }
 
-	private void makeNetworkCall() {
+    private void makeNetworkCall() {
         getActivity().getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 
-	private void setupSlidingPane(View view)
-	{
-		mAlphabetTitles = getActivity().getResources().getStringArray(R.array.browse_game_alphabet);
+    private void setupSlidingPane(View view) {
+        mAlphabetTitles = getActivity().getResources().getStringArray(R.array.browse_game_alphabet);
 
         mSlidingPane = (SlidingPaneLayout) view.findViewById(R.id.slp_game_list);
         mSlidingPane.setParallaxDistance(50);
 
-        mLvAlphabet = (ListView) view.findViewById(R.id.lv_alphabet_content);
+        ListView mLvAlphabet = (ListView) view.findViewById(R.id.lv_alphabet_content);
         mLvAlphabet.setAdapter(new GenericAdapter<>(getActivity(), Arrays.asList(mAlphabetTitles), new GenericAdapter.onSetGetView() {
-									   @Override
-									   public View onGetView(int position, View convertView, ViewGroup parent, Context context, List<?> data) {
-										   ViewHolder viewHolder;
+            @Override
+            public View onGetView(int position, View convertView, ViewGroup parent, Context context, List<?> data) {
+                ViewHolder viewHolder;
 
-										   if (convertView == null) {
-											   LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-											   convertView = inflater.inflate(R.layout.row_alphabet, parent, false);
+                if (convertView == null) {
+                    LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    convertView = inflater.inflate(R.layout.row_alphabet, parent, false);
 
-											   viewHolder = new ViewHolder();
-											   assert convertView != null;
+                    viewHolder = new ViewHolder();
+                    assert convertView != null;
 
-											   viewHolder.mTvTitle = (TextView) convertView.findViewById(R.id.tv_alphabet_title);
+                    viewHolder.mTvTitle = (TextView) convertView.findViewById(R.id.tv_alphabet_title);
 
-											   convertView.setTag(viewHolder);
-										   } else {
-											   viewHolder = (ViewHolder) convertView.getTag();
-										   }
+                    convertView.setTag(viewHolder);
+                } else {
+                    viewHolder = (ViewHolder) convertView.getTag();
+                }
 
-										   viewHolder.mTvTitle.setText(data.get(position).toString());
+                viewHolder.mTvTitle.setText(data.get(position).toString());
 
-										   return convertView;
-									   }
-								   }));
+                return convertView;
+            }
+        }));
 
         mLvAlphabet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					if (mCurrentSelectedLetter.equals(mAlphabetTitles[position].toLowerCase()))
-						return;
-						
-					if (position == 0)
-						mCurrentSelectedLetter = "-";
-					else
-						mCurrentSelectedLetter = mAlphabetTitles[position].toLowerCase();
-					
-					cleanFetch();
-				}
-			});
-	}
-	
-	private void cleanFetch() {
-		mCurrentPage = 1;
-		mAdapter.notifyItemRangeRemoved(0, mData.size());
-		mData.clear();
-		mSlidingPane.closePane();
-		makeNetworkCall();
-	}
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (mCurrentSelectedLetter.equals(mAlphabetTitles[position].toLowerCase(Locale.US)))
+                    return;
+
+                if (position == 0)
+                    mCurrentSelectedLetter = "-";
+                else
+                    mCurrentSelectedLetter = mAlphabetTitles[position].toLowerCase(Locale.US);
+
+                cleanFetch();
+            }
+        });
+    }
+
+    private void cleanFetch() {
+        mCurrentPage = 1;
+        mAdapter.notifyItemRangeRemoved(0, mData.size());
+        mData.clear();
+        mSlidingPane.closePane();
+        makeNetworkCall();
+    }
 
     private class ViewHolder {
         TextView mTvTitle;

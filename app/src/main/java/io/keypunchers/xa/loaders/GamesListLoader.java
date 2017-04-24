@@ -51,11 +51,15 @@ public class GamesListLoader extends AsyncTaskLoader<ArrayList<Game>> {
                 String artwork = element.select("img:eq(0)").attr("abs:src").replace("ico", "cover");
                 String title = element.select("strong:eq(0)").text().trim();
                 String ach_count = element.select("td:eq(2)").text().trim();
+                String gs_count = element.select("td:eq(3)").text().trim();
+                String page_url = element.select("td:eq(1) a").attr("href");
 
                 Game game = new Game();
                 game.setArtwork(artwork);
                 game.setTitle(title);
                 game.setAchCount(ach_count);
+                game.setGsCount(gs_count);
+                game.setGamePermalink(page_url);
 
                 mData.add(game);
             }
