@@ -2,10 +2,13 @@ package io.keypunchers.xa.fragments;
 
 
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +61,15 @@ public class SettingsFragment extends Fragment {
 
         mEndlessScrollerMaxSpinner = (Spinner) view.findViewById(R.id.spinner_settings_scroll_max_items);
         mEndlessScrollerMaxSpinner.setSelection(mPrefs.getInt("ENDLESS_SCROLLER_MAX_ITEMS_POSITION", 0));
+
+        int spinnerArrowColor = ContextCompat.getColor(getActivity(), R.color.color_primary_accent);
+
+        Drawable spinnerDrawable = mPlatformSpinner.getBackground().getConstantState().newDrawable();
+        spinnerDrawable.setColorFilter(spinnerArrowColor, PorterDuff.Mode.SRC_ATOP);
+
+        mPlatformSpinner.setBackground(spinnerDrawable);
+        mDefaultHomeSpinner.setBackground(spinnerDrawable);
+        mEndlessScrollerMaxSpinner.setBackground(spinnerDrawable);
     }
 
     @Override

@@ -44,7 +44,10 @@
                 android:layout_alignParentRight="true"
                 android:entries="@array/spinner_home"
                 android:gravity="end"
-                android:textAlignment="textEnd" />
+                android:foregroundTint="@color/color_primary_accent"
+                android:backgroundTint="@color/color_primary_accent"
+                android:textAlignment="textEnd"
+                tools:ignore="UnusedAttribute" />
 
             <TextView
                 android:id="@+id/tv_settings_default_home_subtitle"
