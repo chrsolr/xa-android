@@ -49,7 +49,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
         setRetainInstance(true);
 
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        final int mMaxItems = mPrefs.getInt("MAX_SCROLLING_ITEMS", 100);
+        final int mMaxItems = mPrefs.getInt("ENDLESS_SCROLLER_MAX_ITEMS", 50);
 
         mIvBanner = (ImageView) view.findViewById(R.id.iv_banner);
 

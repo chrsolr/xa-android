@@ -56,6 +56,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         mIsDrawerLearned = mPrefs.getBoolean(DRAWER_LEARNED_TAG, false);
 
+        mDrawerCurrentSelectedPosition = mPrefs.getInt("DEFAULT_HOME_POSITION", 0);
+
         if (savedInstanceState != null) {
             mDrawerCurrentSelectedPosition = savedInstanceState.getInt("current_selected_position");
         }
