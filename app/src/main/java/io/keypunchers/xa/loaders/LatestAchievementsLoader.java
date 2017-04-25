@@ -51,7 +51,7 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<LatestAc
 			for (Element element : elements) {
 				if (element.children().size() < 2) continue;
 
-				Log.i("$$$$$$$", element.select("td:eq(0)");
+				Log.i("$$$$$$$", element.select("td:eq(0)").toString());
 					  
 				String image_url = element.select("td:eq(0) > img").attr("abs:src").replace("/game/", "/achievements/");;
 				String title = element.select("td:(0) > .newsTitle").first().text().trim();
