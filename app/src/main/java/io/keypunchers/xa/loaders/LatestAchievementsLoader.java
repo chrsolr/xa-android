@@ -48,33 +48,33 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<LatestAc
 			
             if (!rows.isEmpty()) {
                 for (int i = 0; i < rows.size(); i++) {
-                    String imageUrl = rows.get(i + 1).select("td:eq(0) > img").attr("abs:src").replace("/game/", "/achievements/");
+                    String image_url = rows.get(i + 1).select("td:eq(0) > img").attr("abs:src").replace("/game/", "/achievements/");
                     String title = rows.get(i).select(".newsTitle").text().trim();
-                    String url = rows.get(i + 1).select("td:eq(1) > a").attr("abs:href");
-                    String dateAdded = rows.get(i).select(".newsNFO").text().trim();
+                    String ach_page_url = rows.get(i + 1).select("td:eq(1) > a").attr("href");
+                    String date_added = rows.get(i).select(".newsNFO").text().trim();
                     String subtitle = "";
-                    String submittedBy = "";
+                    String submitted_by = "";
                     String comment_count = "";
 
                     title = title.replace("Game Added: ", "").replace("DLC Added: ", "").replace("DLCs Added: ", "");
-                    dateAdded = dateAdded.replace("Added: ", "");
+                    date_added = date_added.replace("Added: ", "");
 
                     if (rows.get(i + 1).select("td:eq(1) > p").isEmpty()) {
                         subtitle = rows.get(i + 1).select("td:eq(1)").get(0).textNodes().get(0).text().trim();
-                        submittedBy = rows.get(i + 1).select("td:eq(1) > strong").eq(0).text().trim();
+                        submitted_by = rows.get(i + 1).select("td:eq(1) > strong").eq(0).text().trim();
                     } else {
                         subtitle = rows.get(i + 1).select("td:eq(1) > p").get(0).textNodes().get(0).text().trim();
-                        submittedBy = rows.get(i + 1).select("td:eq(1) > p > strong").eq(0).text().trim();
+                        submitted_by = rows.get(i + 1).select("td:eq(1) > p > strong").eq(0).text().trim();
                     }
 
                     LatestAchievement item = new LatestAchievement();
-                    item.setImageUrl(imageUrl);
+                    item.setImageUrl(image_url);
                     item.setTitle(title);
                     item.setAchievementsCount(subtitle.split(", ")[0].trim());
                     item.setGamerscoreCount(subtitle.split(", ")[1].replace(".", "").trim());
-                    item.setSubmittedBy(submittedBy);
-                    item.setDateAdded(dateAdded);
-                    item.setUrl(url);
+                    item.setSubmittedBy(submitted_by);
+                    item.setDateAdded(date_added);
+                    item.setGamePermalink(ach_page_url);
 
                     mData.add(item);
 

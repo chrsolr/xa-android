@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import io.keypunchers.xa.R;
+import android.view.*;
 
 public class SettingsFragment extends Fragment {
 
@@ -44,14 +45,8 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         setRetainInstance(true);
-
-        Button mBtnReset = (Button) view.findViewById(R.id.btn_settings_reset_default);
-        mBtnReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                resetToDefault();
-            }
-        });
+		
+		setHasOptionsMenu(true);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
@@ -63,15 +58,6 @@ public class SettingsFragment extends Fragment {
 
         mEndlessScrollerMaxSpinner = (Spinner) view.findViewById(R.id.spinner_settings_scroll_max_items);
         mEndlessScrollerMaxSpinner.setSelection(mPrefs.getInt("ENDLESS_SCROLLER_MAX_ITEMS_POSITION", 0));
-
-//        int spinnerArrowColor = ContextCompat.getColor(getActivity(), R.color.color_primary_accent);
-//
-//        Drawable spinnerDrawable = mPlatformSpinner.getBackground().getConstantState().newDrawable();
-//        spinnerDrawable.setColorFilter(spinnerArrowColor, PorterDuff.Mode.SRC_ATOP);
-//
-//        mPlatformSpinner.setBackground(spinnerDrawable);
-//        mDefaultHomeSpinner.setBackground(spinnerDrawable);
-//        mEndlessScrollerMaxSpinner.setBackground(spinnerDrawable);
     }
 
     @Override
@@ -85,6 +71,29 @@ public class SettingsFragment extends Fragment {
         setupDefaultHomeSpinner();
 
         setupEndlessScrollerMaxItemsSpinner();
+    }
+	
+	@Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_settings, menu);
+
+        menu.removeItem(R.id.main_menu_donate);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+		
+		switch(id){
+			case R.id.menu_item_settings_reset:
+				resetToDefault();
+				break;
+		}
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void setupEndlessScrollerMaxItemsSpinner() {

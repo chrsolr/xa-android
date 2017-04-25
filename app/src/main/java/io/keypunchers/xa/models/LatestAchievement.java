@@ -2,6 +2,7 @@ package io.keypunchers.xa.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import io.keypunchers.xa.misc.*;
 
 public class LatestAchievement implements Parcelable {
     private String imageUrl;
@@ -9,7 +10,7 @@ public class LatestAchievement implements Parcelable {
     private String achievementsCount;
     private String gamerscoreCount;
     private String submittedBy;
-    private String url;
+    private String gamePermalink;
     private String commentCount;
     private String dateAdded;
 
@@ -21,7 +22,7 @@ public class LatestAchievement implements Parcelable {
         title = in.readString();
         achievementsCount = in.readString();
         submittedBy = in.readString();
-        url = in.readString();
+        gamePermalink = in.readString();
         commentCount = in.readString();
         dateAdded = in.readString();
         gamerscoreCount = in.readString();
@@ -33,7 +34,7 @@ public class LatestAchievement implements Parcelable {
         dest.writeString(title);
         dest.writeString(achievementsCount);
         dest.writeString(submittedBy);
-        dest.writeString(url);
+        dest.writeString(gamePermalink);
         dest.writeString(commentCount);
         dest.writeString(dateAdded);
         dest.writeString(gamerscoreCount);
@@ -88,14 +89,6 @@ public class LatestAchievement implements Parcelable {
         this.submittedBy = submittedBy;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public String getCommentCount() {
         return commentCount;
     }
@@ -118,5 +111,13 @@ public class LatestAchievement implements Parcelable {
 
     public void setGamerscoreCount(String gamerscoreCount) {
         this.gamerscoreCount = gamerscoreCount;
+    }
+
+	public String getGamePermalink() {
+        return gamePermalink;
+    }
+
+    public void setGamePermalink(String url) {
+        this.gamePermalink = Common.createPermalink(url, UrlTypeEnum.LATEST_ACHIEVEMENTS);
     }
 }

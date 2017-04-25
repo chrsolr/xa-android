@@ -24,14 +24,14 @@ public class Common extends Application {
     public static String createPermalink(String url, UrlTypeEnum type) {
         String permalink = null;
 
-        if (type == UrlTypeEnum.BROWSE_GAMES) {
+        if (type == UrlTypeEnum.BROWSE_GAMES || type == UrlTypeEnum.LATEST_ACHIEVEMENTS) {
             permalink = url.replace("/game/", "").replace("/achievements/", "");
         }
 
         return permalink;
     }
 
-	public static String getNewsCommentId(String url){
+	public static String getNewsCommenstId(String url){
 		String nID = url.substring(url.indexOf("-") + 1, url.length() - 1);
 
 		if (nID.contains("-"))
@@ -39,8 +39,4 @@ public class Common extends Application {
 
 		return nID;
 	}
-
-	public enum UrlTypeEnum {
-        BROWSE_GAMES
-    }
 }

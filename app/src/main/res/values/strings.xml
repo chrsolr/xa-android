@@ -39,5 +39,6 @@
     <string name="menu_item_gfwl">GFWL</string>
     <string name="menu_item_windows_8">Windows 8</string>
     <string name="menu_item_mobile">Mobile</string>
+	<string name="menu_item_reset">Reset</string>
 
 </resources>

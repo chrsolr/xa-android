@@ -50,7 +50,7 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
         try {
             Document document = Jsoup.connect(BASE_URL).get();
 			Document comments_doc = Jsoup.connect(Common.NEWS_COMMENTS_URL)
-                    .data("nID", Common.getNewsCommentId(BASE_URL))
+                    .data("nID", Common.getNewsCommenstId(BASE_URL))
                     .post();
 
             Elements header_root = document.getElementsByClass("bl_la_main").first().getElementsByTag("td");
