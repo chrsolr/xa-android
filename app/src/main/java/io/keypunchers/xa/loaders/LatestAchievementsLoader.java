@@ -45,6 +45,30 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<LatestAc
             Document document = Jsoup.connect(BASE_URL).get();
 
 			Elements rows = document.select(".bl_la_main .divtext table:first-child tbody tr");
+			
+			Elements elements = document.select(".bl_la_main .divtext table:first-child tbody tr");
+			
+			for (Element element : elements) {
+				if (element.children().size() < 2) continue;
+
+				String image_url = element.select("td:eq(0) > img").attr("abs:src").replace("/game/", "/achievements/");;
+				String title = "";
+				String ach_url = "";
+				String date_added = "";
+				String submitted_by = "";
+				String subtitle = "";
+				
+				LatestAchievement item = new LatestAchievement();
+				item.setImageUrl(image_url);
+				item.setTitle(title);
+				//item.setAchievementsCount(subtitle.split(", ")[0].trim());
+				//item.setGamerscoreCount(subtitle.split(", ")[1].replace(".", "").trim());
+				item.setSubmittedBy(submitted_by);
+				item.setDateAdded(date_added);
+				item.setUrl(ach_url);
+
+				mData.add(item);
+			}
 
             if (!rows.isEmpty()) {
                 for (int i = 0; i < rows.size(); i++) {
@@ -76,7 +100,7 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<LatestAc
                     item.setDateAdded(dateAdded);
                     item.setUrl(url);
 
-                    mData.add(item);
+                    //mData.add(item);
 
                     i = i + 2;
                 }
