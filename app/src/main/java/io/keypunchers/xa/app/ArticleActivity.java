@@ -119,7 +119,7 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
         adapter.addFragment(new ArticleFragment().newInstance(mData), "Article");
 
         if (mData.getImageUrls().size() > 1)
-            adapter.addFragment(new ImageListFragment().newInstance(mData.getImageUrls().remove(0)), "Images");
+            adapter.addFragment(new ImageListFragment().newInstance(mData.getImageUrls()), "Images");
 
         if (mData.getVideoUrls().size() > 0)
             adapter.addFragment(new VideoListFragment().newInstance(mData.getVideoUrls()), "Videos");
