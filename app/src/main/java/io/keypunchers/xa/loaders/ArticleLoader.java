@@ -77,7 +77,7 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
             for (Element img : article_images) {
                 String src = img.attr("abs:src");
 
-                if (src.contains("interview-divider.png"))
+                if (Common.isImageBlacklisted("interview-divider.png"))
                     continue;
 
                 images.add(src);
