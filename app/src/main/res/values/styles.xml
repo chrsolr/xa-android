@@ -29,10 +29,12 @@
 
     <style name="SpinnerItem">
         <item name="android:gravity">right|center_vertical</item>
+		<item name="android:paddingRight">16dp</item>
     </style>
 
     <style name="SpinnerDropDownItem">
-        <item name="android:gravity">right|center_vertical</item>
+        <item name="android:gravity">center|center_vertical</item>
+		<item name="android:padding">16dp</item>
     </style>
 
     <style name="NavigationTheme" parent="AppTheme">
