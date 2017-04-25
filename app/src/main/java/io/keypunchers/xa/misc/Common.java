@@ -18,7 +18,7 @@ public class Common extends Application {
     }
 
     public static String getGameScreenshotsUrlByPermalink(String permalink) {
-        return String.format("/game/%s/screenshots/", permalink);
+        return String.format("%s/game/%s/screenshots/1/", BASE_URL, permalink);
     }
 
     public static String createPermalink(String url, UrlTypeEnum type) {
