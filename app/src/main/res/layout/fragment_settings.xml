@@ -44,8 +44,10 @@
                 android:layout_alignParentRight="true"
                 android:entries="@array/spinner_home"
                 android:gravity="end"
+                android:background="@null"
+                tools:ignore="UnusedAttribute"
                 android:textAlignment="textEnd"
-                tools:ignore="UnusedAttribute" />
+                android:theme="@style/AppTheme.Spinner" />
 
             <TextView
                 android:id="@+id/tv_settings_default_home_subtitle"
@@ -88,7 +90,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:entries="@array/spinner_platforms"
+                android:theme="@style/AppTheme.Spinner"
                 android:gravity="end"
+                android:background="@null"
+                tools:ignore="UnusedAttribute"
                 android:textAlignment="textEnd" />
 
             <TextView
@@ -132,7 +137,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:entries="@array/spinner_max_scroller_items"
+                android:theme="@style/AppTheme.Spinner"
                 android:gravity="end"
+                android:background="@null"
+                tools:ignore="UnusedAttribute"
                 android:textAlignment="textEnd" />
 
             <TextView
