@@ -27,6 +27,10 @@ public class Common extends Application {
         if (type == UrlTypeEnum.BROWSE_GAMES || type == UrlTypeEnum.LATEST_ACHIEVEMENTS) {
             permalink = url.replace("/game/", "").replace("/achievements/", "");
         }
+		
+		if (type == UrlTypeEnum.LATEST_SCREENSHOTS){
+			permalink = url.replace("/game/", "").replace("/screenshots/", "");
+		}
 
         return permalink;
     }

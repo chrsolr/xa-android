@@ -16,13 +16,13 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
-import io.keypunchers.xa.adapters.ScreenshotsAdapter;
+import io.keypunchers.xa.adapters.LatestScreenshotsAdapter;
 import io.keypunchers.xa.loaders.LatestScreenshotsLoader;
 import io.keypunchers.xa.models.LatestScreenshot;
 
 public class LatestScreenshotsFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<LatestScreenshot>> {
     private ArrayList<LatestScreenshot> mData = new ArrayList<>();
-    private ScreenshotsAdapter mAdapter;
+    private LatestScreenshotsAdapter mAdapter;
 
     public LatestScreenshotsFragment() {
     }
@@ -38,7 +38,7 @@ public class LatestScreenshotsFragment extends Fragment implements LoaderManager
 
         setRetainInstance(true);
 
-        mAdapter = new ScreenshotsAdapter(getActivity(), mData);
+        mAdapter = new LatestScreenshotsAdapter(getActivity(), mData);
         RecyclerView mRvContent = (RecyclerView) view.findViewById(R.id.rv_latest_screenshot);
         mRvContent.setAdapter(mAdapter);
         mRvContent.setLayoutManager(new LinearLayoutManager(getActivity()));

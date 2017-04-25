@@ -51,7 +51,7 @@ public class LatestScreenshotsLoader extends AsyncTaskLoader<ArrayList<LatestScr
 			for (Element el : elements) {
 				String title = el.select("a b:first-child").text().trim();
 				String image_url = el.select("a img:first-child").attr("abs:src");
-				String game_screenshots_url = el.select("a:first-child").attr("abs:href");
+				String game_screenshots_url = el.select("a:first-child").attr("href");
 				String date = el.ownText().trim();
 
 				image_url = Common.imageUrlThumbToMed(image_url);

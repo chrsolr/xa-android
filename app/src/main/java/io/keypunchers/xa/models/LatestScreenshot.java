@@ -2,6 +2,7 @@ package io.keypunchers.xa.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import io.keypunchers.xa.misc.*;
 
 public class LatestScreenshot implements Parcelable {
     private String mTitle;
@@ -73,6 +74,6 @@ public class LatestScreenshot implements Parcelable {
     }
 
     public void setGamePermalink(String url) {
-        this.mGamePermalink = url.replace("/game/", "").replace("/screenshots/", "");
+        this.mGamePermalink = Common.createPermalink(url, UrlTypeEnum.LATEST_SCREENSHOTS);
     }
 }
