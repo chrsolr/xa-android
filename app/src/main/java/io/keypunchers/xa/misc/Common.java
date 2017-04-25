@@ -44,7 +44,7 @@ public class Common extends Application {
 		return nID;
 	}
 	
-	public static boolean isImageBlackListed(String url) {
+	public static boolean isImageBlacklisted(String url) {
 		if (url.contains("interview-divider.png"))
 			return true;
 			
