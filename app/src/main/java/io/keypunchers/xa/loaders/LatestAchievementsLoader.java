@@ -5,7 +5,7 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
+import org.jsoup.nodes.*;
 import org.jsoup.select.Elements;
 
 import java.net.URL;
@@ -51,24 +51,26 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<LatestAc
 			for (Element element : elements) {
 				if (element.children().size() < 2) continue;
 
+				Log.i("$$$$$$$", element.select("td:eq(0)");
+					  
 				String image_url = element.select("td:eq(0) > img").attr("abs:src").replace("/game/", "/achievements/");;
 				String title = element.select("td:(0) > .newsTitle").first().text().trim();
-				String ach_url = element.select("td:eq(1) > a").attr("abs:href");;
-				String date_added = rows.select("td:(0) > .newsNFO").text().trim();;
-				String submitted_by = "";
-				String subtitle = "";
+				//String ach_url = element.select("td:eq(1) > a").attr("abs:href");;
+				//String date_added = rows.select("td:(0) > .newsNFO").text().trim();;
+				//String submitted_by = "";
+				//String subtitle = "";
 				
 				title = title.replace("Game Added: ", "").replace("DLC Added: ", "").replace("DLCs Added: ", "");
-				date_added = date_added.replace("Added: ", "");
+				//date_added = date_added.replace("Added: ", "");
 				
 				LatestAchievement item = new LatestAchievement();
 				item.setImageUrl(image_url);
 				item.setTitle(title);
 				//item.setAchievementsCount(subtitle.split(", ")[0].trim());
 				//item.setGamerscoreCount(subtitle.split(", ")[1].replace(".", "").trim());
-				item.setSubmittedBy(submitted_by);
-				item.setDateAdded(date_added);
-				item.setUrl(ach_url);
+				//item.setSubmittedBy(submitted_by);
+				//item.setDateAdded(date_added);
+				//item.setUrl(ach_url);
 
 				mData.add(item);
 			}
