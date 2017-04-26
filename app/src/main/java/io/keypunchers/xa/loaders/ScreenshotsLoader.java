@@ -46,8 +46,6 @@ public class ScreenshotsLoader extends AsyncTaskLoader<Screenshots> {
     @Override
     public Screenshots loadInBackground() {
         try {
-            mData.setImageUrls(new ArrayList<String>());
-
 			Document document = Jsoup.connect(BASE_URL).get();
 			Elements elements = document.select(".bl_la_main .divtext table tbody tr td img");
 

@@ -85,7 +85,7 @@ public class ScreenshotsFragment extends Fragment implements LoaderManager.Loade
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(data.getTitle());
 
         mData.addAll(data.getImageUrls());
-        mAdapter.notifyItemRangeChanged(mAdapter.getItemCount(), mData.size());
+        mAdapter.notifyItemRangeChanged(mAdapter.getItemCount(), data.getImageUrls().size());
     }
 
     @Override
