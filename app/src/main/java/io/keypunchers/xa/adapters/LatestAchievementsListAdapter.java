@@ -2,9 +2,13 @@ package io.keypunchers.xa.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,6 +19,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.misc.Common;
+import io.keypunchers.xa.models.Comment;
 import io.keypunchers.xa.models.LatestAchievement;
 
 
@@ -38,7 +44,7 @@ public class LatestAchievementsListAdapter extends RecyclerView.Adapter<LatestAc
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         final LatestAchievement item = mData.get(position);
 
         Picasso.with(mContext).load(item.getImageUrl()).noFade().into(holder.mIvCover);
@@ -47,6 +53,35 @@ public class LatestAchievementsListAdapter extends RecyclerView.Adapter<LatestAc
         holder.mTvAchCount.setText(item.getAchievementsCount());
         holder.mTvGsCount.setText(item.getGamerscoreCount());
         holder.mTvSubmittedBy.setText("Submitted By: " + item.getSubmittedBy());
+
+        holder.mIvContextMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                final PopupMenu menu = new PopupMenu(mContext, v);
+                menu.getMenuInflater().inflate(R.menu.menu_latest_achievements, menu.getMenu());
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        int id = item.getItemId();
+
+                        switch (id) {
+                            case R.id.menu_la_view_screenshots:
+                                Common.makeSnackbar(v,
+                                        Common.getGameScreenshotsUrlByPermalink(mData.get(position).getGamePermalink()),
+                                        Snackbar.LENGTH_LONG, Color.DKGRAY, Color.WHITE)
+                                        .show();
+                                break;
+                            case R.id.menu_la_view_comments:
+
+                                break;
+                        }
+
+                        return true;
+                    }
+                });
+                menu.show();
+            }
+        });
     }
 
     @Override
@@ -56,6 +91,7 @@ public class LatestAchievementsListAdapter extends RecyclerView.Adapter<LatestAc
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView mIvCover;
+        ImageView mIvContextMenu;
         TextView mTvTitle;
         TextView mTvAchCount;
         TextView mTvGsCount;
@@ -69,6 +105,7 @@ public class LatestAchievementsListAdapter extends RecyclerView.Adapter<LatestAc
             mTvAchCount = (TextView) itemView.findViewById(R.id.tv_la_ach_count);
             mTvGsCount = (TextView) itemView.findViewById(R.id.tv_la_gs_count);
             mTvSubmittedBy = (TextView) itemView.findViewById(R.id.tv_la_submitted_by);
+            mIvContextMenu = (ImageView) itemView.findViewById(R.id.iv_la_menu);
         }
     }
 }

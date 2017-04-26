@@ -2,7 +2,12 @@ package io.keypunchers.xa.misc;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.util.TypedValue;
+import android.view.View;
+import android.widget.TextView;
+
 import io.keypunchers.xa.misc.Enums.*;
 
 public class Common extends Application {
@@ -51,4 +56,15 @@ public class Common extends Application {
 			
 		return false;
 	}
+
+    @NonNull
+    public static Snackbar makeSnackbar(@NonNull View layout, @NonNull CharSequence  text, int duration, int backgroundColor, int textColor){
+        Snackbar snackBarView = Snackbar.make(layout, text, duration);
+        snackBarView.getView().setBackgroundColor(backgroundColor);
+
+        TextView tv = (TextView) snackBarView.getView().findViewById(android.support.design.R.id.snackbar_text);
+        tv.setTextColor(textColor);
+
+        return snackBarView;
+    }
 }
