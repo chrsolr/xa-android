@@ -6,11 +6,6 @@ public class Screenshots {
     private String title;
     private ArrayList<String> imageUrls;
 
-    public Screenshots() {
-        title = "";
-        imageUrls = new ArrayList<>();
-    }
-
     public String getTitle() {
         return title;
     }

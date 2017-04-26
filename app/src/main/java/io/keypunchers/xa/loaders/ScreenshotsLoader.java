@@ -24,6 +24,8 @@ public class ScreenshotsLoader extends AsyncTaskLoader<Screenshots> {
     public ScreenshotsLoader(Context context, String url) {
         super(context);
         BASE_URL = url;
+        mData.setTitle("");
+        mData.setImageUrls(new ArrayList<String>());
     }
 
     @Override
@@ -49,7 +51,8 @@ public class ScreenshotsLoader extends AsyncTaskLoader<Screenshots> {
 			Document document = Jsoup.connect(BASE_URL).get();
 			Elements elements = document.select(".bl_la_main .divtext table tbody tr td img");
 
-            mData.setTitle(document.select(".tt").first().text().trim());
+            if (!document.select(".tt").isEmpty())
+                mData.setTitle(document.select(".tt").first().text().trim());
 
             for(Element element : elements) {
                 String image_url = element.attr("abs:src");
