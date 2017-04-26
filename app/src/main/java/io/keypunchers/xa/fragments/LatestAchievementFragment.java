@@ -92,7 +92,7 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
         }
 
         if (mData.isEmpty()) {
-            getActivity().getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
+            makeNetworkCall();
         }
     }
 

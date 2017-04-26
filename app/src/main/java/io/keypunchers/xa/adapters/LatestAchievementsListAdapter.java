@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +22,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.fragments.ScreenshotsFragment;
 import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.models.Comment;
 import io.keypunchers.xa.models.LatestAchievement;
@@ -66,10 +70,17 @@ public class LatestAchievementsListAdapter extends RecyclerView.Adapter<LatestAc
 
                         switch (id) {
                             case R.id.menu_la_view_screenshots:
-                                Common.makeSnackbar(v,
-                                        Common.getGameScreenshotsUrlByPermalink(mData.get(position).getGamePermalink()),
-                                        Snackbar.LENGTH_LONG, Color.DKGRAY, Color.WHITE)
-                                        .show();
+                                Bundle bundle = new Bundle();
+                                bundle.putString("game_permalink", mData.get(position).getGamePermalink());
+
+                                Fragment fragment = new ScreenshotsFragment();
+                                fragment.setArguments(bundle);
+
+                                ((AppCompatActivity)mContext).getSupportFragmentManager()
+                                        .beginTransaction()
+                                        .replace(R.id.main_layout, fragment, ScreenshotsFragment.class.getSimpleName())
+                                        .addToBackStack(null)
+                                        .commit();
                                 break;
                             case R.id.menu_la_view_comments:
 

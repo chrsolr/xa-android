@@ -23,8 +23,8 @@ public class Common extends Application {
         return url.replace("thu", "med").replaceAll("\\s", "%20");
     }
 
-    public static String getGameScreenshotsUrlByPermalink(String permalink) {
-        return String.format("%s/game/%s/screenshots/1/", BASE_URL, permalink);
+    public static String getGameScreenshotsUrlByPermalink(String permalink, int page) {
+        return String.format("%s/game/%s/screenshots/%s/", BASE_URL, permalink, page);
     }
 
     public static String createPermalink(String url, UrlType type) {

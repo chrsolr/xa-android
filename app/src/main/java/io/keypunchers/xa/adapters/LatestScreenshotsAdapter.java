@@ -76,7 +76,7 @@ public class LatestScreenshotsAdapter extends RecyclerView.Adapter<LatestScreens
 		public void onClick(View v)
 		{
 			String game_permalink = mData.get(getAdapterPosition()).getGamePermalink();
-			String screenshots_url = Common.getGameScreenshotsUrlByPermalink(game_permalink);
+			String screenshots_url = Common.getGameScreenshotsUrlByPermalink(game_permalink, 1);
 			
 			Toast.makeText(mContext, String.format(Locale.US, "Game Permalink: %s", game_permalink), Toast.LENGTH_LONG).show();
 		}
