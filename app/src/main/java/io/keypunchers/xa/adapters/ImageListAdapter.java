@@ -53,7 +53,7 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
     public int getItemCount() {
         return mData.size();
     }
-
+	
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView mIvImage;
 
