@@ -3,6 +3,7 @@ package io.keypunchers.xa.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import io.keypunchers.xa.misc.*;
+import io.keypunchers.xa.misc.Enums.*;
 
 public class LatestAchievement implements Parcelable {
     private String imageUrl;
@@ -118,6 +119,6 @@ public class LatestAchievement implements Parcelable {
     }
 
     public void setGamePermalink(String url) {
-        this.gamePermalink = Common.createPermalink(url, UrlTypeEnum.LATEST_ACHIEVEMENTS);
+        this.gamePermalink = Common.createPermalink(url, UrlType.LATEST_ACHIEVEMENTS);
     }
 }

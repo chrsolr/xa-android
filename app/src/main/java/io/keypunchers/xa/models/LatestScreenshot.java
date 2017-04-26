@@ -2,6 +2,7 @@ package io.keypunchers.xa.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import io.keypunchers.xa.misc.Enums.*;
 import io.keypunchers.xa.misc.*;
 
 public class LatestScreenshot implements Parcelable {
@@ -74,6 +75,6 @@ public class LatestScreenshot implements Parcelable {
     }
 
     public void setGamePermalink(String url) {
-        this.mGamePermalink = Common.createPermalink(url, UrlTypeEnum.LATEST_SCREENSHOTS);
+        this.mGamePermalink = Common.createPermalink(url, UrlType.LATEST_SCREENSHOTS);
     }
 }

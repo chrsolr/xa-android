@@ -2,6 +2,7 @@ package io.keypunchers.xa.models;
 
 import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.misc.*;
+import io.keypunchers.xa.misc.Enums.*;
 
 public class Game {
     private String artwork;
@@ -47,6 +48,6 @@ public class Game {
     }
 
     public void setGamePermalink(String url) {
-        this.gamePermalink = Common.createPermalink(url, UrlTypeEnum.BROWSE_GAMES);
+        this.gamePermalink = Common.createPermalink(url, UrlType.BROWSE_GAMES);
     }
 }

@@ -3,6 +3,7 @@ package io.keypunchers.xa.misc;
 import android.app.Application;
 import android.content.Context;
 import android.util.TypedValue;
+import io.keypunchers.xa.misc.Enums.*;
 
 public class Common extends Application {
 
@@ -21,14 +22,14 @@ public class Common extends Application {
         return String.format("%s/game/%s/screenshots/1/", BASE_URL, permalink);
     }
 
-    public static String createPermalink(String url, UrlTypeEnum type) {
+    public static String createPermalink(String url, UrlType type) {
         String permalink = null;
 
-        if (type == UrlTypeEnum.BROWSE_GAMES || type == UrlTypeEnum.LATEST_ACHIEVEMENTS) {
+        if (type == UrlType.BROWSE_GAMES || type == UrlType.LATEST_ACHIEVEMENTS) {
             permalink = url.replace("/game/", "").replace("/achievements/", "");
         }
 		
-		if (type == UrlTypeEnum.LATEST_SCREENSHOTS){
+		if (type == UrlType.LATEST_SCREENSHOTS){
 			permalink = url.replace("/game/", "").replace("/screenshots/", "");
 		}
 
