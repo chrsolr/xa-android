@@ -62,8 +62,7 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
 					
 			Elements game_achievements_rows = document.getElementsByClass("bl_la_main")
 					.first()
-					.select("tr:gt(2)")
-					.select("td:has(.ac1), td:has(.ac2), td:has(.ac4), td:has(.ac3)");
+					.select("tr:gt(2)");
 
             String game_banner = null;
             Element banner = document.getElementsByClass("blr_main")
@@ -110,17 +109,22 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
             }
 			
 			ArrayList<Achievement> achievements = new ArrayList<>();
-			for (int i = 0; i < game_achievements_rows.size(); i++) {
+			for (int i = 0; i < game_achievements_rows.select("td.ac2").size(); i++) {
 				//String ach_image_url = game_achievements_rows.get(i).select("td.ac1 > img").first().attr("abs:src").replace("lo", "hi");
-				//String ach_title = game_achievements_rows.get(i).select("td.ac2 > b").first().text().trim();
+				String ach_title = game_achievements_rows.get(i).select("td.ac2 > b").first().text().trim();
 				//String ach_gamerscore = game_achievements_rows.get(i).select("td.ac4 > strong").first().text().trim();
 				
 				Achievement ach = new Achievement();
 				//ach.setImageUrl(ach_image_url);
-				//ach.setTitle(ach_title);
-				
+				ach.setTitle(ach_title);
 				
 				achievements.add(ach);
+				
+				i += 2;
+			}
+			
+			for (String ach : achievements) {
+				Log.i("***** Title *****", ach.getTitle());
 			}
 
             mData.setTitle(game_title);
