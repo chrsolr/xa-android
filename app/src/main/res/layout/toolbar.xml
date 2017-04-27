@@ -5,5 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
+    android:contentInsetStart="0dp"
+    app:contentInsetStart="0dp"
     app:titleTextAppearance="@style/AppTheme.TextAppearance.Toolbar.Title"
     app:popupTheme="@style/AppTheme.PopupOverlay" />
