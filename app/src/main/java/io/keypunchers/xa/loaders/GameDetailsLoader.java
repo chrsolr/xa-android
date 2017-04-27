@@ -17,6 +17,7 @@ import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.misc.Enums;
 import io.keypunchers.xa.models.GameDetails;
 import io.keypunchers.xa.models.*;
+import android.widget.*;
 
 public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
     private GameDetails mData;
@@ -39,7 +40,9 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
 
     @Override
     public void deliverResult(GameDetails data) {
-        mData = data;
+		Toast.makeText(getContext(), "" + data.getAchievements().size(), Toast.LENGTH_SHORT).show();
+        
+		mData = data;
         if (isStarted() && mData != null) {
             super.deliverResult(mData);
         }
@@ -59,7 +62,8 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
 					
 			Elements game_achievements_rows = document.getElementsByClass("bl_la_main")
 					.first()
-					.select("tr:gt(2)");
+					.select("tr:gt(2)")
+					.select("td:has(.ac1), td:has(.ac2), td:has(.ac4), td:has(.ac3)");
 
             String game_banner = null;
             Element banner = document.getElementsByClass("blr_main")
@@ -107,16 +111,16 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
 			
 			ArrayList<Achievement> achievements = new ArrayList<>();
 			for (int i = 0; i < game_achievements_rows.size(); i++) {
-				String ach_image_url = game_achievements_rows.get(i).select("td.ac1 > img").attr("abs:src").replace("lo", "hi");
-				String ach_title = game_achievements_rows.get(i).select("td.ac2 > b").first().text().trim();
-				String ach_gamerscore = game_achievements_rows.get(i).select("td.ac4 > strong").first().text().trim();
+				//String ach_image_url = game_achievements_rows.get(i).select("td.ac1 > img").first().attr("abs:src").replace("lo", "hi");
+				//String ach_title = game_achievements_rows.get(i).select("td.ac2 > b").first().text().trim();
+				//String ach_gamerscore = game_achievements_rows.get(i).select("td.ac4 > strong").first().text().trim();
 				
 				Achievement ach = new Achievement();
-				ach.setImageUrl(ach_image_url);
-				ach.setTitle(ach_title);
+				//ach.setImageUrl(ach_image_url);
+				//ach.setTitle(ach_title);
 				
 				
-				achivements.add(ach);
+				achievements.add(ach);
 			}
 
             mData.setTitle(game_title);
@@ -127,8 +131,6 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
             mData.setReleaseDates(game_release_dates);
             mData.setBanner(Common.imageUrlThumbToMed(game_banner));
 			mData.setAchievements(achievements);
-
-
 
             return mData;
         } catch (Exception e) {
