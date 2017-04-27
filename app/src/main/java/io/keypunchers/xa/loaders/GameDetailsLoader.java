@@ -62,7 +62,7 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
 					
 			Elements game_achievements_rows = document.getElementsByClass("bl_la_main")
 					.first()
-					.select("tr:gt(2)");
+					.select("tr:has(td.ac1), tr:has(td.ac3)");
 
             String game_banner = null;
             Element banner = document.getElementsByClass("blr_main")
