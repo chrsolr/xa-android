@@ -66,7 +66,11 @@ public class GameActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoadFinished(Loader<GameDetails> loader, GameDetails data) {
         mData = data;
 
-        ScaledImageView mIvBanner = (ScaledImageView) findViewById(R.id.iv_game_achievements_banner);
+        setupUI();
+    }
+
+	private void setupUI() {
+		ScaledImageView mIvBanner = (ScaledImageView) findViewById(R.id.iv_game_achievements_banner);
         ImageView mIvGameCover = (ImageView) findViewById(R.id.iv_game_achievements_cover);
         TextView mTvGameTitle = (TextView) findViewById(R.id.tv_game_ach_title);
         TextView mTvGameGenres = (TextView) findViewById(R.id.tv_game_ach_genres);
@@ -76,21 +80,21 @@ public class GameActivity extends AppCompatActivity implements LoaderManager.Loa
 
         if (mData.getBanner() != null)
             Picasso.with(this)
-                    .load(mData.getBanner())
-                    .error(R.drawable.promo_banner)
-                    .noFade()
-                    .into(mIvBanner);
+				.load(mData.getBanner())
+				.error(R.drawable.promo_banner)
+				.noFade()
+				.into(mIvBanner);
 
         if (mData.getImageUrl() != null)
             Picasso.with(this)
-                    .load(mData.getImageUrl())
-                    //.transform(new CircularTransform())
-                    .noFade()
-                    .into(mIvGameCover);
+				.load(mData.getImageUrl())
+			//.transform(new CircularTransform())
+				.noFade()
+				.into(mIvGameCover);
 
         mTvGameTitle.setText(mData.getTitle());
         mTvGameGenres.setText(TextUtils.join(" / ", mData.getGenres()));
-    }
+	}
 
     @Override
     public void onLoaderReset(Loader<GameDetails> loader) {
