@@ -88,7 +88,6 @@ public class GameActivity extends AppCompatActivity implements LoaderManager.Loa
         if (mData.getImageUrl() != null)
             Picasso.with(this)
 				.load(mData.getImageUrl())
-			//.transform(new CircularTransform())
 				.noFade()
 				.into(mIvGameCover);
 

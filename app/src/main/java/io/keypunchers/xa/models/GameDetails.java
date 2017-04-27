@@ -13,6 +13,15 @@ public class GameDetails {
     private String publisher;
     private ArrayList<String> genres;
     private Map<Enums.Country, String> releaseDates;
+	private ArrayList<Achievement> achievements;
+
+	public void setAchievements(ArrayList<Achievement> achievements) {
+		this.achievements = achievements;
+	}
+
+	public ArrayList<Achievement> getAchievements() {
+		return achievements;
+	}
 
     public String getTitle() {
         return title;

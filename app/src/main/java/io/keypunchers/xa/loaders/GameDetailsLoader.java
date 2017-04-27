@@ -16,6 +16,7 @@ import java.util.Map;
 import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.misc.Enums;
 import io.keypunchers.xa.models.GameDetails;
+import io.keypunchers.xa.models.*;
 
 public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
     private GameDetails mData;
@@ -48,6 +49,7 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
     public GameDetails loadInBackground() {
         try {
             mData = new GameDetails();
+			mData.setAchievements(new ArrayList<Achievement>());
 
             Document document = Jsoup.connect(BASE_URL).get();
 
@@ -55,6 +57,10 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
                     .first()
                     .select("tr")
                     .first();
+					
+			Elements game_achievements_root = document.getElementsByClass("bl_la_main")
+					.first()
+					.select("tr:gt(2)");
 
             String game_banner = null;
             Element banner = document.getElementsByClass("blr_main")
@@ -99,6 +105,8 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
                 if (element.attr("alt").equals("Japan"))
                     game_release_dates.put(Enums.Country.JAPAN, element.nextSibling().toString().trim());
             }
+			
+			
 
             mData.setTitle(game_title);
             mData.setImageUrl(game_image_url);

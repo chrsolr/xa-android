@@ -8,7 +8,8 @@
     android:contentInsetStart="0dp"
     app:contentInsetStart="0dp"
     android:contentInsetLeft="0dp"
-    app:contentInsetLeft="0dp"                  	
+    app:contentInsetLeft="0dp"
+	android:contentInsetStartWithNavigation="0dp"
     app:contentInsetStartWithNavigation="0dp"
     app:titleTextAppearance="@style/AppTheme.TextAppearance.Toolbar.Title"
     app:popupTheme="@style/AppTheme.PopupOverlay" />
