@@ -12,8 +12,6 @@
         android:minHeight="200dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <include layout="@layout/toolbar" />
-
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -22,6 +20,8 @@
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
             app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
+			
+			<include layout="@layout/toolbar" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -88,8 +88,6 @@
                 </LinearLayout>
 
             </RelativeLayout>
-			
-			
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
