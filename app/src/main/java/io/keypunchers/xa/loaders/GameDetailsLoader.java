@@ -131,7 +131,7 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
 			}
 			
 			for (Achievement ach : achievements) {
-				Log.i("***** Title *****", ach.getCommentAmount());
+				Log.i("***** Title *****", ach.getTitle() + " | " +ach.getCommentAmount());
 			}
 
             mData.setTitle(game_title);
