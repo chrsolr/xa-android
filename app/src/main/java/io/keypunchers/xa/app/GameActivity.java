@@ -22,6 +22,7 @@ import android.support.v7.widget.*;
 import io.keypunchers.xa.adapters.*;
 import java.util.*;
 import io.keypunchers.xa.models.*;
+import android.widget.*;
 
 public class GameActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<GameDetails> {
     private GameDetails mData = new GameDetails();
@@ -58,7 +59,8 @@ public class GameActivity extends AppCompatActivity implements LoaderManager.Loa
 		mRvContent.setAdapter(mAdapter);
 		mRvContent.setLayoutManager(mLinearLayoutManager);
 
-        makeNetworkCall();
+		if (mAchievements.isEmpty())
+        	makeNetworkCall();
     }
 
     @Override
@@ -82,7 +84,8 @@ public class GameActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<GameDetails> loader, GameDetails data) {
         mData = data;
-		mAchievements.addAll(data.getAchievements());
+		mAchievements.addAll(mData.getAchievements());
+		mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), mAchievements.size());
 
         setupUI();
     }
@@ -111,8 +114,6 @@ public class GameActivity extends AppCompatActivity implements LoaderManager.Loa
 
         mTvGameTitle.setText(mData.getTitle());
         mTvGameGenres.setText(TextUtils.join(" / ", mData.getGenres()));
-		
-		mAdapter.notifyItemRangeChanged(mAdapter.getItemCount(), mAchievements.size());
 	}
 
     @Override

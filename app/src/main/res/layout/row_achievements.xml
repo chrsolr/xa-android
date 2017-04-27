@@ -8,10 +8,10 @@
     android:padding="@dimen/padding_level_2">
 
     <io.keypunchers.xa.views.ScaledImageView
-        android:id="@+id/iv_achievements_image"
+        android:id="@+id/iv_achievement_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_primary" />
+        android:background="@color/color_black" />
 
     <View
         android:id="@+id/view"

@@ -5,6 +5,8 @@ import io.keypunchers.xa.models.*;
 import java.util.*;
 import android.view.*;
 import io.keypunchers.xa.*;
+import io.keypunchers.xa.views.*;
+import com.squareup.picasso.*;
 
 public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsListAdapter.ViewHolder> {
     private Context mContext;
@@ -28,6 +30,11 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Achievement item = mData.get(position);
+		
+		Picasso.with(mContext)
+				.load(item.getImageUrl())
+				.noPlaceholder()
+				.into(holder.mIvAchImage);
     }
 
     @Override
@@ -38,11 +45,15 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private Context mContext;
         private ArrayList<Achievement> mData;
+		
+		ScaledImageView mIvAchImage;
 
         public ViewHolder(View itemView, ArrayList<Achievement> data, Context context) {
             super(itemView);
             mData = data;
             mContext = context;
+			
+			mIvAchImage = (ScaledImageView) itemView.findViewById(R.id.iv_achievement_image);
 
             itemView.setOnClickListener(this);
         }
