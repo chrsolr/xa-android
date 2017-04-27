@@ -18,11 +18,14 @@ import io.keypunchers.xa.misc.CircularTransform;
 import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.models.GameDetails;
 import io.keypunchers.xa.views.ScaledImageView;
+import android.support.v7.widget.*;
 
 public class GameActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<GameDetails> {
     private GameDetails mData = new GameDetails();
     private String BASE_URL;
     private ScaledImageView mIvBanner;
+
+	private RecyclerView mRvContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,8 @@ public class GameActivity extends AppCompatActivity implements LoaderManager.Loa
             String gamePermalink = getIntent().getExtras().getString("game_permalink");
             BASE_URL = Common.getGameAchievementsUrlByPermalink(gamePermalink);
         }
+		
+		mRvContent = (RecyclerView) findViewById(R.id.rv_game_achievements);
 
         makeNetworkCall();
     }
