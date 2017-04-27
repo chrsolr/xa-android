@@ -49,7 +49,6 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
     public GameDetails loadInBackground() {
         try {
             mData = new GameDetails();
-			mData.setAchievements(new ArrayList<Achievement>());
 
             Document document = Jsoup.connect(BASE_URL).get();
 
@@ -58,7 +57,7 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
                     .select("tr")
                     .first();
 					
-			Elements game_achievements_root = document.getElementsByClass("bl_la_main")
+			Elements game_achievements_rows = document.getElementsByClass("bl_la_main")
 					.first()
 					.select("tr:gt(2)");
 
@@ -106,7 +105,19 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
                     game_release_dates.put(Enums.Country.JAPAN, element.nextSibling().toString().trim());
             }
 			
-			
+			ArrayList<Achievement> achievements = new ArrayList<>();
+			for (int i = 0; i < game_achievements_rows.size(); i++) {
+				String ach_image_url = game_achievements_rows.get(i).select("td.ac1 > img").attr("abs:src").replace("lo", "hi");
+				String ach_title = game_achievements_rows.get(i).select("td.ac2 > b").first().text().trim();
+				String ach_gamerscore = game_achievements_rows.get(i).select("td.ac4 > strong").first().text().trim();
+				
+				Achievement ach = new Achievement();
+				ach.setImageUrl(ach_image_url);
+				ach.setTitle(ach_title);
+				
+				
+				achivements.add(ach);
+			}
 
             mData.setTitle(game_title);
             mData.setImageUrl(game_image_url);
@@ -115,7 +126,7 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
             mData.setGenres(game_genres);
             mData.setReleaseDates(game_release_dates);
             mData.setBanner(Common.imageUrlThumbToMed(game_banner));
-
+			mData.setAchievements(achievements);
 
 
 
