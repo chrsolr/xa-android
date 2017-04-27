@@ -17,4 +17,10 @@ public class Enums {
 		MOBILE,
 		JAPANESE
 	}
+
+	public enum Country {
+		US,
+		EUROPE,
+		JAPAN
+	}
 }

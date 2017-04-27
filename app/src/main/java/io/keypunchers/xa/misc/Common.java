@@ -27,6 +27,10 @@ public class Common extends Application {
         return String.format("%s/game/%s/screenshots/%s/", BASE_URL, permalink, page);
     }
 
+    public static String getGameAchievementsUrlByPermalink(String permalink) {
+        return String.format("%s/game/%s/achievements/", BASE_URL, permalink);
+    }
+
     public static String createPermalink(String url, UrlType type) {
         String permalink = null;
 
