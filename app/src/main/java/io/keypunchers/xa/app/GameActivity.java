@@ -53,7 +53,6 @@ public class GameActivity extends AppCompatActivity implements LoaderManager.Loa
 		mAdapter = new AchievementsListAdapter(this, mAchievements);
 		
 		LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
-		//mLinearLayoutManager.setAutoMeasureEnabled(true);
 		
 		mRvContent = (RecyclerView) findViewById(R.id.rv_game_achievements);
 		mRvContent.setAdapter(mAdapter);
@@ -86,8 +85,6 @@ public class GameActivity extends AppCompatActivity implements LoaderManager.Loa
         mData = data;
 		mAchievements.addAll(data.getAchievements());
 		mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), mAchievements.size());
-
-		Toast.makeText(this, mAchievements.get(0).getTitle(), Toast.LENGTH_SHORT).show();
 		
         setupUI();
     }

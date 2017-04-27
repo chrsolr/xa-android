@@ -35,6 +35,8 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
         Achievement item = mData.get(position);
 		
 		holder.mTvAchTitle.setText(item.getTitle());
+		holder.mTvAchDesc.setText(item.getDescription());
+		
 		Picasso.with(mContext)
 				.load(item.getImageUrl())
 				.noFade()
@@ -52,6 +54,7 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
 		
 		ScaledImageView mIvAchImage;
 		TextView mTvAchTitle;
+		TextView mTvAchDesc;
 
         public ViewHolder(View itemView, ArrayList<Achievement> data, Context context) {
             super(itemView);
@@ -60,6 +63,7 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
 			
 			mIvAchImage = (ScaledImageView) itemView.findViewById(R.id.iv_achievement_image);
 			mTvAchTitle = (TextView) itemView.findViewById(R.id.tv_achievement_title);
+			mTvAchDesc = (TextView) itemView.findViewById(R.id.tv_achievement_desc);
 
             itemView.setOnClickListener(this);
         }
