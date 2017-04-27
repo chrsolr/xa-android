@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.misc.Enums;
 import io.keypunchers.xa.models.GameDetails;
 
@@ -55,6 +56,15 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
                     .select("tr")
                     .first();
 
+            String game_banner = null;
+            Element banner = document.getElementsByClass("blr_main")
+                    .eq(1)
+                    .select("img")
+                    .first();
+
+            if (banner != null)
+                game_banner = banner.attr("abs:src");
+
             String game_title = document.getElementsByClass("tt")
                     .first()
                     .text()
@@ -96,6 +106,7 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
             mData.setPublisher(game_publisher);
             mData.setGenres(game_genres);
             mData.setReleaseDates(game_release_dates);
+            mData.setBanner(Common.imageUrlThumbToMed(game_banner));
 
 
 

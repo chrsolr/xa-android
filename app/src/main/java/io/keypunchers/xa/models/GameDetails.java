@@ -8,6 +8,7 @@ import io.keypunchers.xa.misc.Enums;
 public class GameDetails {
     private String title;
     private String imageUrl;
+    private String banner;
     private String developer;
     private String publisher;
     private ArrayList<String> genres;
@@ -59,5 +60,13 @@ public class GameDetails {
 
     public void setReleaseDates(Map<Enums.Country, String> releaseDates) {
         this.releaseDates = releaseDates;
+    }
+
+    public String getBanner() {
+        return banner;
+    }
+
+    public void setBanner(String banner) {
+        this.banner = banner;
     }
 }

@@ -20,7 +20,10 @@ public class Common extends Application {
     }
 
     public static String imageUrlThumbToMed(String url) {
-        return url.replace("thu", "med").replaceAll("\\s", "%20");
+        if (url != null)
+            url = url.replace("thu", "med").replaceAll("\\s", "%20");
+
+        return url;
     }
 
     public static String getGameScreenshotsUrlByPermalink(String permalink, int page) {
