@@ -26,6 +26,7 @@ import io.keypunchers.xa.fragments.ScreenshotsFragment;
 import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.models.Comment;
 import io.keypunchers.xa.models.LatestAchievement;
+import io.keypunchers.xa.app.*;
 
 
 public class LatestAchievementsListAdapter extends RecyclerView.Adapter<LatestAchievementsListAdapter.ViewHolder> {
@@ -44,7 +45,7 @@ public class LatestAchievementsListAdapter extends RecyclerView.Adapter<LatestAc
 
         View view = inflater.inflate(R.layout.row_latest_achievements, parent, false);
 
-        return new ViewHolder(view);
+        return new ViewHolder(view, mData, context);
     }
 
     @Override
@@ -57,42 +58,6 @@ public class LatestAchievementsListAdapter extends RecyclerView.Adapter<LatestAc
         holder.mTvAchCount.setText(item.getAchievementsCount());
         holder.mTvGsCount.setText(item.getGamerscoreCount());
         holder.mTvSubmittedBy.setText("Submitted By: " + item.getSubmittedBy());
-
-        holder.mIvContextMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                final PopupMenu menu = new PopupMenu(mContext, v);
-                menu.getMenuInflater().inflate(R.menu.menu_latest_achievements, menu.getMenu());
-                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        int id = item.getItemId();
-
-                        switch (id) {
-                            case R.id.menu_la_view_screenshots:
-                                Bundle bundle = new Bundle();
-                                bundle.putString("game_permalink", mData.get(position).getGamePermalink());
-
-                                Fragment fragment = new ScreenshotsFragment();
-                                fragment.setArguments(bundle);
-
-                                ((AppCompatActivity)mContext).getSupportFragmentManager()
-                                        .beginTransaction()
-                                        .replace(R.id.main_layout, fragment, ScreenshotsFragment.class.getSimpleName())
-                                        .addToBackStack(null)
-                                        .commit();
-                                break;
-                            case R.id.menu_la_view_comments:
-
-                                break;
-                        }
-
-                        return true;
-                    }
-                });
-                menu.show();
-            }
-        });
     }
 
     @Override
@@ -100,23 +65,34 @@ public class LatestAchievementsListAdapter extends RecyclerView.Adapter<LatestAc
         return mData.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+		private Context mContext;
+		private ArrayList<LatestAchievement> mData;
+		
         ImageView mIvCover;
-        ImageView mIvContextMenu;
         TextView mTvTitle;
         TextView mTvAchCount;
         TextView mTvGsCount;
         TextView mTvSubmittedBy;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, ArrayList<LatestAchievement> data, Context context) {
             super(itemView);
+			
+			mData = data;
+			mContext = context;
 
             mIvCover = (ImageView) itemView.findViewById(R.id.iv_la_cover);
             mTvTitle = (TextView) itemView.findViewById(R.id.tv_la_title);
             mTvAchCount = (TextView) itemView.findViewById(R.id.tv_la_ach_count);
             mTvGsCount = (TextView) itemView.findViewById(R.id.tv_la_gs_count);
             mTvSubmittedBy = (TextView) itemView.findViewById(R.id.tv_la_submitted_by);
-            mIvContextMenu = (ImageView) itemView.findViewById(R.id.iv_la_menu);
+			
+			itemView.setOnClickListener(this);
         }
+		
+		@Override
+		public void onClick(View view) {
+			mContext.startActivity(new Intent(mContext, GameActivity.class).putExtra("game_permalink", mData.get(getAdapterPosition()).getGamePermalink()));
+		}
     }
 }

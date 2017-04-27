@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.models.Game;
+import android.content.*;
+import io.keypunchers.xa.app.*;
 
 
 public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHolder> {
@@ -32,7 +34,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
 
         View view = inflater.inflate(R.layout.row_browse_games, parent, false);
 
-        return new ViewHolder(view);
+        return new ViewHolder(view, mData, context);
     }
 
     @Override
@@ -54,19 +56,32 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
         return mData.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+		private Context mContext;
+		private ArrayList<Game> mData;
+		
         ImageView mIvImage;
         TextView mTvTitle;
         TextView mTvAchCount;
         TextView mTvGsCount;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, ArrayList<Game> data, Context context) {
             super(itemView);
+			
+			mContext = context;
+			mData = data;
 
             mIvImage = (ImageView) itemView.findViewById(R.id.iv_games_cover);
             mTvTitle = (TextView) itemView.findViewById(R.id.tv_games_title);
             mTvAchCount = (TextView) itemView.findViewById(R.id.tv_games_ach);
             mTvGsCount = (TextView) itemView.findViewById(R.id.tv_games_gs_count);
+			
+			itemView.setOnClickListener(this);
         }
+		
+		@Override
+		public void onClick(View p1){
+			mContext.startActivity(new Intent(mContext, GameActivity.class).putExtra("game_permalink", mData.get(getAdapterPosition()).getGamePermalink()));
+		}
     }
 }

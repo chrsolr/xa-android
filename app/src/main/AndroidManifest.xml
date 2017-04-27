@@ -24,7 +24,7 @@
 		android:value="2.1"/>
 
         <activity
-            android:name=".app.MainActivity"
+            android:name=".app.BaseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
@@ -45,6 +45,16 @@
             </intent-filter>
         </activity>
 
+		<activity
+            android:name=".app.GameActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name=".app.GameActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
     </application>
 
