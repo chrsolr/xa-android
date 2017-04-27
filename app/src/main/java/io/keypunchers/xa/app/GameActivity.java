@@ -19,13 +19,19 @@ import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.models.GameDetails;
 import io.keypunchers.xa.views.ScaledImageView;
 import android.support.v7.widget.*;
+import io.keypunchers.xa.adapters.*;
+import java.util.*;
+import io.keypunchers.xa.models.*;
 
 public class GameActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<GameDetails> {
     private GameDetails mData = new GameDetails();
+	private ArrayList<Achievement> mAchievements = new ArrayList<>();
     private String BASE_URL;
     private ScaledImageView mIvBanner;
 
 	private RecyclerView mRvContent;
+
+	private AchievementsListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +50,13 @@ public class GameActivity extends AppCompatActivity implements LoaderManager.Loa
             BASE_URL = Common.getGameAchievementsUrlByPermalink(gamePermalink);
         }
 		
+		mAdapter = new AchievementsListAdapter(this, mAchievements);
+		
+		LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
+		
 		mRvContent = (RecyclerView) findViewById(R.id.rv_game_achievements);
+		mRvContent.setAdapter(mAdapter);
+		mRvContent.setLayoutManager(mLinearLayoutManager);
 
         makeNetworkCall();
     }
@@ -70,6 +82,7 @@ public class GameActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<GameDetails> loader, GameDetails data) {
         mData = data;
+		mAchievements.addAll(data.getAchievements());
 
         setupUI();
     }
@@ -98,6 +111,8 @@ public class GameActivity extends AppCompatActivity implements LoaderManager.Loa
 
         mTvGameTitle.setText(mData.getTitle());
         mTvGameGenres.setText(TextUtils.join(" / ", mData.getGenres()));
+		
+		mAdapter.notifyItemRangeChanged(mAdapter.getItemCount(), mAchievements.size());
 	}
 
     @Override
