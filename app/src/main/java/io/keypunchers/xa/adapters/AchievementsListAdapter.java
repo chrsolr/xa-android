@@ -33,7 +33,7 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
 		
 		Picasso.with(mContext)
 				.load(item.getImageUrl())
-				.noPlaceholder()
+				.noFade()
 				.into(holder.mIvAchImage);
     }
 
