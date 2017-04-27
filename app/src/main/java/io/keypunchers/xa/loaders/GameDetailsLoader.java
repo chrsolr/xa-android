@@ -40,7 +40,7 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
 
     @Override
     public void deliverResult(GameDetails data) {
-		Toast.makeText(getContext(), "" + data.getAchievements().size(), Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getContext(), "" + data.getAchievements().size(), Toast.LENGTH_SHORT).show();
         
 		mData = data;
         if (isStarted() && mData != null) {
