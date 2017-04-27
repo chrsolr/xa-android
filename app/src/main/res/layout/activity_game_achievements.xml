@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:minHeight="200dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
