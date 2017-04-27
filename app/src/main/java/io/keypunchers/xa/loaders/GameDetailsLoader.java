@@ -112,7 +112,7 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
 				String ach_title = game_achievements_rows.get(i).select("td.ac2 b").first().text().trim();
 				String ach_gamerscore = game_achievements_rows.get(i).select("td.ac4 strong").first().text().trim();
 				String ach_desc = game_achievements_rows.get(i + 1).select("td.ac3:eq(0)").first().text().trim();
-				String ach_comments_amount = game_achievements_rows.get(i + 1).select("td.ac3:eq(1) a img").first().text().trim();
+				String ach_comments_amount = game_achievements_rows.get(i + 1).select("td.ac3:eq(1) a").first().text().trim();
 				String ach_page_url = game_achievements_rows.get(i).select("td.ac1 a").first().attr("href");
 				boolean ach_is_secret = game_achievements_rows.get(i).hasClass("secret");
 				
@@ -128,10 +128,6 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
 				achievements.add(ach);
 				
 				i = i + 1;
-			}
-			
-			for (Achievement ach : achievements) {
-				Log.i("***** Title *****", ach.getTitle() + " | " +ach.getCommentAmount());
 			}
 
             mData.setTitle(game_title);
