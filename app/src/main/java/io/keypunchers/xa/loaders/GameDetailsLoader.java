@@ -123,7 +123,7 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
 				i += 2;
 			}
 			
-			for (String ach : achievements) {
+			for (Achievement ach : achievements) {
 				Log.i("***** Title *****", ach.getTitle());
 			}
 
