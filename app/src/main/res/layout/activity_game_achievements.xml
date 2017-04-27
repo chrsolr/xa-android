@@ -89,7 +89,7 @@
 
             </RelativeLayout>
 			
-			<include layout="@layout/toolbar" />
+			
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
