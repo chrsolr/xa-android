@@ -26,15 +26,15 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+				android:fitsSystemWindows="true"
+				app:layout_collapseMode="parallax" >
 
                 <io.keypunchers.xa.views.ScaledImageView
                     android:id="@+id/iv_game_achievements_banner"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:background="@color/color_black"
-                    android:fitsSystemWindows="true"
-                    app:layout_collapseMode="parallax" />
+                    android:layout_height="match_parent"
+                    android:background="@color/color_black"/>
 
                 <View
                     android:id="@+id/view"
@@ -102,7 +102,6 @@
         android:clipToPadding="false"
         android:fitsSystemWindows="true"
         android:paddingBottom="@dimen/padding_level_1"
-        android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>

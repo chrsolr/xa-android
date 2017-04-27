@@ -41,7 +41,6 @@ public class GameActivity extends AppCompatActivity implements LoaderManager.Loa
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setLogo(null);
 
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -54,6 +53,7 @@ public class GameActivity extends AppCompatActivity implements LoaderManager.Loa
 		mAdapter = new AchievementsListAdapter(this, mAchievements);
 		
 		LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
+		//mLinearLayoutManager.setAutoMeasureEnabled(true);
 		
 		mRvContent = (RecyclerView) findViewById(R.id.rv_game_achievements);
 		mRvContent.setAdapter(mAdapter);
@@ -84,9 +84,11 @@ public class GameActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<GameDetails> loader, GameDetails data) {
         mData = data;
-		mAchievements.addAll(mData.getAchievements());
+		mAchievements.addAll(data.getAchievements());
 		mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), mAchievements.size());
 
+		Toast.makeText(this, mAchievements.get(0).getTitle(), Toast.LENGTH_SHORT).show();
+		
         setupUI();
     }
 

@@ -1,12 +1,15 @@
 package io.keypunchers.xa.adapters;
-import android.support.v7.widget.*;
-import android.content.*;
-import io.keypunchers.xa.models.*;
-import java.util.*;
-import android.view.*;
-import io.keypunchers.xa.*;
-import io.keypunchers.xa.views.*;
-import com.squareup.picasso.*;
+import android.support.v7.widget.RecyclerView;
+import android.content.Context;
+import io.keypunchers.xa.models.Achievement;
+import java.util.ArrayList;
+import android.view.View;
+import io.keypunchers.xa.views.ScaledImageView;
+import com.squareup.picasso.Picasso;
+import android.widget.TextView;
+import android.view.ViewGroup;
+import android.view.LayoutInflater;
+import io.keypunchers.xa.R;
 
 public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsListAdapter.ViewHolder> {
     private Context mContext;
