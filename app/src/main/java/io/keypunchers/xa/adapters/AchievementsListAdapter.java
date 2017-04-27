@@ -1,4 +1,10 @@
 package io.keypunchers.xa.adapters;
+import android.support.v7.widget.*;
+import android.content.*;
+import io.keypunchers.xa.models.*;
+import java.util.*;
+import android.view.*;
+import io.keypunchers.xa.*;
 
 public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsListAdapter.ViewHolder> {
     private Context mContext;
