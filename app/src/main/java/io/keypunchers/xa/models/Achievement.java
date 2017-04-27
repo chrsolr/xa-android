@@ -7,6 +7,15 @@ public class Achievement {
 	private String gamescoreAmount;
 	private String commentAmount;
 	private String achievementsPageUrl;
+	private boolean isSecret;
+
+	public void setIsSecret(boolean isSecrect) {
+		this.isSecret = isSecrect;
+	}
+
+	public boolean isSecret() {
+		return isSecret;
+	}
 
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;

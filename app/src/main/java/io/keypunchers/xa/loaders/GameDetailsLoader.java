@@ -113,11 +113,19 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
 				String ach_image_url = game_achievements_rows.get(i).select("td.ac1 img").attr("abs:src").replace("lo", "hi");
 				String ach_title = game_achievements_rows.get(i).select("td.ac2 b").first().text().trim();
 				String ach_gamerscore = game_achievements_rows.get(i).select("td.ac4 strong").first().text().trim();
+				String ach_desc = game_achievements_rows.get(i + 1).select("td.ac3:eq(0)").first().text().trim();
+				String ach_comments_amount = game_achievements_rows.get(i + 1).select("td.ac3:eq(1) img").text().trim();
+				String ach_page_url = game_achievements_rows.get(i).select("td.ac1 a").first().attr("href");
+				boolean ach_is_secret = game_achievements_rows.get(i).hasClass("secret");
 				
 				Achievement ach = new Achievement();
 				ach.setImageUrl(ach_image_url);
 				ach.setTitle(ach_title);
 				ach.setGamescoreAmount(ach_gamerscore);
+				ach.setDescription(ach_desc);
+				ach.setCommentAmount(ach_comments_amount.isEmpty() ? "(0)" : ach_comments_amount);
+				ach.setIsSecret(ach_is_secret);
+				ach.setAchievementsPageUrl(ach_page_url);
 				
 				achievements.add(ach);
 				
@@ -125,7 +133,7 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
 			}
 			
 			for (Achievement ach : achievements) {
-				Log.i("***** Title *****", ach.getGamescoreAmount());
+				Log.i("***** Title *****", ach.getAchievementsPageUrl());
 			}
 
             mData.setTitle(game_title);
