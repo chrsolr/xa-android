@@ -84,12 +84,12 @@ public class GameActivity extends AppCompatActivity implements LoaderManager.Loa
         if (mData.getImageUrl() != null)
             Picasso.with(this)
                     .load(mData.getImageUrl())
-                    .transform(new CircularTransform())
+                    //.transform(new CircularTransform())
                     .noFade()
                     .into(mIvGameCover);
 
         mTvGameTitle.setText(mData.getTitle());
-        mTvGameGenres.setText(TextUtils.join("/", mData.getGenres()));
+        mTvGameGenres.setText(TextUtils.join(" / ", mData.getGenres()));
     }
 
     @Override
