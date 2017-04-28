@@ -39,14 +39,19 @@ import android.support.v4.view.ViewPager;
 import android.support.design.widget.TabLayout;
 import io.keypunchers.xa.adapters.ViewPagerAdapter;
 import io.keypunchers.xa.fragments.AchievementsFragment;
+import android.support.v4.content.AsyncTaskLoader;
+import io.keypunchers.xa.models.Screenshots;
+import io.keypunchers.xa.loaders.ScreenshotsLoader;
+import io.keypunchers.xa.fragments.ImageListFragment;
 
-public class AchievementsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<GameDetails> {
+public class AchievementsActivity extends AppCompatActivity {
     private GameDetails mData;
-    private ArrayList<Achievement> mAchievements = new ArrayList<>();
     private String BASE_URL;
-    private RecyclerView mRvContent;
-    private AchievementsListAdapter mAdapter;
-    private Target mTarget;
+	private String GAME_PERMALINK;
+
+	private ViewPagerAdapter mAdapter;
+
+	private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,18 +60,26 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+		
+		mViewPager = (ViewPager) findViewById(R.id.vp_achievements);
+		mAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+		mViewPager.setAdapter(mAdapter);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tl_achievements);
+        tabLayout.setupWithViewPager(mViewPager);
 
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (getIntent().getExtras() != null) {
-            String gamePermalink = getIntent().getExtras().getString("game_permalink");
-            BASE_URL = Common.getGameAchievementsUrlByPermalink(gamePermalink);
+            GAME_PERMALINK = getIntent().getExtras().getString("game_permalink");
+            BASE_URL = Common.getGameAchievementsUrlByPermalink(GAME_PERMALINK);
         }
 		
 		if (mData == null) {
 			mData = new GameDetails();
-			makeNetworkCall();
+			getGameScreenshots();
+			getGameAchievements();
 		}
     }
 
@@ -82,38 +95,53 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
 
         return super.onOptionsItemSelected(item);
     }
+	
+	private void getGameAchievements(){
+		LoaderManager.LoaderCallbacks mGameAchievementsLoader = new LoaderManager.LoaderCallbacks<GameDetails>(){
 
-    @Override
-    public Loader<GameDetails> onCreateLoader(int id, Bundle args) {
-        return new GameDetailsLoader(this, BASE_URL);
-    }
+			@Override
+			public Loader<GameDetails> onCreateLoader(int id, Bundle args) {
+				return new GameDetailsLoader(getApplicationContext(), BASE_URL);
+			}
 
-    @Override
-    public void onLoadFinished(Loader<GameDetails> loader, GameDetails data) {
-        mData = data;
-		setupUI();
-    }
+			@Override
+			public void onLoadFinished(Loader<GameDetails> loader, GameDetails data) {
+				mData = data;
+				
+				if (getSupportActionBar() != null)
+					getSupportActionBar().setTitle(mData.getTitle());
+				
+				mAdapter.addFragment(new AchievementsFragment().newInstance(mData), "Achievements");
+				mAdapter.notifyDataSetChanged();
+			}
 
-    @Override
-    public void onLoaderReset(Loader<GameDetails> loader) {
-    }
-
-    private void makeNetworkCall() {
-        getSupportLoaderManager().restartLoader(0, null, this);
-    }
-
-	private void setupUI() {
-		if (getSupportActionBar() != null)
-			getSupportActionBar().setTitle(mData.getTitle());
+			@Override
+			public void onLoaderReset(Loader<GameDetails> loader) {
+			}
+		};
 		
-		ViewPager mViewPager = (ViewPager) findViewById(R.id.vp_achievements);
+		getSupportLoaderManager().restartLoader(0, null, mGameAchievementsLoader);
+	}
+	
+	private void getGameScreenshots(){
+		LoaderManager.LoaderCallbacks mGameScreenshotsLoader = new LoaderManager.LoaderCallbacks<Screenshots>(){
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tl_achievements);
-        tabLayout.setupWithViewPager(mViewPager);
+			@Override
+			public Loader<Screenshots> onCreateLoader(int id, Bundle args) {
+				return new ScreenshotsLoader(getApplicationContext(), Common.getGameScreenshotsUrlByPermalink(GAME_PERMALINK, 1));
+			}
 
-		ViewPagerAdapter mAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-		mAdapter.addFragment(new AchievementsFragment().newInstance(mData), "Achievements");
+			@Override
+			public void onLoadFinished(Loader<Screenshots> loader, Screenshots data) {
+				mAdapter.addFragment(new ImageListFragment().newInstance(data.getImageUrls()), "Screenshots");
+				mAdapter.notifyDataSetChanged();
+			}
+
+			@Override
+			public void onLoaderReset(Loader<Screenshots> loader) {
+			}
+		};
 		
-		mViewPager.setAdapter(mAdapter);
+		getSupportLoaderManager().restartLoader(1, null, mGameScreenshotsLoader);
 	}
 }

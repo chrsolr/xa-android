@@ -14,6 +14,24 @@ public class GameDetails {
     private ArrayList<String> genres;
     private Map<Enums.Country, String> releaseDates;
 	private ArrayList<Achievement> achievements;
+	private boolean hasScreenshots;
+	private boolean hasVideos;
+
+	public void setHasVideos(boolean hasVideos) {
+		this.hasVideos = hasVideos;
+	}
+
+	public boolean hasVideos() {
+		return hasVideos;
+	}
+
+	public void setHasScreenshots(boolean hasScreenshots) {
+		this.hasScreenshots = hasScreenshots;
+	}
+
+	public boolean hasScreenshots() {
+		return hasScreenshots;
+	}
 
 	public void setAchievements(ArrayList<Achievement> achievements) {
 		this.achievements = achievements;

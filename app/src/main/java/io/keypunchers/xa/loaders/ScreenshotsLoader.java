@@ -62,7 +62,7 @@ public class ScreenshotsLoader extends AsyncTaskLoader<Screenshots> {
 
             return mData;
         } catch (Exception ex) {
-            Log.e("Article Loader", ex.getMessage());
+            Log.e(ScreenshotsLoader.class.getSimpleName(), ex.getMessage());
             return null;
         }
     }
