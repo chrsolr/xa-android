@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.models.Game;
@@ -47,8 +48,8 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
                 .into(holder.mIvImage);
 
         holder.mTvTitle.setText(item.getTitle());
-        holder.mTvAchCount.setText(item.getAchCount() + " Achievements");
-        holder.mTvGsCount.setText(item.getGsCount() + " Points");
+        holder.mTvAchCount.setText(String.format(Locale.US, "%s Achievements", item.getAchCount()));
+        holder.mTvGsCount.setText(String.format(Locale.US, "%s Points", item.getGsCount()));
     }
 
     @Override
