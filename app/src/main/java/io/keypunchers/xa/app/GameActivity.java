@@ -14,7 +14,6 @@ import com.squareup.picasso.Picasso;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.loaders.GameDetailsLoader;
-import io.keypunchers.xa.misc.CircularTransform;
 import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.models.GameDetails;
 import io.keypunchers.xa.views.ScaledImageView;
@@ -22,7 +21,7 @@ import android.support.v7.widget.*;
 import io.keypunchers.xa.adapters.*;
 import java.util.*;
 import io.keypunchers.xa.models.*;
-import android.widget.*;
+
 import com.squareup.picasso.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
@@ -40,7 +39,7 @@ public class GameActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_achievements);
+        setContentView(R.layout.activity_achievements);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

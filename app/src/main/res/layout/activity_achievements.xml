@@ -44,7 +44,6 @@
 						android:id="@+id/view"
 						android:layout_width="match_parent"
 						android:layout_height="@dimen/img_gradient_height"
-						android:layout_alignBottom="@+id/iv_game_achievements_banner"
 						android:layout_alignParentBottom="true"
 						android:layout_alignParentLeft="true"
 						android:layout_alignParentStart="true"
