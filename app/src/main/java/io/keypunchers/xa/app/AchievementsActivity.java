@@ -91,22 +91,11 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
     @Override
     public void onLoadFinished(Loader<GameDetails> loader, GameDetails data) {
         mData = data;
-
-        Collections.sort(mData.getAchievements(), new Comparator<Achievement>() {
-				@Override
-				public int compare(Achievement a, Achievement b) {
-					return a.getTitle().compareTo(b.getTitle());
-				}
-			});
-
 		setupUI();
     }
 
-
-
     @Override
     public void onLoaderReset(Loader<GameDetails> loader) {
-
     }
 
     private void makeNetworkCall() {

@@ -26,9 +26,17 @@ import android.graphics.Bitmap;
 import com.squareup.picasso.Picasso;
 import android.graphics.drawable.Drawable;
 import io.keypunchers.xa.models.Achievement;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class AchievementsFragment extends Fragment {
     private GameDetails mData;
+	private ScaledNetworkImageView mIvBanner;
+	private NetworkImageView mIvGameCover;
+	private TextView mTvGameTitle;
+	private TextView mTvGameGenres;
+	private TextView mTvAchAmount;
+	private RecyclerView mRvContent;
 
     public AchievementsFragment() {
     }
@@ -50,48 +58,55 @@ public class AchievementsFragment extends Fragment {
 
         setRetainInstance(true);
 
-		setupUI(view);
+		mIvBanner = (ScaledNetworkImageView) view.findViewById(R.id.iv_game_achievements_banner);
+		mIvGameCover = (NetworkImageView) view.findViewById(R.id.iv_game_achievements_cover);
+		mTvGameTitle = (TextView) view.findViewById(R.id.tv_game_ach_title);
+		mTvGameGenres = (TextView) view.findViewById(R.id.tv_game_ach_genres);
+		mTvAchAmount = (TextView) view.findViewById(R.id.tv_game_ach_amount);
+		mRvContent = (RecyclerView) view.findViewById(R.id.rv_achievements);
     }
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-	}
-	
-	private void setupUI(View view) {
-        ScaledNetworkImageView mIvBanner = (ScaledNetworkImageView) view.findViewById(R.id.iv_game_achievements_banner);
-        NetworkImageView mIvGameCover = (NetworkImageView) view.findViewById(R.id.iv_game_achievements_cover);
-        TextView mTvGameTitle = (TextView) view.findViewById(R.id.tv_game_ach_title);
-        TextView mTvGameGenres = (TextView) view.findViewById(R.id.tv_game_ach_genres);
-        TextView mTvAchAmount = (TextView) view.findViewById(R.id.tv_game_ach_amount);
 
+		Collections.sort(mData.getAchievements(), new Comparator<Achievement>() {
+				@Override
+				public int compare(Achievement a, Achievement b) {
+					return a.getTitle().compareTo(b.getTitle());
+				}
+			});
+
+		setupUI();
+	}
+
+	private void setupUI() {
         mIvBanner.setImageUrl(mData.getBanner(), VolleySingleton.getImageLoader());
         mIvGameCover.setImageUrl(mData.getImageUrl(), VolleySingleton.getImageLoader());
 
         mTvGameTitle.setText(mData.getTitle());
         mTvGameGenres.setText(TextUtils.join("/", mData.getGenres()));
         mTvAchAmount.setText(String.format(Locale.US, "%s Achievements", mData.getAchievements().size()));
-		
-        final RecyclerView mRvContent = (RecyclerView) view.findViewById(R.id.rv_achievements);
+
         mRvContent.setLayoutManager(new LinearLayoutManager(getActivity()){
-			@Override
-			public boolean canScrollHorizontally(){
-				return false;
-			}
-			
-			@Override
-			public boolean canScrollVertically(){
-				return false;
-			}
-		});
-		
+				@Override
+				public boolean canScrollHorizontally() {
+					return false;
+				}
+
+				@Override
+				public boolean canScrollVertically() {
+					return false;
+				}
+			});
+
 		Target mTarget = new Target(){
 
 			@Override
 			public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom p2) {
 				if (bitmap != null) {
 					AchievementsListAdapter mAdapter = null;
-					
+
                     if (bitmap.getWidth() < 100)
                         mAdapter = new AchievementsListAdapter(getActivity(), mData.getAchievements(), R.layout.row_achievements_square);
                     else
