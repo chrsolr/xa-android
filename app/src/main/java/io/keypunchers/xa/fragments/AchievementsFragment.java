@@ -37,6 +37,7 @@ public class AchievementsFragment extends Fragment {
 	private TextView mTvGameGenres;
 	private TextView mTvAchAmount;
 	private RecyclerView mRvContent;
+	private Target mTarget;
 
     public AchievementsFragment() {
     }
@@ -100,7 +101,7 @@ public class AchievementsFragment extends Fragment {
 				}
 			});
 
-		Target mTarget = new Target(){
+		mTarget = new Target(){
 
 			@Override
 			public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom p2) {
