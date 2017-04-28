@@ -81,7 +81,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
 		
 		@Override
 		public void onClick(View p1){
-			mContext.startActivity(new Intent(mContext, GameActivity.class).putExtra("game_permalink", mData.get(getAdapterPosition()).getGamePermalink()));
+			mContext.startActivity(new Intent(mContext, Achievements.class).putExtra("game_permalink", mData.get(getAdapterPosition()).getGamePermalink()));
 		}
     }
 }

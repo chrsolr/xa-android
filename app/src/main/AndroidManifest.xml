@@ -46,11 +46,11 @@
         </activity>
 
 		<activity
-            android:name=".app.GameActivity"
+            android:name=".app.Achievements"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
-                <action android:name=".app.GameActivity" />
+                <action android:name=".app.Achievements" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

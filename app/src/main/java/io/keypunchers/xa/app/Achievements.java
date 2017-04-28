@@ -26,7 +26,7 @@ import com.squareup.picasso.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
 
-public class GameActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<GameDetails> {
+public class Achievements extends AppCompatActivity implements LoaderManager.LoaderCallbacks<GameDetails> {
     private GameDetails mData = new GameDetails();
 	private ArrayList<Achievement> mAchievements = new ArrayList<>();
     private String BASE_URL;
