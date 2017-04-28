@@ -131,26 +131,7 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
 //			.into(mTarget);
     }
 
-//    private void setupUI() {
-//        ScaledNetworkImageView mIvBanner = (ScaledNetworkImageView) findViewById(R.id.iv_game_achievements_banner);
-//        NetworkImageView mIvGameCover = (NetworkImageView) findViewById(R.id.iv_game_achievements_cover);
-//        TextView mTvGameTitle = (TextView) findViewById(R.id.tv_game_ach_title);
-//        TextView mTvGameGenres = (TextView) findViewById(R.id.tv_game_ach_genres);
-//        TextView mTvAchAmount = (TextView) findViewById(R.id.tv_game_ach_amount);
-//
-//        if (getSupportActionBar() != null)
-//            getSupportActionBar().setTitle(mData.getTitle());
-//
-//        mIvBanner.setImageUrl(mData.getBanner(), VolleySingleton.getImageLoader());
-//        mIvGameCover.setImageUrl(mData.getImageUrl(), VolleySingleton.getImageLoader());
-//
-//        mTvGameTitle.setText(mData.getTitle());
-//        mTvGameGenres.setText(TextUtils.join("/", mData.getGenres()));
-//        mTvAchAmount.setText(String.format(Locale.US, "%s Achievements", mData.getAchievements().size()));
-//
-//        mRvContent.setAdapter(mAdapter);
-//        mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), mAchievements.size());
-//    }
+
 
     @Override
     public void onLoaderReset(Loader<GameDetails> loader) {
