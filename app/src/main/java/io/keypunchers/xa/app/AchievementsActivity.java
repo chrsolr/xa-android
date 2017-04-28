@@ -26,7 +26,7 @@ import com.squareup.picasso.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
 
-public class Achievements extends AppCompatActivity implements LoaderManager.LoaderCallbacks<GameDetails> {
+public class AchievementsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<GameDetails> {
     private GameDetails mData = new GameDetails();
 	private ArrayList<Achievement> mAchievements = new ArrayList<>();
     private String BASE_URL;
@@ -54,7 +54,8 @@ public class Achievements extends AppCompatActivity implements LoaderManager.Loa
 
 		LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
 
-		mRvContent = (RecyclerView) findViewById(R.id.rv_game_achievements);
+        mAdapter = new AchievementsListAdapter(getApplicationContext(), mAchievements, R.layout.row_achievements_wide);
+        mRvContent = (RecyclerView) findViewById(R.id.rv_game_achievements);
 		mRvContent.setAdapter(mAdapter);
 		mRvContent.setLayoutManager(mLinearLayoutManager);
 
@@ -84,6 +85,13 @@ public class Achievements extends AppCompatActivity implements LoaderManager.Loa
     public void onLoadFinished(Loader<GameDetails> loader, GameDetails data) {
         mData = data;
 		mAchievements.addAll(data.getAchievements());
+
+        Collections.sort(mAchievements, new Comparator<Achievement>() {
+            @Override
+            public int compare(Achievement obj1, Achievement obj2) {
+                return obj1.getTitle().compareTo(obj2.getTitle());
+            }
+        });
 		
 		Picasso.with(this)
 			.load(mAchievements.get(0).getImageUrl())

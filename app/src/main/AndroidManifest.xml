@@ -46,7 +46,7 @@
         </activity>
 
 		<activity
-            android:name=".app.Achievements"
+            android:name=".app.AchievementsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>

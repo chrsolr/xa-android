@@ -47,7 +47,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
                 .into(holder.mIvImage);
 
         holder.mTvTitle.setText(item.getTitle());
-        holder.mTvAchCount.setText(item.getAchCount() + " Achievements");
+        holder.mTvAchCount.setText(item.getAchCount() + " AchievementsActivity");
         holder.mTvGsCount.setText(item.getGsCount() + " Points");
     }
 
@@ -81,7 +81,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
 		
 		@Override
 		public void onClick(View p1){
-			mContext.startActivity(new Intent(mContext, Achievements.class).putExtra("game_permalink", mData.get(getAdapterPosition()).getGamePermalink()));
+			mContext.startActivity(new Intent(mContext, AchievementsActivity.class).putExtra("game_permalink", mData.get(getAdapterPosition()).getGamePermalink()));
 		}
     }
 }

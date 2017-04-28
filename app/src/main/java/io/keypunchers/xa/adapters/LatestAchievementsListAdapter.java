@@ -81,7 +81,7 @@ public class LatestAchievementsListAdapter extends RecyclerView.Adapter<LatestAc
 		
 		@Override
 		public void onClick(View view) {
-			mContext.startActivity(new Intent(mContext, Achievements.class).putExtra("game_permalink", mData.get(getAdapterPosition()).getGamePermalink()));
+			mContext.startActivity(new Intent(mContext, AchievementsActivity.class).putExtra("game_permalink", mData.get(getAdapterPosition()).getGamePermalink()));
 		}
     }
 }
