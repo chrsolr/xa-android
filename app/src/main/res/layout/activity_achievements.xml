@@ -10,7 +10,7 @@
 	<android.support.design.widget.CoordinatorLayout 
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:background="#f1f1f1">
+		android:background="#fafafa">
 
 		<android.support.design.widget.AppBarLayout
 			android:layout_width="match_parent"
@@ -103,7 +103,7 @@
 			android:layout_height="wrap_content"
 			android:clipToPadding="false"
 			android:fitsSystemWindows="true"
-			android:paddingBottom="@dimen/padding_level_1"
+			android:padding="@dimen/padding_level_2"
 			app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 	</android.support.design.widget.CoordinatorLayout>
