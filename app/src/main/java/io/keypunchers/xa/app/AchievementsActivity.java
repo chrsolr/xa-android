@@ -120,6 +120,7 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
         ImageView mIvGameCover = (ImageView) findViewById(R.id.iv_game_achievements_cover);
         TextView mTvGameTitle = (TextView) findViewById(R.id.tv_game_ach_title);
         TextView mTvGameGenres = (TextView) findViewById(R.id.tv_game_ach_genres);
+        TextView mTvAchAmount = (TextView) findViewById(R.id.tv_game_ach_amount);
 
         if (getSupportActionBar() != null)
             getSupportActionBar().setTitle(mData.getTitle());
@@ -137,6 +138,7 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
 
         mTvGameTitle.setText(mData.getTitle());
         mTvGameGenres.setText(TextUtils.join("/", mData.getGenres()));
+        mTvAchAmount.setText(String.format(Locale.US, "%s Achievements", mData.getAchievements().size()));
 		
 		mRvContent.setAdapter(mAdapter);
 		mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), mAchievements.size());

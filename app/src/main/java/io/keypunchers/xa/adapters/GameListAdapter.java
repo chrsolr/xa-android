@@ -47,7 +47,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
                 .into(holder.mIvImage);
 
         holder.mTvTitle.setText(item.getTitle());
-        holder.mTvAchCount.setText(item.getAchCount() + " AchievementsActivity");
+        holder.mTvAchCount.setText(item.getAchCount() + " Achievements");
         holder.mTvGsCount.setText(item.getGsCount() + " Points");
     }
 

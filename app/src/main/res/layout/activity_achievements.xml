@@ -89,6 +89,16 @@
 							android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
 							android:textColor="@color/color_light_gray"
 							android:textStyle="italic" />
+
+						<TextView
+							android:id="@+id/tv_game_ach_amount"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="@dimen/margin_level_1_italic"
+							android:layout_marginStart="@dimen/margin_level_1_italic"
+							android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
+							android:textColor="@color/color_light_gray"
+							android:textStyle="italic" />
 					</LinearLayout>
 
 				</RelativeLayout>

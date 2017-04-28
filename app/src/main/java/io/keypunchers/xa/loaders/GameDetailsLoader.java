@@ -15,9 +15,8 @@ import java.util.Map;
 
 import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.misc.Enums;
+import io.keypunchers.xa.models.Achievement;
 import io.keypunchers.xa.models.GameDetails;
-import io.keypunchers.xa.models.*;
-import android.widget.*;
 
 public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
     private GameDetails mData;
@@ -40,7 +39,7 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
 
     @Override
     public void deliverResult(GameDetails data) {
-		mData = data;
+        mData = data;
         if (isStarted() && mData != null) {
             super.deliverResult(mData);
         }
@@ -57,10 +56,10 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
                     .first()
                     .select("tr")
                     .first();
-					
-			Elements game_achievements_rows = document.getElementsByClass("bl_la_main")
-					.first()
-					.select("tr:has(td.ac1), tr:has(td.ac3)");
+
+            Elements game_achievements_rows = document.getElementsByClass("bl_la_main")
+                    .first()
+                    .select("tr:has(td.ac1), tr:has(td.ac3)");
 
             String game_banner = null;
             Element banner = document.getElementsByClass("blr_main")
@@ -105,30 +104,30 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
                 if (element.attr("alt").equals("Japan"))
                     game_release_dates.put(Enums.Country.JAPAN, element.nextSibling().toString().trim());
             }
-			
-			ArrayList<Achievement> achievements = new ArrayList<>();
-			for (int i = 0; i < game_achievements_rows.size(); i++) {
-				String ach_image_url = game_achievements_rows.get(i).select("td.ac1 img").attr("abs:src").replace("lo", "hi");
-				String ach_title = game_achievements_rows.get(i).select("td.ac2 b").first().text().trim();
-				String ach_gamerscore = game_achievements_rows.get(i).select("td.ac4 strong").first().text().trim();
-				String ach_desc = game_achievements_rows.get(i + 1).select("td.ac3:eq(0)").first().text().trim();
-				String ach_comments_amount = game_achievements_rows.get(i + 1).select("td.ac3:eq(1) a").first().text().trim();
-				String ach_page_url = game_achievements_rows.get(i).select("td.ac1 a").first().attr("href");
-				boolean ach_is_secret = game_achievements_rows.get(i).hasClass("secret");
-				
-				Achievement ach = new Achievement();
-				ach.setImageUrl(ach_image_url);
-				ach.setTitle(ach_title);
-				ach.setGamescoreAmount(ach_gamerscore);
-				ach.setDescription(ach_desc);
-				ach.setCommentAmount(ach_comments_amount == null || ach_comments_amount.equals("") ? "(0)" : ach_comments_amount);
-				ach.setIsSecret(ach_is_secret);
-				ach.setAchievementsPageUrl(ach_page_url);
-				
-				achievements.add(ach);
-				
-				i = i + 1;
-			}
+
+            ArrayList<Achievement> achievements = new ArrayList<>();
+            for (int i = 0; i < game_achievements_rows.size(); i++) {
+                String ach_image_url = game_achievements_rows.get(i).select("td.ac1 img").attr("abs:src").replace("lo", "hi");
+                String ach_title = game_achievements_rows.get(i).select("td.ac2 b").first().text().trim();
+                String ach_gamerscore = game_achievements_rows.get(i).select("td.ac4 strong").first().text().trim();
+                String ach_desc = game_achievements_rows.get(i + 1).select("td.ac3:eq(0)").first().text().trim();
+                String ach_comments_amount = game_achievements_rows.get(i + 1).select("td.ac3:eq(1) a").first().text().trim();
+                String ach_page_url = game_achievements_rows.get(i).select("td.ac1 a").first().attr("href");
+                boolean ach_is_secret = game_achievements_rows.get(i).hasClass("secret");
+
+                Achievement ach = new Achievement();
+                ach.setImageUrl(ach_image_url);
+                ach.setTitle(ach_title);
+                ach.setGamescoreAmount(ach_gamerscore);
+                ach.setDescription(ach_desc);
+                ach.setCommentAmount(ach_comments_amount.equals("") ? "(0)" : ach_comments_amount);
+                ach.setIsSecret(ach_is_secret);
+                ach.setAchievementsPageUrl(ach_page_url);
+
+                achievements.add(ach);
+
+                i += 1;
+            }
 
             mData.setTitle(game_title);
             mData.setImageUrl(game_image_url);
@@ -137,11 +136,11 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
             mData.setGenres(game_genres);
             mData.setReleaseDates(game_release_dates);
             mData.setBanner(Common.imageUrlThumbToMed(game_banner));
-			mData.setAchievements(achievements);
+            mData.setAchievements(achievements);
 
             return mData;
         } catch (Exception e) {
-            Log.e(GamesListLoader.class.getSimpleName(), e.getMessage());
+            Log.e(GameDetails.class.getSimpleName(), e.getMessage());
             return null;
         }
     }
