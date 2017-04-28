@@ -1,7 +1,6 @@
 package io.keypunchers.xa.app;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -14,6 +13,9 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -26,9 +28,11 @@ import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.AchievementsListAdapter;
 import io.keypunchers.xa.loaders.GameDetailsLoader;
 import io.keypunchers.xa.misc.Common;
+import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.Achievement;
 import io.keypunchers.xa.models.GameDetails;
 import io.keypunchers.xa.views.ScaledImageView;
+import io.keypunchers.xa.views.ScaledNetworkImageView;
 
 public class AchievementsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<GameDetails> {
     private GameDetails mData = new GameDetails();
@@ -55,9 +59,10 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
         }
 
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
-
+        mAdapter = new AchievementsListAdapter(getApplicationContext(), mAchievements, R.layout.row_achievements_square);
         mRvContent = (RecyclerView) findViewById(R.id.rv_game_achievements);
         mRvContent.setLayoutManager(mLinearLayoutManager);
+        mRvContent.setAdapter(mAdapter);
 
         if (mAchievements.isEmpty())
             makeNetworkCall();
@@ -93,35 +98,31 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
             }
         });
 
-        mTarget = new Target() {
+        VolleySingleton.getImageLoader().get(mAchievements.get(0).getImageUrl(), new ImageLoader.ImageListener() {
             @Override
-            public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+            public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                Bitmap bitmap = response.getBitmap();
 
-                if (bitmap.getWidth() < 100)
-                    mAdapter = new AchievementsListAdapter(getApplicationContext(), mAchievements, R.layout.row_achievements_square);
-                else
-                    mAdapter = new AchievementsListAdapter(getApplicationContext(), mAchievements, R.layout.row_achievements_wide);
+                if (bitmap != null) {
+                    if (bitmap.getWidth() < 100)
+                        mAdapter = new AchievementsListAdapter(getApplicationContext(), mAchievements, R.layout.row_achievements_square);
+                    else
+                        mAdapter = new AchievementsListAdapter(getApplicationContext(), mAchievements, R.layout.row_achievements_wide);
 
-                setupUI();
+                    setupUI();
+                }
             }
 
             @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-            }
+            public void onErrorResponse(VolleyError error) {
 
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
             }
-        };
-
-        Picasso.with(this)
-                .load(mAchievements.get(0).getImageUrl())
-                .into(mTarget);
+        });
     }
 
     private void setupUI() {
-        ScaledImageView mIvBanner = (ScaledImageView) findViewById(R.id.iv_game_achievements_banner);
-        ImageView mIvGameCover = (ImageView) findViewById(R.id.iv_game_achievements_cover);
+        ScaledNetworkImageView mIvBanner = (ScaledNetworkImageView) findViewById(R.id.iv_game_achievements_banner);
+        NetworkImageView mIvGameCover = (NetworkImageView) findViewById(R.id.iv_game_achievements_cover);
         TextView mTvGameTitle = (TextView) findViewById(R.id.tv_game_ach_title);
         TextView mTvGameGenres = (TextView) findViewById(R.id.tv_game_ach_genres);
         TextView mTvAchAmount = (TextView) findViewById(R.id.tv_game_ach_amount);
@@ -129,16 +130,8 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
         if (getSupportActionBar() != null)
             getSupportActionBar().setTitle(mData.getTitle());
 
-        Picasso.with(this)
-                .load(mData.getBanner())
-                .placeholder(R.drawable.promo_banner)
-                .noFade()
-                .into(mIvBanner);
-
-        Picasso.with(this)
-                .load(mData.getImageUrl())
-                .noFade()
-                .into(mIvGameCover);
+        mIvBanner.setImageUrl(mData.getBanner(), VolleySingleton.getImageLoader());
+        mIvGameCover.setImageUrl(mData.getImageUrl(), VolleySingleton.getImageLoader());
 
         mTvGameTitle.setText(mData.getTitle());
         mTvGameGenres.setText(TextUtils.join("/", mData.getGenres()));

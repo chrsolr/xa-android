@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-	android:layout_marginTop="@dimen/margin_level_1"
-	android:layout_marginBottom="@dimen/margin_level_1" >
+    android:layout_marginBottom="@dimen/margin_level_1"
+    android:layout_marginTop="@dimen/margin_level_1"
+    android:orientation="vertical">
 
-    <io.keypunchers.xa.views.ScaledImageView
+    <io.keypunchers.xa.views.ScaledNetworkImageView
         android:id="@+id/iv_achievement_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-		android:minHeight="200dp"
-        android:background="@color/color_black" />
+        android:background="@color/color_black"
+        android:minHeight="200dp" />
 
     <View
         android:id="@+id/view"
@@ -23,36 +21,36 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="@drawable/primary_gradient_bottom" />
-	
-	<LinearLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/iv_achievement_image"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-		android:paddingLeft="@dimen/padding_level_1"
-		android:paddingStart="@dimen/padding_level_1"
-		android:paddingRight="@dimen/padding_level_1"
-		android:paddingEnd="@dimen/padding_level_1"
-		android:paddingBottom="8dp"
-        android:orientation="vertical">
-		
-	<TextView
-		android:id="@+id/tv_achievement_title"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:maxLines="2"
-		android:textAppearance="@style/AppTheme.TextAppearance.Title"
-		android:textColor="@color/color_white" />
-	
-	<TextView
-		android:id="@+id/tv_achievement_desc"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:maxLines="2"
-		android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
-		android:textColor="@color/color_light_gray"
-		android:textStyle="italic" />
-	</LinearLayout>
-	
+        android:orientation="vertical"
+        android:paddingBottom="8dp"
+        android:paddingEnd="@dimen/padding_level_1"
+        android:paddingLeft="@dimen/padding_level_1"
+        android:paddingRight="@dimen/padding_level_1"
+        android:paddingStart="@dimen/padding_level_1">
+
+        <TextView
+            android:id="@+id/tv_achievement_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:textAppearance="@style/AppTheme.TextAppearance.Title"
+            android:textColor="@color/color_white" />
+
+        <TextView
+            android:id="@+id/tv_achievement_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
+            android:textColor="@color/color_light_gray"
+            android:textStyle="italic" />
+    </LinearLayout>
+
 </RelativeLayout>

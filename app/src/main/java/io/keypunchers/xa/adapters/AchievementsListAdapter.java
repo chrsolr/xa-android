@@ -1,6 +1,8 @@
 package io.keypunchers.xa.adapters;
 import android.support.v7.widget.RecyclerView;
 import android.content.Context;
+
+import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.Achievement;
 import java.util.ArrayList;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.views.ScaledNetworkImageView;
 
 public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsListAdapter.ViewHolder> {
     private Context mContext;
@@ -38,11 +41,13 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
 		
 		holder.mTvAchTitle.setText(item.getTitle());
 		holder.mTvAchDesc.setText(item.getDescription());
-		
-		Picasso.with(mContext)
-				.load(item.getImageUrl())
-				.noFade()
-				.into(holder.mIvAchImage);
+
+        holder.mIvAchImage.setImageUrl(item.getImageUrl(), VolleySingleton.getImageLoader());
+
+//		Picasso.with(mContext)
+//				.load(item.getImageUrl())
+//				.noFade()
+//				.into(holder.mIvAchImage);
     }
 
     @Override
@@ -54,7 +59,7 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
         private Context mContext;
         private ArrayList<Achievement> mData;
 		
-		ScaledImageView mIvAchImage;
+		ScaledNetworkImageView mIvAchImage;
 		TextView mTvAchTitle;
 		TextView mTvAchDesc;
 
@@ -63,7 +68,7 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
             mData = data;
             mContext = context;
 			
-			mIvAchImage = (ScaledImageView) itemView.findViewById(R.id.iv_achievement_image);
+			mIvAchImage = (ScaledNetworkImageView) itemView.findViewById(R.id.iv_achievement_image);
 			mTvAchTitle = (TextView) itemView.findViewById(R.id.tv_achievement_title);
 			mTvAchDesc = (TextView) itemView.findViewById(R.id.tv_achievement_desc);
 
