@@ -35,9 +35,12 @@ import io.keypunchers.xa.views.ScaledImageView;
 import io.keypunchers.xa.views.ScaledNetworkImageView;
 import com.squareup.picasso.Picasso.*;
 import android.graphics.drawable.*;
+import android.support.v4.view.ViewPager;
+import android.support.design.widget.TabLayout;
+import io.keypunchers.xa.adapters.ViewPagerAdapter;
 
 public class AchievementsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<GameDetails> {
-    private GameDetails mData = new GameDetails();
+    private GameDetails mData;
     private ArrayList<Achievement> mAchievements = new ArrayList<>();
     private String BASE_URL;
     private RecyclerView mRvContent;
@@ -59,17 +62,11 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
             String gamePermalink = getIntent().getExtras().getString("game_permalink");
             BASE_URL = Common.getGameAchievementsUrlByPermalink(gamePermalink);
         }
-
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new AchievementsListAdapter(getApplicationContext(), mAchievements, R.layout.row_achievements_square);
-        mRvContent = (RecyclerView) findViewById(R.id.rv_game_achievements);
-        mRvContent.setLayoutManager(mLinearLayoutManager);
-        mRvContent.setAdapter(mAdapter);
-
-        if (mAchievements.isEmpty())
-            //makeNetworkCall();
-			
-		setupViewPager();
+		
+		if (mData == null) {
+			mData = new GameDetails();
+			makeNetworkCall();
+		}
     }
 
     @Override
@@ -93,41 +90,40 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
     @Override
     public void onLoadFinished(Loader<GameDetails> loader, GameDetails data) {
         mData = data;
-        mAchievements.addAll(data.getAchievements());
 
-        Collections.sort(mAchievements, new Comparator<Achievement>() {
+        Collections.sort(mData.getAchievements(), new Comparator<Achievement>() {
 				@Override
 				public int compare(Achievement a, Achievement b) {
 					return a.getTitle().compareTo(b.getTitle());
 				}
 			});
 
-		mTarget = new Target(){
-
-			@Override
-			public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom p2) {
-				if (bitmap != null) {
-                    if (bitmap.getWidth() < 100)
-                        mAdapter = new AchievementsListAdapter(getApplicationContext(), mAchievements, R.layout.row_achievements_square);
-                    else
-                        mAdapter = new AchievementsListAdapter(getApplicationContext(), mAchievements, R.layout.row_achievements_wide);
-
-                    setupUI();
-                }
-			}
-
-			@Override
-			public void onBitmapFailed(Drawable p1) {
-			}
-
-			@Override
-			public void onPrepareLoad(Drawable p1) {
-			}
-		};
-
-		Picasso.with(this)
-			.load(mAchievements.get(0).getImageUrl())
-			.into(mTarget);
+//		mTarget = new Target(){
+//
+//			@Override
+//			public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom p2) {
+//				if (bitmap != null) {
+//                    if (bitmap.getWidth() < 100)
+//                        mAdapter = new AchievementsListAdapter(getApplicationContext(), mAchievements, R.layout.row_achievements_square);
+//                    else
+//                        mAdapter = new AchievementsListAdapter(getApplicationContext(), mAchievements, R.layout.row_achievements_wide);
+//
+//                    setupUI();
+//                }
+//			}
+//
+//			@Override
+//			public void onBitmapFailed(Drawable p1) {
+//			}
+//
+//			@Override
+//			public void onPrepareLoad(Drawable p1) {
+//			}
+//		};
+//
+//		Picasso.with(this)
+//			.load(mAchievements.get(0).getImageUrl())
+//			.into(mTarget);
     }
 
     private void setupUI() {
@@ -159,13 +155,13 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
     private void makeNetworkCall() {
         getSupportLoaderManager().restartLoader(0, null, this);
     }
-	
+
 	private void setupViewPager() {
 		ViewPager mViewPager = (ViewPager) findViewById(R.id.vp_achievements);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tl_achievements);
         tabLayout.setupWithViewPager(mViewPager);
-		
+
 		ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());	
 	}
 }
