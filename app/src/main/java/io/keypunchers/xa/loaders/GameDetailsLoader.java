@@ -51,6 +51,10 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
             mData = new GameDetails();
 
             Document document = Jsoup.connect(BASE_URL).get();
+            
+            Elements navbar_links = document.getElementsByClass("pt3")
+                    .first()
+                    .select("a");
 
             Element game_details_root = document.getElementsByClass("men_h_content")
                     .first()
@@ -104,6 +108,8 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
                 if (element.attr("alt").equals("Japan"))
                     game_release_dates.put(Enums.Country.JAPAN, element.nextSibling().toString().trim());
             }
+            
+            boolean has_screenshots = navbar_links.hasText("Screens");
 
             ArrayList<Achievement> achievements = new ArrayList<>();
             for (int i = 0; i < game_achievements_rows.size(); i++) {
@@ -137,6 +143,7 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
             mData.setReleaseDates(game_release_dates);
             mData.setBanner(Common.imageUrlThumbToMed(game_banner));
             mData.setAchievements(achievements);
+            mData.setHasScreenshots(has_screenshots);
 
             return mData;
         } catch (Exception e) {
