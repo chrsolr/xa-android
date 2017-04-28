@@ -100,35 +100,6 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
 			});
 
 		setupUI();
-			
-			
-		
-//		mTarget = new Target(){
-//
-//			@Override
-//			public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom p2) {
-//				if (bitmap != null) {
-//                    if (bitmap.getWidth() < 100)
-//                        mAdapter = new AchievementsListAdapter(getApplicationContext(), mAchievements, R.layout.row_achievements_square);
-//                    else
-//                        mAdapter = new AchievementsListAdapter(getApplicationContext(), mAchievements, R.layout.row_achievements_wide);
-//
-//                    setupUI();
-//                }
-//			}
-//
-//			@Override
-//			public void onBitmapFailed(Drawable p1) {
-//			}
-//
-//			@Override
-//			public void onPrepareLoad(Drawable p1) {
-//			}
-//		};
-//
-//		Picasso.with(this)
-//			.load(mAchievements.get(0).getImageUrl())
-//			.into(mTarget);
     }
 
 

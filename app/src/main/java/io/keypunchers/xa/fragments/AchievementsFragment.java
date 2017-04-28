@@ -21,6 +21,11 @@ import android.widget.TextView;
 import io.keypunchers.xa.misc.VolleySingleton;
 import android.text.TextUtils;
 import java.util.Locale;
+import com.squareup.picasso.Target;
+import android.graphics.Bitmap;
+import com.squareup.picasso.Picasso;
+import android.graphics.drawable.Drawable;
+import io.keypunchers.xa.models.Achievement;
 
 public class AchievementsFragment extends Fragment {
     private GameDetails mData;
@@ -67,9 +72,47 @@ public class AchievementsFragment extends Fragment {
         mTvGameGenres.setText(TextUtils.join("/", mData.getGenres()));
         mTvAchAmount.setText(String.format(Locale.US, "%s Achievements", mData.getAchievements().size()));
 		
-		AchievementsListAdapter mAdapter = new AchievementsListAdapter(getActivity(), mData.getAchievements(), R.layout.row_achievements_wide);
-        RecyclerView mRvContent = (RecyclerView) view.findViewById(R.id.rv_achievements);
-        mRvContent.setAdapter(mAdapter);
-        mRvContent.setLayoutManager(new LinearLayoutManager(getActivity()));
+        final RecyclerView mRvContent = (RecyclerView) view.findViewById(R.id.rv_achievements);
+        mRvContent.setLayoutManager(new LinearLayoutManager(getActivity()){
+			@Override
+			public boolean canScrollHorizontally(){
+				return false;
+			}
+			
+			@Override
+			public boolean canScrollVertically(){
+				return false;
+			}
+		});
+		
+		Target mTarget = new Target(){
+
+			@Override
+			public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom p2) {
+				if (bitmap != null) {
+					AchievementsListAdapter mAdapter = null;
+					
+                    if (bitmap.getWidth() < 100)
+                        mAdapter = new AchievementsListAdapter(getActivity(), mData.getAchievements(), R.layout.row_achievements_square);
+                    else
+                        mAdapter = new AchievementsListAdapter(getActivity(), mData.getAchievements(), R.layout.row_achievements_wide);
+
+					mRvContent.setAdapter(mAdapter);
+					mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), mData.getAchievements().size());
+                }
+			}
+
+			@Override
+			public void onBitmapFailed(Drawable d) {
+			}
+
+			@Override
+			public void onPrepareLoad(Drawable d) {
+			}
+		};
+
+		Picasso.with(getActivity())
+			.load(mData.getAchievements().get(0).getImageUrl())
+			.into(mTarget);
     }
 }
