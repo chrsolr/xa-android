@@ -50,26 +50,11 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
 		holder.mTvAchTitle.setText(item.getTitle());
 		holder.mTvAchDesc.setText(item.getDescription());
 
-        RequestQueue mQueue = VolleySingleton.getRequestQueque();
-        ImageRequest mRequest = new ImageRequest(item.getImageUrl(), new Response.Listener<Bitmap>() {
-            @Override
-            public void onResponse(Bitmap response) {
-                if (response != null)
-                    holder.mIvAchImage.setImageBitmap(response);
-            }
-        }, 0, 0, null, null, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-
-        mQueue.add(mRequest);
-
-//		Picasso.with(mContext)
-//				.load(item.getImageUrl())
-//				.noFade()
-//				.into(holder.mIvAchImage);
+		Picasso.with(mContext)
+				.load(item.getImageUrl())
+				.noFade()
+				.error(R.drawable.ic_app_logo)
+				.into(holder.mIvAchImage);
     }
 
     @Override

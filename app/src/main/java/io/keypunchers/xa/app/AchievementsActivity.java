@@ -33,6 +33,8 @@ import io.keypunchers.xa.models.Achievement;
 import io.keypunchers.xa.models.GameDetails;
 import io.keypunchers.xa.views.ScaledImageView;
 import io.keypunchers.xa.views.ScaledNetworkImageView;
+import com.squareup.picasso.Picasso.*;
+import android.graphics.drawable.*;
 
 public class AchievementsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<GameDetails> {
     private GameDetails mData = new GameDetails();
@@ -92,18 +94,17 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
         mAchievements.addAll(data.getAchievements());
 
         Collections.sort(mAchievements, new Comparator<Achievement>() {
-            @Override
-            public int compare(Achievement a, Achievement b) {
-                return a.getTitle().compareTo(b.getTitle());
-            }
-        });
+				@Override
+				public int compare(Achievement a, Achievement b) {
+					return a.getTitle().compareTo(b.getTitle());
+				}
+			});
 
-        VolleySingleton.getImageLoader().get(mAchievements.get(0).getImageUrl(), new ImageLoader.ImageListener() {
-            @Override
-            public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                Bitmap bitmap = response.getBitmap();
+		mTarget = new Target(){
 
-                if (bitmap != null) {
+			@Override
+			public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom p2) {
+				if (bitmap != null) {
                     if (bitmap.getWidth() < 100)
                         mAdapter = new AchievementsListAdapter(getApplicationContext(), mAchievements, R.layout.row_achievements_square);
                     else
@@ -111,13 +112,20 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
 
                     setupUI();
                 }
-            }
+			}
 
-            @Override
-            public void onErrorResponse(VolleyError error) {
+			@Override
+			public void onBitmapFailed(Drawable p1) {
+			}
 
-            }
-        });
+			@Override
+			public void onPrepareLoad(Drawable p1) {
+			}
+		};
+
+		Picasso.with(this)
+			.load(mAchievements.get(0).getImageUrl())
+			.into(mTarget);
     }
 
     private void setupUI() {
