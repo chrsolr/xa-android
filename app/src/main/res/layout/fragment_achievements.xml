@@ -98,6 +98,7 @@
 			android:paddingStart="@dimen/padding_level_2"
 			android:paddingRight="@dimen/padding_level_2"
 			android:paddingEnd="@dimen/padding_level_2"
+						 android:scrollbars="none"
 			app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </LinearLayout>
