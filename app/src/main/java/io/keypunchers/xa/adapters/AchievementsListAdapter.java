@@ -14,10 +14,12 @@ import io.keypunchers.xa.R;
 public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsListAdapter.ViewHolder> {
     private Context mContext;
     private ArrayList<Achievement> mData;
+	private int mResId = R.layout.row_achievements_wide;
 
-    public AchievementsListAdapter(Context context, ArrayList<Achievement> data) {
+    public AchievementsListAdapter(Context context, ArrayList<Achievement> data, int layoutId) {
         mContext = context;
         mData = data;
+		mResId = layoutId;
     }
 
     @Override
@@ -25,7 +27,7 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        View view = inflater.inflate(R.layout.row_achievements, parent, false);
+        View view = inflater.inflate(mResId, parent, false);
 
         return new ViewHolder(view, mData, context);
     }

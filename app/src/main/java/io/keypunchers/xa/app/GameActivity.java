@@ -23,6 +23,9 @@ import io.keypunchers.xa.adapters.*;
 import java.util.*;
 import io.keypunchers.xa.models.*;
 import android.widget.*;
+import com.squareup.picasso.*;
+import android.graphics.*;
+import android.graphics.drawable.*;
 
 public class GameActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<GameDetails> {
     private GameDetails mData = new GameDetails();
@@ -49,11 +52,9 @@ public class GameActivity extends AppCompatActivity implements LoaderManager.Loa
             String gamePermalink = getIntent().getExtras().getString("game_permalink");
             BASE_URL = Common.getGameAchievementsUrlByPermalink(gamePermalink);
         }
-		
-		mAdapter = new AchievementsListAdapter(this, mAchievements);
-		
+
 		LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
-		
+
 		mRvContent = (RecyclerView) findViewById(R.id.rv_game_achievements);
 		mRvContent.setAdapter(mAdapter);
 		mRvContent.setLayoutManager(mLinearLayoutManager);
@@ -84,9 +85,31 @@ public class GameActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoadFinished(Loader<GameDetails> loader, GameDetails data) {
         mData = data;
 		mAchievements.addAll(data.getAchievements());
-		mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), mAchievements.size());
 		
-        setupUI();
+		Picasso.with(this)
+			.load(mAchievements.get(0).getImageUrl())
+			.into(new Target() {
+				@Override
+				public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+					
+					if (bitmap.getWidth() < 100)
+						mAdapter = new AchievementsListAdapter(getApplicationContext(), mAchievements, R.layout.row_achievements_square);
+					else
+						mAdapter = new AchievementsListAdapter(getApplicationContext(), mAchievements, R.layout.row_achievements_wide);
+		
+					setupUI();
+				}
+
+				@Override
+				public void onBitmapFailed(Drawable errorDrawable) {
+
+				}
+
+				@Override
+				public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+				}
+			});
     }
 
 	private void setupUI() {
@@ -98,21 +121,22 @@ public class GameActivity extends AppCompatActivity implements LoaderManager.Loa
         if (getSupportActionBar() != null)
             getSupportActionBar().setTitle(mData.getTitle());
 
-        if (mData.getBanner() != null)
-            Picasso.with(this)
-				.load(mData.getBanner())
-				.error(R.drawable.promo_banner)
-				.noFade()
-				.into(mIvBanner);
-
-        if (mData.getImageUrl() != null)
-            Picasso.with(this)
-				.load(mData.getImageUrl())
-				.noFade()
-				.into(mIvGameCover);
+		Picasso.with(this)
+			.load(mData.getBanner())
+			.placeholder(R.drawable.promo_banner)
+			.noFade()
+			.into(mIvBanner);
+		
+		Picasso.with(this)
+			.load(mData.getImageUrl())
+			.noFade()
+			.into(mIvGameCover);
 
         mTvGameTitle.setText(mData.getTitle());
-        mTvGameGenres.setText(TextUtils.join(" / ", mData.getGenres()));
+        mTvGameGenres.setText(TextUtils.join("/", mData.getGenres()));
+		
+		mRvContent.setAdapter(mAdapter);
+		mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), mAchievements.size());
 	}
 
     @Override
