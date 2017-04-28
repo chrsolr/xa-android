@@ -28,10 +28,16 @@ public class ScreenshotsFragment extends Fragment implements LoaderManager.Loade
     private String GAME_PERMALINK;
     private int mCurrentPage = 1;
     private ImageListAdapter mAdapter;
-
+    private RecyclerView mRvContent;
 
     public ScreenshotsFragment() {
         // Required empty public constructor
+    }
+    
+    public static Fragment newInstance(String data) {
+        ScreenshotsFragment fragment = new ScreenshotsFragment();
+        fragment.GAME_PERMALINK = data;
+        return fragment;
     }
 
     @Override
@@ -45,8 +51,6 @@ public class ScreenshotsFragment extends Fragment implements LoaderManager.Loade
 
         setRetainInstance(true);
 
-        mAdapter = new ImageListAdapter(getActivity(), mData);
-
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         EndlessRecyclerViewScrollListener mScroller = new EndlessRecyclerViewScrollListener(mLinearLayoutManager) {
             @Override
@@ -56,8 +60,7 @@ public class ScreenshotsFragment extends Fragment implements LoaderManager.Loade
             }
         };
 
-        RecyclerView mRvContent = (RecyclerView) view.findViewById(R.id.rv_image_list);
-        mRvContent.setAdapter(mAdapter);
+        mRvContent = (RecyclerView) view.findViewById(R.id.rv_image_list);
         mRvContent.setLayoutManager(mLinearLayoutManager);
         mRvContent.addOnScrollListener(mScroller);
     }
@@ -66,9 +69,12 @@ public class ScreenshotsFragment extends Fragment implements LoaderManager.Loade
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (getArguments() != null && getArguments().containsKey("game_permalink")) {
+        if (GAME_PERMALINK.equals("") && (getArguments() != null && getArguments().containsKey("game_permalink"))) {
             GAME_PERMALINK = getArguments().getString("game_permalink");
         }
+        
+        mAdapter = new ImageListAdapter(getActivity(), mData);
+        mRvContent.setAdapter(mAdapter);
 
         if (mData.isEmpty()) {
             makeNetworkCall();
@@ -82,15 +88,12 @@ public class ScreenshotsFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public void onLoadFinished(Loader<Screenshots> loader, Screenshots data) {
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(data.getTitle());
-
         mData.addAll(data.getImageUrls());
         mAdapter.notifyItemRangeChanged(mAdapter.getItemCount(), mData.size());
     }
 
     @Override
     public void onLoaderReset(Loader<Screenshots> loader) {
-
     }
 
     private void makeNetworkCall() {
