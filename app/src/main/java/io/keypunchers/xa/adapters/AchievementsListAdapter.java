@@ -1,4 +1,5 @@
 package io.keypunchers.xa.adapters;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.content.Context;
 
@@ -7,7 +8,14 @@ import io.keypunchers.xa.models.Achievement;
 import java.util.ArrayList;
 import android.view.View;
 import io.keypunchers.xa.views.ScaledImageView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.squareup.picasso.Picasso;
+
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
@@ -36,13 +44,27 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         Achievement item = mData.get(position);
 		
 		holder.mTvAchTitle.setText(item.getTitle());
 		holder.mTvAchDesc.setText(item.getDescription());
 
-        holder.mIvAchImage.setImageUrl(item.getImageUrl(), VolleySingleton.getImageLoader());
+        RequestQueue mQueue = VolleySingleton.getRequestQueque();
+        ImageRequest mRequest = new ImageRequest(item.getImageUrl(), new Response.Listener<Bitmap>() {
+            @Override
+            public void onResponse(Bitmap response) {
+                if (response != null)
+                    holder.mIvAchImage.setImageBitmap(response);
+            }
+        }, 0, 0, null, null, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        mQueue.add(mRequest);
 
 //		Picasso.with(mContext)
 //				.load(item.getImageUrl())
@@ -58,8 +80,8 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private Context mContext;
         private ArrayList<Achievement> mData;
-		
-		ScaledNetworkImageView mIvAchImage;
+
+        ScaledImageView mIvAchImage;
 		TextView mTvAchTitle;
 		TextView mTvAchDesc;
 
@@ -68,7 +90,7 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
             mData = data;
             mContext = context;
 			
-			mIvAchImage = (ScaledNetworkImageView) itemView.findViewById(R.id.iv_achievement_image);
+			mIvAchImage = (ScaledImageView) itemView.findViewById(R.id.iv_achievement_image);
 			mTvAchTitle = (TextView) itemView.findViewById(R.id.tv_achievement_title);
 			mTvAchDesc = (TextView) itemView.findViewById(R.id.tv_achievement_desc);
 

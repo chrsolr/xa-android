@@ -6,7 +6,7 @@
     android:layout_marginBottom="@dimen/margin_level_1"
     android:orientation="vertical">
 
-    <io.keypunchers.xa.views.ScaledNetworkImageView
+    <io.keypunchers.xa.views.ScaledImageView
         android:id="@+id/iv_achievement_image"
         android:layout_width="75dp"
         android:layout_height="75dp"
