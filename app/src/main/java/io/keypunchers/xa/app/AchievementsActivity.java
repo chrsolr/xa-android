@@ -79,7 +79,6 @@ public class AchievementsActivity extends AppCompatActivity {
 		
 		if (mData == null) {
 			mData = new GameDetails();
-			//getGameScreenshots();
 			getGameAchievements();
 		}
     }
@@ -113,7 +112,10 @@ public class AchievementsActivity extends AppCompatActivity {
 					getSupportActionBar().setTitle(mData.getTitle());
 				
 				mAdapter.addFragment(new AchievementsFragment().newInstance(mData), "Achievements");
-				mAdapter.addFragment(new ScreenshotsFragment().newInstance(GAME_PERMALINK), "Screenshots");
+				
+				if (mData.hasScreenshots())
+					mAdapter.addFragment(new ScreenshotsFragment().newInstance(GAME_PERMALINK), "Screenshots");
+				
 				mAdapter.notifyDataSetChanged();
 			}
 
