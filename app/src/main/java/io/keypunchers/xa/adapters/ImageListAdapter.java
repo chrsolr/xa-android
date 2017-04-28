@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.views.ScaledImageView;
 
 
 public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.ViewHolder> {
