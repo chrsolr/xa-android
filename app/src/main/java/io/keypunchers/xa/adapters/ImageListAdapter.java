@@ -32,21 +32,18 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
 
         View view = inflater.inflate(R.layout.row_image_list, parent, false);
 
-        return new ViewHolder(view);
+        return new ViewHolder(view, mData, context);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final String item = mData.get(position);
 
-        Picasso.with(mContext).load(item).noFade().into(holder.mIvImage);
-        holder.mIvImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(item));
-                mContext.startActivity(mIntent);
-            }
-        });
+        Picasso.with(mContext)
+			.load(item)
+			.noFade()
+			.error(R.drawable.ic_app_logo)
+			.into(holder.mIvImage);
     }
 
     @Override
@@ -54,13 +51,26 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
         return mData.size();
     }
 	
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView mIvImage;
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+		private Context mContext;
+        private ArrayList<String> mData;
 
-        public ViewHolder(View itemView) {
+        ScaledImageView mIvImage;
+
+        public ViewHolder(View itemView, ArrayList<String> data, Context context) {
             super(itemView);
+			mData = data;
+            mContext = context;
 
-            mIvImage = (ImageView) itemView.findViewById(R.id.iv_image_list);
+            mIvImage = (ScaledImageView) itemView.findViewById(R.id.iv_image_list);
+			
+			itemView.setOnClickListener(this);
+        }
+		
+		@Override
+        public void onClick(View v) {
+        	Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mData.get(getAdapterPosition())));
+			mContext.startActivity(mIntent);
         }
     }
 }
