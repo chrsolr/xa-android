@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.ImageListAdapter;
+import io.keypunchers.xa.models.GameDetails;
+import io.keypunchers.xa.adapters.AchievementsListAdapter;
 
 public class AchievementsFragment extends Fragment {
     private GameDetails mData;
@@ -21,7 +23,7 @@ public class AchievementsFragment extends Fragment {
     }
 
     public static Fragment newInstance(GameDetails data) {
-        GameDetails fragment = new GameDetails();
+        AchievementsFragment fragment = new AchievementsFragment();
         fragment.mData = data;
         return fragment;
     }
@@ -37,9 +39,9 @@ public class AchievementsFragment extends Fragment {
 
         setRetainInstance(true);
 
-        AchievementsListAdapter mAdapter = new AchievementsListAdapter(getActivity(), mData, R.layout.row_achievements_wide);
-        RecyclerView mRvContent = (RecyclerView) view.findViewById(R.id.rv_achievements);
-        mRvContent.setAdapter(mAdapter);
-        mRvContent.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        AchievementsListAdapter mAdapter = new AchievementsListAdapter(getActivity(), mData.getAchievements(), R.layout.row_achievements_wide);
+//        RecyclerView mRvContent = (RecyclerView) view.findViewById(R.id.rv_achievements);
+//        mRvContent.setAdapter(mAdapter);
+//        mRvContent.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 }

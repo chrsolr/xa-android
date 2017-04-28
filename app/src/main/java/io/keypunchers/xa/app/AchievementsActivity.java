@@ -38,6 +38,7 @@ import android.graphics.drawable.*;
 import android.support.v4.view.ViewPager;
 import android.support.design.widget.TabLayout;
 import io.keypunchers.xa.adapters.ViewPagerAdapter;
+import io.keypunchers.xa.fragments.AchievementsFragment;
 
 public class AchievementsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<GameDetails> {
     private GameDetails mData;
@@ -98,6 +99,10 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
 				}
 			});
 
+		setupUI();
+			
+			
+		
 //		mTarget = new Target(){
 //
 //			@Override
@@ -126,26 +131,26 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
 //			.into(mTarget);
     }
 
-    private void setupUI() {
-        ScaledNetworkImageView mIvBanner = (ScaledNetworkImageView) findViewById(R.id.iv_game_achievements_banner);
-        NetworkImageView mIvGameCover = (NetworkImageView) findViewById(R.id.iv_game_achievements_cover);
-        TextView mTvGameTitle = (TextView) findViewById(R.id.tv_game_ach_title);
-        TextView mTvGameGenres = (TextView) findViewById(R.id.tv_game_ach_genres);
-        TextView mTvAchAmount = (TextView) findViewById(R.id.tv_game_ach_amount);
-
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setTitle(mData.getTitle());
-
-        mIvBanner.setImageUrl(mData.getBanner(), VolleySingleton.getImageLoader());
-        mIvGameCover.setImageUrl(mData.getImageUrl(), VolleySingleton.getImageLoader());
-
-        mTvGameTitle.setText(mData.getTitle());
-        mTvGameGenres.setText(TextUtils.join("/", mData.getGenres()));
-        mTvAchAmount.setText(String.format(Locale.US, "%s Achievements", mData.getAchievements().size()));
-
-        mRvContent.setAdapter(mAdapter);
-        mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), mAchievements.size());
-    }
+//    private void setupUI() {
+//        ScaledNetworkImageView mIvBanner = (ScaledNetworkImageView) findViewById(R.id.iv_game_achievements_banner);
+//        NetworkImageView mIvGameCover = (NetworkImageView) findViewById(R.id.iv_game_achievements_cover);
+//        TextView mTvGameTitle = (TextView) findViewById(R.id.tv_game_ach_title);
+//        TextView mTvGameGenres = (TextView) findViewById(R.id.tv_game_ach_genres);
+//        TextView mTvAchAmount = (TextView) findViewById(R.id.tv_game_ach_amount);
+//
+//        if (getSupportActionBar() != null)
+//            getSupportActionBar().setTitle(mData.getTitle());
+//
+//        mIvBanner.setImageUrl(mData.getBanner(), VolleySingleton.getImageLoader());
+//        mIvGameCover.setImageUrl(mData.getImageUrl(), VolleySingleton.getImageLoader());
+//
+//        mTvGameTitle.setText(mData.getTitle());
+//        mTvGameGenres.setText(TextUtils.join("/", mData.getGenres()));
+//        mTvAchAmount.setText(String.format(Locale.US, "%s Achievements", mData.getAchievements().size()));
+//
+//        mRvContent.setAdapter(mAdapter);
+//        mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), mAchievements.size());
+//    }
 
     @Override
     public void onLoaderReset(Loader<GameDetails> loader) {
@@ -156,12 +161,18 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
         getSupportLoaderManager().restartLoader(0, null, this);
     }
 
-	private void setupViewPager() {
+	private void setupUI() {
+		if (getSupportActionBar() != null)
+			getSupportActionBar().setTitle(mData.getTitle());
+		
 		ViewPager mViewPager = (ViewPager) findViewById(R.id.vp_achievements);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tl_achievements);
         tabLayout.setupWithViewPager(mViewPager);
 
-		ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());	
+		ViewPagerAdapter mAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+		mAdapter.addFragment(new AchievementsFragment().newInstance(mData), "Achievements");
+		
+		mViewPager.setAdapter(mAdapter);
 	}
 }
