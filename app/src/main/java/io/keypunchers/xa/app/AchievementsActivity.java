@@ -30,11 +30,9 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
     private GameDetails mData = new GameDetails();
 	private ArrayList<Achievement> mAchievements = new ArrayList<>();
     private String BASE_URL;
-    private ScaledImageView mIvBanner;
-
 	private RecyclerView mRvContent;
-
 	private AchievementsListAdapter mAdapter;
+    private Target mTarget;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +52,7 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
 
 		LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
 
-        mAdapter = new AchievementsListAdapter(getApplicationContext(), mAchievements, R.layout.row_achievements_wide);
         mRvContent = (RecyclerView) findViewById(R.id.rv_game_achievements);
-		mRvContent.setAdapter(mAdapter);
 		mRvContent.setLayoutManager(mLinearLayoutManager);
 
 		if (mAchievements.isEmpty())
@@ -92,31 +88,31 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
                 return obj1.getTitle().compareTo(obj2.getTitle());
             }
         });
+
+        mTarget = new Target() {
+            @Override
+            public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+
+                if (bitmap.getWidth() < 100)
+                    mAdapter = new AchievementsListAdapter(getApplicationContext(), mAchievements, R.layout.row_achievements_square);
+                else
+                    mAdapter = new AchievementsListAdapter(getApplicationContext(), mAchievements, R.layout.row_achievements_wide);
+
+                setupUI();
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+            }
+        };
 		
 		Picasso.with(this)
 			.load(mAchievements.get(0).getImageUrl())
-			.into(new Target() {
-				@Override
-				public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-					
-					if (bitmap.getWidth() < 100)
-						mAdapter = new AchievementsListAdapter(getApplicationContext(), mAchievements, R.layout.row_achievements_square);
-					else
-						mAdapter = new AchievementsListAdapter(getApplicationContext(), mAchievements, R.layout.row_achievements_wide);
-		
-					setupUI();
-				}
-
-				@Override
-				public void onBitmapFailed(Drawable errorDrawable) {
-
-				}
-
-				@Override
-				public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-				}
-			});
+			.into(mTarget);
     }
 
 	private void setupUI() {
