@@ -67,7 +67,9 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
         mRvContent.setAdapter(mAdapter);
 
         if (mAchievements.isEmpty())
-            makeNetworkCall();
+            //makeNetworkCall();
+			
+		setupViewPager();
     }
 
     @Override
@@ -157,4 +159,13 @@ public class AchievementsActivity extends AppCompatActivity implements LoaderMan
     private void makeNetworkCall() {
         getSupportLoaderManager().restartLoader(0, null, this);
     }
+	
+	private void setupViewPager() {
+		ViewPager mViewPager = (ViewPager) findViewById(R.id.vp_achievements);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tl_achievements);
+        tabLayout.setupWithViewPager(mViewPager);
+		
+		ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());	
+	}
 }
