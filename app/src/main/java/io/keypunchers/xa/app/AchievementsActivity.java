@@ -43,6 +43,7 @@ import android.support.v4.content.AsyncTaskLoader;
 import io.keypunchers.xa.models.Screenshots;
 import io.keypunchers.xa.loaders.ScreenshotsLoader;
 import io.keypunchers.xa.fragments.ImageListFragment;
+import io.keypunchers.xa.fragments.ScreenshotsFragment;
 
 public class AchievementsActivity extends AppCompatActivity {
     private GameDetails mData;
@@ -78,7 +79,7 @@ public class AchievementsActivity extends AppCompatActivity {
 		
 		if (mData == null) {
 			mData = new GameDetails();
-			getGameScreenshots();
+			//getGameScreenshots();
 			getGameAchievements();
 		}
     }
@@ -112,6 +113,7 @@ public class AchievementsActivity extends AppCompatActivity {
 					getSupportActionBar().setTitle(mData.getTitle());
 				
 				mAdapter.addFragment(new AchievementsFragment().newInstance(mData), "Achievements");
+				mAdapter.addFragment(new ScreenshotsFragment().newInstance(GAME_PERMALINK), "Screenshots");
 				mAdapter.notifyDataSetChanged();
 			}
 
@@ -121,27 +123,5 @@ public class AchievementsActivity extends AppCompatActivity {
 		};
 		
 		getSupportLoaderManager().restartLoader(0, null, mGameAchievementsLoader);
-	}
-	
-	private void getGameScreenshots(){
-		LoaderManager.LoaderCallbacks mGameScreenshotsLoader = new LoaderManager.LoaderCallbacks<Screenshots>(){
-
-			@Override
-			public Loader<Screenshots> onCreateLoader(int id, Bundle args) {
-				return new ScreenshotsLoader(getApplicationContext(), Common.getGameScreenshotsUrlByPermalink(GAME_PERMALINK, 1));
-			}
-
-			@Override
-			public void onLoadFinished(Loader<Screenshots> loader, Screenshots data) {
-				mAdapter.addFragment(new ImageListFragment().newInstance(data.getImageUrls()), "Screenshots");
-				mAdapter.notifyDataSetChanged();
-			}
-
-			@Override
-			public void onLoaderReset(Loader<Screenshots> loader) {
-			}
-		};
-		
-		getSupportLoaderManager().restartLoader(1, null, mGameScreenshotsLoader);
 	}
 }
