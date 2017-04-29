@@ -37,7 +37,14 @@
             android:id="@+id/tv_achievement_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="2"
+            android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
+            android:textColor="@color/primary_text_light"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/tv_achievement_comments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
             android:textColor="@color/primary_text_light"
             android:textStyle="italic" />

@@ -22,8 +22,9 @@
         android:layout_alignParentStart="true"
         android:background="@drawable/primary_gradient_bottom" />
 
+
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/iv_achievement_image"
         android:layout_alignParentLeft="true"
@@ -52,5 +53,21 @@
             android:textColor="@color/color_light_gray"
             android:textStyle="italic" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_achievement_comments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
+        android:textColor="@color/primary_text_light"
+        android:textStyle="italic"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="8dp"
+        android:paddingEnd="@dimen/padding_level_1"
+        android:paddingLeft="@dimen/padding_level_1"
+        android:paddingRight="@dimen/padding_level_1"
+        android:paddingStart="@dimen/padding_level_1"/>
 
 </RelativeLayout>
