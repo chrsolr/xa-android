@@ -52,6 +52,7 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
 		holder.mTvAchTitle.setText(item.getTitle());
 		holder.mTvAchDesc.setText(item.getDescription());
         holder.mTvAchComments.setText(String.format(Locale.US, "%s %s", item.getCommentAmount(), holder.mTvAchComments.getText()).trim());
+		holder.mTvAchGamerscore.setText(item.getGamescoreAmount());
 
 		Picasso.with(mContext)
 				.load(item.getImageUrl())
@@ -73,6 +74,7 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
 		TextView mTvAchTitle;
         TextView mTvAchDesc;
         TextView mTvAchComments;
+		TextView mTvAchGamerscore;
 
         public ViewHolder(View itemView, ArrayList<Achievement> data, Context context) {
             super(itemView);
@@ -83,6 +85,7 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
 			mTvAchTitle = (TextView) itemView.findViewById(R.id.tv_achievement_title);
             mTvAchDesc = (TextView) itemView.findViewById(R.id.tv_achievement_desc);
             mTvAchComments = (TextView) itemView.findViewById(R.id.tv_achievement_comments);
+			mTvAchGamerscore = (TextView) itemView.findViewById(R.id.tv_achievement_gs);
 
             itemView.setOnClickListener(this);
         }

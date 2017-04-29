@@ -20,19 +20,51 @@
         android:layout_toRightOf="@+id/iv_achievement_image"
         android:orientation="vertical"
         android:paddingBottom="8dp"
-        android:paddingEnd="@dimen/padding_level_1"
-        android:paddingLeft="@dimen/padding_level_1"
-        android:paddingRight="@dimen/padding_level_1"
-        android:paddingStart="@dimen/padding_level_1">
+        android:paddingLeft="@dimen/padding_level_2"
+        android:paddingStart="@dimen/padding_level_2">
 
-        <TextView
-            android:id="@+id/tv_achievement_title"
+		<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="2"
-            android:textAppearance="@style/AppTheme.TextAppearance.Title"
-            android:textColor="@color/primary_text_dark" />
+            android:orientation="horizontal"
+            android:weightSum="1">
 
+			<TextView
+				android:id="@+id/tv_achievement_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textAppearance="@style/AppTheme.TextAppearance.Title"
+                android:textColor="@color/primary_text_dark"
+                android:layout_weight="0.90" />
+
+			<LinearLayout
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:gravity="end|bottom"
+                android:layout_gravity="end|bottom"
+                android:layout_weight="0.10" >
+
+				<TextView
+					android:id="@+id/tv_achievement_gs"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
+					android:textColor="@color/primary_text_dark"
+					android:textStyle="italic" />
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
+					android:textColor="@color/primary_text_dark"
+					android:text="G"
+					android:textStyle="italic|bold" />
+			</LinearLayout>
+
+        </LinearLayout>
         <TextView
             android:id="@+id/tv_achievement_desc"
             android:layout_width="match_parent"

@@ -36,13 +36,48 @@
         android:paddingRight="@dimen/padding_level_1"
         android:paddingStart="@dimen/padding_level_1">
 
-        <TextView
-            android:id="@+id/tv_achievement_title"
+		<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="2"
-            android:textAppearance="@style/AppTheme.TextAppearance.Title"
-            android:textColor="@color/color_white" />
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+			<TextView
+				android:id="@+id/tv_achievement_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textAppearance="@style/AppTheme.TextAppearance.Title"
+                android:textColor="@color/color_white"
+                android:layout_weight="0.90" />
+
+			<LinearLayout
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:gravity="end|bottom"
+                android:layout_gravity="end|bottom"
+                android:layout_weight="0.10" >
+
+				<TextView
+					android:id="@+id/tv_achievement_gs"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
+					android:textColor="@color/color_white"
+					android:textStyle="italic" />
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
+					android:textColor="@color/color_white"
+					android:text="G"
+					android:textStyle="italic|bold" />
+			</LinearLayout>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
