@@ -1,6 +1,8 @@
 package io.keypunchers.xa.app;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -9,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -83,18 +86,35 @@ public class AchievementsActivity extends AppCompatActivity {
 		}
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_article, menu);
+		return true;
+	}
 
-        switch (id) {
-            case android.R.id.home:
-                onBackPressed();
-                break;
-        }
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent;
+		int id = item.getItemId();
 
-        return super.onOptionsItemSelected(item);
-    }
+		switch (id) {
+			case android.R.id.home:
+				onBackPressed();
+				break;
+			case R.id.menu_item_open_in_browser:
+				intent = new Intent(Intent.ACTION_VIEW, Uri.parse(BASE_URL));
+				startActivity(intent);
+				break;
+			case R.id.menu_item_share:
+				intent = new Intent(Intent.ACTION_SEND);
+				intent.setType("text/plain");
+				intent.putExtra(Intent.EXTRA_SUBJECT, "Check it out!");
+				intent.putExtra(Intent.EXTRA_TEXT, "Check it out! " + mData.getTitle() + "\n\n" + Common.getGameAchievementsUrlByPermalink(GAME_PERMALINK) + "\n\n" + "Shared via XA App.");
+				startActivity(Intent.createChooser(intent, "Share"));
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
 	
 	private void getGameAchievements(){
 		LoaderManager.LoaderCallbacks mGameAchievementsLoader = new LoaderManager.LoaderCallbacks<GameDetails>(){
