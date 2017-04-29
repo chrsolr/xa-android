@@ -6,6 +6,8 @@ import android.content.Context;
 import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.Achievement;
 import java.util.ArrayList;
+import java.util.Locale;
+
 import android.view.View;
 import io.keypunchers.xa.views.ScaledImageView;
 
@@ -49,7 +51,7 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
 		
 		holder.mTvAchTitle.setText(item.getTitle());
 		holder.mTvAchDesc.setText(item.getDescription());
-        holder.mTvAchComments.setText(item.getCommentAmount());
+        holder.mTvAchComments.setText(String.format(Locale.US, "%s %s", item.getCommentAmount(), holder.mTvAchComments.getText()).trim());
 
 		Picasso.with(mContext)
 				.load(item.getImageUrl())
