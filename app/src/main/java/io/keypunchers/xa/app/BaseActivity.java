@@ -30,10 +30,10 @@ import io.keypunchers.xa.fragments.ArticleListFragment;
 import io.keypunchers.xa.fragments.GameListFragment;
 import io.keypunchers.xa.fragments.LatestAchievementFragment;
 import io.keypunchers.xa.fragments.LatestScreenshotsFragment;
+import io.keypunchers.xa.fragments.SettingsFragment;
 import io.keypunchers.xa.fragments.UpcomingGamesFragment;
+import io.keypunchers.xa.loaders.LatestScreenshotsLoader;
 import io.keypunchers.xa.models.LatestScreenshot;
-import io.keypunchers.xa.loaders.*;
-import io.keypunchers.xa.fragments.*;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<ArrayList<LatestScreenshot>> {
     private final String DRAWER_LEARNED_TAG = "DRAWER_LEARNED";
@@ -255,10 +255,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             fragment = new UpcomingGamesFragment();
             fragment.setArguments(bundle);
         }
-		
-		if (position == 7 && fragment == null){
-			fragment = new SettingsFragment();
-		}
+
+        if (position == 7 && fragment == null) {
+            fragment = new SettingsFragment();
+        }
 
         if (position == 8 && fragment == null) {
             fragment = new AboutFragment();
