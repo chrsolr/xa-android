@@ -9,12 +9,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.net.URL;
 import java.util.ArrayList;
 
+import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.models.Article;
 import io.keypunchers.xa.models.Comment;
-import io.keypunchers.xa.misc.*;
 
 public class ArticleLoader extends AsyncTaskLoader<Article> {
     private final String BASE_URL;
@@ -49,7 +48,7 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
 
         try {
             Document document = Jsoup.connect(BASE_URL).get();
-			Document comments_doc = Jsoup.connect(Common.NEWS_COMMENTS_URL)
+            Document comments_doc = Jsoup.connect(Common.NEWS_COMMENTS_URL)
                     .data("nID", Common.getNewsCommenstId(BASE_URL))
                     .post();
 
@@ -80,7 +79,7 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
                 if (Common.isImageBlacklisted(src))
                     continue;
 
-                images.add(src);
+                images.add(Common.highResScreenshotImage(src, getContext()));
             }
 
             ArrayList<String> videos = new ArrayList<>();
@@ -99,7 +98,7 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
                     String date = comments_rows.get(i).select(".newsNFO").first().text().split(" @")[0].trim();
                     String text = "";
 
-                    image_url = image_url.replaceAll(" ", "%20");
+                    image_url = image_url.replaceAll("\\s", "%20");
 
                     Element text_root = comments_rows.get(i + 1).select("td").first();
 

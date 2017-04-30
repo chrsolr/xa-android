@@ -5,12 +5,12 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.*;
+import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import java.net.URL;
 import java.util.ArrayList;
 
+import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.models.LatestAchievement;
 
 public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<LatestAchievement>> {
@@ -25,11 +25,11 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<LatestAc
     @Override
     protected void onStartLoading() {
         super.onStartLoading();
-		
-		if (!mData.isEmpty())
-			deliverResult(mData);
-		else
-        	forceLoad();
+
+        if (!mData.isEmpty())
+            deliverResult(mData);
+        else
+            forceLoad();
     }
 
     @Override
@@ -44,11 +44,11 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<LatestAc
         try {
             Document document = Jsoup.connect(BASE_URL).get();
 
-			Elements rows = document.select(".bl_la_main .divtext table:first-child tbody tr");
-			
+            Elements rows = document.select(".bl_la_main .divtext table:first-child tbody tr");
+
             if (!rows.isEmpty()) {
                 for (int i = 0; i < rows.size(); i++) {
-                    String image_url = rows.get(i + 1).select("td:eq(0) > img").attr("abs:src").replace("/game/", "/achievements/");
+                    String image_url = rows.get(i + 1).select("td:eq(0) > img").attr("abs:src");
                     String title = rows.get(i).select(".newsTitle").text().trim();
                     String ach_page_url = rows.get(i + 1).select("td:eq(1) > a").attr("href");
                     String date_added = rows.get(i).select(".newsNFO").text().trim();
@@ -68,7 +68,7 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<LatestAc
                     }
 
                     LatestAchievement item = new LatestAchievement();
-                    item.setImageUrl(image_url);
+                    item.setImageUrl(Common.highResCoverImage(image_url, getContext()));
                     item.setTitle(title);
                     item.setAchievementsCount(subtitle.split(", ")[0].trim());
                     item.setGamerscoreCount(subtitle.split(", ")[1].replace(".", "").trim());

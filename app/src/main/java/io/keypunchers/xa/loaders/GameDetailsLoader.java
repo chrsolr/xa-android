@@ -51,11 +51,12 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
             mData = new GameDetails();
 
             Document document = Jsoup.connect(BASE_URL).get();
-            
+
+
             Element navbar_root = document.getElementsByClass("pt3")
                     .first();
-					
-			Element has_screenshots = navbar_root.select("a:containsOwn(Screen)").first();
+
+            Element has_screenshots = navbar_root.select("a:containsOwn(Screen)").first();
 
             Element game_details_root = document.getElementsByClass("men_h_content")
                     .first()
@@ -81,8 +82,7 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
                     .trim();
 
             String game_image_url = game_details_root.select("td:eq(0) > img")
-                    .attr("abs:src")
-                    .replace("/game/", "/achievements/");
+                    .attr("abs:src");
 
             String game_developer = game_details_root.select("td:eq(1) > div:eq(0) > a")
                     .text()
@@ -112,7 +112,7 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
 
             ArrayList<Achievement> achievements = new ArrayList<>();
             for (int i = 0; i < game_achievements_rows.size(); i++) {
-                String ach_image_url = game_achievements_rows.get(i).select("td.ac1 img").attr("abs:src").replace("lo", "hi");
+                String ach_image_url = game_achievements_rows.get(i).select("td.ac1 img").attr("abs:src");
                 String ach_title = game_achievements_rows.get(i).select("td.ac2 b").first().text().trim();
                 String ach_gamerscore = game_achievements_rows.get(i).select("td.ac4 strong").first().text().trim();
                 String ach_desc = game_achievements_rows.get(i + 1).select("td.ac3:eq(0)").first().text().trim();
@@ -121,7 +121,7 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
                 boolean ach_is_secret = game_achievements_rows.get(i).hasClass("secret");
 
                 Achievement ach = new Achievement();
-                ach.setImageUrl(ach_image_url);
+                ach.setImageUrl(Common.highResAchImage(ach_image_url, getContext()));
                 ach.setTitle(ach_title);
                 ach.setGamescoreAmount(ach_gamerscore);
                 ach.setDescription(ach_desc);
@@ -135,12 +135,12 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
             }
 
             mData.setTitle(game_title);
-            mData.setImageUrl(game_image_url);
+            mData.setImageUrl(Common.highResCoverImage(game_image_url, getContext()));
             mData.setDeveloper(game_developer);
             mData.setPublisher(game_publisher);
             mData.setGenres(game_genres);
             mData.setReleaseDates(game_release_dates);
-            mData.setBanner(Common.imageUrlThumbToMed(game_banner));
+            mData.setBanner(Common.highResScreenshotImage(game_banner, getContext()));
             mData.setAchievements(achievements);
             mData.setHasScreenshots(has_screenshots != null);
 

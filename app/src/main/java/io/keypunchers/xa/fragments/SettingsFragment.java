@@ -2,33 +2,29 @@ package io.keypunchers.xa.fragments;
 
 
 import android.content.SharedPreferences;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 
 import io.keypunchers.xa.R;
-import android.view.*;
 
 public class SettingsFragment extends Fragment {
-
-
     private Spinner mPlatformSpinner;
     private SharedPreferences mPrefs;
     private Spinner mDefaultHomeSpinner;
     private Spinner mEndlessScrollerMaxSpinner;
+    private SwitchCompat mHighImageQuality;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -45,8 +41,8 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         setRetainInstance(true);
-		
-		setHasOptionsMenu(true);
+
+        setHasOptionsMenu(true);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
@@ -58,6 +54,9 @@ public class SettingsFragment extends Fragment {
 
         mEndlessScrollerMaxSpinner = (Spinner) view.findViewById(R.id.spinner_settings_scroll_max_items);
         mEndlessScrollerMaxSpinner.setSelection(mPrefs.getInt("ENDLESS_SCROLLER_MAX_ITEMS_POSITION", 0));
+
+        mHighImageQuality = (SwitchCompat) view.findViewById(R.id.sw_settings_image_quality);
+        mHighImageQuality.setChecked(mPrefs.getBoolean("HIGH_IMAGE_QUALITY", true));
     }
 
     @Override
@@ -71,9 +70,11 @@ public class SettingsFragment extends Fragment {
         setupDefaultHomeSpinner();
 
         setupEndlessScrollerMaxItemsSpinner();
+
+        setupHighImageQuality();
     }
-	
-	@Override
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_settings, menu);
 
@@ -86,12 +87,12 @@ public class SettingsFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-		
-		switch(id){
-			case R.id.menu_item_settings_reset:
-				resetToDefault();
-				break;
-		}
+
+        switch (id) {
+            case R.id.menu_item_settings_reset:
+                resetToDefault();
+                break;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -174,11 +175,21 @@ public class SettingsFragment extends Fragment {
         });
     }
 
+    private void setupHighImageQuality() {
+        mHighImageQuality.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPrefs.edit().putBoolean("HIGH_IMAGE_QUALITY", mHighImageQuality.isChecked()).apply();
+            }
+        });
+    }
+
     public void resetToDefault() {
         mPrefs.edit().clear().apply();
         mPrefs.edit().putBoolean("DRAWER_LEARNED", true).apply();
         mPlatformSpinner.setSelection(0);
         mDefaultHomeSpinner.setSelection(0);
         mEndlessScrollerMaxSpinner.setSelection(0);
+        mHighImageQuality.setChecked(true);
     }
 }

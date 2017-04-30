@@ -10,11 +10,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import io.keypunchers.xa.misc.Common;
-import io.keypunchers.xa.models.ArticleListItem;
 import io.keypunchers.xa.models.Screenshots;
 
 public class ScreenshotsLoader extends AsyncTaskLoader<Screenshots> {
@@ -32,10 +29,10 @@ public class ScreenshotsLoader extends AsyncTaskLoader<Screenshots> {
     protected void onStartLoading() {
         super.onStartLoading();
 
-		if (!mData.getImageUrls().isEmpty())
-        	deliverResult(mData);
-		else
-			forceLoad();
+        if (!mData.getImageUrls().isEmpty())
+            deliverResult(mData);
+        else
+            forceLoad();
     }
 
     @Override
@@ -48,16 +45,16 @@ public class ScreenshotsLoader extends AsyncTaskLoader<Screenshots> {
     @Override
     public Screenshots loadInBackground() {
         try {
-			Document document = Jsoup.connect(BASE_URL).get();
-			Elements elements = document.select(".bl_la_main .divtext table tbody tr td img");
+            Document document = Jsoup.connect(BASE_URL).get();
+            Elements elements = document.select(".bl_la_main .divtext table tbody tr td img");
 
             if (!document.select(".tt").isEmpty())
                 mData.setTitle(document.select(".tt").first().text().trim());
 
-            for(Element element : elements) {
+            for (Element element : elements) {
                 String image_url = element.attr("abs:src");
 
-                mData.getImageUrls().add(Common.imageUrlThumbToMed(image_url));
+                mData.getImageUrls().add(Common.highResScreenshotImage(image_url, getContext()));
             }
 
             return mData;

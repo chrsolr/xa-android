@@ -52,12 +52,11 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private Context mContext;
-        private ArrayList<ArticleListItem> mData;
-
         TextView mTvTitle;
         TextView mTvSubTitle;
         ImageView mIvImage;
+        private Context mContext;
+        private ArrayList<ArticleListItem> mData;
 
         public ViewHolder(View itemView, ArrayList<ArticleListItem> data, Context context) {
             super(itemView);

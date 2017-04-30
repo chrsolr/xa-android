@@ -14,8 +14,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.app.AchievementsActivity;
 import io.keypunchers.xa.models.LatestAchievement;
-import io.keypunchers.xa.app.*;
 
 
 public class LatestAchievementsListAdapter extends RecyclerView.Adapter<LatestAchievementsListAdapter.ViewHolder> {
@@ -55,33 +55,32 @@ public class LatestAchievementsListAdapter extends RecyclerView.Adapter<LatestAc
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-		private Context mContext;
-		private ArrayList<LatestAchievement> mData;
-		
         ImageView mIvCover;
         TextView mTvTitle;
         TextView mTvAchCount;
         TextView mTvGsCount;
         TextView mTvSubmittedBy;
+        private Context mContext;
+        private ArrayList<LatestAchievement> mData;
 
         public ViewHolder(View itemView, ArrayList<LatestAchievement> data, Context context) {
             super(itemView);
-			
-			mData = data;
-			mContext = context;
+
+            mData = data;
+            mContext = context;
 
             mIvCover = (ImageView) itemView.findViewById(R.id.iv_la_cover);
             mTvTitle = (TextView) itemView.findViewById(R.id.tv_la_title);
             mTvAchCount = (TextView) itemView.findViewById(R.id.tv_la_ach_count);
             mTvGsCount = (TextView) itemView.findViewById(R.id.tv_la_gs_count);
             mTvSubmittedBy = (TextView) itemView.findViewById(R.id.tv_la_submitted_by);
-			
-			itemView.setOnClickListener(this);
+
+            itemView.setOnClickListener(this);
         }
-		
-		@Override
-		public void onClick(View view) {
-			mContext.startActivity(new Intent(mContext, AchievementsActivity.class).putExtra("game_permalink", mData.get(getAdapterPosition()).getGamePermalink()));
-		}
+
+        @Override
+        public void onClick(View view) {
+            mContext.startActivity(new Intent(mContext, AchievementsActivity.class).putExtra("game_permalink", mData.get(getAdapterPosition()).getGamePermalink()));
+        }
     }
 }

@@ -60,7 +60,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Check it out!");
-                intent.putExtra(Intent.EXTRA_TEXT, "Check it out! \n\nhttps://www.youtube.com/watch?v=" + videoId + "\n\nShared via XA App.");
+                intent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + videoId + "\n\nShared via XA App.");
                 mContext.startActivity(Intent.createChooser(intent, "Share"));
             }
         });

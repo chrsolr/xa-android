@@ -1,22 +1,23 @@
 package io.keypunchers.xa.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.android.volley.toolbox.ImageLoader;
 
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.misc.Common;
+import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.LatestScreenshot;
 import io.keypunchers.xa.views.ScaledImageView;
-import io.keypunchers.xa.misc.*;
-import android.widget.*;
-import java.util.*;
 
 
 public class LatestScreenshotsAdapter extends RecyclerView.Adapter<LatestScreenshotsAdapter.ViewHolder> {
@@ -44,7 +45,9 @@ public class LatestScreenshotsAdapter extends RecyclerView.Adapter<LatestScreens
 
         holder.mTvTitle.setText(screenshot.getTitle());
         holder.mTvSubTitle.setText(screenshot.getDateAdded());
-        Picasso.with(mContext).load(screenshot.getImageUrl()).into(holder.mIvScreenshot);
+        VolleySingleton.getImageLoader()
+                .get(screenshot.getImageUrl(),
+                        ImageLoader.getImageListener(holder.mIvScreenshot, 0, 0));
     }
 
     @Override
@@ -53,32 +56,30 @@ public class LatestScreenshotsAdapter extends RecyclerView.Adapter<LatestScreens
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-		private Context mContext;
-		private ArrayList<LatestScreenshot> mData;
-
         TextView mTvTitle;
         TextView mTvSubTitle;
         ScaledImageView mIvScreenshot;
+        private Context mContext;
+        private ArrayList<LatestScreenshot> mData;
 
         public ViewHolder(View itemView, Context context, ArrayList<LatestScreenshot> data) {
             super(itemView);
-			mContext = context;
-			mData = data;
+            mContext = context;
+            mData = data;
 
             mTvTitle = (TextView) itemView.findViewById(R.id.tv_latest_screenshot_title);
             mTvSubTitle = (TextView) itemView.findViewById(R.id.tv_latest_screenshot_subtitle);
             mIvScreenshot = (ScaledImageView) itemView.findViewById(R.id.iv_latest_screenshot_image);
-			
-			itemView.setOnClickListener(this);
+
+            itemView.setOnClickListener(this);
         }
-		
-		@Override
-		public void onClick(View v)
-		{
-			String game_permalink = mData.get(getAdapterPosition()).getGamePermalink();
-			String screenshots_url = Common.getGameScreenshotsUrlByPermalink(game_permalink, 1);
-			
-			Toast.makeText(mContext, String.format(Locale.US, "Game Permalink: %s", game_permalink), Toast.LENGTH_LONG).show();
-		}
+
+        @Override
+        public void onClick(View v) {
+            String screenshots_url = mData.get(getAdapterPosition()).getImageUrl().replace("/thu", "/med");
+
+            Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(screenshots_url));
+            mContext.startActivity(mIntent);
+        }
     }
 }
