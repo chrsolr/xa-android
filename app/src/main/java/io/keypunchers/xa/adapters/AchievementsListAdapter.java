@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.LayoutInflater;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.views.ScaledNetworkImageView;
+import com.android.volley.toolbox.ImageLoader;
 
 public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsListAdapter.ViewHolder> {
     private Context mContext;
@@ -53,18 +54,22 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
 		holder.mTvAchDesc.setText(item.getDescription());
         holder.mTvAchComments.setText(String.format(Locale.US, "%s %s", item.getCommentAmount(), holder.mTvAchComments.getText()).trim());
 		holder.mTvAchGamerscore.setText(item.getGamescoreAmount());
-
-		Picasso.with(mContext)
-				.load(item.getImageUrl())
-				.noFade()
-				.error(R.drawable.ic_app_logo)
-				.into(holder.mIvAchImage);
+		
+		VolleySingleton
+				.getImageLoader()
+				.get(item.getImageUrl(), 
+				ImageLoader.getImageListener(holder.mIvAchImage, 0, 0));
     }
 
     @Override
     public int getItemCount() {
         return mData.size();
     }
+
+	@Override
+	public int getItemViewType(int position) {
+		return position;
+	}
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private Context mContext;

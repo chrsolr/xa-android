@@ -15,6 +15,15 @@ import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.views.ScaledImageView;
+import com.bumptech.glide.Glide;
+import io.keypunchers.xa.misc.VolleySingleton;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.Response;
+import android.graphics.Bitmap;
+import com.android.volley.VolleyError;
+import android.support.design.widget.Snackbar;
+import com.android.volley.toolbox.ImageLoader;
 
 
 public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.ViewHolder> {
@@ -36,15 +45,21 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
         return new ViewHolder(view, mData, context);
     }
 
-    @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
-        final String item = mData.get(position);
+	@Override
+	public int getItemViewType(int position) {
+		return position;
+	}
 
-        Picasso.with(mContext)
-			.load(item)
-			.noFade()
-			.error(R.drawable.ic_app_logo)
-			.into(holder.mIvImage);
+	@Override
+	public long getItemId(int position) {
+		return position;
+	}
+
+    @Override
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        String item = mData.get(position);
+		
+		VolleySingleton.getImageLoader().get(item, ImageLoader.getImageListener(holder.mIvImage, 0, 0));
     }
 
     @Override
