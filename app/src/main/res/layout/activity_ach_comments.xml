@@ -28,7 +28,9 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+					app:layout_collapseMode="parallax" 
+					android:fitsSystemWindows="true">
 
                     <io.keypunchers.xa.views.ScaledImageView
                         android:id="@+id/iv_banner"
@@ -36,10 +38,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="?attr/actionBarSize"
                         android:background="@color/color_primary"
-                        android:fitsSystemWindows="true"
-                        android:src="@drawable/promo_banner"
-                        android:transitionName="achievement image"
-                        app:layout_collapseMode="parallax" />
+                        android:src="@drawable/promo_banner"/>
 
                     <View
                         android:id="@+id/view"
@@ -48,7 +47,6 @@
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
-                        android:transitionName="achievement gradient"
                         android:background="@drawable/primary_gradient_bottom" />
 
                     <LinearLayout
@@ -69,8 +67,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textAppearance="@style/AppTheme.TextAppearance.Title"
-                            android:textColor="@color/color_white"
-                            android:transitionName="achievement title" />
+                            android:textColor="@color/color_white" />
 
                         <TextView
                             android:id="@+id/tv_achievement_desc"
@@ -78,8 +75,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
                             android:textColor="@color/color_light_gray"
-                            android:textStyle="italic"
-                            android:transitionName="achievement desc" />
+                            android:textStyle="italic" />
 
                     </LinearLayout>
                 </RelativeLayout>
