@@ -90,7 +90,10 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
 
         @Override
         public void onClick(View v) {
-            mContext.startActivity(new Intent(mContext, AchievementCommentsActivity.class).putExtra("comments_url", mData.get(getAdapterPosition()).getAchievementsPageUrl()));
+            Intent intent = new Intent(mContext, AchievementCommentsActivity.class);
+            intent.putExtra("ACHIEVEMENT", mData.get(getAdapterPosition()));
+
+            mContext.startActivity(intent);
         }
     }
 }

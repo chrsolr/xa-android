@@ -3,17 +3,33 @@ package io.keypunchers.xa.app;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.widget.ImageView;
+
+import com.android.volley.toolbox.ImageLoader;
+
+import java.util.ArrayList;
+import java.util.Locale;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.adapters.CommentListAdapter;
+import io.keypunchers.xa.loaders.AchievementCommentsLoader;
+import io.keypunchers.xa.misc.Common;
+import io.keypunchers.xa.misc.VolleySingleton;
+import io.keypunchers.xa.models.Achievement;
+import io.keypunchers.xa.models.Comment;
 
 public class AchievementCommentsActivity extends AppCompatActivity {
-    private String BASE_URL;
+    private Achievement mAchievement;
+    private CommentListAdapter mAdapter;
+    private RecyclerView mRvContent;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,27 +43,57 @@ public class AchievementCommentsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (getIntent().getExtras() != null) {
-            BASE_URL = getIntent().getExtras().getString("comments_url");
+            mAchievement = getIntent().getExtras().getParcelable("ACHIEVEMENT");
         }
 
-        Toast.makeText(this, BASE_URL, Toast.LENGTH_LONG).show();
+        ImageView mIvBanner = (ImageView) findViewById(R.id.iv_banner);
+
+        VolleySingleton.getImageLoader().get(mAchievement.getImageUrl(), ImageLoader.getImageListener(mIvBanner, 0, 0));
+
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+
+        mRvContent = (RecyclerView) findViewById(R.id.rv_ach_comments);
+        mRvContent.setLayoutManager(mLayoutManager);
+
+        getAchievementComments();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
         int id = item.getItemId();
 
         switch (id) {
             case android.R.id.home:
                 onBackPressed();
                 break;
-            case R.id.menu_item_open_in_browser:
-                intent = new Intent(Intent.ACTION_VIEW, Uri.parse(BASE_URL));
-                startActivity(intent);
-                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getAchievementComments() {
+        LoaderManager.LoaderCallbacks mAchievementCommentsLoader = new LoaderManager.LoaderCallbacks<ArrayList<Comment>>() {
+
+            @Override
+            public Loader<ArrayList<Comment>> onCreateLoader(int id, Bundle args) {
+                return new AchievementCommentsLoader(getApplicationContext(), String.format(Locale.US, "%s%s", Common.BASE_URL, mAchievement.getAchievementsPageUrl()));
+            }
+
+            @Override
+            public void onLoadFinished(Loader<ArrayList<Comment>> loader, ArrayList<Comment> data) {
+
+                if (getSupportActionBar() != null)
+                    getSupportActionBar().setTitle(mAchievement.getTitle());
+
+                mAdapter = new CommentListAdapter(getApplicationContext(), data);
+                mRvContent.setAdapter(mAdapter);
+            }
+
+            @Override
+            public void onLoaderReset(Loader<ArrayList<Comment>> loader) {
+            }
+        };
+
+        getSupportLoaderManager().restartLoader(0, null, mAchievementCommentsLoader);
     }
 }

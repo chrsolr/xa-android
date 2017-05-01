@@ -1,6 +1,9 @@
 package io.keypunchers.xa.models;
 
-public class Achievement {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Achievement implements Parcelable {
 	private String imageUrl;
 	private String title;
 	private String description;
@@ -8,6 +11,47 @@ public class Achievement {
 	private String commentAmount;
 	private String achievementsPageUrl;
 	private boolean isSecret;
+
+	public Achievement() {
+	}
+
+	protected Achievement(Parcel in) {
+		imageUrl = in.readString();
+		title = in.readString();
+		description = in.readString();
+		gamescoreAmount = in.readString();
+		commentAmount = in.readString();
+		achievementsPageUrl = in.readString();
+		isSecret = in.readByte() != 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(imageUrl);
+		dest.writeString(title);
+		dest.writeString(description);
+		dest.writeString(gamescoreAmount);
+		dest.writeString(commentAmount);
+		dest.writeString(achievementsPageUrl);
+		dest.writeByte((byte) (isSecret ? 1 : 0));
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	public static final Creator<Achievement> CREATOR = new Creator<Achievement>() {
+		@Override
+		public Achievement createFromParcel(Parcel in) {
+			return new Achievement(in);
+		}
+
+		@Override
+		public Achievement[] newArray(int size) {
+			return new Achievement[size];
+		}
+	};
 
 	public void setIsSecret(boolean isSecrect) {
 		this.isSecret = isSecrect;
