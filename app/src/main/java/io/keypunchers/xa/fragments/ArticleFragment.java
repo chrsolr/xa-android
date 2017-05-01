@@ -24,7 +24,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.Article;
-import android.widget.FrameLayout;
 
 public class ArticleFragment extends Fragment {
     private Article mData;
@@ -114,7 +113,7 @@ public class ArticleFragment extends Fragment {
         TextView mTvBody = (TextView) view.findViewById(R.id.tv_article_body);
         mTvBody.setText(text);
         mTvBody.setMovementMethod(LinkMovementMethod.getInstance());
-		
-		((FrameLayout) view.findViewById(R.id.fragment_container)).setVisibility(View.VISIBLE);
+
+        view.setVisibility(View.VISIBLE);
     }
 }

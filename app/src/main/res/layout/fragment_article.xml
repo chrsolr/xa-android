@@ -2,9 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_container"
-	android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-	android:visibility="invisible"
+    android:visibility="gone"
     tools:context="io.keypunchers.xa.fragments.ArticleFragment">
 
     <ScrollView
@@ -13,7 +13,8 @@
         android:clipToPadding="false"
         android:orientation="vertical"
         android:paddingBottom="@dimen/padding_level_2"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:id="@+id/ll_article"
@@ -21,85 +22,83 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/color_black">
+
+                <io.keypunchers.xa.views.ScaledImageView
+                    android:id="@+id/iv_article_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="200dp" />
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/img_gradient_height"
+                    android:layout_alignBottom="@+id/iv_article_banner"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:background="@drawable/primary_gradient_bottom" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_article_author_avatar"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignBottom="@+id/iv_article_banner"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="@dimen/margin_level_2"
+                    android:layout_marginLeft="@dimen/margin_level_2"
+                    app:civ_border_color="@color/color_white"
+                    app:civ_border_width="1dp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/iv_article_banner"
+                    android:layout_marginBottom="@dimen/margin_level_2"
+                    android:layout_toEndOf="@+id/iv_article_author_avatar"
+                    android:layout_toRightOf="@+id/iv_article_author_avatar">
 
-                    <io.keypunchers.xa.views.ScaledImageView
-                        android:id="@+id/iv_article_banner"
+                    <TextView
+                        android:id="@+id/tv_article_author_firstname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="false"
+                        android:layout_marginLeft="@dimen/margin_level_1"
+                        android:layout_marginStart="@dimen/margin_level_1"
+                        android:fontFamily="sans-serif-light"
+                        android:textAllCaps="true"
+                        android:textColor="@color/color_white"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tv_article_author_lastname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/color_black" />
+                        android:layout_centerVertical="false"
+                        android:layout_toEndOf="@+id/tv_article_author_firstname"
+                        android:layout_toRightOf="@+id/tv_article_author_firstname"
+                        android:fontFamily="sans-serif-bold"
+                        android:textAllCaps="true"
+                        android:textColor="@color/color_white"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
-                    <View
-                        android:id="@+id/view"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/img_gradient_height"
-                        android:layout_alignBottom="@+id/iv_article_banner"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:background="@drawable/primary_gradient_bottom" />
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iv_article_author_avatar"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_alignBottom="@+id/iv_article_banner"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginBottom="@dimen/margin_level_2"
-                        android:layout_marginLeft="@dimen/margin_level_2"
-                        app:civ_border_color="@color/color_white"
-                        app:civ_border_width="1dp" />
-
-                    <RelativeLayout
+                    <TextView
+                        android:id="@+id/tv_article_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/iv_article_banner"
-                        android:layout_marginBottom="@dimen/margin_level_2"
-                        android:layout_toEndOf="@+id/iv_article_author_avatar"
-                        android:layout_toRightOf="@+id/iv_article_author_avatar">
-
-                        <TextView
-                            android:id="@+id/tv_article_author_firstname"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="false"
-                            android:layout_marginLeft="@dimen/margin_level_1"
-                            android:fontFamily="sans-serif-light"
-                            android:textAllCaps="true"
-                            android:textColor="@color/color_white"
-                            android:textSize="24sp" />
-
-                        <TextView
-                            android:id="@+id/tv_article_author_lastname"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="false"
-                            android:layout_toEndOf="@+id/tv_article_author_firstname"
-                            android:layout_toRightOf="@+id/tv_article_author_firstname"
-                            android:fontFamily="sans-serif-bold"
-                            android:textAllCaps="true"
-                            android:textColor="@color/color_white"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tv_article_date"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/tv_article_author_firstname"
-                            android:layout_marginLeft="@dimen/margin_level_1_italic"
-                            android:layout_marginTop="-7dp"
-                            android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
-                            android:textColor="@color/color_light_gray"
-                            android:textStyle="italic" />
-                    </RelativeLayout>
-
+                        android:layout_below="@+id/tv_article_author_firstname"
+                        android:layout_marginLeft="@dimen/margin_level_1_italic"
+                        android:layout_marginStart="@dimen/margin_level_1"
+                        android:layout_marginTop="-7dp"
+                        android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
+                        android:textColor="@color/color_light_gray"
+                        android:textStyle="italic" />
                 </RelativeLayout>
 
             </RelativeLayout>
@@ -131,7 +130,5 @@
 
             </LinearLayout>
         </LinearLayout>
-
     </ScrollView>
-
 </FrameLayout>
