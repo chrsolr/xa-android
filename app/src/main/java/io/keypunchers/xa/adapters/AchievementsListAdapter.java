@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -103,7 +104,13 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
             int comment_amount = parseInt(ach.getCommentAmount().replace("(", "").replace(")", ""));
 
             if (comment_amount != 0) {
-                Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(((AppCompatActivity)mContext), mIvAchImage, "achievement image").toBundle();
+                Bundle bundle = ActivityOptionsCompat
+                        .makeSceneTransitionAnimation(((AppCompatActivity)mContext),
+                                Pair.create((View)mIvAchImage, "achievement image"),
+                                Pair.create((View)mTvAchTitle, "achievement title"),
+                                Pair.create((View)mTvAchDesc, "achievement desc"))
+                        .toBundle();
+
                 Intent intent = new Intent(mContext, AchievementCommentsActivity.class);
                 intent.putExtra("ACHIEVEMENT", mData.get(getAdapterPosition()));
                 mContext.startActivity(intent, bundle);
