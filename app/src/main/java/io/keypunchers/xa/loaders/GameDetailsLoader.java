@@ -127,7 +127,8 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
                 ach.setDescription(ach_desc);
                 ach.setCommentAmount(ach_comments_amount.equals("") ? "(0)" : ach_comments_amount);
                 ach.setIsSecret(ach_is_secret);
-                ach.setAchievementsPageUrl(ach_page_url);
+                ach.setCommentsPageUrl(ach_page_url);
+                ach.setGameTitle(game_title);
 
                 achievements.add(ach);
 

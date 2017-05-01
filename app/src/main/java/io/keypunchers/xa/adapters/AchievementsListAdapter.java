@@ -2,6 +2,9 @@ package io.keypunchers.xa.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +18,12 @@ import java.util.Locale;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.app.AchievementCommentsActivity;
+import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.Achievement;
 import io.keypunchers.xa.views.ScaledImageView;
+
+import static java.lang.Integer.parseInt;
 
 public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsListAdapter.ViewHolder> {
     private Context mContext;
@@ -90,10 +96,17 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(mContext, AchievementCommentsActivity.class);
-            intent.putExtra("ACHIEVEMENT", mData.get(getAdapterPosition()));
+            Achievement ach = mData.get(getAdapterPosition());
+            int comment_amount = parseInt(ach.getCommentAmount().replace("(", "").replace(")", ""));
 
-            mContext.startActivity(intent);
+            if (comment_amount != 0) {
+                Intent intent = new Intent(mContext, AchievementCommentsActivity.class);
+                intent.putExtra("ACHIEVEMENT", mData.get(getAdapterPosition()));
+                mContext.startActivity(intent);
+            } else {
+                Common.makeSnackbar(v.getRootView(), "No Comments", Snackbar.LENGTH_SHORT, ContextCompat.getColor(mContext, R.color.color_primary_accent), Color.WHITE).show();
+            }
+
         }
     }
 }

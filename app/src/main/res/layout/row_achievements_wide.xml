@@ -29,52 +29,52 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:orientation="vertical"
-        android:paddingBottom="8dp"
+        android:paddingBottom="@dimen/padding_level_1"
         android:paddingEnd="@dimen/padding_level_1"
         android:paddingLeft="@dimen/padding_level_1"
         android:paddingRight="@dimen/padding_level_1"
         android:paddingStart="@dimen/padding_level_1">
 
-		<LinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="1">
 
-			<TextView
-				android:id="@+id/tv_achievement_title"
+            <TextView
+                android:id="@+id/tv_achievement_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
+                android:layout_weight="0.90"
                 android:ellipsize="end"
+                android:maxLines="1"
                 android:textAppearance="@style/AppTheme.TextAppearance.Title"
-                android:textColor="@color/color_white"
-                android:layout_weight="0.90" />
+                android:textColor="@color/color_white" />
 
-			<LinearLayout
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:orientation="horizontal"
-				android:gravity="end|bottom"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
-                android:layout_weight="0.10" >
+                android:layout_weight="0.10"
+                android:gravity="end|bottom"
+                android:orientation="horizontal">
 
-				<TextView
-					android:id="@+id/tv_achievement_gs"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
-					android:textColor="@color/color_white"
-					android:textStyle="italic" />
+                <TextView
+                    android:id="@+id/tv_achievement_gs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
+                    android:textColor="@color/color_white"
+                    android:textStyle="italic" />
 
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
-					android:textColor="@color/color_white"
-					android:text="G"
-					android:textStyle="italic|bold" />
-			</LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="G"
+                    android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
+                    android:textColor="@color/color_white"
+                    android:textStyle="italic|bold" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -88,22 +88,22 @@
                 android:id="@+id/tv_achievement_desc"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
+                android:layout_weight="0.90"
                 android:ellipsize="end"
+                android:maxLines="1"
                 android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
                 android:textColor="@color/color_light_gray"
-                android:layout_weight="0.90"
                 android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/tv_achievement_comments"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
-                android:textColor="@color/primary_text_light"
-                android:gravity="end|bottom"
                 android:layout_gravity="end|bottom"
                 android:layout_weight="0.10"
+                android:gravity="end|bottom"
+                android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
+                android:textColor="@color/primary_text_light"
                 android:textStyle="italic" />
 
         </LinearLayout>

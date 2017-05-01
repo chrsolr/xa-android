@@ -1,7 +1,5 @@
 package io.keypunchers.xa.app;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
@@ -12,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 
@@ -39,16 +38,23 @@ public class AchievementCommentsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         if (getIntent().getExtras() != null) {
             mAchievement = getIntent().getExtras().getParcelable("ACHIEVEMENT");
         }
 
-        ImageView mIvBanner = (ImageView) findViewById(R.id.iv_banner);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(mAchievement.getGameTitle());
+        }
 
+        ImageView mIvBanner = (ImageView) findViewById(R.id.iv_banner);
         VolleySingleton.getImageLoader().get(mAchievement.getImageUrl(), ImageLoader.getImageListener(mIvBanner, 0, 0));
+
+        TextView mTvAchTitle = (TextView) findViewById(R.id.tv_achievement_title);
+        mTvAchTitle.setText(mAchievement.getTitle());
+
+        TextView mTvAchDesc = (TextView) findViewById(R.id.tv_achievement_desc);
+        mTvAchDesc.setText(mAchievement.getDescription());
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
 
@@ -76,15 +82,11 @@ public class AchievementCommentsActivity extends AppCompatActivity {
 
             @Override
             public Loader<ArrayList<Comment>> onCreateLoader(int id, Bundle args) {
-                return new AchievementCommentsLoader(getApplicationContext(), String.format(Locale.US, "%s%s", Common.BASE_URL, mAchievement.getAchievementsPageUrl()));
+                return new AchievementCommentsLoader(getApplicationContext(), String.format(Locale.US, "%s%s", Common.BASE_URL, mAchievement.getCommentsPageUrl()));
             }
 
             @Override
             public void onLoadFinished(Loader<ArrayList<Comment>> loader, ArrayList<Comment> data) {
-
-                if (getSupportActionBar() != null)
-                    getSupportActionBar().setTitle(mAchievement.getTitle());
-
                 mAdapter = new CommentListAdapter(getApplicationContext(), data);
                 mRvContent.setAdapter(mAdapter);
             }

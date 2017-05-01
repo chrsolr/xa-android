@@ -26,15 +26,59 @@
                 app:expandedTitleMarginStart="48dp"
                 app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
 
-                <io.keypunchers.xa.views.ScaledImageView
-                    android:id="@+id/iv_banner"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-					android:layout_marginTop="?attr/actionBarSize"
-                    android:background="@color/color_primary"
-                    android:fitsSystemWindows="true"
-                    android:src="@drawable/promo_banner"
-                    app:layout_collapseMode="parallax" />
+                    android:layout_height="match_parent">
+
+                    <io.keypunchers.xa.views.ScaledImageView
+                        android:id="@+id/iv_banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="?attr/actionBarSize"
+                        android:background="@color/color_primary"
+                        android:fitsSystemWindows="true"
+                        android:src="@drawable/promo_banner"
+                        app:layout_collapseMode="parallax" />
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/img_gradient_height"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:background="@drawable/primary_gradient_bottom" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/padding_level_1"
+                        android:paddingEnd="@dimen/padding_level_1"
+                        android:paddingLeft="@dimen/padding_level_1"
+                        android:paddingRight="@dimen/padding_level_1"
+                        android:paddingStart="@dimen/padding_level_1">
+
+                        <TextView
+                            android:id="@+id/tv_achievement_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/AppTheme.TextAppearance.Title"
+                            android:textColor="@color/color_white" />
+
+                        <TextView
+                            android:id="@+id/tv_achievement_desc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
+                            android:textColor="@color/color_light_gray"
+                            android:textStyle="italic" />
+
+                    </LinearLayout>
+                </RelativeLayout>
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -49,6 +93,6 @@
             android:paddingBottom="@dimen/padding_level_1"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     </android.support.design.widget.CoordinatorLayout>
-	
-	<include layout="@layout/toolbar" />
+
+    <include layout="@layout/toolbar" />
 </RelativeLayout>

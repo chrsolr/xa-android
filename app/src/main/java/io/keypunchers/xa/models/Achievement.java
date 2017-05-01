@@ -9,7 +9,8 @@ public class Achievement implements Parcelable {
 	private String description;
 	private String gamescoreAmount;
 	private String commentAmount;
-	private String achievementsPageUrl;
+	private String commentsPageUrl;
+	private String gameTitle;
 	private boolean isSecret;
 
 	public Achievement() {
@@ -21,7 +22,8 @@ public class Achievement implements Parcelable {
 		description = in.readString();
 		gamescoreAmount = in.readString();
 		commentAmount = in.readString();
-		achievementsPageUrl = in.readString();
+		commentsPageUrl = in.readString();
+		gameTitle = in.readString();
 		isSecret = in.readByte() != 0;
 	}
 
@@ -32,7 +34,8 @@ public class Achievement implements Parcelable {
 		dest.writeString(description);
 		dest.writeString(gamescoreAmount);
 		dest.writeString(commentAmount);
-		dest.writeString(achievementsPageUrl);
+		dest.writeString(commentsPageUrl);
+		dest.writeString(gameTitle);
 		dest.writeByte((byte) (isSecret ? 1 : 0));
 	}
 
@@ -101,11 +104,19 @@ public class Achievement implements Parcelable {
 		return commentAmount;
 	}
 
-	public void setAchievementsPageUrl(String achievementsPageUrl) {
-		this.achievementsPageUrl = achievementsPageUrl;
+	public void setCommentsPageUrl(String commentsPageUrl) {
+		this.commentsPageUrl = commentsPageUrl;
 	}
 
-	public String getAchievementsPageUrl() {
-		return achievementsPageUrl;
+	public String getCommentsPageUrl() {
+		return commentsPageUrl;
+	}
+
+	public String getGameTitle() {
+		return gameTitle;
+	}
+
+	public void setGameTitle(String gameTitle) {
+		this.gameTitle = gameTitle;
 	}
 }
