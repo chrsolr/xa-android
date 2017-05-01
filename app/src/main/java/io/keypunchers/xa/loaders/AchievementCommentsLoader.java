@@ -43,7 +43,11 @@ public class AchievementCommentsLoader extends AsyncTaskLoader<ArrayList<Comment
         try {
             Elements elements = Jsoup.connect(BASE_URL)
                     .get()
-                    .select(".bl_la_main .divtext:eq(0) table:eq(0) tr");
+                    .select(".divtext")
+                    .eq(1)
+                    .select("table")
+                    .first()
+                    .select("tr");
 
             for (Element element : elements) {
                 if (element.children().size() < 2) continue;
