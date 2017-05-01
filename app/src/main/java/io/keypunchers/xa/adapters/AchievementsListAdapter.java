@@ -30,12 +30,10 @@ import io.keypunchers.xa.views.ScaledImageView;
 import static java.lang.Integer.parseInt;
 
 public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsListAdapter.ViewHolder> {
-    private Context mContext;
     private ArrayList<Achievement> mData;
     private int mResId = R.layout.row_achievements_wide;
 
-    public AchievementsListAdapter(Context context, ArrayList<Achievement> data, int layoutId) {
-        mContext = context;
+    public AchievementsListAdapter(ArrayList<Achievement> data, int layoutId) {
         mData = data;
         mResId = layoutId;
     }

@@ -24,12 +24,11 @@ public class ScaledImageView extends ImageView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        Drawable d = getDrawable();
+        Drawable drawable = getDrawable();
 
-        if (d != null) {
-            // ceil not round - avoid thin vertical gaps along the left/right edges
+        if (drawable != null) {
             int width = MeasureSpec.getSize(widthMeasureSpec);
-            int height = (int) Math.ceil((float) width * (float) d.getIntrinsicHeight() / (float) d.getIntrinsicWidth());
+            int height = (int) Math.ceil((float) width * (float) drawable.getIntrinsicHeight() / (float) drawable.getIntrinsicWidth());
             setMeasuredDimension(width, height);
         } else {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);

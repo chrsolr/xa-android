@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
 
-
 public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.ViewHolder> {
     private Context mContext;
     private ArrayList<String> mData;

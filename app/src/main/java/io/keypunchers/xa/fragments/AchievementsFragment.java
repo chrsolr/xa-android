@@ -111,9 +111,9 @@ public class AchievementsFragment extends Fragment {
                     AchievementsListAdapter mAdapter;
 
                     if (bitmap.getWidth() < 100)
-                        mAdapter = new AchievementsListAdapter(getActivity(), mData.getAchievements(), R.layout.row_achievements_square);
+                        mAdapter = new AchievementsListAdapter(mData.getAchievements(), R.layout.row_achievements_square);
                     else
-                        mAdapter = new AchievementsListAdapter(getActivity(), mData.getAchievements(), R.layout.row_achievements_wide);
+                        mAdapter = new AchievementsListAdapter(mData.getAchievements(), R.layout.row_achievements_wide);
 
                     mRvContent.setAdapter(mAdapter);
                     mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), mData.getAchievements().size());
