@@ -2,7 +2,6 @@ package io.keypunchers.xa.misc;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
