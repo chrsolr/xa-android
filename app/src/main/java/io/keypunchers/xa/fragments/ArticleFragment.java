@@ -113,7 +113,5 @@ public class ArticleFragment extends Fragment {
         TextView mTvBody = (TextView) view.findViewById(R.id.tv_article_body);
         mTvBody.setText(text);
         mTvBody.setMovementMethod(LinkMovementMethod.getInstance());
-
-        view.setVisibility(View.VISIBLE);
     }
 }
