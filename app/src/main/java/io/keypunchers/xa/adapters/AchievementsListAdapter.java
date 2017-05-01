@@ -81,6 +81,7 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
         TextView mTvAchDesc;
         TextView mTvAchComments;
         TextView mTvAchGamerscore;
+        View mView;
         private Context mContext;
         private ArrayList<Achievement> mData;
 
@@ -94,6 +95,7 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
             mTvAchDesc = (TextView) itemView.findViewById(R.id.tv_achievement_desc);
             mTvAchComments = (TextView) itemView.findViewById(R.id.tv_achievement_comments);
             mTvAchGamerscore = (TextView) itemView.findViewById(R.id.tv_achievement_gs);
+            mView = (View) itemView.findViewById(R.id.view);
 
             itemView.setOnClickListener(this);
         }
@@ -105,7 +107,11 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
 
             if (comment_amount != 0) {
                 Bundle bundle = ActivityOptionsCompat
-                        .makeSceneTransitionAnimation(((AppCompatActivity)mContext), mIvAchImage, "achievement image")
+                        .makeSceneTransitionAnimation(((AppCompatActivity)mContext),
+                                Pair.create((View)mIvAchImage, "achievement image"),
+                                Pair.create((View)mTvAchTitle, "achievement title"),
+                                Pair.create((View)mTvAchDesc, "achievement desc"),
+                                Pair.create(mView, "achievement gradient"))
                         .toBundle();
 
                 Intent intent = new Intent(mContext, AchievementCommentsActivity.class);
