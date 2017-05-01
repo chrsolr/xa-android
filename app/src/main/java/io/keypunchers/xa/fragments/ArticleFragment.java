@@ -20,6 +20,7 @@ import com.android.volley.toolbox.ImageLoader;
 
 import org.xml.sax.XMLReader;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.Article;
@@ -52,6 +53,7 @@ public class ArticleFragment extends Fragment {
             VolleySingleton.getImageLoader().get(mData.getImageUrls().get(0), new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                    ((ImageView) view.findViewById(R.id.iv_article_banner)).setImageBitmap(response.getBitmap());
                     setupUI(view);
                 }
 
@@ -68,8 +70,8 @@ public class ArticleFragment extends Fragment {
     private void setupUI(View view) {
 
         VolleySingleton.getImageLoader()
-                .get(mData.getAuthorProfileUrl(),
-                        ImageLoader.getImageListener(((ImageView) view.findViewById(R.id.iv_article_author_avatar)), 0, 0));
+                .get(mData.getAuthorProfileImageUrl(),
+                        ImageLoader.getImageListener(((CircleImageView) view.findViewById(R.id.iv_article_author_avatar)), 0, 0));
 
         ((TextView) view.findViewById(R.id.tv_article_title))
                 .setText(mData.getHeaderTitle());
