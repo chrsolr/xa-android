@@ -105,10 +105,7 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
 
             if (comment_amount != 0) {
                 Bundle bundle = ActivityOptionsCompat
-                        .makeSceneTransitionAnimation(((AppCompatActivity)mContext),
-                                Pair.create((View)mIvAchImage, "achievement image"),
-                                Pair.create((View)mTvAchTitle, "achievement title"),
-                                Pair.create((View)mTvAchDesc, "achievement desc"))
+                        .makeSceneTransitionAnimation(((AppCompatActivity)mContext), mIvAchImage, "achievement image")
                         .toBundle();
 
                 Intent intent = new Intent(mContext, AchievementCommentsActivity.class);

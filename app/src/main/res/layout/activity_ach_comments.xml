@@ -68,8 +68,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textAppearance="@style/AppTheme.TextAppearance.Title"
-                            android:textColor="@color/color_white"
-                            android:transitionName="achievement title" />
+                            android:textColor="@color/color_white"  />
 
                         <TextView
                             android:id="@+id/tv_achievement_desc"
@@ -77,8 +76,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
                             android:textColor="@color/color_light_gray"
-                            android:textStyle="italic"
-                            android:transitionName="achievement desc" />
+                            android:textStyle="italic"  />
 
                     </LinearLayout>
                 </RelativeLayout>

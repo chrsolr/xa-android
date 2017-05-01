@@ -50,8 +50,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textAppearance="@style/AppTheme.TextAppearance.Title"
-                android:textColor="@color/color_white"
-                android:transitionName="achievement title" />
+                android:textColor="@color/color_white" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -95,8 +94,7 @@
                 android:maxLines="1"
                 android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
                 android:textColor="@color/color_light_gray"
-                android:textStyle="italic"
-                android:transitionName="achievement desc" />
+                android:textStyle="italic"  />
 
             <TextView
                 android:id="@+id/tv_achievement_comments"
