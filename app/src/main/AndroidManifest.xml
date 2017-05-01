@@ -50,7 +50,18 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
-                <action android:name=".app.Achievements" />
+                <action android:name=".app.AchievementsActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".app.AchievementCommentsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name=".app.AchievementCommentsActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

@@ -1,6 +1,7 @@
 package io.keypunchers.xa.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.app.AchievementCommentsActivity;
 import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.Achievement;
 import io.keypunchers.xa.views.ScaledImageView;
@@ -88,7 +90,7 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
 
         @Override
         public void onClick(View v) {
-
+            mContext.startActivity(new Intent(mContext, AchievementCommentsActivity.class).putExtra("comments_url", mData.get(getAdapterPosition()).getAchievementsPageUrl()));
         }
     }
 }
