@@ -24,6 +24,8 @@ import io.keypunchers.xa.models.Achievement;
 import io.keypunchers.xa.views.ScaledImageView;
 
 import static java.lang.Integer.parseInt;
+import android.support.v7.app.AppCompatActivity;
+import android.test.AndroidTestCase;
 
 public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsListAdapter.ViewHolder> {
     private Context mContext;
@@ -104,7 +106,7 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
                 intent.putExtra("ACHIEVEMENT", mData.get(getAdapterPosition()));
                 mContext.startActivity(intent);
             } else {
-                Common.makeSnackbar(v.getRootView(), "No Comments", Snackbar.LENGTH_SHORT, ContextCompat.getColor(mContext, R.color.color_primary_accent), Color.WHITE).show();
+                Common.makeSnackbar(((AppCompatActivity)mContext).getWindow().getDecorView().findViewById(android.R.id.content), "No Comments", Snackbar.LENGTH_SHORT, ContextCompat.getColor(mContext, R.color.color_primary_accent), Color.WHITE).show();
             }
 
         }
