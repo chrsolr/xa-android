@@ -25,7 +25,6 @@
     <string name="ab_previews_title">Previews</string>
     <string name="menu_item_open_in_browser">Open in Browser</string>
     <string name="menu_item_share">Share</string>
-    <string name="ytp_api_key">AIzaSyCImy8dXg20m5hxdCBqCybZ4Q0KhRDc-Dg</string>
     <string name="ab_article">Article</string>
     <string name="menu_item_previews">Previews</string>
     <string name="ab_interviews_title">Interviews</string>
@@ -42,5 +41,9 @@
     <string name="menu_item_reset">Reset</string>
     <string name="view_screenshots">View Screenshots</string>
     <string name="view_comments">View Comments</string>
+    <string name="about_disclaimer">
+        This application it is not affiliated with XboxAchievements.com and it is an unofficial application.
+        If you will like to report an issue, please use the Google Play Store or feel free to sent me an email.
+    </string>
 
 </resources>
