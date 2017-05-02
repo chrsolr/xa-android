@@ -12,10 +12,9 @@ import android.widget.TextView;
 
 import io.keypunchers.xa.BuildConfig;
 import io.keypunchers.xa.R;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.PackageManager;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class AboutFragment extends Fragment {
 
 
@@ -32,8 +31,11 @@ public class AboutFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView mTvVersionName = (TextView) view.findViewById(R.id.tv_about_app_version_name);
-        mTvVersionName.setText(BuildConfig.VERSION_NAME);
+		try {
+			String versionName = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
+			TextView mTvVersionName = (TextView) view.findViewById(R.id.tv_about_app_version_name);
+			mTvVersionName.setText(versionName);
+		} catch (PackageManager.NameNotFoundException e) {}
     }
 
     @Override
