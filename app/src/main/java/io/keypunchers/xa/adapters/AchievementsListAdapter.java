@@ -60,7 +60,7 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
         VolleySingleton
                 .getImageLoader()
                 .get(item.getImageUrl(),
-                        ImageLoader.getImageListener(holder.mIvAchImage, 0, 0));
+                        ImageLoader.getImageListener(holder.mIvAchImage, 0, R.drawable.promo_banner));
     }
 
     @Override

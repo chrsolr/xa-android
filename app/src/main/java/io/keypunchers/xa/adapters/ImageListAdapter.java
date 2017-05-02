@@ -50,7 +50,8 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         String item = mData.get(position);
 
-        VolleySingleton.getImageLoader().get(item, ImageLoader.getImageListener(holder.mIvImage, 0, 0));
+        VolleySingleton.getImageLoader()
+				.get(item, ImageLoader.getImageListener(holder.mIvImage, 0, 0));
     }
 
     @Override

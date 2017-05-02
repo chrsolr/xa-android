@@ -121,8 +121,10 @@ public class AchievementsFragment extends Fragment {
             }
 
             @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(AchievementsFragment.class.getSimpleName(), error.getMessage());
+            public void onErrorResponse(VolleyError e) {
+				e.printStackTrace();
+				
+				mRvContent.setAdapter(new AchievementsListAdapter(mData.getAchievements(), R.layout.row_achievements_wide));
             }
         });
     }
