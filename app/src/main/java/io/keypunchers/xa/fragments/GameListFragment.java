@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SlidingPaneLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,7 +35,6 @@ import io.keypunchers.xa.adapters.GenericAdapter;
 import io.keypunchers.xa.loaders.GamesListLoader;
 import io.keypunchers.xa.misc.EndlessRecyclerViewScrollListener;
 import io.keypunchers.xa.models.Game;
-import android.support.v7.app.*;
 
 public class GameListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<Game>> {
     private String BASE_URL;
@@ -47,7 +47,7 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
     private int LOADER_ID;
     private String[] mAlphabetTitles;
 
-	private ActionBar mActionBar;
+    private ActionBar mActionBar;
 
     public GameListFragment() {
     }
@@ -89,16 +89,16 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
         setHasOptionsMenu(true);
 
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        mSelectedPlatform = mPrefs.getString("DEFAULT_PLATFORM", "xbox-one");
+        mSelectedPlatform = mPrefs.getString(getString(R.string.DEFAULT_PLATFORM_TAG), "xbox-one");
 
         LOADER_ID = getActivity().getResources().getInteger(R.integer.games_loader_id);
-		
-		String[] titles = getActivity().getResources().getStringArray(R.array.spinner_platforms);
+
+        String[] titles = getActivity().getResources().getStringArray(R.array.spinner_platforms);
 
         if (getArguments() != null) {
             BASE_URL = getArguments().getString("url");
             mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-			mActionBar.setTitle(titles[mPrefs.getInt("DEFAULT_PLATFORM_POSITION", 0)]);
+            mActionBar.setTitle(titles[mPrefs.getInt(getString(R.string.DEFAULT_PLATFORM_POSITION_TAG), 0)]);
         }
 
         if (mData.isEmpty()) {
@@ -130,43 +130,43 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
             case R.id.menu_browse_games_xone:
                 mSelectedPlatform = "xbox-one";
                 mCurrentSelectedLetter = "a";
-				mActionBar.setTitle("Xbox One");
+                mActionBar.setTitle("Xbox One");
                 cleanFetch();
                 break;
             case R.id.menu_browse_games_x360:
                 mSelectedPlatform = "retail";
                 mCurrentSelectedLetter = "a";
-				mActionBar.setTitle("Xbox 360");
+                mActionBar.setTitle("Xbox 360");
                 cleanFetch();
                 break;
             case R.id.menu_browse_games_arcade:
                 mSelectedPlatform = "arcade";
                 mCurrentSelectedLetter = "a";
-				mActionBar.setTitle("Arcade");
+                mActionBar.setTitle("Arcade");
                 cleanFetch();
                 break;
             case R.id.menu_browse_games_japanese:
                 mSelectedPlatform = "japanese";
                 mCurrentSelectedLetter = "a";
-				mActionBar.setTitle("Japanese");
+                mActionBar.setTitle("Japanese");
                 cleanFetch();
                 break;
             case R.id.menu_browse_games_gfwl:
                 mSelectedPlatform = "pc";
                 mCurrentSelectedLetter = "a";
-				mActionBar.setTitle("GFWL");
+                mActionBar.setTitle("GFWL");
                 cleanFetch();
                 break;
             case R.id.menu_browse_games_mobile:
                 mSelectedPlatform = "wp7";
                 mCurrentSelectedLetter = "a";
-				mActionBar.setTitle("Mobile");
+                mActionBar.setTitle("Mobile");
                 cleanFetch();
                 break;
             case R.id.menu_browse_games_win8:
                 mSelectedPlatform = "win8";
                 mCurrentSelectedLetter = "a";
-				mActionBar.setTitle("Windows 8");
+                mActionBar.setTitle("Windows 8");
                 cleanFetch();
                 break;
         }

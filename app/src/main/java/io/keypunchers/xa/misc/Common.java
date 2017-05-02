@@ -9,6 +9,9 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.Locale;
+
+import io.keypunchers.xa.R;
 import io.keypunchers.xa.misc.Enums.UrlType;
 
 public class Common extends Application {
@@ -20,7 +23,8 @@ public class Common extends Application {
     }
 
     public static String highResScreenshotImage(String url, Context context) {
-        boolean high_res = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("HIGH_IMAGE_QUALITY", true);
+        final String HIGH_RES_IMAGE_SETTING = context.getResources().getString(R.string.HIGH_RES_IMAGE_SETTING_TAG);
+        boolean high_res = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(HIGH_RES_IMAGE_SETTING, true);
 
         if (url != null && high_res)
             url = url.replace("thu", "med").replaceAll("\\s", "%20");
@@ -31,7 +35,8 @@ public class Common extends Application {
     }
 
     public static String highResCoverImage(String url, Context context) {
-        boolean high_res = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("HIGH_IMAGE_QUALITY", true);
+        final String HIGH_RES_IMAGE_SETTING = context.getResources().getString(R.string.HIGH_RES_IMAGE_SETTING_TAG);
+        boolean high_res = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(HIGH_RES_IMAGE_SETTING, true);
 
         if (url != null && high_res)
             url = url.replace("/game/", "/achievements/").replaceAll("\\s", "%20");
@@ -42,12 +47,38 @@ public class Common extends Application {
     }
 
     public static String highResAchImage(String url, Context context) {
-        boolean high_res = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("HIGH_IMAGE_QUALITY", true);
+        final String HIGH_RES_IMAGE_SETTING = context.getResources().getString(R.string.HIGH_RES_IMAGE_SETTING_TAG);
+        boolean high_res = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(HIGH_RES_IMAGE_SETTING, true);
 
         if (url != null && high_res)
             url = url.replace("lo.", "hi.").replaceAll("\\s", "%20");
         else if (url != null)
             url = url.replace("hi.", "lo.").replaceAll("\\s", "%20");
+
+        return url;
+    }
+
+    public static String highResYouTubeImage(String url) {
+
+        if (url.contains("?")) {
+            url = url.substring(0, url.indexOf("?"));
+        }
+
+        String video_id = url.replace("https://www.youtube.com/embed/", "");
+
+        url = String.format(Locale.US, "https://i3.ytimg.com/vi/%s/0.jpg", video_id);
+
+        return url;
+    }
+
+    public static String getYouTubeWatchLink(String url) {
+        if (url.contains("?")) {
+            url = url.substring(0, url.indexOf("?"));
+        }
+
+        final String video_id = url.replace("https://www.youtube.com/embed/", "");
+
+        url = String.format(Locale.US, "https://www.youtube.com/watch?v=%s", video_id);
 
         return url;
     }

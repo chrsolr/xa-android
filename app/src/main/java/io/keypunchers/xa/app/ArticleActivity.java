@@ -37,10 +37,10 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-		if (getSupportActionBar() != null) {
-			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-			getSupportActionBar().setTitle(R.string.ab_article);
-		}
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.ab_article);
+        }
 
         LOADER_ID = getResources().getInteger(R.integer.article_loader_id);
 

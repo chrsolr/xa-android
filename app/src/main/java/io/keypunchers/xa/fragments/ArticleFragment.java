@@ -24,7 +24,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.Article;
-import io.keypunchers.xa.views.ScaledImageView;
 
 public class ArticleFragment extends Fragment {
     private Article mData;
@@ -55,8 +54,8 @@ public class ArticleFragment extends Fragment {
                 @Override
                 public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
                     ImageView mIvBanner = (ImageView) view.findViewById(R.id.iv_article_banner);
-					mIvBanner.setImageBitmap(response.getBitmap());
-					
+                    mIvBanner.setImageBitmap(response.getBitmap());
+
                     setupUI(view);
                 }
 
@@ -94,7 +93,7 @@ public class ArticleFragment extends Fragment {
         Spanned text;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            text = Html.fromHtml(mData.getBodyText(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM, null, new Html.TagHandler() {
+            text = Html.fromHtml(mData.getBodyText(), Html.FROM_HTML_MODE_LEGACY, null, new Html.TagHandler() {
                 @Override
                 public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
                     if (tag.equals("ul") && !opening) output.append("\n");

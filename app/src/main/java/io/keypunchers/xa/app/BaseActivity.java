@@ -36,7 +36,6 @@ import io.keypunchers.xa.loaders.LatestScreenshotsLoader;
 import io.keypunchers.xa.models.LatestScreenshot;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<ArrayList<LatestScreenshot>> {
-    private final String DRAWER_LEARNED_TAG = "DRAWER_LEARNED";
     private int mDrawerCurrentSelectedPosition = 0;
     private boolean mIsDrawerLearned;
     private Toolbar mToolbar;
@@ -54,9 +53,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(mToolbar);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        mIsDrawerLearned = mPrefs.getBoolean(DRAWER_LEARNED_TAG, false);
+        mIsDrawerLearned = mPrefs.getBoolean(getString(R.string.DRAWER_LEARNED_TAG), false);
 
-        mDrawerCurrentSelectedPosition = mPrefs.getInt("DEFAULT_HOME_POSITION", 0);
+        mDrawerCurrentSelectedPosition = mPrefs.getInt(getString(R.string.DEFAULT_HOME_POSITION_TAG), 0);
 
         if (savedInstanceState != null) {
             mDrawerCurrentSelectedPosition = savedInstanceState.getInt("current_selected_position");
@@ -279,7 +278,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         if (!mIsDrawerLearned) {
             mDrawer.openDrawer(GravityCompat.START);
             mIsDrawerLearned = true;
-            mPrefs.edit().putBoolean(DRAWER_LEARNED_TAG, true).apply();
+            mPrefs.edit().putBoolean(getString(R.string.DRAWER_LEARNED_TAG), true).apply();
         }
 
         mDrawerCurrentSelectedPosition = position;

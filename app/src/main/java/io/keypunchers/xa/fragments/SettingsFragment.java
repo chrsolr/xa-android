@@ -2,6 +2,7 @@ package io.keypunchers.xa.fragments;
 
 
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -26,8 +27,12 @@ public class SettingsFragment extends Fragment {
     private Spinner mEndlessScrollerMaxSpinner;
     private SwitchCompat mHighImageQuality;
 
+    private String HIGH_RES_IMAGE_SETTING_TAG;
+    private String DEFAULT_PLATFORM_POSITION_TAG;
+    private String DEFAULT_HOME_POSITION_TAG;
+    private String ENDLESS_SCROLLER_MAX_ITEMS_POSITION_TAG;
+
     public SettingsFragment() {
-        // Required empty public constructor
     }
 
 
@@ -41,22 +46,27 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         setRetainInstance(true);
-
         setHasOptionsMenu(true);
+
+        Resources mResources = getActivity().getResources();
+        HIGH_RES_IMAGE_SETTING_TAG = mResources.getString(R.string.HIGH_RES_IMAGE_SETTING_TAG);
+        DEFAULT_PLATFORM_POSITION_TAG = mResources.getString(R.string.DEFAULT_PLATFORM_POSITION_TAG);
+        DEFAULT_HOME_POSITION_TAG = mResources.getString(R.string.DEFAULT_HOME_POSITION_TAG);
+        ENDLESS_SCROLLER_MAX_ITEMS_POSITION_TAG = mResources.getString(R.string.ENDLESS_SCROLLER_MAX_ITEMS_POSITION_TAG);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         mPlatformSpinner = (Spinner) view.findViewById(R.id.spinner_settings_default_platform);
-        mPlatformSpinner.setSelection(mPrefs.getInt("DEFAULT_PLATFORM_POSITION", 0));
+        mPlatformSpinner.setSelection(mPrefs.getInt(DEFAULT_PLATFORM_POSITION_TAG, 0));
 
         mDefaultHomeSpinner = (Spinner) view.findViewById(R.id.spinner_settings_default_home);
-        mDefaultHomeSpinner.setSelection(mPrefs.getInt("DEFAULT_HOME_POSITION", 0));
+        mDefaultHomeSpinner.setSelection(mPrefs.getInt(DEFAULT_HOME_POSITION_TAG, 0));
 
         mEndlessScrollerMaxSpinner = (Spinner) view.findViewById(R.id.spinner_settings_scroll_max_items);
-        mEndlessScrollerMaxSpinner.setSelection(mPrefs.getInt("ENDLESS_SCROLLER_MAX_ITEMS_POSITION", 0));
+        mEndlessScrollerMaxSpinner.setSelection(mPrefs.getInt(ENDLESS_SCROLLER_MAX_ITEMS_POSITION_TAG, 0));
 
         mHighImageQuality = (SwitchCompat) view.findViewById(R.id.sw_settings_image_quality);
-        mHighImageQuality.setChecked(mPrefs.getBoolean("HIGH_IMAGE_QUALITY", true));
+        mHighImageQuality.setChecked(mPrefs.getBoolean(HIGH_RES_IMAGE_SETTING_TAG, true));
     }
 
     @Override
@@ -104,8 +114,8 @@ public class SettingsFragment extends Fragment {
                 int max = Integer.parseInt(mEndlessScrollerMaxSpinner.getAdapter().getItem(position).toString());
 
                 mPrefs.edit()
-                        .putInt("ENDLESS_SCROLLER_MAX_ITEMS", max)
-                        .putInt("ENDLESS_SCROLLER_MAX_ITEMS_POSITION", position)
+                        .putInt(getString(R.string.ENDLESS_SCROLLER_MAX_ITEMS_TAG), max)
+                        .putInt(ENDLESS_SCROLLER_MAX_ITEMS_POSITION_TAG, position)
                         .apply();
             }
 
@@ -121,7 +131,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mPrefs.edit()
-                        .putInt("DEFAULT_HOME_POSITION", position)
+                        .putInt(DEFAULT_HOME_POSITION_TAG, position)
                         .apply();
             }
 
@@ -163,8 +173,8 @@ public class SettingsFragment extends Fragment {
                 }
 
                 mPrefs.edit()
-                        .putString("DEFAULT_PLATFORM", platform)
-                        .putInt("DEFAULT_PLATFORM_POSITION", position)
+                        .putString(getString(R.string.DEFAULT_PLATFORM_TAG), platform)
+                        .putInt(DEFAULT_PLATFORM_POSITION_TAG, position)
                         .apply();
             }
 
@@ -179,14 +189,14 @@ public class SettingsFragment extends Fragment {
         mHighImageQuality.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPrefs.edit().putBoolean("HIGH_IMAGE_QUALITY", mHighImageQuality.isChecked()).apply();
+                mPrefs.edit().putBoolean(HIGH_RES_IMAGE_SETTING_TAG, mHighImageQuality.isChecked()).apply();
             }
         });
     }
 
     public void resetToDefault() {
         mPrefs.edit().clear().apply();
-        mPrefs.edit().putBoolean("DRAWER_LEARNED", true).apply();
+        mPrefs.edit().putBoolean(getString(R.string.DRAWER_LEARNED_TAG), true).apply();
         mPlatformSpinner.setSelection(0);
         mDefaultHomeSpinner.setSelection(0);
         mEndlessScrollerMaxSpinner.setSelection(0);

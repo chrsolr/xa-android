@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.ImageListAdapter;
@@ -31,9 +29,8 @@ public class ScreenshotsFragment extends Fragment implements LoaderManager.Loade
     private RecyclerView mRvContent;
 
     public ScreenshotsFragment() {
-        // Required empty public constructor
     }
-    
+
     public static Fragment newInstance(String data) {
         ScreenshotsFragment fragment = new ScreenshotsFragment();
         fragment.GAME_PERMALINK = data;
@@ -72,7 +69,7 @@ public class ScreenshotsFragment extends Fragment implements LoaderManager.Loade
         if (GAME_PERMALINK.equals("") && (getArguments() != null && getArguments().containsKey("game_permalink"))) {
             GAME_PERMALINK = getArguments().getString("game_permalink");
         }
-        
+
         mAdapter = new ImageListAdapter(getActivity(), mData);
         mRvContent.setAdapter(mAdapter);
 

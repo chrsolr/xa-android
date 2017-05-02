@@ -9,11 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.misc.Common;
+import io.keypunchers.xa.misc.VolleySingleton;
 
 public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.ViewHolder> {
     private Context mContext;
@@ -36,19 +39,18 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        String item = mData.get(position);
+        final String item = mData.get(position);
 
-        if (item.contains("?")) {
-            item = item.substring(0, item.indexOf("?"));
-        }
+        final String url = Common.highResYouTubeImage(item);
+        final String yt_watch_link = Common.getYouTubeWatchLink(item);
 
-        final String videoId = item.replace("https://www.youtube.com/embed/", "");
+        VolleySingleton.getImageLoader()
+                .get(url, ImageLoader.getImageListener(holder.mIvImage, 0, 0));
 
-        Picasso.with(mContext).load("https://i3.ytimg.com/vi/" + videoId + "/0.jpg").noFade().into(holder.mIvImage);
         holder.mIvPlayIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=" + videoId));
+                Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(yt_watch_link));
                 mContext.startActivity(mIntent);
             }
         });
@@ -59,7 +61,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Check it out!");
-                intent.putExtra(Intent.EXTRA_TEXT, "https://www.youtube.com/watch?v=" + videoId + "\n\nShared via XA App.");
+                intent.putExtra(Intent.EXTRA_TEXT, yt_watch_link + "\n\nShared via XA App.");
                 mContext.startActivity(Intent.createChooser(intent, "Share"));
             }
         });

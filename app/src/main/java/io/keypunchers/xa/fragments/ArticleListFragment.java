@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.ArticleListAdapter;
@@ -49,7 +50,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
         setRetainInstance(true);
 
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        final int mMaxItems = mPrefs.getInt("ENDLESS_SCROLLER_MAX_ITEMS", 50);
+        final int mMaxItems = mPrefs.getInt(getString(R.string.ENDLESS_SCROLLER_MAX_ITEMS_TAG), 50);
 
         mIvBanner = (ImageView) view.findViewById(R.id.iv_banner);
 
@@ -95,7 +96,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public Loader<ArrayList<ArticleListItem>> onCreateLoader(int id, Bundle args) {
-        return new ArticleListLoader(getActivity(), BASE_URL + mCurrentPage + "/");
+        return new ArticleListLoader(getActivity(), String.format(Locale.US, "%s%d/", BASE_URL, mCurrentPage));
     }
 
     @Override

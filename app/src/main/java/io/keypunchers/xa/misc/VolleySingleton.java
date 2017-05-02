@@ -7,7 +7,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
 public class VolleySingleton {
-    private static RequestQueue mRequestQueque;
+    private static RequestQueue mRequestQueue;
     private static ImageLoader mImageLoader;
     private static BitmapLruCache mBitmapLruCache;
 
@@ -16,8 +16,8 @@ public class VolleySingleton {
 
     static void instantiate(Context context) {
         mBitmapLruCache = new BitmapLruCache();
-        mRequestQueque = Volley.newRequestQueue(context);
-        mImageLoader = new ImageLoader(mRequestQueque, mBitmapLruCache);
+        mRequestQueue = Volley.newRequestQueue(context);
+        mImageLoader = new ImageLoader(mRequestQueue, mBitmapLruCache);
     }
 
     public static ImageLoader getImageLoader() {
@@ -27,7 +27,7 @@ public class VolleySingleton {
     }
 
     public static RequestQueue getRequestQueque() {
-        if (mRequestQueque != null) return mRequestQueque;
+        if (mRequestQueue != null) return mRequestQueue;
 
         throw new IllegalStateException("RequestQueue not instantiated");
     }

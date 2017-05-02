@@ -8,23 +8,22 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.GenericAdapter;
 import io.keypunchers.xa.models.UpcomingGame;
-import java.util.*;
-import android.util.*;
 
 public class UpcomingGamesChildFragment extends Fragment {
     private ArrayList<UpcomingGame> mData;
     private GenericAdapter<UpcomingGame> mAdapter;
 
-    public UpcomingGamesChildFragment() { }
+    public UpcomingGamesChildFragment() {
+    }
 
     public static Fragment newInstance(ArrayList<UpcomingGame> data) {
         UpcomingGamesChildFragment fragment = new UpcomingGamesChildFragment();

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="HIGH_RES_IMAGE_SETTING_TAG">HIGH_RES_IMAGE_SETTING_TAG</string>
+    <string name="DEFAULT_PLATFORM_POSITION_TAG">DEFAULT_PLATFORM_POSITION_TAG</string>
+    <string name="DEFAULT_HOME_POSITION_TAG">DEFAULT_HOME_POSITION</string>
+    <string name="ENDLESS_SCROLLER_MAX_ITEMS_POSITION_TAG">ENDLESS_SCROLLER_MAX_ITEMS_POSITION</string>
+    <string name="ENDLESS_SCROLLER_MAX_ITEMS_TAG">ENDLESS_SCROLLER_MAX_ITEMS</string>
+    <string name="DEFAULT_PLATFORM_TAG">DEFAULT_PLATFORM</string>
+    <string name="DRAWER_LEARNED_TAG">DRAWER_LEARNED</string>
+</resources>

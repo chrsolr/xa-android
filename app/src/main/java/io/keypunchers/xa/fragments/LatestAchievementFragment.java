@@ -15,15 +15,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
-import io.keypunchers.xa.adapters.GenericAdapter;
 import io.keypunchers.xa.adapters.LatestAchievementsListAdapter;
 import io.keypunchers.xa.loaders.LatestAchievementsLoader;
 import io.keypunchers.xa.misc.EndlessRecyclerViewScrollListener;
@@ -52,7 +49,7 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
         setRetainInstance(true);
 
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        final int mMaxItems = mPrefs.getInt("ENDLESS_SCROLLER_MAX_ITEMS", 50);
+        final int mMaxItems = mPrefs.getInt(getString(R.string.ENDLESS_SCROLLER_MAX_ITEMS_TAG), 50);
 
         mIvBanner = (ImageView) view.findViewById(R.id.iv_la_banner);
 
@@ -103,7 +100,7 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
 
     @Override
     public void onLoadFinished(Loader<ArrayList<LatestAchievement>> loader, ArrayList<LatestAchievement> data) {
-		mData.addAll(data);
+        mData.addAll(data);
         mAdapter.notifyItemRangeChanged(mAdapter.getItemCount(), mData.size());
     }
 

@@ -67,7 +67,7 @@ public class LatestScreenshotsFragment extends Fragment implements LoaderManager
 
     @Override
     public void onLoadFinished(Loader<ArrayList<LatestScreenshot>> loader, ArrayList<LatestScreenshot> data) {
-		mData.addAll(data);
+        mData.addAll(data);
         mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), data.size());
     }
 
