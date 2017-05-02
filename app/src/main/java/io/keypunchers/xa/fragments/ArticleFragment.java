@@ -24,6 +24,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.Article;
+import io.keypunchers.xa.views.ScaledImageView;
 
 public class ArticleFragment extends Fragment {
     private Article mData;
@@ -53,7 +54,9 @@ public class ArticleFragment extends Fragment {
             VolleySingleton.getImageLoader().get(mData.getImageUrls().get(0), new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                    ((ImageView) view.findViewById(R.id.iv_article_banner)).setImageBitmap(response.getBitmap());
+                    ImageView mIvBanner = (ImageView) view.findViewById(R.id.iv_article_banner);
+					mIvBanner.setImageBitmap(response.getBitmap());
+					
                     setupUI(view);
                 }
 
