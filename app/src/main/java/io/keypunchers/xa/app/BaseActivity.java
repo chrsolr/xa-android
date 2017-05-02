@@ -84,7 +84,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_interviews:
                 selectDrawerItem(2);
                 break;
-            case R.id.nav_games:
+            case R.id.nav_browse_games:
                 selectDrawerItem(3);
                 break;
             case R.id.nav_latest_achievements:
