@@ -5,12 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
-    android:contentInsetLeft="0dp"
-    android:contentInsetStart="0dp"
-    android:contentInsetStartWithNavigation="0dp"
-    app:contentInsetLeft="0dp"
-    app:contentInsetStart="0dp"
-    app:contentInsetStartWithNavigation="0dp"
+	android:theme="@style/AppTheme.AppBarOverlay"
     app:popupTheme="@style/AppTheme.PopupOverlay"
-    app:titleTextAppearance="@style/AppTheme.TextAppearance.Toolbar.Title"
     tools:ignore="UnusedAttribute" />

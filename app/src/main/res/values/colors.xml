@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<!-- Theme Main Colors -->
     <color name="color_primary">#107c10</color>
     <color name="color_primary_dark">#1b5e20</color>
     <color name="color_primary_accent">#e64a19</color>
+	
+	<!-- Theme Control Colors -->
+	<!--<color name="color_control_normal">#E4E619</color>
+	<color name="color_control_activated">#191EE6</color>
+	<color name="color_control_highlight">#107c10</color>-->
+	
     <color name="color_drawer_background">#ffffff</color>
     <color name="color_drawer_background_pressed">#f1f1f1</color>
     <color name="color_overlay_black">#ee107c10</color>
