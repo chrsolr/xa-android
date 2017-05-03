@@ -66,8 +66,7 @@
                             android:id="@+id/tv_achievement_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textAppearance="@style/AppTheme.TextAppearance.Title"
-                            android:textColor="@color/color_white" />
+                            android:textAppearance="@style/AppTheme.TextStyle.Medium.Light"/>
 
                         <TextView
                             android:id="@+id/tv_achievement_desc"

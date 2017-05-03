@@ -24,14 +24,30 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+	
+	<style name="NavigationTheme" parent="AppTheme">
+		<item name="itemBackground">@color/color_transparent</item>
+		<item name="itemIconTint">@drawable/drawer_selected_item</item>
+        <item name="itemTextColor">@drawable/drawer_selected_item</item>
+    </style>
+	
+	<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark">
+    </style>
+	
+	<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+    </style>
+	
+	
+	
+	
 
     <style name="AppTheme.Spinner">
-        <item name="android:spinnerItemStyle">@style/SpinnerItem</item>
+        <!--<item name="android:spinnerItemStyle">@style/SpinnerItem</item>-->
         <!--<item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItem</item>-->
     </style>
 
     <style name="SpinnerItem">
-        <item name="android:gravity">right|center_vertical</item>
+        <!--<item name="android:gravity">right|center_vertical</item>-->
 		<!--<item name="android:paddingRight">16dp</item>-->
     </style>
 
@@ -40,17 +56,11 @@
 		<item name="android:padding">16dp</item>-->
     </style>
 
-    <style name="NavigationTheme" parent="AppTheme">
-		<item name="itemBackground">@color/color_transparent</item>
-		<item name="itemIconTint">@drawable/drawer_selected_item</item>
-        <item name="itemTextColor">@drawable/drawer_selected_item</item>
-    </style>
+    
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark">
-    </style>
+    
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
-    </style>
+    
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <!--<item name="color">@color/color_white</item>-->

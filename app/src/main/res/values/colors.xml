@@ -5,21 +5,24 @@
     <color name="color_primary_dark">#1b5e20</color>
     <color name="color_primary_accent">#e64a19</color>
 	
-	<!-- Theme Control Colors -->
-	<!--<color name="color_control_normal">#E4E619</color>
-	<color name="color_control_activated">#191EE6</color>
-	<color name="color_control_highlight">#107c10</color>-->
+	<!-- Fonts Colors -->
+	<color name="primary_text_dark">#6F6F6F</color>
+    <color name="primary_text_light">#A6A6A6</color>
+    <color name="primary_text_small_light">#D0D0D0</color>
 	
-    <color name="color_drawer_background">#ffffff</color>
-    <color name="color_drawer_background_pressed">#f1f1f1</color>
-    <color name="color_overlay_black">#ee107c10</color>
+	<!-- Theme Control Colors -->
+	<color name="color_control_normal">#107c10</color>
+	<color name="color_control_activated">#1b5e20</color>
+	<color name="color_control_highlight">#e64a19</color>
+	
+	<!-- Regular Colors -->
     <color name="color_light_gray">#D0D0D0</color>
     <color name="color_white">#ffffff</color>
     <color name="color_black">#000000</color>
-    <color name="primary_text_dark">#6E6F73</color>
-    <color name="primary_text_light">#A6A6A6</color>
-    <color name="primary_text_small_light">#D0D0D0</color>
+	<color name="color_transparent">#00000000</color>
+    
+	<!-- Specific Colors -->
     <color name="tab_strip">#D0D0D0</color>
     <color name="divider">#33D0D0D0</color>
-    <color name="color_transparent">#00000000</color>
+    
 </resources>

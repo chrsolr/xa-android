@@ -31,8 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/color_white" />
+            android:textAppearance="@style/AppTheme.TextStyle.Title.Light" />
 
         <TextView
             android:id="@+id/tv_banner_subtitle"
@@ -40,8 +39,7 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:text="@string/nav_header_subtitle"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/color_light_gray" />
+            android:textAppearance="@style/AppTheme.TextStyle.Subtitle" />
 
     </LinearLayout>
 </RelativeLayout>

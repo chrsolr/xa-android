@@ -7,49 +7,42 @@
     android:orientation="vertical"
 	android:paddingTop="@dimen/padding_level_1"
 	android:paddingBottom="@dimen/padding_level_1">
+	
+	<ImageView
+		android:id="@+id/iv_news_image"
+		android:layout_width="75dp"
+		android:layout_height="75dp"
+		android:background="@color/color_black"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentStart="true"
+		android:layout_alignParentTop="true" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+	<TextView
+		android:id="@+id/tv_news_title"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentEnd="true"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentTop="true"
+		android:layout_marginLeft="@dimen/margin_level_1"
+		android:layout_toEndOf="@+id/iv_news_image"
+		android:layout_toRightOf="@+id/iv_news_image"
+		android:ellipsize="end"
+		android:maxLines="2"
+		android:textAppearance="@style/AppTheme.TextStyle.Title" />
 
-        <ImageView
-            android:id="@+id/iv_news_image"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-			android:background="@color/color_black"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true" />
+	<TextView
+		android:id="@+id/tv_news_subtitle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentEnd="true"
+		android:layout_alignParentRight="true"
+		android:layout_below="@+id/tv_news_title"
+		android:layout_marginLeft="@dimen/margin_level_1"
+		android:layout_toEndOf="@+id/iv_news_image"
+		android:layout_toRightOf="@+id/iv_news_image"
+		android:ellipsize="end"
+		android:maxLines="1"
+		android:textAppearance="@style/AppTheme.TextStyle.Subtitle" />
 
-        <TextView
-            android:id="@+id/tv_news_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="@dimen/margin_level_1"
-            android:layout_toEndOf="@+id/iv_news_image"
-            android:layout_toRightOf="@+id/iv_news_image"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textAppearance="@style/AppTheme.TextAppearance.Title"
-            android:textColor="@null" />
-
-        <TextView
-            android:id="@+id/tv_news_subtitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/tv_news_title"
-            android:layout_marginLeft="@dimen/margin_level_1"
-            android:layout_toEndOf="@+id/iv_news_image"
-            android:layout_toRightOf="@+id/iv_news_image"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
-            android:textColor="@null" />
-
-    </RelativeLayout>
 </RelativeLayout>

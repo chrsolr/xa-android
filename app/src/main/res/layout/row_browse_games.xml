@@ -26,8 +26,7 @@
         android:layout_toRightOf="@+id/iv_games_cover"
         android:ellipsize="end"
         android:maxLines="2"
-        android:textAppearance="@style/AppTheme.TextAppearance.Title"
-        android:textColor="@null" />
+        android:textAppearance="@style/AppTheme.TextStyle.Title" />
 
     <TextView
         android:id="@+id/tv_games_ach"
@@ -38,8 +37,7 @@
         android:layout_marginStart="@dimen/margin_level_1"
         android:layout_toEndOf="@+id/iv_games_cover"
         android:layout_toRightOf="@+id/iv_games_cover"
-        android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
-        android:textColor="@null" />
+        android:textAppearance="@style/AppTheme.TextStyle.Subtitle" />
 
     <TextView
         android:id="@+id/tv_games_gs_count"
@@ -50,19 +48,6 @@
         android:layout_marginStart="@dimen/margin_level_1"
         android:layout_toEndOf="@+id/iv_games_cover"
         android:layout_toRightOf="@+id/iv_games_cover"
-        android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
-        android:textColor="@null" />
-
-    <!--<TextView-->
-        <!--android:id="@+id/tv_la_submitted_by"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@+id/tv_la_gs_count"-->
-        <!--android:layout_marginLeft="@dimen/margin_level_1"-->
-        <!--android:layout_toEndOf="@+id/iv_la_cover"-->
-        <!--android:layout_toRightOf="@+id/iv_la_cover"-->
-        <!--android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"-->
-        <!--android:textColor="@null"-->
-        <!--android:textStyle="italic" />-->
+        android:textAppearance="@style/AppTheme.TextStyle.Subtitle" />
 
 </RelativeLayout>
