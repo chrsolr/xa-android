@@ -1,15 +1,16 @@
-<android.support.v7.widget.Toolbar
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
-    android:contentInsetStart="0dp"
-    app:contentInsetStart="0dp"
     android:contentInsetLeft="0dp"
+    android:contentInsetStart="0dp"
+    android:contentInsetStartWithNavigation="0dp"
     app:contentInsetLeft="0dp"
-	android:contentInsetStartWithNavigation="0dp"
+    app:contentInsetStart="0dp"
     app:contentInsetStartWithNavigation="0dp"
+    app:popupTheme="@style/AppTheme.PopupOverlay"
     app:titleTextAppearance="@style/AppTheme.TextAppearance.Toolbar.Title"
-    app:popupTheme="@style/AppTheme.PopupOverlay" />
+    tools:ignore="UnusedAttribute" />

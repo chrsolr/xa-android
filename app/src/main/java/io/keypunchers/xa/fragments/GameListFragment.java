@@ -98,7 +98,9 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
         if (getArguments() != null) {
             BASE_URL = getArguments().getString("url");
             mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-            mActionBar.setTitle(titles[mPrefs.getInt(getString(R.string.DEFAULT_PLATFORM_POSITION_TAG), 0)]);
+
+            if (mActionBar != null)
+                mActionBar.setTitle(titles[mPrefs.getInt(getString(R.string.DEFAULT_PLATFORM_POSITION_TAG), 0)]);
         }
 
         if (mData.isEmpty()) {
