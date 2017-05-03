@@ -42,6 +42,10 @@
         android:clipToPadding="false"
         android:fitsSystemWindows="true"
         android:scrollbars="none"
+		android:paddingLeft="@dimen/padding_level_2"
+		android:paddingRight="@dimen/padding_level_2"
+		android:paddingTop="@dimen/padding_level_1"
+		android:paddingBottom="@dimen/padding_level_1"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context="io.keypunchers.xa.fragments.LatestAchievementFragment" />
 

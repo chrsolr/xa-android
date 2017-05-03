@@ -2,8 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rv_latest_screenshot"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:clipToPadding="false"
     android:fitsSystemWindows="true"
     android:scrollbars="none"
+	android:paddingLeft="@dimen/padding_level_2"
+	android:paddingRight="@dimen/padding_level_2"
+	android:paddingTop="@dimen/padding_level_1"
+	android:paddingBottom="@dimen/padding_level_1"
     tools:context="io.keypunchers.xa.fragments.LatestScreenshotsFragment" />

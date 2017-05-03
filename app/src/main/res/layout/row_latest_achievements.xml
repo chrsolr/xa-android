@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/padding_level_2">
+	android:paddingTop="@dimen/padding_level_1"
+	android:paddingBottom="@dimen/padding_level_1">
 
     <ImageView
         android:id="@+id/iv_la_cover"
