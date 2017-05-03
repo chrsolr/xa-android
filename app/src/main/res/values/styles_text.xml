@@ -1,53 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<style name="AppTheme.TextStyle.Small" parent="@style/TextAppearance.AppCompat.Medium">
-		<item name="android:textColor">@color/primary_text_dark</item>
+
+    <style name="AppTheme.TextStyle.Small" parent="@style/TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">@color/primary_text_dark</item>
         <item name="android:textSize">12sp</item>
     </style>
 
-	<style name="AppTheme.TextStyle.Small.Light" parent="@style/AppTheme.TextStyle.Small">
+    <style name="AppTheme.TextStyle.Small.Light" parent="@style/AppTheme.TextStyle.Small">
         <item name="android:textColor">@color/color_white</item>
     </style>
-	
-	<style name="AppTheme.TextStyle.Normal" parent="@style/TextAppearance.AppCompat.Medium">
-		<item name="android:textColor">@color/primary_text_dark</item>
+
+    <style name="AppTheme.TextStyle.Normal" parent="@style/TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">@color/primary_text_dark</item>
         <item name="android:textSize">14sp</item>
     </style>
 
-	<style name="AppTheme.TextStyle.Normal.Light" parent="@style/AppTheme.TextStyle.Normal">
+    <style name="AppTheme.TextStyle.Normal.Light" parent="@style/AppTheme.TextStyle.Normal">
         <item name="android:textColor">@color/color_white</item>
     </style>
-	
-	<style name="AppTheme.TextStyle.Medium" parent="@style/TextAppearance.AppCompat.Medium">
-		<item name="android:textColor">@color/primary_text_dark</item>
+
+    <style name="AppTheme.TextStyle.Medium" parent="@style/TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">@color/primary_text_dark</item>
         <item name="android:textSize">16sp</item>
     </style>
 
-	<style name="AppTheme.TextStyle.Medium.Light" parent="@style/AppTheme.TextStyle.Medium">
+    <style name="AppTheme.TextStyle.Medium.Light" parent="@style/AppTheme.TextStyle.Medium">
         <item name="android:textColor">@color/color_white</item>
     </style>
-	
-	<style name="AppTheme.TextStyle.Large" parent="@style/TextAppearance.AppCompat.Medium">
-		<item name="android:textColor">@color/primary_text_dark</item>
+
+    <style name="AppTheme.TextStyle.Large" parent="@style/TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">@color/primary_text_dark</item>
         <item name="android:textSize">18sp</item>
     </style>
 
-	<style name="AppTheme.TextStyle.Large.Light" parent="@style/AppTheme.TextStyle.Large">
+    <style name="AppTheme.TextStyle.Large.Light" parent="@style/AppTheme.TextStyle.Large">
         <item name="android:textColor">@color/color_white</item>
     </style>
-	
-	<style name="AppTheme.TextStyle.Subtitle" parent="@style/TextAppearance.AppCompat.Medium">
-		<item name="android:textColor">@color/primary_text_small_light</item>
+
+    <style name="AppTheme.TextStyle.Subtitle" parent="@style/TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">@color/primary_text_light</item>
         <item name="android:textSize">12sp</item>
-		<item name="android:textStyle">italic</item>
+        <item name="android:textStyle">italic</item>
     </style>
-	
-	<style name="AppTheme.TextStyle.Title" parent="@style/TextAppearance.AppCompat.Medium">
-		<item name="android:textColor">@color/primary_text_dark</item>
+
+    <style name="AppTheme.TextStyle.Title" parent="@style/TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">@color/primary_text_dark</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif-bold</item>
     </style>
-	
-	<style name="AppTheme.TextStyle.Title.Light" parent="@style/AppTheme.TextStyle.Title">
-		<item name="android:textColor">@color/color_white</item>
+
+    <style name="AppTheme.TextStyle.Title.Light" parent="@style/AppTheme.TextStyle.Title">
+        <item name="android:textColor">@color/color_white</item>
     </style>
 </resources>
