@@ -18,7 +18,6 @@
             android:id="@+id/tl_upcoming_games"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_primary"
             style="@style/AppTheme.AppTabLayout" />
 
     </android.support.design.widget.AppBarLayout>
