@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -51,6 +52,13 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
             Document comments_doc = Jsoup.connect(Common.NEWS_COMMENTS_URL)
                     .data("nID", Common.getNewsCommenstId(BASE_URL))
                     .post();
+
+            String doc = Jsoup.connect("http://www.xboxachievements.com/postComment.php?type=360news")
+                    .data("newsID", Common.getNewsCommenstId(BASE_URL))
+                    .data("username", "CS15")
+                    .data("comment", "Gears where are you??? \n\n Via XA Android App")
+                    .data("submit", "Submit")
+                    .post().html();
 
             Elements header_root = document.getElementsByClass("bl_la_main").first().getElementsByTag("td");
             Element body_root = document.getElementsByClass("bl_la_main").first().select("span[itemprop=articleBody]").first();
