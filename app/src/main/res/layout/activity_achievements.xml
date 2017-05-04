@@ -19,12 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_primary"
-            app:tabGravity="fill"
-            app:tabIndicatorColor="@color/tab_strip"
-            app:tabSelectedTextColor="@color/color_white"
-            app:tabTextColor="@color/primary_text_small_light"
-            app:tabIndicatorHeight="4dp"
-            app:tabMode="fixed" />
+			style="@style/AppTheme.AppTabLayout" />
 
     </android.support.design.widget.AppBarLayout>
 
