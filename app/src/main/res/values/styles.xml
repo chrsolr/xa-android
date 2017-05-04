@@ -40,6 +40,11 @@
 		<item name="tabMode">fixed</item>
     </style>
 
+    <style name="AppTheme.FAB">
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="android:tint">@color/color_white</item>
+    </style>
+
     <style name="AppTheme.Spinner">
         <!--<item name="android:spinnerItemStyle">@style/SpinnerItem</item>-->
         <!--<item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItem</item>-->
