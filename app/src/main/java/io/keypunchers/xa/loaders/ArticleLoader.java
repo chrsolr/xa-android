@@ -62,8 +62,8 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
 //
 //            response = Jsoup.connect(url)
 //                    .cookies(response.cookies())
-//                    .data("vb_login_username", "cs15")
-//                    .data("vb_login_password", "damian.l")
+//                    .data("vb_login_username", "username")
+//                    .data("vb_login_password", "pass")
 //                    .data("do", "login")
 //                    .userAgent(userAgent)
 //                    .method(Connection.Method.POST)
