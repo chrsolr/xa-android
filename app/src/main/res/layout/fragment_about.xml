@@ -1,12 +1,12 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="none"
     android:clipToPadding="false"
+    android:orientation="vertical"
     android:padding="@dimen/padding_level_2"
-    android:orientation="vertical">
+    android:scrollbars="none"
+    tools:ignore="HardcodedText">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,27 +18,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_level_4"
-            android:fontFamily="sans-serif-bold"
             android:text="About Me"
-            android:textAppearance="@style/AppTheme.TextAppearance.Title"
+            android:textAppearance="@style/AppTheme.TextStyle.Title"
             android:textColor="@color/color_primary_accent"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-bold"
             android:text="Developer"
-            android:textAppearance="@style/AppTheme.TextAppearance.Title"
-            android:textColor="@null"
+            android:textAppearance="@style/AppTheme.TextStyle.Title"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Christian Soler"
-            android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
-            android:textColor="@null" />
+            android:textAppearance="@style/AppTheme.TextStyle.Normal" />
 
         <View
             android:layout_width="match_parent"
@@ -50,19 +46,16 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-bold"
             android:text="Email"
-            android:textAppearance="@style/AppTheme.TextAppearance.Title"
-            android:textColor="@null"
+            android:textAppearance="@style/AppTheme.TextStyle.Title"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autoLink="email"
             android:text="iamrelos@gmail.com"
-			android:autoLink="email"
-            android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
-            android:textColor="@null" />
+            android:textAppearance="@style/AppTheme.TextStyle.Normal" />
 
         <View
             android:layout_width="match_parent"
@@ -74,45 +67,38 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-bold"
             android:text="Twitter"
-            android:textAppearance="@style/AppTheme.TextAppearance.Title"
-            android:textColor="@null"
+            android:textAppearance="@style/AppTheme.TextStyle.Title"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="iamrelos"
-            android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
-            android:textColor="@null" />
+            android:textAppearance="@style/AppTheme.TextStyle.Normal" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_level_4"
             android:layout_marginTop="@dimen/margin_level_4"
-            android:fontFamily="sans-serif-bold"
             android:text="About Application"
-            android:textAppearance="@style/AppTheme.TextAppearance.Title"
+            android:textAppearance="@style/AppTheme.TextStyle.Title"
             android:textColor="@color/color_primary_accent"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-bold"
             android:text="Version"
-            android:textAppearance="@style/AppTheme.TextAppearance.Title"
-            android:textColor="@null"
+            android:textAppearance="@style/AppTheme.TextStyle.Title"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_about_app_version_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
-            android:textColor="@null" />
+            android:textAppearance="@style/AppTheme.TextStyle.Normal" />
 
         <View
             android:layout_width="match_parent"
@@ -124,19 +110,16 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-bold"
             android:text="Terms of Service"
-            android:textAppearance="@style/AppTheme.TextAppearance.Title"
-            android:textColor="@null"
+            android:textAppearance="@style/AppTheme.TextStyle.Title"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="http://www.keypunchers.io"
             android:autoLink="web"
-            android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
-            android:textColor="@null" />
+            android:text="http://www.keypunchers.io"
+            android:textAppearance="@style/AppTheme.TextStyle.Normal" />
 
         <View
             android:layout_width="match_parent"
@@ -148,18 +131,15 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-bold"
             android:text="Disclaimer"
-            android:textAppearance="@style/AppTheme.TextAppearance.Title"
-            android:textColor="@null"
+            android:textAppearance="@style/AppTheme.TextStyle.Title"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/about_disclaimer"
-            android:textStyle="italic"
-            android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
-            android:textColor="@null" />
+            android:textAppearance="@style/AppTheme.TextStyle.Normal"
+            android:textStyle="italic" />
     </LinearLayout>
 </ScrollView>

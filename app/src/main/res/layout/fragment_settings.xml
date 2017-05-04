@@ -18,7 +18,7 @@
             android:layout_marginBottom="@dimen/margin_level_4"
             android:fontFamily="sans-serif-bold"
             android:text="Settings"
-            android:textAppearance="@style/AppTheme.TextAppearance.Title"
+            android:textAppearance="@style/AppTheme.TextStyle.Title"
             android:textColor="@color/color_primary_accent"
             android:textStyle="bold" />
 
@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-bold"
                 android:text="Home"
-                android:textAppearance="@style/AppTheme.TextAppearance.Title"
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
                 android:textColor="@null"
                 android:textStyle="bold" />
 
@@ -57,7 +57,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tv_settings_default_home_title"
                 android:text="Section to load when opening the application."
-                android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
+                android:textAppearance="@style/AppTheme.TextStyle.Small"
                 android:textColor="@null" />
 
         </RelativeLayout>
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-bold"
                 android:text="Browse Game Platform"
-                android:textAppearance="@style/AppTheme.TextAppearance.Title"
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
                 android:textColor="@null"
                 android:textStyle="bold" />
 
@@ -104,7 +104,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tv_settings_default_platform_title"
                 android:text="The default platform to loading when in browse games."
-                android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
+                android:textAppearance="@style/AppTheme.TextStyle.Small"
                 android:textColor="@null" />
 
         </RelativeLayout>
@@ -126,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-bold"
                 android:text="Infinite Loading"
-                android:textAppearance="@style/AppTheme.TextAppearance.Title"
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
                 android:textColor="@null"
                 android:textStyle="bold" />
 
@@ -151,7 +151,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tv_settings_scroll_max_items_title"
                 android:text="The max item allow to load (Excluding Browse Games, Comments and Game Achievements)."
-                android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
+                android:textAppearance="@style/AppTheme.TextStyle.Small"
                 android:textColor="@null" />
 
         </RelativeLayout>
@@ -173,7 +173,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-bold"
                 android:text="High Image Quality"
-                android:textAppearance="@style/AppTheme.TextAppearance.Title"
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
                 android:textColor="@null"
                 android:textStyle="bold" />
 
@@ -198,7 +198,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tv_settings_image_quality_title"
                 android:text="High quality will use more data and be slower to show."
-                android:textAppearance="@style/AppTheme.TextAppearance.Small.Light"
+                android:textAppearance="@style/AppTheme.TextStyle.Small"
                 android:textColor="@null" />
 
         </RelativeLayout>

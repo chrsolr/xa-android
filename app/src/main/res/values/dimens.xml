@@ -43,5 +43,6 @@
     <dimen name="image_min_height">200dp</dimen>
     <dimen name="news_artwork_size">75dp</dimen>
     <dimen name="ach_artwork_square_size">75dp</dimen>
+    <dimen name="video_icon_size">24dp</dimen>
 
 </resources>
