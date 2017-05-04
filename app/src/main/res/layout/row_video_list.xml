@@ -1,64 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clipToPadding="false"
     android:orientation="vertical"
     android:padding="@dimen/padding_level_2">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <io.keypunchers.xa.views.ScaledImageView
+        android:id="@+id/iv_video_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_primary" />
 
-            <io.keypunchers.xa.views.ScaledImageView
-                android:id="@+id/iv_video_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/color_primary" />
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/img_gradient_height"
+        android:layout_alignBottom="@+id/iv_video_list"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/primary_gradient_bottom" />
 
-            <View
-                android:id="@+id/view"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/img_gradient_height"
-                android:layout_alignBottom="@+id/iv_video_list"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:background="@drawable/primary_gradient_bottom" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/iv_video_list"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/padding_level_1">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/iv_video_list"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:paddingBottom="@dimen/padding_level_1"
-                android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/iv_video_list_play_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_weight="0.1"
+            android:gravity="start"
+            android:src="@drawable/ic_play_circle_filled_24dp"
+            android:tint="@color/color_white"
+            tools:ignore="ContentDescription" />
 
-                <ImageView
-                    android:id="@+id/iv_video_list_play_icon"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:gravity="start"
-                    android:layout_weight="0.1"
-                    android:src="@drawable/ic_play_circle_filled_24dp"
-                    android:tint="@color/color_white" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"/>
-
-                <ImageView
-                    android:id="@+id/iv_video_list_share_icon"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_weight="0.1"
-                    android:gravity="end"
-                    android:src="@drawable/ic_share_24dp"
-                    android:tint="@color/color_white" />
-            </LinearLayout>
-
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/iv_video_list_share_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_weight="0.1"
+            android:gravity="end"
+            android:src="@drawable/ic_share_24dp"
+            android:tint="@color/color_white"
+            tools:ignore="ContentDescription" />
+    </LinearLayout>
 </RelativeLayout>

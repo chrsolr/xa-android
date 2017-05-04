@@ -11,6 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_black"
-        android:minHeight="200dp" />
+        android:minHeight="@dimen/image_min_height" />
 
 </RelativeLayout>

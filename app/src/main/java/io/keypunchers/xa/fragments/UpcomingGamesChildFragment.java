@@ -2,12 +2,14 @@ package io.keypunchers.xa.fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ import java.util.List;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.GenericAdapter;
+import io.keypunchers.xa.app.AchievementsActivity;
 import io.keypunchers.xa.models.UpcomingGame;
 
 public class UpcomingGamesChildFragment extends Fragment {
@@ -46,6 +49,13 @@ public class UpcomingGamesChildFragment extends Fragment {
 
         ListView mLvContent = (ListView) view.findViewById(R.id.lv_upcoming_games_child);
         mLvContent.setAdapter(mAdapter);
+        mLvContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                getActivity().startActivity(new Intent(getActivity(), AchievementsActivity.class)
+                        .putExtra("game_permalink", mData.get(position).getGamePermalink()));
+            }
+        });
     }
 
     private void setAdapter() {

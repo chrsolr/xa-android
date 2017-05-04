@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clipToPadding="false"
-    android:fitsSystemWindows="true"
     android:paddingBottom="@dimen/padding_level_1"
     android:paddingEnd="@dimen/padding_level_2"
     android:paddingLeft="@dimen/padding_level_2"

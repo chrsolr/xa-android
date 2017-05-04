@@ -35,9 +35,10 @@
                     <io.keypunchers.xa.views.ScaledImageView
                         android:id="@+id/iv_banner"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="?attr/actionBarSize"
                         android:background="@color/color_primary"
+                        android:minHeight="@dimen/image_min_height"
                         android:src="@drawable/promo_banner" />
 
                     <View
@@ -66,15 +67,13 @@
                             android:id="@+id/tv_achievement_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textAppearance="@style/AppTheme.TextStyle.Medium.Light"/>
+                            android:textAppearance="@style/AppTheme.TextStyle.Title.Light" />
 
                         <TextView
                             android:id="@+id/tv_achievement_desc"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textAppearance="@style/AppTheme.TextAppearance.Subtitle"
-                            android:textColor="@color/color_light_gray"
-                            android:textStyle="italic" />
+                            android:textAppearance="@style/AppTheme.TextStyle.Subtitle" />
 
                     </LinearLayout>
                 </RelativeLayout>
@@ -88,7 +87,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:fitsSystemWindows="true"
             android:paddingBottom="@dimen/padding_level_1"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     </android.support.design.widget.CoordinatorLayout>

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-	android:paddingTop="@dimen/padding_level_1"
-	android:paddingBottom="@dimen/padding_level_1">
+    android:paddingBottom="@dimen/padding_level_1"
+    android:paddingTop="@dimen/padding_level_1">
 
     <io.keypunchers.xa.views.ScaledImageView
         android:id="@+id/iv_latest_screenshot_image"
@@ -41,8 +39,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/color_white" />
+            android:textAppearance="@style/AppTheme.TextStyle.Title.Light" />
 
         <TextView
             android:id="@+id/tv_latest_screenshot_subtitle"
@@ -54,8 +51,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/color_light_gray" />
+            android:textAppearance="@style/AppTheme.TextStyle.Subtitle" />
     </LinearLayout>
 
 </RelativeLayout>
