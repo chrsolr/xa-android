@@ -34,6 +34,7 @@ import android.app.ProgressDialog;
 import android.text.InputType;
 import android.view.inputmethod.InputMethodManager;
 import android.content.Context;
+import io.keypunchers.xa.misc.Common;
 
 public class ArticleActivity extends AppCompatActivity {
     private String BASE_URL;
@@ -86,9 +87,11 @@ public class ArticleActivity extends AppCompatActivity {
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT);
 
+				int padding = Common.convertDpToPx(16, ArticleActivity.this);
                 mInput.setLayoutParams(mLayoutParams);
-                mDialog.setView(mInput);
+                mDialog.setView(mInput, padding, 0, padding, 0);
 
+				
                 mDialog.setPositiveButton("Submit",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
