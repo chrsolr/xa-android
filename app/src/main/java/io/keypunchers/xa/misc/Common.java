@@ -27,9 +27,9 @@ public class Common extends Application {
         boolean high_res = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(HIGH_RES_IMAGE_SETTING, true);
 
         if (url != null && high_res)
-            url = url.replace("thu", "med").replaceAll("\\s", "%20");
+            url = url.replace("thu_", "med_").replaceAll("\\s", "%20");
         else if (url != null)
-            url = url.replace("med", "thu").replaceAll("\\s", "%20");
+            url = url.replace("med_", "thu_").replaceAll("\\s", "%20");
 
         return url;
     }
