@@ -79,9 +79,11 @@ public class ArticleActivity extends AppCompatActivity {
             public void onClick(View view) {
                 AlertDialog.Builder mDialog = new AlertDialog.Builder(ArticleActivity.this);
                 mDialog.setTitle("Enter Comment");
+				
+				final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
                 final EditText mInput = new EditText(ArticleActivity.this);
-				mInput.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+				mInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
 				
                 LinearLayout.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
@@ -95,6 +97,8 @@ public class ArticleActivity extends AppCompatActivity {
                 mDialog.setPositiveButton("Submit",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+								imm.hideSoftInputFromWindow(mInput.getWindowToken(), 0);
+								
 								mProgressDialog.show(ArticleActivity.this, "Submitting", "Please wait while submitting your comment");
 							
                                 String comment = mInput.getText().toString();
@@ -105,13 +109,13 @@ public class ArticleActivity extends AppCompatActivity {
                 mDialog.setNegativeButton("Cancel",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+								imm.hideSoftInputFromWindow(mInput.getWindowToken(), 0);
                                 dialog.cancel();
                             }
                         });
 
                 mDialog.show();
 				mInput.requestFocus();
-				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
             }
         });
