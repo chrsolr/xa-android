@@ -30,6 +30,7 @@ import io.keypunchers.xa.fragments.VideoListFragment;
 import io.keypunchers.xa.loaders.ArticleLoader;
 import io.keypunchers.xa.loaders.SubmitArticleCommentLoader;
 import io.keypunchers.xa.models.Article;
+import android.app.ProgressDialog;
 
 public class ArticleActivity extends AppCompatActivity {
     private String BASE_URL;
@@ -39,6 +40,8 @@ public class ArticleActivity extends AppCompatActivity {
     private ViewPager mViewPager;
 
     private ViewPagerAdapter mAdapter;
+
+	private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +57,9 @@ public class ArticleActivity extends AppCompatActivity {
 
         TabLayout mTabLayout = (TabLayout) findViewById(R.id.tl_article);
         mTabLayout.setupWithViewPager(mViewPager);
+		
+		mProgressDialog = new ProgressDialog(ArticleActivity.this);
+		mProgressDialog.setCancelable(false);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -81,6 +87,8 @@ public class ArticleActivity extends AppCompatActivity {
                 mDialog.setPositiveButton("Submit",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+								mProgressDialog.show(ArticleActivity.this, "Submitting", "Please wait while submitting your comment");
+							
                                 String comment = mInput.getText().toString();
                                 postComment(comment);
                             }
@@ -164,6 +172,7 @@ public class ArticleActivity extends AppCompatActivity {
             public void onLoadFinished(Loader<Boolean> loader, Boolean data) {
                 if (data) {
                     //recreate();
+					mProgressDialog.dismiss();
                     finish();
                     startActivity(getIntent());
                 }
