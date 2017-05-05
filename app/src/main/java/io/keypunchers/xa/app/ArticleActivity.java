@@ -32,6 +32,8 @@ import io.keypunchers.xa.loaders.SubmitArticleCommentLoader;
 import io.keypunchers.xa.models.Article;
 import android.app.ProgressDialog;
 import android.text.InputType;
+import android.view.inputmethod.InputMethodManager;
+import android.content.Context;
 
 public class ArticleActivity extends AppCompatActivity {
     private String BASE_URL;
@@ -79,6 +81,7 @@ public class ArticleActivity extends AppCompatActivity {
 
                 final EditText mInput = new EditText(ArticleActivity.this);
 				mInput.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+				
                 LinearLayout.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT);
@@ -104,6 +107,9 @@ public class ArticleActivity extends AppCompatActivity {
                         });
 
                 mDialog.show();
+				mInput.requestFocus();
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
             }
         });
 
