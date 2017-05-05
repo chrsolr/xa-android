@@ -20,10 +20,9 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
     private final String BASE_URL;
     private Article mData;
 
-    public ArticleLoader(Context context, String url, Article article) {
+    public ArticleLoader(Context context, String url) {
         super(context);
         BASE_URL = url;
-        mData = article;
     }
 
     @Override
@@ -52,31 +51,6 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
             Document comments_doc = Jsoup.connect(Common.NEWS_COMMENTS_URL)
                     .data("nID", Common.getNewsCommenstId(BASE_URL))
                     .post();
-
-//            String url = Common.BASE_URL + "/forum/login.php";
-//            String userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36";
-//
-//            Connection.Response response = Jsoup.connect(url).userAgent(userAgent)
-//                    .method(Connection.Method.GET)
-//                    .execute();
-//
-//            response = Jsoup.connect(url)
-//                    .cookies(response.cookies())
-//                    .data("vb_login_username", "username")
-//                    .data("vb_login_password", "pass")
-//                    .data("do", "login")
-//                    .userAgent(userAgent)
-//                    .method(Connection.Method.POST)
-//                    .followRedirects(true)
-//                    .execute();
-//
-//            Jsoup.connect("http://www.xboxachievements.com/postComment.php?type=360news")
-//                    .data("newsID", Common.getNewsCommenstId(BASE_URL))
-//                    .data("username", "CS15")
-//                    .data("comment", "Gears where are you??? \n\n Via XA Android App")
-//                    .data("submit", "Submit")
-//                    .cookies(response.cookies())
-//                    .post();
 
             Elements header_root = document.getElementsByClass("bl_la_main").first().getElementsByTag("td");
             Element body_root = document.getElementsByClass("bl_la_main").first().select("span[itemprop=articleBody]").first();

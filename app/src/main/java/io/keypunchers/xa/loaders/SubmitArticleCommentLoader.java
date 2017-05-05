@@ -19,6 +19,7 @@ public class SubmitArticleCommentLoader extends AsyncTaskLoader<Boolean> {
     @Override
     protected void onStartLoading() {
         super.onStartLoading();
+
 		if (mComment == null || mComment.equals("")) {
 			super.deliverResult(false);
 		} else {
