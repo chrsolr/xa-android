@@ -31,6 +31,7 @@ import io.keypunchers.xa.loaders.ArticleLoader;
 import io.keypunchers.xa.loaders.SubmitArticleCommentLoader;
 import io.keypunchers.xa.models.Article;
 import android.app.ProgressDialog;
+import android.text.InputType;
 
 public class ArticleActivity extends AppCompatActivity {
     private String BASE_URL;
@@ -77,6 +78,7 @@ public class ArticleActivity extends AppCompatActivity {
                 mDialog.setTitle("Enter Comment");
 
                 final EditText mInput = new EditText(ArticleActivity.this);
+				mInput.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_MULTI_LINE);
                 LinearLayout.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT);

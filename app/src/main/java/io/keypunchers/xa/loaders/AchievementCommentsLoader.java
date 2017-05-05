@@ -11,6 +11,8 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 
 import io.keypunchers.xa.models.Comment;
+import org.jsoup.nodes.TextNode;
+import java.util.List;
 
 public class AchievementCommentsLoader extends AsyncTaskLoader<ArrayList<Comment>> {
     private ArrayList<Comment> mData = new ArrayList<>();
@@ -55,27 +57,24 @@ public class AchievementCommentsLoader extends AsyncTaskLoader<ArrayList<Comment
                 String image_url = element.select("td:eq(0) img").attr("abs:src");
                 String title = element.select("td:eq(1) b").first().text().trim();
                 String date = element.select(".newsNFO").first().text().split(" @")[0].trim();
-                String text = "";
+                String content = "";
 
                 image_url = image_url.replaceAll("\\s", "%20");
 
-                Element text_root = element.select("td:eq(1)").first();
+				List<TextNode> text_nodes = element.select("td:eq(1)").first().textNodes();
+				for (int j = 0, nodes_size = text_nodes.size(); j < nodes_size; j++){
+					content += text_nodes.get(j).text().trim();
 
-                if (text_root.textNodes().size() > 0) {
-                    for (int j = 0; j < text_root.textNodes().size(); j++) {
-                        text += text_root.textNodes().get(j).text();
-
-                        if (j != (text_root.textNodes().size() - 1)) {
-                            text += "\n";
-                        }
-                    }
-                }
+					if (j != nodes_size - 1) {
+						content += System.getProperty("line.separator") + System.getProperty("line.separator");
+					}
+				}
 
                 Comment comment = new Comment();
                 comment.setImageUrl(image_url);
                 comment.setTitle(title);
                 comment.setDate(date);
-                comment.setText(text);
+                comment.setText(content);
 
                 mData.add(comment);
             }

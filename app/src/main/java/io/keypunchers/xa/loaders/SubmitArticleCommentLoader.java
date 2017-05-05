@@ -58,7 +58,7 @@ public class SubmitArticleCommentLoader extends AsyncTaskLoader<Boolean> {
             Jsoup.connect("http://www.xboxachievements.com/postComment.php?type=360news")
 				.data("newsID", Common.getNewsCommenstId(BASE_URL))
 				.data("username", "CS15")
-				.data("comment", String.format(Locale.US, "%s\n\n\nVia XA Android App", mComment))
+				.data("comment", String.format(Locale.US, "%s%s%sVia XA Android App", mComment, System.getProperty("line.separator"), System.getProperty("line.separator")))
 				.data("submit", "Submit")
 				.cookies(response.cookies())
 				.post();

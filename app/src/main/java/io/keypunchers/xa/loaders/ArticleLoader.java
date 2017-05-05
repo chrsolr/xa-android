@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.models.Article;
 import io.keypunchers.xa.models.Comment;
+import org.jsoup.nodes.TextNode;
+import java.util.List;
 
 public class ArticleLoader extends AsyncTaskLoader<Article> {
     private final String BASE_URL;
@@ -92,25 +94,22 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
             ArrayList<Comment> comments = new ArrayList<>();
 
             if (comments_rows.size() > 1) {
-                for (int i = 0; i < comments_rows.size(); i++) {
+                for (int i = 0, size = comments_rows.size(); i < size; i++) {
                     String image_url = comments_rows.get(i).select("td img").attr("abs:src");
                     String title = comments_rows.get(i).select("td b").first().text().trim();
                     String date = comments_rows.get(i).select(".newsNFO").first().text().split(" @")[0].trim();
-                    String text = "";
+                    String content = "";
 
                     image_url = image_url.replaceAll("\\s", "%20");
-
-                    Element text_root = comments_rows.get(i + 1).select("td").first();
-
-                    if (text_root.textNodes().size() > 0) {
-                        for (int j = 0; j < text_root.textNodes().size(); j++) {
-                            text += text_root.textNodes().get(j).text();
-
-                            if (j != (text_root.textNodes().size() - 1)) {
-                                text += "\n";
-                            }
-                        }
-                    }
+					
+					List<TextNode> text_nodes = comments_rows.get(i + 1).select("td").first().textNodes();
+					for (int j = 0, nodes_size = text_nodes.size(); j < nodes_size; j++){
+						content += text_nodes.get(j).text().trim();
+						
+						if (j != nodes_size - 1) {
+							content += System.getProperty("line.separator") + System.getProperty("line.separator");
+						}
+					}
 
                     i = i + 2;
 
@@ -118,7 +117,7 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
                     comment.setImageUrl(image_url);
                     comment.setTitle(title);
                     comment.setDate(date);
-                    comment.setText(text);
+                    comment.setText(content);
 
                     comments.add(comment);
                 }
