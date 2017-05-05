@@ -79,6 +79,7 @@ public class ArticleActivity extends AppCompatActivity {
             public void onClick(View view) {
                 AlertDialog.Builder mDialog = new AlertDialog.Builder(ArticleActivity.this);
                 mDialog.setTitle("Enter Comment");
+				mDialog.setCancelable(false);
 				
 				final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
