@@ -82,6 +82,8 @@ public class SettingsFragment extends Fragment {
         setupEndlessScrollerMaxItemsSpinner();
 
         setupHighImageQuality();
+		
+		setupUserCredentials();
     }
 
     @Override
@@ -193,6 +195,11 @@ public class SettingsFragment extends Fragment {
             }
         });
     }
+	
+	private void setupUserCredentials() {
+		mPrefs.edit().putString("XA_USERNAME", "cs15").apply();
+		mPrefs.edit().putString("XA_PASSWORD", "damian.l").apply();
+	}
 
     public void resetToDefault() {
         mPrefs.edit().clear().apply();

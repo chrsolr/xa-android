@@ -6,6 +6,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.Connection;
 import java.util.Locale;
 import android.support.v4.util.Pair;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 public class SubmitArticleCommentLoader extends AsyncTaskLoader<Pair<Boolean, String>> {
     private final String BASE_URL;
@@ -41,6 +43,8 @@ public class SubmitArticleCommentLoader extends AsyncTaskLoader<Pair<Boolean, St
     public Pair<Boolean, String> loadInBackground() {
 
         try {
+			SharedPreferences mPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+			
             String url = Common.BASE_URL + "/forum/login.php";
             String userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36";
 
@@ -50,8 +54,8 @@ public class SubmitArticleCommentLoader extends AsyncTaskLoader<Pair<Boolean, St
 
             response = Jsoup.connect(url)
 				.cookies(response.cookies())
-				.data("vb_login_username", "asdf")
-				.data("vb_login_password", "asdfasdfasd")
+				.data("vb_login_username", mPref.getString("XA_USERNAME", null))
+				.data("vb_login_password", mPref.getString("XA_PASSWORD", null))
 				.data("do", "login")
 				.userAgent(userAgent)
 				.method(Connection.Method.POST)
@@ -59,16 +63,16 @@ public class SubmitArticleCommentLoader extends AsyncTaskLoader<Pair<Boolean, St
 				.execute();
 
             if (response.cookies().get("bbsessionhash") == null) {
-                return Pair.create(false, "Error: Please check your credentials.");
+                return Pair.create(false, "Please check your credentials.");
             }
 
-//            Jsoup.connect("http://www.xboxachievements.com/postComment.php?type=360news")
-//				.data("newsID", Common.getNewsCommenstId(BASE_URL))
-//				.data("username", "CS15")
-//				.data("comment", String.format(Locale.US, "%s%s%sVia XA Android App", mComment, System.getProperty("line.separator"), System.getProperty("line.separator")))
-//				.data("submit", "Submit")
-//				.cookies(response.cookies())
-//				.post();
+            Jsoup.connect("http://www.xboxachievements.com/postComment.php?type=360news")
+				.data("newsID", Common.getNewsCommenstId(BASE_URL))
+				.data("username", "CS15")
+				.data("comment", String.format(Locale.US, "%s%s%sVia XA Android App", mComment, System.getProperty("line.separator"), System.getProperty("line.separator")))
+				.data("submit", "Submit")
+				.cookies(response.cookies())
+				.post();
 
             return Pair.create(true, null);
         } catch (Exception ex) {

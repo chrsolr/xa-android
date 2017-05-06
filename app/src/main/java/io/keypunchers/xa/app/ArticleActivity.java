@@ -39,6 +39,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.content.Context;
 import io.keypunchers.xa.misc.Common;
 import android.support.v4.util.Pair;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 public class ArticleActivity extends AppCompatActivity {
     private String BASE_URL;
@@ -75,6 +77,9 @@ public class ArticleActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("url"))
             BASE_URL = getIntent().getExtras().getString("url");
 
+		SharedPreferences mPref = PreferenceManager.getDefaultSharedPreferences(this);
+		boolean isLoggedIn = mPref.contains("XA_USERNAME") && mPref.contains("XA_PASSWORD");
+		
         mFab = (FloatingActionButton) findViewById(R.id.fab_article);
         mFab.setOnClickListener(new OnClickListener() {
 				@Override
@@ -128,6 +133,10 @@ public class ArticleActivity extends AppCompatActivity {
 					imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 				}
 			});
+			
+		if (!isLoggedIn) {
+			mFab.setVisibility(View.GONE);
+		}
 
 		mSnackbar = Common.makeSnackbar(this, mFab, null, Snackbar.LENGTH_INDEFINITE);
 
