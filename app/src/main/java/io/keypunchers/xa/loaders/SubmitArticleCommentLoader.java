@@ -54,8 +54,8 @@ public class SubmitArticleCommentLoader extends AsyncTaskLoader<Pair<Boolean, St
 
             response = Jsoup.connect(url)
 				.cookies(response.cookies())
-				.data("vb_login_username", mPref.getString("XA_USERNAME", null))
-				.data("vb_login_password", mPref.getString("XA_PASSWORD", null))
+				.data("vb_login_username", mPref.getString("XA_USERNAME", ""))
+				.data("vb_login_password", mPref.getString("XA_PASSWORD", ""))
 				.data("do", "login")
 				.userAgent(userAgent)
 				.method(Connection.Method.POST)
@@ -68,7 +68,7 @@ public class SubmitArticleCommentLoader extends AsyncTaskLoader<Pair<Boolean, St
 
             Jsoup.connect("http://www.xboxachievements.com/postComment.php?type=360news")
 				.data("newsID", Common.getNewsCommenstId(BASE_URL))
-				.data("username", "CS15")
+				.data("username", mPref.getString("XA_USERNAME", "").toUpperCase(Locale.US))
 				.data("comment", String.format(Locale.US, "%s%s%sVia XA Android App", mComment, System.getProperty("line.separator"), System.getProperty("line.separator")))
 				.data("submit", "Submit")
 				.cookies(response.cookies())
