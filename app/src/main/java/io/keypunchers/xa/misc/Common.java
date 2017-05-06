@@ -15,6 +15,7 @@ import java.util.Locale;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.misc.Enums.UrlType;
+import android.view.View;
 
 public class Common extends Application {
     public static final String BASE_URL = "http://www.xboxachievements.com";
@@ -126,6 +127,17 @@ public class Common extends Application {
     @NonNull
     public static Snackbar makeSnackbar(@NonNull Context context, @NonNull CharSequence text, int duration) {
         Snackbar snackBarView = Snackbar.make(((AppCompatActivity) context).getWindow().getDecorView().findViewById(android.R.id.content), text, duration);
+        snackBarView.getView().setBackgroundColor(ContextCompat.getColor(context, R.color.color_primary_accent));
+
+        TextView tv = (TextView) snackBarView.getView().findViewById(android.support.design.R.id.snackbar_text);
+        tv.setTextColor(Color.WHITE);
+
+        return snackBarView;
+    }
+	
+	@NonNull
+    public static Snackbar makeSnackbar(@NonNull Context context, @NonNull View view, @NonNull CharSequence text, int duration) {
+        Snackbar snackBarView = Snackbar.make(view, text, duration);
         snackBarView.getView().setBackgroundColor(ContextCompat.getColor(context, R.color.color_primary_accent));
 
         TextView tv = (TextView) snackBarView.getView().findViewById(android.support.design.R.id.snackbar_text);

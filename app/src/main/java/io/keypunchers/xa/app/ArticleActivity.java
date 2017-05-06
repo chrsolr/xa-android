@@ -47,9 +47,9 @@ public class ArticleActivity extends AppCompatActivity {
     private ViewPager mViewPager;
 
     private ViewPagerAdapter mAdapter;
-
-	private ProgressDialog mProgressDialog;
     private FloatingActionButton mFab;
+
+	private Snackbar mSnackbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,9 +66,6 @@ public class ArticleActivity extends AppCompatActivity {
         TabLayout mTabLayout = (TabLayout) findViewById(R.id.tl_article);
         mTabLayout.setupWithViewPager(mViewPager);
 
-		mProgressDialog = new ProgressDialog(ArticleActivity.this);
-		mProgressDialog.setCancelable(false);
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.ab_article);
@@ -79,44 +76,45 @@ public class ArticleActivity extends AppCompatActivity {
 
         mFab = (FloatingActionButton) findViewById(R.id.fab_article);
         mFab.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder mDialog = new AlertDialog.Builder(ArticleActivity.this);
-                mDialog.setTitle("Enter Comment");
-				mDialog.setCancelable(false);
+				@Override
+				public void onClick(View view) {
+					AlertDialog.Builder mDialog = new AlertDialog.Builder(ArticleActivity.this);
+					mDialog.setTitle("Enter Comment");
+					mDialog.setCancelable(false);
 
-				final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+					final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-                final EditText mInput = new EditText(ArticleActivity.this);
-				mInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+					final EditText mInput = new EditText(ArticleActivity.this);
+					mInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
 
-                LinearLayout.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT);
 
-				int padding = Common.convertDpToPx(16, ArticleActivity.this);
-                mInput.setLayoutParams(mLayoutParams);
-                mDialog.setView(mInput, padding, 0, padding, 0);
+					int padding = Common.convertDpToPx(16, ArticleActivity.this);
+					mInput.setLayoutParams(mLayoutParams);
+					mDialog.setView(mInput, padding, 0, padding, 0);
 
-
-                mDialog.setPositiveButton("Submit",
-                        new DialogInterface.OnClickListener() {
+					mDialog.setPositiveButton("Submit",
+						new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 imm.hideSoftInputFromWindow(mInput.getWindowToken(), 0);
 
                                 String comment = mInput.getText().toString();
 
                                 if (!comment.equals("")) {
-                                    mProgressDialog.show(ArticleActivity.this, "Submitting", "Please wait while submitting your comment");
-
+									mSnackbar.setText("Submitting...");
                                     postComment(comment);
                                 } else {
-                                    Snackbar.make(mFab, "Comment cannot be empty", Snackbar.LENGTH_LONG).show();
+                                    mSnackbar.setText("Comment cannot be empty.");
+									mSnackbar.setDuration(Snackbar.LENGTH_LONG);
                                 }
+
+								mSnackbar.show();
                             }
                         });
 
-                mDialog.setNegativeButton("Cancel",
+					mDialog.setNegativeButton("Cancel",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 								imm.hideSoftInputFromWindow(mInput.getWindowToken(), 0);
@@ -124,11 +122,13 @@ public class ArticleActivity extends AppCompatActivity {
                             }
                         });
 
-                mDialog.show();
-				mInput.requestFocus();
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-            }
-        });
+					mDialog.show();
+					mInput.requestFocus();
+					imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+				}
+			});
+
+		mSnackbar = Common.makeSnackbar(this, mFab, null, Snackbar.LENGTH_INDEFINITE);
 
         getArticle();
     }
@@ -185,57 +185,50 @@ public class ArticleActivity extends AppCompatActivity {
         mAdapter.notifyDataSetChanged();
     }
 
-    private void onPostCommentFinished(boolean success) {
-        mProgressDialog.dismiss();
-
-        if (success) {
-            finish();
-            startActivity(getIntent());
-        } else {
-            Snackbar.make(mFab, "Something went wrong while posting comment.", Snackbar.LENGTH_LONG).show();
-        }
-    }
-
     private void postComment(final String comment) {
-        LoaderManager.LoaderCallbacks loader = new LoaderManager.LoaderCallbacks<Boolean>() {
+        getSupportLoaderManager().restartLoader(1, null, new LoaderManager.LoaderCallbacks<Boolean>() {
 
-            @Override
-            public Loader<Boolean> onCreateLoader(int id, Bundle args) {
-                return new SubmitArticleCommentLoader(getApplicationContext(), BASE_URL, comment);
-            }
+				@Override
+				public Loader<Boolean> onCreateLoader(int id, Bundle args) {
+					return new SubmitArticleCommentLoader(getApplicationContext(), BASE_URL, comment);
+				}
 
-            @Override
-            public void onLoadFinished(Loader<Boolean> loader, Boolean data) {
-               onPostCommentFinished(data);
-            }
+				@Override
+				public void onLoadFinished(Loader<Boolean> loader, Boolean success) {
+					if (success) {
+						mSnackbar.dismiss();
+						finish();
+						startActivity(getIntent());
+					} else {
+						mSnackbar.setText("Something went wrong while posting comment.");
+						mSnackbar.setDuration(Snackbar.LENGTH_LONG);
+						mSnackbar.show();
+					}
+				}
 
-            @Override
-            public void onLoaderReset(Loader<Boolean> loader) {
-            }
-        };
-
-        getSupportLoaderManager().restartLoader(1, null, loader);
+				@Override
+				public void onLoaderReset(Loader<Boolean> loader) {
+				}
+			});
     }
 
     private void getArticle() {
-        LoaderManager.LoaderCallbacks loader = new LoaderManager.LoaderCallbacks<Article>() {
+		getSupportLoaderManager().restartLoader(0, null, new LoaderManager.LoaderCallbacks<Article>() {
 
-            @Override
-            public Loader<Article> onCreateLoader(int id, Bundle args) {
-                return new ArticleLoader(getApplicationContext(), BASE_URL);
-            }
+				@Override
+				public Loader<Article> onCreateLoader(int id, Bundle args) {
+					return new ArticleLoader(getApplicationContext(), BASE_URL);
+				}
 
-            @Override
-            public void onLoadFinished(Loader<Article> loader, Article data) {
-                mData = data;
-                setupUI();
-            }
+				@Override
+				public void onLoadFinished(Loader<Article> loader, Article data) {
+					mData = data;
+					setupUI();
+				}
 
-            @Override
-            public void onLoaderReset(Loader<Article> loader) {
-            }
-        };
-
-        getSupportLoaderManager().restartLoader(0, null, loader);
+				@Override
+				public void onLoaderReset(Loader<Article> loader) {
+				}
+			});
     }
 }
