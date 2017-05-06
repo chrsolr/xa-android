@@ -5,10 +5,12 @@ import io.keypunchers.xa.misc.Common;
 import org.jsoup.Jsoup;
 import org.jsoup.Connection;
 import java.util.Locale;
+import android.support.v4.util.Pair;
 
-public class SubmitArticleCommentLoader extends AsyncTaskLoader<Boolean> {
+public class SubmitArticleCommentLoader extends AsyncTaskLoader<Pair<Boolean, String>> {
     private final String BASE_URL;
 	private String mComment;
+	private boolean isCached;
 
     public SubmitArticleCommentLoader(Context context, String url, String comment) {
         super(context);
@@ -20,22 +22,23 @@ public class SubmitArticleCommentLoader extends AsyncTaskLoader<Boolean> {
     protected void onStartLoading() {
         super.onStartLoading();
 
-		if (mComment == null || mComment.equals("")) {
-			super.deliverResult(false);
+		if (isCached) {
+			super.deliverResult(Pair.create(false, "Cached"));
 		} else {
             forceLoad();
 		}
     }
 
     @Override
-    public void deliverResult(Boolean data) {
+    public void deliverResult(Pair<Boolean, String> data) {
         if (isStarted()) {
+			isCached = true;
             super.deliverResult(data);
         }
     }
 
     @Override
-    public Boolean loadInBackground() {
+    public Pair<Boolean, String> loadInBackground() {
 
         try {
             String url = Common.BASE_URL + "/forum/login.php";
@@ -56,7 +59,7 @@ public class SubmitArticleCommentLoader extends AsyncTaskLoader<Boolean> {
 				.execute();
 
             if (response.cookies().get("bbsessionhash") == null) {
-                return false;
+                return Pair.create(false, "Error: Please check your credentials.");
             }
 
 //            Jsoup.connect("http://www.xboxachievements.com/postComment.php?type=360news")
@@ -67,9 +70,9 @@ public class SubmitArticleCommentLoader extends AsyncTaskLoader<Boolean> {
 //				.cookies(response.cookies())
 //				.post();
 
-            return true;
+            return Pair.create(true, null);
         } catch (Exception ex) {
-            return false;
+            return Pair.create(false, ex.getMessage());
         }
     }
 }

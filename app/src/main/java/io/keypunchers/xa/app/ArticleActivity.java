@@ -38,6 +38,7 @@ import android.text.InputType;
 import android.view.inputmethod.InputMethodManager;
 import android.content.Context;
 import io.keypunchers.xa.misc.Common;
+import android.support.v4.util.Pair;
 
 public class ArticleActivity extends AppCompatActivity {
     private String BASE_URL;
@@ -186,28 +187,30 @@ public class ArticleActivity extends AppCompatActivity {
     }
 
     private void postComment(final String comment) {
-        getSupportLoaderManager().restartLoader(1, null, new LoaderManager.LoaderCallbacks<Boolean>() {
+        getSupportLoaderManager().restartLoader(1, null, new LoaderManager.LoaderCallbacks<Pair<Boolean, String>>() {
 
 				@Override
-				public Loader<Boolean> onCreateLoader(int id, Bundle args) {
+				public Loader<Pair<Boolean, String>> onCreateLoader(int id, Bundle args) {
 					return new SubmitArticleCommentLoader(getApplicationContext(), BASE_URL, comment);
 				}
 
 				@Override
-				public void onLoadFinished(Loader<Boolean> loader, Boolean success) {
-					if (success) {
+				public void onLoadFinished(Loader<Pair<Boolean, String>> loader, Pair<Boolean, String> data) {
+					if (data.first) {
 						mSnackbar.dismiss();
 						finish();
 						startActivity(getIntent());
+					} else if (!data.first && data.second.equals("Cached")) {
+						
 					} else {
-						mSnackbar.setText("Something went wrong while posting comment.");
+						mSnackbar.setText(data.second);
 						mSnackbar.setDuration(Snackbar.LENGTH_LONG);
 						mSnackbar.show();
 					}
 				}
 
 				@Override
-				public void onLoaderReset(Loader<Boolean> loader) {
+				public void onLoaderReset(Loader<Pair<Boolean, String>> loader) {
 				}
 			});
     }

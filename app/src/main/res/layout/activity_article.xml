@@ -14,7 +14,6 @@
             android:id="@+id/tl_article"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            
             style="@style/AppTheme.AppTabLayout" />
 
     </android.support.design.widget.AppBarLayout>
