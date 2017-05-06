@@ -49,6 +49,7 @@ public class ArticleActivity extends AppCompatActivity {
     private ViewPagerAdapter mAdapter;
 
 	private ProgressDialog mProgressDialog;
+    private FloatingActionButton mFab;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,7 +77,7 @@ public class ArticleActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("url"))
             BASE_URL = getIntent().getExtras().getString("url");
 
-        FloatingActionButton mFab = (FloatingActionButton) findViewById(R.id.fab_article);
+        mFab = (FloatingActionButton) findViewById(R.id.fab_article);
         mFab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,16 +102,16 @@ public class ArticleActivity extends AppCompatActivity {
                 mDialog.setPositiveButton("Submit",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                imm.hideSoftInputFromWindow(mInput.getWindowToken(), 0);
+
                                 String comment = mInput.getText().toString();
 
                                 if (!comment.equals("")) {
-                                    imm.hideSoftInputFromWindow(mInput.getWindowToken(), 0);
-
                                     mProgressDialog.show(ArticleActivity.this, "Submitting", "Please wait while submitting your comment");
 
                                     postComment(comment);
                                 } else {
-                                    Common.makeSnackbar(ArticleActivity.this, "Comment cannot be empty", Snackbar.LENGTH_LONG).show();
+                                    Snackbar.make(mFab, "Comment cannot be empty", Snackbar.LENGTH_LONG).show();
                                 }
                             }
                         });
@@ -184,6 +185,17 @@ public class ArticleActivity extends AppCompatActivity {
         mAdapter.notifyDataSetChanged();
     }
 
+    private void onPostCommentFinished(boolean success) {
+        mProgressDialog.dismiss();
+
+        if (success) {
+            finish();
+            startActivity(getIntent());
+        } else {
+            Snackbar.make(mFab, "Something went wrong while posting comment.", Snackbar.LENGTH_LONG).show();
+        }
+    }
+
     private void postComment(final String comment) {
         LoaderManager.LoaderCallbacks loader = new LoaderManager.LoaderCallbacks<Boolean>() {
 
@@ -194,14 +206,7 @@ public class ArticleActivity extends AppCompatActivity {
 
             @Override
             public void onLoadFinished(Loader<Boolean> loader, Boolean data) {
-                mProgressDialog.dismiss();
-
-                if (data) {
-                    finish();
-                    startActivity(getIntent());
-                } else {
-                    Common.makeSnackbar(ArticleActivity.this, "Something went wrong while posting comment.", Snackbar.LENGTH_LONG).show();
-                }
+               onPostCommentFinished(data);
             }
 
             @Override
