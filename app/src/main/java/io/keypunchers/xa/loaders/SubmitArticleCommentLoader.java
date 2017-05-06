@@ -47,21 +47,25 @@ public class SubmitArticleCommentLoader extends AsyncTaskLoader<Boolean> {
 
             response = Jsoup.connect(url)
 				.cookies(response.cookies())
-				.data("vb_login_username", "cs15")
-				.data("vb_login_password", "damian.l")
+				.data("vb_login_username", "asdf")
+				.data("vb_login_password", "asdfasdfasd")
 				.data("do", "login")
 				.userAgent(userAgent)
 				.method(Connection.Method.POST)
 				.followRedirects(true)
 				.execute();
 
-            Jsoup.connect("http://www.xboxachievements.com/postComment.php?type=360news")
-				.data("newsID", Common.getNewsCommenstId(BASE_URL))
-				.data("username", "CS15")
-				.data("comment", String.format(Locale.US, "%s%s%sVia XA Android App", mComment, System.getProperty("line.separator"), System.getProperty("line.separator")))
-				.data("submit", "Submit")
-				.cookies(response.cookies())
-				.post();
+            if (response.cookies().get("bbsessionhash") == null) {
+                return false;
+            }
+
+//            Jsoup.connect("http://www.xboxachievements.com/postComment.php?type=360news")
+//				.data("newsID", Common.getNewsCommenstId(BASE_URL))
+//				.data("username", "CS15")
+//				.data("comment", String.format(Locale.US, "%s%s%sVia XA Android App", mComment, System.getProperty("line.separator"), System.getProperty("line.separator")))
+//				.data("submit", "Submit")
+//				.cookies(response.cookies())
+//				.post();
 
             return true;
         } catch (Exception ex) {

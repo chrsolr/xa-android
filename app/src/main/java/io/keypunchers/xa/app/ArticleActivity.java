@@ -3,12 +3,15 @@ package io.keypunchers.xa.app;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -61,7 +64,7 @@ public class ArticleActivity extends AppCompatActivity {
 
         TabLayout mTabLayout = (TabLayout) findViewById(R.id.tl_article);
         mTabLayout.setupWithViewPager(mViewPager);
-		
+
 		mProgressDialog = new ProgressDialog(ArticleActivity.this);
 		mProgressDialog.setCancelable(false);
 
@@ -80,12 +83,12 @@ public class ArticleActivity extends AppCompatActivity {
                 AlertDialog.Builder mDialog = new AlertDialog.Builder(ArticleActivity.this);
                 mDialog.setTitle("Enter Comment");
 				mDialog.setCancelable(false);
-				
+
 				final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
                 final EditText mInput = new EditText(ArticleActivity.this);
 				mInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-				
+
                 LinearLayout.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT);
@@ -94,16 +97,21 @@ public class ArticleActivity extends AppCompatActivity {
                 mInput.setLayoutParams(mLayoutParams);
                 mDialog.setView(mInput, padding, 0, padding, 0);
 
-				
+
                 mDialog.setPositiveButton("Submit",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-								imm.hideSoftInputFromWindow(mInput.getWindowToken(), 0);
-								
-								mProgressDialog.show(ArticleActivity.this, "Submitting", "Please wait while submitting your comment");
-							
                                 String comment = mInput.getText().toString();
-                                postComment(comment);
+
+                                if (!comment.equals("")) {
+                                    imm.hideSoftInputFromWindow(mInput.getWindowToken(), 0);
+
+                                    mProgressDialog.show(ArticleActivity.this, "Submitting", "Please wait while submitting your comment");
+
+                                    postComment(comment);
+                                } else {
+                                    Common.makeSnackbar(ArticleActivity.this, "Comment cannot be empty", Snackbar.LENGTH_LONG).show();
+                                }
                             }
                         });
 
@@ -186,11 +194,13 @@ public class ArticleActivity extends AppCompatActivity {
 
             @Override
             public void onLoadFinished(Loader<Boolean> loader, Boolean data) {
+                mProgressDialog.dismiss();
+
                 if (data) {
-                    //recreate();
-					mProgressDialog.dismiss();
                     finish();
                     startActivity(getIntent());
+                } else {
+                    Common.makeSnackbar(ArticleActivity.this, "Something went wrong while posting comment.", Snackbar.LENGTH_LONG).show();
                 }
             }
 

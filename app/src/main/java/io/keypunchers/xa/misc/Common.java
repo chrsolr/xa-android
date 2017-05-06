@@ -2,11 +2,13 @@ package io.keypunchers.xa.misc;
 
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
-import android.view.View;
 import android.widget.TextView;
 
 import java.util.Locale;
@@ -122,12 +124,12 @@ public class Common extends Application {
     }
 
     @NonNull
-    public static Snackbar makeSnackbar(@NonNull View layout, @NonNull CharSequence text, int duration, int backgroundColor, int textColor) {
-        Snackbar snackBarView = Snackbar.make(layout, text, duration);
-        snackBarView.getView().setBackgroundColor(backgroundColor);
+    public static Snackbar makeSnackbar(@NonNull Context context, @NonNull CharSequence text, int duration) {
+        Snackbar snackBarView = Snackbar.make(((AppCompatActivity) context).getWindow().getDecorView().findViewById(android.R.id.content), text, duration);
+        snackBarView.getView().setBackgroundColor(ContextCompat.getColor(context, R.color.color_primary_accent));
 
         TextView tv = (TextView) snackBarView.getView().findViewById(android.support.design.R.id.snackbar_text);
-        tv.setTextColor(textColor);
+        tv.setTextColor(Color.WHITE);
 
         return snackBarView;
     }

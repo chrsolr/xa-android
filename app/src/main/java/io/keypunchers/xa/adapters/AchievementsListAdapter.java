@@ -106,7 +106,7 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
                 intent.putExtra("ACHIEVEMENT", ach);
                 mContext.startActivity(intent);
             } else {
-                Common.makeSnackbar(((AppCompatActivity) mContext).getWindow().getDecorView().findViewById(android.R.id.content), "No Comments", Snackbar.LENGTH_SHORT, ContextCompat.getColor(mContext, R.color.color_primary_accent), Color.WHITE).show();
+                Common.makeSnackbar(mContext, "No Comments", Snackbar.LENGTH_SHORT).show();
             }
         }
     }
