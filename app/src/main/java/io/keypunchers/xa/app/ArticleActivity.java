@@ -104,7 +104,7 @@ public class ArticleActivity extends AppCompatActivity {
                             }
                         });
 
-					AlertDialog dialog = builder.create();
+					final AlertDialog dialog = builder.create();
 					dialog.show();
 					dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new OnClickListener(){
 							@Override
@@ -114,6 +114,7 @@ public class ArticleActivity extends AppCompatActivity {
 								if (comment.equals(""))
 									mInputComment.setError("Comment cannot be empty.");
                           		else {
+									dialog.dismiss();
 									postComment(comment);
 									mSnackbar.setText("Submitting...");
 									mSnackbar.show();
