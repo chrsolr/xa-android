@@ -223,7 +223,7 @@ public class SettingsFragment extends Fragment {
 				@Override
 				public void onClick(final View view) {
 					AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-					builder.setCancelable(false);
+					builder.setCancelable(true);
 					
 					View layout = getActivity().getLayoutInflater().inflate(R.layout.dialog_credentials, null, false);
 

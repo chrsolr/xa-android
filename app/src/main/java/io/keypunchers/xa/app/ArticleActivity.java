@@ -84,7 +84,7 @@ public class ArticleActivity extends AppCompatActivity {
 				@Override
 				public void onClick(View view) {
 					AlertDialog.Builder builder = new AlertDialog.Builder(ArticleActivity.this);
-					builder.setCancelable(false);
+					builder.setCancelable(true);
 
 					View layout = getLayoutInflater().inflate(R.layout.dialog_comment, null, false);
 					
