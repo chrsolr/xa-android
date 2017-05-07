@@ -58,7 +58,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tv_settings_default_home_title"
-                android:text="Section to load when opening the application."
+                android:text="Section to load when opening application."
                 android:textAppearance="@style/AppTheme.TextStyle.Small"
                 android:textColor="@null" />
 
@@ -105,7 +105,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tv_settings_default_platform_title"
-                android:text="The default platform to loading when in browse games."
+                android:text="Default platform to loading in browse games."
                 android:textAppearance="@style/AppTheme.TextStyle.Small"
                 android:textColor="@null" />
 
@@ -152,7 +152,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tv_settings_scroll_max_items_title"
-                android:text="The max item allow to load (Excluding Browse Games, Comments and Game Achievements)."
+                android:text="The max item allow to load (Excluding Browse Games, Comments, Achievements and Screenshots)."
                 android:textAppearance="@style/AppTheme.TextStyle.Small"
                 android:textColor="@null" />
 
@@ -174,7 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-bold"
-                android:text="High Image Quality"
+                android:text="High-Res Images"
                 android:textAppearance="@style/AppTheme.TextStyle.Title"
                 android:textColor="@null"
                 android:textStyle="bold" />
@@ -199,7 +199,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tv_settings_image_quality_title"
-                android:text="High quality will use more data and be slower to show."
+                android:text="High-Res images will use more data and be slower to display"
                 android:textAppearance="@style/AppTheme.TextStyle.Small"
                 android:textColor="@null" />
 
@@ -230,7 +230,7 @@
 			<TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Set your user credentials for XboxAchievements.com."
+                android:text="Set credentials for XboxAchievements.com"
                 android:textAppearance="@style/AppTheme.TextStyle.Small"
                 android:textColor="@null" />
 				
