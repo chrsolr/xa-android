@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/padding_level_2"
+	android:clipToPadding="false"
+	android:scrollbars="none"
     tools:context="io.keypunchers.xa.fragments.SettingsFragment">
 
     <LinearLayout
@@ -202,6 +204,37 @@
                 android:textColor="@null" />
 
         </RelativeLayout>
+		
+		<View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="@dimen/margin_level_2"
+            android:layout_marginTop="@dimen/margin_level_2"
+            android:background="@color/divider" />
+		
+		<LinearLayout
+			android:id="@+id/ll_credentials"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+			
+			<TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-bold"
+                android:text="Credentials"
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
+                android:textColor="@null"
+                android:textStyle="bold" />
+			
+			<TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set your user credentials for XboxAchievements.com."
+                android:textAppearance="@style/AppTheme.TextStyle.Small"
+                android:textColor="@null" />
+				
+		</LinearLayout>
 
     </LinearLayout>
 </ScrollView>

@@ -41,6 +41,8 @@ import io.keypunchers.xa.misc.Common;
 import android.support.v4.util.Pair;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import io.keypunchers.xa.misc.Singleton;
+import android.app.Dialog;
 
 public class ArticleActivity extends AppCompatActivity {
     private String BASE_URL;
@@ -76,65 +78,52 @@ public class ArticleActivity extends AppCompatActivity {
 
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("url"))
             BASE_URL = getIntent().getExtras().getString("url");
-
-		SharedPreferences mPref = PreferenceManager.getDefaultSharedPreferences(this);
-		boolean isLoggedIn = mPref.contains("XA_USERNAME") && mPref.contains("XA_PASSWORD");
-		
+			
         mFab = (FloatingActionButton) findViewById(R.id.fab_article);
         mFab.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					AlertDialog.Builder mDialog = new AlertDialog.Builder(ArticleActivity.this);
-					mDialog.setTitle("Enter Comment");
-					mDialog.setCancelable(false);
+					AlertDialog.Builder builder = new AlertDialog.Builder(ArticleActivity.this);
+					builder.setCancelable(false);
 
-					final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-
-					final EditText mInput = new EditText(ArticleActivity.this);
-					mInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-
-					LinearLayout.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT);
-
-					int padding = Common.convertDpToPx(16, ArticleActivity.this);
-					mInput.setLayoutParams(mLayoutParams);
-					mDialog.setView(mInput, padding, 0, padding, 0);
-
-					mDialog.setPositiveButton("Submit",
+					View layout = getLayoutInflater().inflate(R.layout.dialog_comment, null, false);
+					
+					final EditText mInputComment = (EditText) layout.findViewById(R.id.et_comment);
+					
+					builder.setView(layout);
+					builder.setPositiveButton("Submit",
 						new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                imm.hideSoftInputFromWindow(mInput.getWindowToken(), 0);
-
-                                String comment = mInput.getText().toString();
-
-                                if (!comment.equals("")) {
-									mSnackbar.setText("Submitting...");
-                                    postComment(comment);
-                                } else {
-                                    mSnackbar.setText("Comment cannot be empty.");
-									mSnackbar.setDuration(Snackbar.LENGTH_LONG);
-                                }
-
-								mSnackbar.show();
                             }
                         });
 
-					mDialog.setNegativeButton("Cancel",
+					builder.setNegativeButton("Cancel",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-								imm.hideSoftInputFromWindow(mInput.getWindowToken(), 0);
                                 dialog.cancel();
                             }
                         });
 
-					mDialog.show();
-					mInput.requestFocus();
-					imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+					AlertDialog dialog = builder.create();
+					dialog.show();
+					dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new OnClickListener(){
+							@Override
+							public void onClick(View view) {
+								String comment = mInputComment.getText().toString();
+
+								if (comment.equals(""))
+									mInputComment.setError("Comment cannot be empty.");
+                          		else {
+									postComment(comment);
+									mSnackbar.setText("Submitting...");
+									mSnackbar.show();
+                                }
+							}
+						});
 				}
 			});
 			
-		if (!isLoggedIn) {
+		if (!Singleton.getInstance().getUserProfile().isLogged()) {
 			mFab.setVisibility(View.GONE);
 		}
 

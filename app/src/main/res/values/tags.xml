@@ -7,4 +7,6 @@
     <string name="ENDLESS_SCROLLER_MAX_ITEMS_TAG">ENDLESS_SCROLLER_MAX_ITEMS</string>
     <string name="DEFAULT_PLATFORM_TAG">DEFAULT_PLATFORM</string>
     <string name="DRAWER_LEARNED_TAG">DRAWER_LEARNED</string>
+	<string name="XA_USERNAME">XA_USERNAME</string>
+	<string name="XA_PASSWORD">XA_PASSWORD</string>
 </resources>
