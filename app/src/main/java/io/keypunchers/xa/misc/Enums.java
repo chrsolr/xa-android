@@ -23,4 +23,9 @@ public class Enums {
 		EUROPE,
 		JAPAN
 	}
+
+	public enum PostType {
+		ARTICLE,
+		ACHIEVEMENTS
+	}
 }

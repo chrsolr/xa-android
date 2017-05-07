@@ -108,8 +108,17 @@ public class Common extends Application {
         return permalink;
     }
 
-    public static String getNewsCommenstId(String url) {
+    public static String getNewsCommentstId(String url) {
         String nID = url.substring(url.indexOf("-") + 1, url.length() - 1);
+
+        if (nID.contains("-"))
+            nID = nID.substring(0, nID.indexOf("-"));
+
+        return nID;
+    }
+
+    public static String getAchievementId(String url) {
+        String nID = url.substring(url.indexOf("achievement/") + 12, url.length() - 1);
 
         if (nID.contains("-"))
             nID = nID.substring(0, nID.indexOf("-"));
@@ -136,7 +145,7 @@ public class Common extends Application {
     }
 	
 	@NonNull
-    public static Snackbar makeSnackbar(@NonNull Context context, @NonNull View view, @NonNull CharSequence text, int duration) {
+    public static Snackbar makeSnackbar(@NonNull Context context, @NonNull View view, CharSequence text, int duration) {
         Snackbar snackBarView = Snackbar.make(view, text, duration);
         snackBarView.getView().setBackgroundColor(ContextCompat.getColor(context, R.color.color_primary_accent));
 

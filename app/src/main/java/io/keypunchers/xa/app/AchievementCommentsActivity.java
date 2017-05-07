@@ -1,14 +1,22 @@
 package io.keypunchers.xa.app;
 
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.util.Pair;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,7 +28,10 @@ import java.util.Locale;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.CommentListAdapter;
 import io.keypunchers.xa.loaders.AchievementCommentsLoader;
+import io.keypunchers.xa.loaders.SubmitArticleCommentLoader;
 import io.keypunchers.xa.misc.Common;
+import io.keypunchers.xa.misc.Enums;
+import io.keypunchers.xa.misc.Singleton;
 import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.Achievement;
 import io.keypunchers.xa.models.Comment;
@@ -29,6 +40,7 @@ public class AchievementCommentsActivity extends AppCompatActivity {
     private Achievement mAchievement;
     private CommentListAdapter mAdapter;
     private RecyclerView mRvContent;
+    private Snackbar mSnackbar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,6 +72,56 @@ public class AchievementCommentsActivity extends AppCompatActivity {
 
         mRvContent = (RecyclerView) findViewById(R.id.rv_ach_comments);
         mRvContent.setLayoutManager(mLayoutManager);
+
+        FloatingActionButton mFab = (FloatingActionButton) findViewById(R.id.fab_ach_comments);
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(AchievementCommentsActivity.this);
+                builder.setCancelable(true);
+
+                @SuppressLint("InflateParams")
+                View layout = getLayoutInflater().inflate(R.layout.dialog_comment, null, false);
+
+                final EditText mInputComment = (EditText) layout.findViewById(R.id.et_comment);
+
+                builder.setView(layout);
+                builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                final AlertDialog dialog = builder.create();
+                dialog.show();
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String comment = mInputComment.getText().toString();
+
+                        if (comment.equals(""))
+                            mInputComment.setError("Comment cannot be empty.");
+                        else {
+                            dialog.dismiss();
+                            postComment(comment);
+                            mSnackbar.setText("Submitting...");
+                            mSnackbar.show();
+                        }
+                    }
+                });
+            }
+        });
+
+        if (!Singleton.getInstance().getUserProfile().isLogged()) {
+            mFab.setVisibility(View.GONE);
+        }
+
+        mSnackbar = Common.makeSnackbar(this, mFab, null, Snackbar.LENGTH_INDEFINITE);
 
         getAchievementComments();
     }
@@ -97,5 +159,32 @@ public class AchievementCommentsActivity extends AppCompatActivity {
         };
 
         getSupportLoaderManager().restartLoader(0, null, mAchievementCommentsLoader);
+    }
+
+    private void postComment(final String comment) {
+        getSupportLoaderManager().restartLoader(1, null, new LoaderManager.LoaderCallbacks<Pair<Boolean, String>>() {
+
+            @Override
+            public Loader<Pair<Boolean, String>> onCreateLoader(int id, Bundle args) {
+                return new SubmitArticleCommentLoader(getApplicationContext(), Common.getAchievementId(mAchievement.getCommentsPageUrl()), comment, Enums.PostType.ACHIEVEMENTS);
+            }
+
+            @Override
+            public void onLoadFinished(Loader<Pair<Boolean, String>> loader, Pair<Boolean, String> data) {
+                if (data.first) {
+                    mSnackbar.dismiss();
+                    finish();
+                    startActivity(getIntent());
+                } else if (!data.second.equals("Cached")) {
+                    mSnackbar.setText(data.second);
+                    mSnackbar.setDuration(Snackbar.LENGTH_LONG);
+                    mSnackbar.show();
+                }
+            }
+
+            @Override
+            public void onLoaderReset(Loader<Pair<Boolean, String>> loader) {
+            }
+        });
     }
 }

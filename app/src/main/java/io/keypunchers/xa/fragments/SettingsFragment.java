@@ -1,12 +1,14 @@
 package io.keypunchers.xa.fragments;
 
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
@@ -14,24 +16,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import io.keypunchers.xa.R;
-import io.keypunchers.xa.models.UserProfile;
 import io.keypunchers.xa.misc.Singleton;
-import android.widget.LinearLayout;
-import android.view.View.OnClickListener;
-import android.support.v7.app.AlertDialog;
-import android.view.inputmethod.InputMethodManager;
-import android.content.Context;
-import android.widget.EditText;
-import android.text.InputType;
-import io.keypunchers.xa.misc.Common;
-import android.content.DialogInterface;
-import android.support.design.widget.TextInputLayout;
-import android.widget.Toast;
+import io.keypunchers.xa.models.UserProfile;
 
 public class SettingsFragment extends Fragment {
     private Spinner mPlatformSpinner;
@@ -39,14 +33,14 @@ public class SettingsFragment extends Fragment {
     private Spinner mDefaultHomeSpinner;
     private Spinner mEndlessScrollerMaxSpinner;
     private SwitchCompat mHighImageQuality;
-	private LinearLayout mLlCredentials;
+    private LinearLayout mLlCredentials;
 
     private String HIGH_RES_IMAGE_SETTING_TAG;
     private String DEFAULT_PLATFORM_POSITION_TAG;
     private String DEFAULT_HOME_POSITION_TAG;
     private String ENDLESS_SCROLLER_MAX_ITEMS_POSITION_TAG;
-	private String XA_USERNAME;
-	private String XA_PASSWORD;
+    private String XA_USERNAME;
+    private String XA_PASSWORD;
 
     public SettingsFragment() {
     }
@@ -69,8 +63,8 @@ public class SettingsFragment extends Fragment {
         DEFAULT_PLATFORM_POSITION_TAG = mResources.getString(R.string.DEFAULT_PLATFORM_POSITION_TAG);
         DEFAULT_HOME_POSITION_TAG = mResources.getString(R.string.DEFAULT_HOME_POSITION_TAG);
         ENDLESS_SCROLLER_MAX_ITEMS_POSITION_TAG = mResources.getString(R.string.ENDLESS_SCROLLER_MAX_ITEMS_POSITION_TAG);
-		XA_USERNAME = mResources.getString(R.string.XA_USERNAME);
-		XA_PASSWORD = mResources.getString(R.string.XA_PASSWORD);
+        XA_USERNAME = mResources.getString(R.string.XA_USERNAME);
+        XA_PASSWORD = mResources.getString(R.string.XA_PASSWORD);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
@@ -85,8 +79,8 @@ public class SettingsFragment extends Fragment {
 
         mHighImageQuality = (SwitchCompat) view.findViewById(R.id.sw_settings_image_quality);
         mHighImageQuality.setChecked(mPrefs.getBoolean(HIGH_RES_IMAGE_SETTING_TAG, true));
-		
-		mLlCredentials = (LinearLayout)  view.findViewById(R.id.ll_credentials);
+
+        mLlCredentials = (LinearLayout) view.findViewById(R.id.ll_credentials);
     }
 
     @Override
@@ -102,8 +96,8 @@ public class SettingsFragment extends Fragment {
         setupEndlessScrollerMaxItemsSpinner();
 
         setupHighImageQuality();
-		
-		setupUserCredentials();
+
+        setupUserCredentials();
     }
 
     @Override
@@ -215,69 +209,69 @@ public class SettingsFragment extends Fragment {
             }
         });
     }
-	
-	private void setupUserCredentials() {
-		final UserProfile profile = Singleton.getInstance().getUserProfile();
-			
-		mLlCredentials.setOnClickListener(new OnClickListener(){
-				@Override
-				public void onClick(final View view) {
-					AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-					builder.setCancelable(true);
-					
-					View layout = getActivity().getLayoutInflater().inflate(R.layout.dialog_credentials, null, false);
 
-					final EditText mInputUsername = (EditText) layout.findViewById(R.id.et_username);
-					final EditText mInputPassword = (EditText) layout.findViewById(R.id.et_password);
-					
-					mInputUsername.setText(profile.getUsername());
-					mInputPassword.setText(profile.getPassword());
-					
-					builder.setView(layout);
-					builder.setPositiveButton("Save",
-						new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        });
+    private void setupUserCredentials() {
+        final UserProfile profile = Singleton.getInstance().getUserProfile();
 
-					builder.setNegativeButton("Cancel",
+        mLlCredentials.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setCancelable(true);
+
+                View layout = getActivity().getLayoutInflater().inflate(R.layout.dialog_credentials, null, false);
+
+                final EditText mInputUsername = (EditText) layout.findViewById(R.id.et_username);
+                final EditText mInputPassword = (EditText) layout.findViewById(R.id.et_password);
+
+                mInputUsername.setText(profile.getUsername());
+                mInputPassword.setText(profile.getPassword());
+
+                builder.setView(layout);
+                builder.setPositiveButton("Save",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-								dialog.cancel();
                             }
                         });
 
-					final AlertDialog dialog = builder.create();
-					dialog.show();
-					dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new OnClickListener(){
-							@Override
-							public void onClick(View view) {
-								String username = mInputUsername.getText().toString();
-								String password = mInputPassword.getText().toString();
-                                
-								if(username.equals(""))
-									mInputUsername.setError("Username cannot be empty");
-								else if (password.equals(""))
-									mInputPassword.setError("Password cannot be empty");
-								else {
-									mPrefs.edit()
-											.putString(XA_USERNAME, username)
-											.putString(XA_PASSWORD, password)
-											.apply();
-											
-									profile.setUsername(username);
-									profile.setPassword(password);
-									
-									Singleton.getInstance().setUserProfile(profile);
-									
-									dialog.dismiss();
-								}
-								
-							}
-						});
-				}
-			});
-	}
+                builder.setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                final AlertDialog dialog = builder.create();
+                dialog.show();
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String username = mInputUsername.getText().toString();
+                        String password = mInputPassword.getText().toString();
+
+                        if (username.equals(""))
+                            mInputUsername.setError("Username cannot be empty");
+                        else if (password.equals(""))
+                            mInputPassword.setError("Password cannot be empty");
+                        else {
+                            mPrefs.edit()
+                                    .putString(XA_USERNAME, username)
+                                    .putString(XA_PASSWORD, password)
+                                    .apply();
+
+                            profile.setUsername(username);
+                            profile.setPassword(password);
+
+                            Singleton.getInstance().setUserProfile(profile);
+
+                            dialog.dismiss();
+                        }
+
+                    }
+                });
+            }
+        });
+    }
 
     public void resetToDefault() {
         mPrefs.edit().clear().apply();
@@ -286,6 +280,6 @@ public class SettingsFragment extends Fragment {
         mDefaultHomeSpinner.setSelection(0);
         mEndlessScrollerMaxSpinner.setSelection(0);
         mHighImageQuality.setChecked(true);
-		Singleton.getInstance().destroyUserProfile();
+        Singleton.getInstance().destroyUserProfile();
     }
 }
