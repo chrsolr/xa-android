@@ -6,6 +6,7 @@ public class UserProfile {
 	private String username;
 	private String password;
 	private Map<String, String> cookies;
+	private long expire;
 	
 	public void setUsername(String username) {
 		this.username = username;
@@ -28,10 +29,14 @@ public class UserProfile {
 	}
 
 	public Map<String, String> getCookies() {
+		if (System.currentTimeMillis() > expire)
+			cookies = null;
+
 		return cookies;
 	}
 
 	public void setCookies(Map<String, String> cookies) {
+		this.expire = System.currentTimeMillis() + 72000;
 		this.cookies = cookies;
 	}
 }

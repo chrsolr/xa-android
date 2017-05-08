@@ -3,6 +3,7 @@ package io.keypunchers.xa.loaders;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.util.Pair;
+import android.util.Log;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -57,10 +58,10 @@ public class SubmitCommentLoader extends AsyncTaskLoader<Pair<Boolean, String>> 
             if (!profile.isLogged())
                 return Pair.create(false, "Not logged in. Set credentials in settings.");
 
-            String url = Common.BASE_URL + "/forum/login.php";
-            String userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36";
-
             if (profile.getCookies() == null || profile.getCookies().isEmpty()) {
+                String url = Common.BASE_URL + "/forum/login.php";
+                String userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36";
+
                 Connection.Response response = Jsoup.connect(url).userAgent(userAgent)
                         .method(Connection.Method.GET)
                         .execute();
@@ -82,6 +83,8 @@ public class SubmitCommentLoader extends AsyncTaskLoader<Pair<Boolean, String>> 
                 Map<String, String> cookies = response.cookies();
 
                 profile.setCookies(cookies);
+
+                Log.i("$$$$$$$$$$$$", "From no cookies");
             }
 
             mComment = String.format(Locale.US,
@@ -92,23 +95,23 @@ public class SubmitCommentLoader extends AsyncTaskLoader<Pair<Boolean, String>> 
                     System.getProperty("line.separator"),
                     mThread);
 
-//            if (mPostType == Enums.PostType.ARTICLE) {
-//                Jsoup.connect(Common.getSubmitCommentUrl(mPostType))
-//                        .data("newsID", mID)
-//                        .data("username", profile.getUsername())
-//						.data("comment", mComment)
-//                        .data("submit", "Submit")
-//                        .cookies(cookies)
-//                        .post();
-//            } else if (mPostType == Enums.PostType.ACHIEVEMENTS) {
-//                Jsoup.connect(Common.getSubmitCommentUrl(mPostType) + mID)
-//                        .data("achID", mID)
-//                        .data("username", profile.getUsername())
-//                        .data("comment", mComment)
-//                        .data("submit", "Submit")
-//                        .cookies(cookies)
-//                        .post();
-//            }
+            if (mPostType == Enums.PostType.ARTICLE) {
+                Jsoup.connect(Common.getSubmitCommentUrl(mPostType))
+                        .data("newsID", mID)
+                        .data("username", profile.getUsername())
+                        .data("comment", mComment)
+                        .data("submit", "Submit")
+                        .cookies(profile.getCookies())
+                        .post();
+            } else if (mPostType == Enums.PostType.ACHIEVEMENTS) {
+                Jsoup.connect(Common.getSubmitCommentUrl(mPostType) + mID)
+                        .data("achID", mID)
+                        .data("username", profile.getUsername())
+                        .data("comment", mComment)
+                        .data("submit", "Submit")
+                        .cookies(profile.getCookies())
+                        .post();
+            }
 
             return Pair.create(true, null);
         } catch (Exception ex) {
