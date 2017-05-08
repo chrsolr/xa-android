@@ -121,7 +121,7 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
                 boolean ach_is_secret = game_achievements_rows.get(i).hasClass("secret");
 
                 Achievement ach = new Achievement();
-                ach.setImageUrl(Common.highResAchImage(ach_image_url, getContext()));
+                ach.setImageUrl(Common.getHighResAchImage(ach_image_url, getContext()));
                 ach.setTitle(ach_title);
                 ach.setGamescoreAmount(ach_gamerscore);
                 ach.setDescription(ach_desc);
@@ -136,12 +136,12 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
             }
 
             mData.setTitle(game_title);
-            mData.setImageUrl(Common.highResCoverImage(game_image_url, getContext()));
+            mData.setImageUrl(Common.getHighResCoverImage(game_image_url, getContext()));
             mData.setDeveloper(game_developer);
             mData.setPublisher(game_publisher);
             mData.setGenres(game_genres);
             mData.setReleaseDates(game_release_dates);
-            mData.setBanner(Common.highResScreenshotImage(game_banner, getContext()));
+            mData.setBanner(Common.getHighResScreenshotImage(game_banner, getContext()));
             mData.setAchievements(achievements);
             mData.setHasScreenshots(has_screenshots != null);
 

@@ -54,7 +54,7 @@ public class ScreenshotsLoader extends AsyncTaskLoader<Screenshots> {
             for (Element element : elements) {
                 String image_url = element.attr("abs:src");
 
-                mData.getImageUrls().add(Common.highResScreenshotImage(image_url, getContext()));
+                mData.getImageUrls().add(Common.getHighResScreenshotImage(image_url, getContext()));
             }
 
             return mData;

@@ -57,7 +57,7 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
             Element body_root = document.getElementsByClass("bl_la_main").first().select("span[itemprop=articleBody]").first();
             Elements comments_rows = comments_doc.select("tr");
 
-            String profile_image = header_root.first().select("img").first().attr("abs:src");
+            String profile_image = Common.getHighResArticleAuthorImage(header_root.first().select("img").first().attr("abs:src"), getContext());
             String header_title = header_root.get(1).select(".newsTitle").first().text();
             String header_date = header_root.get(1).select(".newsNFO").text().split("By ")[0].replace("Written ", "").trim();
             String header_author_name = header_root.get(1).select(".newsNFO").text().split("By ")[1];
@@ -80,7 +80,7 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
                 if (Common.isImageBlacklisted(src))
                     continue;
 
-                images.add(Common.highResScreenshotImage(src, getContext()));
+                images.add(Common.getHighResScreenshotImage(src, getContext()));
             }
 
             ArrayList<String> videos = new ArrayList<>();

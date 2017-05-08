@@ -24,8 +24,18 @@ public class Common extends Application {
     public static int convertDpToPx(int dp, Context context) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
     }
+	
+	public static String getHighResArticleAuthorImage(String url, Context context) {
+        final String HIGH_RES_IMAGE_SETTING = context.getResources().getString(R.string.HIGH_RES_IMAGE_SETTING_TAG);
+        boolean high_res = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(HIGH_RES_IMAGE_SETTING, true);
 
-    public static String highResScreenshotImage(String url, Context context) {
+        if (url != null && high_res)
+            url = url.replace(".png", "-la.png").replace(".jpg", "-la.jpg");
+
+        return url;
+    }
+
+    public static String getHighResScreenshotImage(String url, Context context) {
         final String HIGH_RES_IMAGE_SETTING = context.getResources().getString(R.string.HIGH_RES_IMAGE_SETTING_TAG);
         boolean high_res = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(HIGH_RES_IMAGE_SETTING, true);
 
@@ -37,7 +47,7 @@ public class Common extends Application {
         return url;
     }
 
-    public static String highResCoverImage(String url, Context context) {
+    public static String getHighResCoverImage(String url, Context context) {
         final String HIGH_RES_IMAGE_SETTING = context.getResources().getString(R.string.HIGH_RES_IMAGE_SETTING_TAG);
         boolean high_res = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(HIGH_RES_IMAGE_SETTING, true);
 
@@ -49,7 +59,7 @@ public class Common extends Application {
         return url;
     }
 
-    public static String highResAchImage(String url, Context context) {
+    public static String getHighResAchImage(String url, Context context) {
         final String HIGH_RES_IMAGE_SETTING = context.getResources().getString(R.string.HIGH_RES_IMAGE_SETTING_TAG);
         boolean high_res = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(HIGH_RES_IMAGE_SETTING, true);
 
@@ -61,7 +71,7 @@ public class Common extends Application {
         return url;
     }
 
-    public static String highResYouTubeImage(String url) {
+    public static String getHighResYouTubeImage(String url) {
 
         if (url.contains("?")) {
             url = url.substring(0, url.indexOf("?"));

@@ -57,7 +57,7 @@ public class GamesListLoader extends AsyncTaskLoader<ArrayList<Game>> {
                 String page_url = element.select("td:eq(1) a").attr("href");
 
                 Game game = new Game();
-                game.setArtwork(Common.highResCoverImage(artwork, getContext()));
+                game.setArtwork(Common.getHighResCoverImage(artwork, getContext()));
                 game.setTitle(title);
                 game.setAchCount(ach_count);
                 game.setGsCount(gs_count);
