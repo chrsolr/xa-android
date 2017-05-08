@@ -1,42 +1,26 @@
 package io.keypunchers.xa.models;
 
-import java.util.Map;
-
 public class UserProfile {
-	private String username;
-	private String password;
-	private Map<String, String> cookies;
-	private long expire;
-	
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    private String username;
+    private String password;
 
-	public String getUsername() {
-		return username;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public String getPassword() {
-		return password;
-	}
-	
-	public boolean isLogged() {
-		return (this.username != null && !this.username.equals("")) && (this.password != null && !this.password.equals(""));
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public Map<String, String> getCookies() {
-		if (System.currentTimeMillis() > expire)
-			cookies = null;
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-		return cookies;
-	}
-
-	public void setCookies(Map<String, String> cookies) {
-		this.expire = System.currentTimeMillis() + 72000;
-		this.cookies = cookies;
-	}
+    public boolean isLogged() {
+        return (this.username != null && !this.username.equals("")) && (this.password != null && !this.password.equals(""));
+    }
 }

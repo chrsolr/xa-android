@@ -3,7 +3,6 @@ package io.keypunchers.xa.loaders;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.util.Pair;
-import android.util.Log;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -58,34 +57,28 @@ public class SubmitCommentLoader extends AsyncTaskLoader<Pair<Boolean, String>> 
             if (!profile.isLogged())
                 return Pair.create(false, "Not logged in. Set credentials in settings.");
 
-            if (profile.getCookies() == null || profile.getCookies().isEmpty()) {
-                String url = Common.BASE_URL + "/forum/login.php";
-                String userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36";
+            String url = Common.BASE_URL + "/forum/login.php";
+            String userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36";
 
-                Connection.Response response = Jsoup.connect(url).userAgent(userAgent)
-                        .method(Connection.Method.GET)
-                        .execute();
+            Connection.Response response = Jsoup.connect(url).userAgent(userAgent)
+                    .method(Connection.Method.GET)
+                    .execute();
 
-                response = Jsoup.connect(url)
-                        .cookies(response.cookies())
-                        .data("vb_login_username", profile.getUsername())
-                        .data("vb_login_password", profile.getPassword())
-                        .data("do", "login")
-                        .userAgent(userAgent)
-                        .method(Connection.Method.POST)
-                        .followRedirects(true)
-                        .execute();
+            response = Jsoup.connect(url)
+                    .cookies(response.cookies())
+                    .data("vb_login_username", profile.getUsername())
+                    .data("vb_login_password", profile.getPassword())
+                    .data("do", "login")
+                    .userAgent(userAgent)
+                    .method(Connection.Method.POST)
+                    .followRedirects(true)
+                    .execute();
 
-                if (response.cookies().get("bbsessionhash") == null) {
-                    return Pair.create(false, "Please check your credentials.");
-                }
-
-                Map<String, String> cookies = response.cookies();
-
-                profile.setCookies(cookies);
-
-                Log.i("$$$$$$$$$$$$", "From no cookies");
+            if (response.cookies().get("bbsessionhash") == null) {
+                return Pair.create(false, "Please check your credentials.");
             }
+
+            Map<String, String> cookies = response.cookies();
 
             mComment = String.format(Locale.US,
                     "%s%s%sVia XA Android App%s%s",
@@ -101,7 +94,7 @@ public class SubmitCommentLoader extends AsyncTaskLoader<Pair<Boolean, String>> 
                         .data("username", profile.getUsername())
                         .data("comment", mComment)
                         .data("submit", "Submit")
-                        .cookies(profile.getCookies())
+                        .cookies(cookies)
                         .post();
             } else if (mPostType == Enums.PostType.ACHIEVEMENTS) {
                 Jsoup.connect(Common.getSubmitCommentUrl(mPostType) + mID)
@@ -109,7 +102,7 @@ public class SubmitCommentLoader extends AsyncTaskLoader<Pair<Boolean, String>> 
                         .data("username", profile.getUsername())
                         .data("comment", mComment)
                         .data("submit", "Submit")
-                        .cookies(profile.getCookies())
+                        .cookies(cookies)
                         .post();
             }
 
