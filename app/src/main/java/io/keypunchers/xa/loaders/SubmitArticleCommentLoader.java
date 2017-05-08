@@ -15,7 +15,8 @@ import io.keypunchers.xa.misc.Singleton;
 import io.keypunchers.xa.models.UserProfile;
 
 public class SubmitArticleCommentLoader extends AsyncTaskLoader<Pair<Boolean, String>> {
-    private String mComment;
+    private String mThread = "https://forum.xda-developers.com/android/apps-games/app-xa-unofficial-xboxachievements-com-t3600450";
+	private String mComment;
     private Enums.PostType mPostType;
     private String mID;
     private boolean isCached;
@@ -75,12 +76,14 @@ public class SubmitArticleCommentLoader extends AsyncTaskLoader<Pair<Boolean, St
             if (response.cookies().get("bbsessionhash") == null) {
                 return Pair.create(false, "Please check your credentials.");
             }
+			
+			mComment = String.format(Locale.US, "%s%s%sVia XA Android App%s%s", mComment, System.getProperty("line.separator"), System.getProperty("line.separator"), System.getProperty("line.separator"), mThread);
 
             if (mPostType == Enums.PostType.ARTICLE) {
                 Jsoup.connect("http://www.xboxachievements.com/postComment.php?type=360news")
                         .data("newsID", mID)
                         .data("username", profile.getUsername())
-                        .data("comment", String.format(Locale.US, "%s%s%sVia XA Android App", mComment, System.getProperty("line.separator"), System.getProperty("line.separator")))
+						.data("comment", mComment)
                         .data("submit", "Submit")
                         .cookies(response.cookies())
                         .post();
@@ -88,7 +91,7 @@ public class SubmitArticleCommentLoader extends AsyncTaskLoader<Pair<Boolean, St
                 Jsoup.connect("http://www.xboxachievements.com/postCommentAch.php?achID=" + mID)
                         .data("achID", mID)
                         .data("username", profile.getUsername())
-                        .data("comment", String.format(Locale.US, "%s%s%sVia XA Android App", mComment, System.getProperty("line.separator"), System.getProperty("line.separator")))
+						.data("comment", mComment)
                         .data("submit", "Submit")
                         .cookies(response.cookies())
                         .post();
