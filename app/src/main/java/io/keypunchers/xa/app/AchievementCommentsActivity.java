@@ -28,7 +28,7 @@ import java.util.Locale;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.CommentListAdapter;
 import io.keypunchers.xa.loaders.AchievementCommentsLoader;
-import io.keypunchers.xa.loaders.SubmitArticleCommentLoader;
+import io.keypunchers.xa.loaders.SubmitCommentLoader;
 import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.misc.Enums;
 import io.keypunchers.xa.misc.Singleton;
@@ -166,7 +166,7 @@ public class AchievementCommentsActivity extends AppCompatActivity {
 
             @Override
             public Loader<Pair<Boolean, String>> onCreateLoader(int id, Bundle args) {
-                return new SubmitArticleCommentLoader(getApplicationContext(), Common.getAchievementId(mAchievement.getCommentsPageUrl()), comment, Enums.PostType.ACHIEVEMENTS);
+                return new SubmitCommentLoader(getApplicationContext(), Common.getAchievementId(mAchievement.getCommentsPageUrl()), comment, Enums.PostType.ACHIEVEMENTS);
             }
 
             @Override

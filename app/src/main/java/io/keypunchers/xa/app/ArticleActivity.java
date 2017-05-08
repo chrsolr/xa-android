@@ -30,7 +30,7 @@ import io.keypunchers.xa.fragments.CommentListFragment;
 import io.keypunchers.xa.fragments.ImageListFragment;
 import io.keypunchers.xa.fragments.VideoListFragment;
 import io.keypunchers.xa.loaders.ArticleLoader;
-import io.keypunchers.xa.loaders.SubmitArticleCommentLoader;
+import io.keypunchers.xa.loaders.SubmitCommentLoader;
 import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.misc.Enums;
 import io.keypunchers.xa.misc.Singleton;
@@ -177,7 +177,7 @@ public class ArticleActivity extends AppCompatActivity {
 
             @Override
             public Loader<Pair<Boolean, String>> onCreateLoader(int id, Bundle args) {
-                return new SubmitArticleCommentLoader(getApplicationContext(), Common.getNewsCommentstId(BASE_URL), comment, Enums.PostType.ARTICLE);
+                return new SubmitCommentLoader(getApplicationContext(), Common.getNewsCommentstId(BASE_URL), comment, Enums.PostType.ARTICLE);
             }
 
             @Override

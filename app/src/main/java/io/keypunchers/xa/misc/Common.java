@@ -143,6 +143,21 @@ public class Common extends Application {
         return false;
     }
 
+    public static String getSubmitCommentUrl(Enums.PostType postType) {
+        String url = null;
+
+        switch (postType) {
+            case ARTICLE:
+                url = "http://www.xboxachievements.com/postComment.php?type=360news";
+                break;
+            case ACHIEVEMENTS:
+                url = "http://www.xboxachievements.com/postCommentAch.php?achID=";
+                break;
+        }
+
+        return url;
+    }
+
     @NonNull
     public static Snackbar makeSnackbar(@NonNull Context context, @NonNull CharSequence text, int duration) {
         Snackbar snackBarView = Snackbar.make(((AppCompatActivity) context).getWindow().getDecorView().findViewById(android.R.id.content), text, duration);
