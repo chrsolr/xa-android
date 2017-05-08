@@ -27,6 +27,7 @@ import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.Achievement;
 import io.keypunchers.xa.models.GameDetails;
 import io.keypunchers.xa.views.ScaledImageView;
+import android.support.v4.content.ContextCompat;
 
 public class AchievementsFragment extends Fragment {
     private GameDetails mData;
@@ -82,9 +83,13 @@ public class AchievementsFragment extends Fragment {
     private void setupUI() {
         if (mData.getBanner() != null)
             VolleySingleton.getImageLoader().get(mData.getBanner(), ImageLoader.getImageListener(mIvBanner, 0, 0));
+		else
+			mIvBanner.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.promo_banner));
 
         if (mData.getImageUrl() != null)
             VolleySingleton.getImageLoader().get(mData.getImageUrl(), ImageLoader.getImageListener(mIvGameCover, 0, 0));
+		else
+			mIvGameCover.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.promo_banner));
 
         mTvGameTitle.setText(mData.getTitle());
         mTvGameGenres.setText(TextUtils.join("/", mData.getGenres()));
