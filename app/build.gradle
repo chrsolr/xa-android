@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 25
@@ -10,8 +9,7 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "0.0.2"
-		multiDexEnabled true
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+		multiDexEnabled false
     }
     buildTypes {
         release {
@@ -26,7 +24,7 @@ repositories {
     maven {
         url 'http://central.maven.org/maven2'
     }
-} 
+}
 
 dependencies {
 	//noinspection GradleDynamicVersion
@@ -53,4 +51,4 @@ dependencies {
     compile 'com.google.android.gms:play-services-analytics:10.2.4'
 }
 
-
+// apply plugin: 'com.google.gms.google-services'
