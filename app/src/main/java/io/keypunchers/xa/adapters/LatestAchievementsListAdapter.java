@@ -9,12 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.android.volley.toolbox.ImageLoader;
 
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.app.AchievementsActivity;
+import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.LatestAchievement;
 
 
@@ -41,12 +42,15 @@ public class LatestAchievementsListAdapter extends RecyclerView.Adapter<LatestAc
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final LatestAchievement item = mData.get(position);
 
-        Picasso.with(mContext).load(item.getImageUrl()).noFade().into(holder.mIvCover);
-
         holder.mTvTitle.setText(item.getTitle());
         holder.mTvAchCount.setText(item.getAchievementsCount());
         holder.mTvGsCount.setText(item.getGamerscoreCount());
         holder.mTvSubmittedBy.setText("Submitted By: " + item.getSubmittedBy());
+
+        VolleySingleton
+                .getImageLoader()
+                .get(item.getImageUrl(),
+                        ImageLoader.getImageListener(holder.mIvCover, 0, 0));
     }
 
     @Override

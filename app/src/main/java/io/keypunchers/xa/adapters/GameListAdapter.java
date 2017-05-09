@@ -9,13 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.android.volley.toolbox.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.app.AchievementsActivity;
+import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.Game;
 
 
@@ -42,14 +43,14 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final Game item = mData.get(position);
 
-        Picasso.with(mContext)
-                .load(item.getArtwork())
-                .noFade()
-                .into(holder.mIvImage);
-
         holder.mTvTitle.setText(item.getTitle());
         holder.mTvAchCount.setText(String.format(Locale.US, "%s achievements", item.getAchCount()));
         holder.mTvGsCount.setText(String.format(Locale.US, "%s points", item.getGsCount()));
+
+        VolleySingleton
+                .getImageLoader()
+                .get(item.getArtwork(),
+                        ImageLoader.getImageListener(holder.mIvImage, 0, 0));
     }
 
     @Override
