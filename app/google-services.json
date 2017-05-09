@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "663174103865",
+    "project_id": "xa-android"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663174103865:android:d941a283b7d18d09",
+        "android_client_info": {
+          "package_name": "io.keypunchers.xa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUO0d0mW8pmxCAL81sDLUhinsfmETIA_M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-98134981-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -12,11 +12,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.ViewPagerAdapter;
 import io.keypunchers.xa.fragments.AchievementsFragment;
 import io.keypunchers.xa.fragments.ScreenshotsFragment;
 import io.keypunchers.xa.loaders.GameDetailsLoader;
+import io.keypunchers.xa.misc.ApplicationClass;
 import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.models.GameDetails;
 
@@ -25,6 +29,7 @@ public class AchievementsActivity extends AppCompatActivity {
     private String BASE_URL;
     private String GAME_PERMALINK;
     private ViewPagerAdapter mAdapter;
+    private Tracker mTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,9 @@ public class AchievementsActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ApplicationClass application = (ApplicationClass) getApplication();
+        mTracker = application.getDefaultTracker();
 
         ViewPager mViewPager = (ViewPager) findViewById(R.id.vp_achievements);
         mAdapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -83,6 +91,13 @@ public class AchievementsActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mTracker.setScreenName(AchievementsActivity.class.getSimpleName());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void getGameAchievements() {

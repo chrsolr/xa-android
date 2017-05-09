@@ -24,6 +24,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +36,7 @@ import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.GameListAdapter;
 import io.keypunchers.xa.adapters.GenericAdapter;
 import io.keypunchers.xa.loaders.GamesListLoader;
+import io.keypunchers.xa.misc.ApplicationClass;
 import io.keypunchers.xa.misc.EndlessRecyclerViewScrollListener;
 import io.keypunchers.xa.models.Game;
 
@@ -48,6 +52,7 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
     private String[] mAlphabetTitles;
 
     private ActionBar mActionBar;
+    private Tracker mTracker;
 
     public GameListFragment() {
     }
@@ -85,6 +90,9 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        ApplicationClass application = (ApplicationClass) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
 
         setHasOptionsMenu(true);
 
@@ -173,7 +181,19 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
                 break;
         }
 
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Platform Selection")
+                .setAction(mSelectedPlatform)
+                .build());
+
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mTracker.setScreenName(GameListFragment.class.getSimpleName());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

@@ -23,6 +23,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.ViewPagerAdapter;
 import io.keypunchers.xa.fragments.ArticleFragment;
@@ -31,6 +34,7 @@ import io.keypunchers.xa.fragments.ImageListFragment;
 import io.keypunchers.xa.fragments.VideoListFragment;
 import io.keypunchers.xa.loaders.ArticleLoader;
 import io.keypunchers.xa.loaders.SubmitCommentLoader;
+import io.keypunchers.xa.misc.ApplicationClass;
 import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.misc.Enums;
 import io.keypunchers.xa.misc.Singleton;
@@ -43,6 +47,7 @@ public class ArticleActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private ViewPagerAdapter mAdapter;
     private Snackbar mSnackbar;
+    private Tracker mTracker;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +56,9 @@ public class ArticleActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ApplicationClass application = (ApplicationClass) getApplication();
+        mTracker = application.getDefaultTracker();
 
         mAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
@@ -154,6 +162,13 @@ public class ArticleActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(TAG, mData);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mTracker.setScreenName(ArticleActivity.class.getSimpleName());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void setupUI() {

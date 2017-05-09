@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -24,6 +26,7 @@ import java.util.Locale;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.ArticleListAdapter;
 import io.keypunchers.xa.loaders.ArticleListLoader;
+import io.keypunchers.xa.misc.ApplicationClass;
 import io.keypunchers.xa.misc.EndlessRecyclerViewScrollListener;
 import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.ArticleListItem;
@@ -35,6 +38,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
     private ImageView mIvBanner;
     private int LOADER_ID;
     private int mCurrentPage = 1;
+    private Tracker mTracker;
 
     public ArticleListFragment() {
     }
@@ -78,6 +82,9 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        ApplicationClass application = (ApplicationClass) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+
         LOADER_ID = getActivity().getResources().getInteger(R.integer.news_loader_id);
 
         if (getArguments() != null) {
@@ -97,6 +104,13 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
         if (mData.isEmpty()) {
             makeNetworkCall();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mTracker.setScreenName(ArticleListFragment.class.getSimpleName());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

@@ -23,7 +23,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.misc.ApplicationClass;
 import io.keypunchers.xa.misc.Singleton;
 import io.keypunchers.xa.models.UserProfile;
 
@@ -41,6 +45,7 @@ public class SettingsFragment extends Fragment {
     private String ENDLESS_SCROLLER_MAX_ITEMS_POSITION_TAG;
     private String XA_USERNAME;
     private String XA_PASSWORD;
+    private Tracker mTracker;
 
     public SettingsFragment() {
     }
@@ -87,6 +92,9 @@ public class SettingsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        ApplicationClass application = (ApplicationClass) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.ab_settings_title);
 
         setupPlatformSpinner();
@@ -121,6 +129,13 @@ public class SettingsFragment extends Fragment {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mTracker.setScreenName(SettingsFragment.class.getSimpleName());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void setupEndlessScrollerMaxItemsSpinner() {

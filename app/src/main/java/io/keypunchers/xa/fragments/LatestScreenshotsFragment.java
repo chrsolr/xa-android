@@ -13,16 +13,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.LatestScreenshotsAdapter;
 import io.keypunchers.xa.loaders.LatestScreenshotsLoader;
+import io.keypunchers.xa.misc.ApplicationClass;
 import io.keypunchers.xa.models.LatestScreenshot;
 
 public class LatestScreenshotsFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<LatestScreenshot>> {
     private ArrayList<LatestScreenshot> mData = new ArrayList<>();
     private LatestScreenshotsAdapter mAdapter;
+    private Tracker mTracker;
 
     public LatestScreenshotsFragment() {
     }
@@ -48,6 +53,9 @@ public class LatestScreenshotsFragment extends Fragment implements LoaderManager
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        ApplicationClass application = (ApplicationClass) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+
         int LOADER_ID = getActivity().getResources().getInteger(R.integer.latest_screenshots_loader_id);
 
         if (mData.isEmpty() && getArguments() != null) {
@@ -58,6 +66,13 @@ public class LatestScreenshotsFragment extends Fragment implements LoaderManager
         if (mData.isEmpty()) {
             getActivity().getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mTracker.setScreenName(LatestScreenshotsFragment.class.getSimpleName());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
