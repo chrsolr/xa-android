@@ -9,14 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.app.ArticleActivity;
-import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.ArticleListItem;
 
 

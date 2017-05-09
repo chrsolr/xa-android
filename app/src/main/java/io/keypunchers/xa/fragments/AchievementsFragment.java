@@ -1,22 +1,22 @@
 package io.keypunchers.xa.fragments;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -24,11 +24,9 @@ import java.util.Locale;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.AchievementsListAdapter;
-import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.Achievement;
 import io.keypunchers.xa.models.GameDetails;
 import io.keypunchers.xa.views.ScaledImageView;
-import android.support.v4.content.ContextCompat;
 
 public class AchievementsFragment extends Fragment {
     private GameDetails mData;
@@ -38,6 +36,7 @@ public class AchievementsFragment extends Fragment {
     private TextView mTvGameGenres;
     private TextView mTvAchAmount;
     private RecyclerView mRvContent;
+    private Target mTarget;
 
     public AchievementsFragment() {
     }
@@ -84,20 +83,20 @@ public class AchievementsFragment extends Fragment {
     private void setupUI() {
         if (mData.getBanner() != null)
             Picasso.with(getActivity())
-                .load(mData.getBanner())
-                .noFade()
-                .error(R.drawable.promo_banner)
-                .into(mIvBanner);
-		else
-			mIvBanner.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.promo_banner));
+                    .load(mData.getBanner())
+                    .noFade()
+                    .error(R.drawable.promo_banner)
+                    .into(mIvBanner);
+        else
+            mIvBanner.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.promo_banner));
 
         if (mData.getImageUrl() != null)
             Picasso.with(getActivity())
                     .load(mData.getImageUrl())
                     .noFade()
                     .into(mIvGameCover);
-		else
-			mIvGameCover.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.promo_banner));
+        else
+            mIvGameCover.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.promo_banner));
 
         mTvGameTitle.setText(mData.getTitle());
         mTvGameGenres.setText(TextUtils.join("/", mData.getGenres()));
@@ -115,11 +114,9 @@ public class AchievementsFragment extends Fragment {
             }
         });
 
-        VolleySingleton.getImageLoader().get(mData.getAchievements().get(0).getImageUrl(), new ImageLoader.ImageListener() {
+        mTarget = new Target() {
             @Override
-            public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                Bitmap bitmap = response.getBitmap();
-
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                 if (bitmap != null) {
                     AchievementsListAdapter mAdapter;
 
@@ -134,11 +131,19 @@ public class AchievementsFragment extends Fragment {
             }
 
             @Override
-            public void onErrorResponse(VolleyError e) {
-				e.printStackTrace();
-				
-				mRvContent.setAdapter(new AchievementsListAdapter(getActivity(), mData.getAchievements(), R.layout.row_achievements_wide));
+            public void onBitmapFailed(Drawable errorDrawable) {
+
             }
-        });
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        };
+
+        Picasso.with(getActivity())
+                .load(mData.getAchievements().get(0).getImageUrl())
+                .noFade()
+                .into(mTarget);
     }
 }

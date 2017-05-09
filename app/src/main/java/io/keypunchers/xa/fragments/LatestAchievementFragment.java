@@ -16,9 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,6 @@ import io.keypunchers.xa.adapters.LatestAchievementsListAdapter;
 import io.keypunchers.xa.loaders.LatestAchievementsLoader;
 import io.keypunchers.xa.misc.ApplicationClass;
 import io.keypunchers.xa.misc.EndlessRecyclerViewScrollListener;
-import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.LatestAchievement;
 
 public class LatestAchievementFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<LatestAchievement>> {
@@ -93,10 +92,11 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
 
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(AB_TITLE);
 
-            VolleySingleton
-                    .getImageLoader()
-                    .get(mHeaderImageUrl,
-                            ImageLoader.getImageListener(mIvBanner, 0, 0));
+            Picasso.with(getActivity())
+                    .load(mHeaderImageUrl)
+                    .noFade()
+                    .error(R.drawable.promo_banner)
+                    .into(mIvBanner);
         }
 
         if (mData.isEmpty()) {

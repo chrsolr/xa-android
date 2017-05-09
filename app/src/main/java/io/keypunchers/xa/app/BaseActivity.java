@@ -20,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -34,7 +33,6 @@ import io.keypunchers.xa.fragments.LatestScreenshotsFragment;
 import io.keypunchers.xa.fragments.SettingsFragment;
 import io.keypunchers.xa.fragments.UpcomingGamesFragment;
 import io.keypunchers.xa.loaders.LatestScreenshotsLoader;
-import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.LatestScreenshot;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<ArrayList<LatestScreenshot>> {

@@ -18,8 +18,7 @@ public class ApplicationClass extends Application {
     public void onCreate(){
         super.onCreate();
 		MultiDex.install(this);
-        VolleySingleton.instantiate(this);
-		
+
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		
 		boolean hasCredentials = prefs.contains(getString(R.string.XA_PASSWORD)) && prefs.contains(getString(R.string.XA_PASSWORD));
