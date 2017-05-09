@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -20,12 +21,14 @@ import io.keypunchers.xa.models.Achievement;
 import io.keypunchers.xa.views.ScaledImageView;
 
 public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsListAdapter.ViewHolder> {
+    private Context mContext;
     private ArrayList<Achievement> mData;
     private int mResId = R.layout.row_achievements_wide;
 
-    public AchievementsListAdapter(ArrayList<Achievement> data, int layoutId) {
+    public AchievementsListAdapter(Context context, ArrayList<Achievement> data, int layoutId) {
         mData = data;
         mResId = layoutId;
+        mContext = context;
     }
 
     @Override
@@ -47,10 +50,11 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
         holder.mTvAchComments.setText(String.format(Locale.US, "%s %s", item.getCommentAmount(), holder.mTvAchComments.getText()).trim());
         holder.mTvAchGamerscore.setText(item.getGamescoreAmount());
 
-        VolleySingleton
-                .getImageLoader()
-                .get(item.getImageUrl(),
-                        ImageLoader.getImageListener(holder.mIvAchImage, 0, R.drawable.promo_banner));
+        Picasso.with(mContext)
+                .load(item.getImageUrl())
+                .noFade()
+                .error(R.drawable.promo_banner)
+                .into(holder.mIvAchImage);
     }
 
     @Override

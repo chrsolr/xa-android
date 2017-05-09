@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -82,12 +83,19 @@ public class AchievementsFragment extends Fragment {
 
     private void setupUI() {
         if (mData.getBanner() != null)
-            VolleySingleton.getImageLoader().get(mData.getBanner(), ImageLoader.getImageListener(mIvBanner, 0, 0));
+            Picasso.with(getActivity())
+                .load(mData.getBanner())
+                .noFade()
+                .error(R.drawable.promo_banner)
+                .into(mIvBanner);
 		else
 			mIvBanner.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.promo_banner));
 
         if (mData.getImageUrl() != null)
-            VolleySingleton.getImageLoader().get(mData.getImageUrl(), ImageLoader.getImageListener(mIvGameCover, 0, 0));
+            Picasso.with(getActivity())
+                    .load(mData.getImageUrl())
+                    .noFade()
+                    .into(mIvGameCover);
 		else
 			mIvGameCover.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.promo_banner));
 
@@ -116,9 +124,9 @@ public class AchievementsFragment extends Fragment {
                     AchievementsListAdapter mAdapter;
 
                     if (bitmap.getWidth() < 100)
-                        mAdapter = new AchievementsListAdapter(mData.getAchievements(), R.layout.row_achievements_square);
+                        mAdapter = new AchievementsListAdapter(getActivity(), mData.getAchievements(), R.layout.row_achievements_square);
                     else
-                        mAdapter = new AchievementsListAdapter(mData.getAchievements(), R.layout.row_achievements_wide);
+                        mAdapter = new AchievementsListAdapter(getActivity(), mData.getAchievements(), R.layout.row_achievements_wide);
 
                     mRvContent.setAdapter(mAdapter);
                     mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), mData.getAchievements().size());
@@ -129,7 +137,7 @@ public class AchievementsFragment extends Fragment {
             public void onErrorResponse(VolleyError e) {
 				e.printStackTrace();
 				
-				mRvContent.setAdapter(new AchievementsListAdapter(mData.getAchievements(), R.layout.row_achievements_wide));
+				mRvContent.setAdapter(new AchievementsListAdapter(getActivity(), mData.getAchievements(), R.layout.row_achievements_wide));
             }
         });
     }

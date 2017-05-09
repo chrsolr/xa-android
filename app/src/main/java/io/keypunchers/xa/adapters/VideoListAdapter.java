@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -43,8 +44,10 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         final String url = Common.getHighResYouTubeImage(item);
         final String yt_watch_link = Common.getYouTubeWatchLink(item);
 
-        VolleySingleton.getImageLoader()
-                .get(url, ImageLoader.getImageListener(holder.mIvImage, 0, 0));
+        Picasso.with(mContext)
+                .load(url)
+                .noFade()
+                .into(holder.mIvImage);
 
         holder.mIvPlayIcon.setOnClickListener(new View.OnClickListener() {
             @Override

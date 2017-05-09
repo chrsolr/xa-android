@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -47,10 +48,10 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
         holder.mTvAchCount.setText(String.format(Locale.US, "%s achievements", item.getAchCount()));
         holder.mTvGsCount.setText(String.format(Locale.US, "%s points", item.getGsCount()));
 
-        VolleySingleton
-                .getImageLoader()
-                .get(item.getArtwork(),
-                        ImageLoader.getImageListener(holder.mIvImage, 0, 0));
+        Picasso.with(mContext)
+                .load(item.getArtwork())
+                .noFade()
+                .into(holder.mIvImage);
     }
 
     @Override

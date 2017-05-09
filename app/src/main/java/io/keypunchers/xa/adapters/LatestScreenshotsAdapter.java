@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -41,13 +42,15 @@ public class LatestScreenshotsAdapter extends RecyclerView.Adapter<LatestScreens
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        LatestScreenshot screenshot = mData.get(position);
+        LatestScreenshot item = mData.get(position);
 
-        holder.mTvTitle.setText(screenshot.getTitle());
-        holder.mTvSubTitle.setText(screenshot.getDateAdded());
-        VolleySingleton.getImageLoader()
-                .get(screenshot.getImageUrl(),
-                        ImageLoader.getImageListener(holder.mIvScreenshot, 0, 0));
+        holder.mTvTitle.setText(item.getTitle());
+        holder.mTvSubTitle.setText(item.getDateAdded());
+
+        Picasso.with(mContext)
+                .load(item.getImageUrl())
+                .noFade()
+                .into(holder.mIvScreenshot);
     }
 
     @Override

@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -67,7 +68,11 @@ public class AchievementCommentsActivity extends AppCompatActivity {
         }
 
         ImageView mIvBanner = (ImageView) findViewById(R.id.iv_banner);
-        VolleySingleton.getImageLoader().get(mAchievement.getImageUrl(), ImageLoader.getImageListener(mIvBanner, 0, 0));
+
+        Picasso.with(this)
+                .load(mAchievement.getImageUrl())
+                .noFade()
+                .into(mIvBanner);
 
         TextView mTvAchTitle = (TextView) findViewById(R.id.tv_achievement_title);
         mTvAchTitle.setText(mAchievement.getTitle());

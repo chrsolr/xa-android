@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -50,8 +51,10 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         String item = mData.get(position);
 
-        VolleySingleton.getImageLoader()
-				.get(item, ImageLoader.getImageListener(holder.mIvImage, 0, 0));
+        Picasso.with(mContext)
+                .load(item)
+                .noFade()
+                .into(holder.mIvImage);
     }
 
     @Override

@@ -10,8 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.app.AchievementsActivity;
@@ -45,12 +47,12 @@ public class LatestAchievementsListAdapter extends RecyclerView.Adapter<LatestAc
         holder.mTvTitle.setText(item.getTitle());
         holder.mTvAchCount.setText(item.getAchievementsCount());
         holder.mTvGsCount.setText(item.getGamerscoreCount());
-        holder.mTvSubmittedBy.setText("Submitted By: " + item.getSubmittedBy());
+        holder.mTvSubmittedBy.setText(String.format(Locale.US, "Submitted By: %s", item.getSubmittedBy()));
 
-        VolleySingleton
-                .getImageLoader()
-                .get(item.getImageUrl(),
-                        ImageLoader.getImageListener(holder.mIvCover, 0, 0));
+        Picasso.with(mContext)
+                .load(item.getImageUrl())
+                .noFade()
+                .into(holder.mIvCover);
     }
 
     @Override

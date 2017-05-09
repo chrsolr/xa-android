@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import com.android.volley.toolbox.ImageLoader;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -95,10 +96,10 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
             if (((AppCompatActivity) getActivity()).getSupportActionBar() != null)
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(AB_TITLE);
 
-            VolleySingleton
-                    .getImageLoader()
-                    .get(mHeaderImageUrl,
-                            ImageLoader.getImageListener(mIvBanner, 0, 0));
+            Picasso.with(getActivity())
+                    .load(mHeaderImageUrl)
+                    .noFade()
+                    .into(mIvBanner);
         }
 
         if (mData.isEmpty()) {

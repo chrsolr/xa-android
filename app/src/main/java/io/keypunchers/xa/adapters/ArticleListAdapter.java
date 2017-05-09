@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -45,10 +46,10 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
         holder.mTvTitle.setText(item.getTitle());
         holder.mTvSubTitle.setText(item.getDesc());
 
-        VolleySingleton
-                .getImageLoader()
-                .get(item.getImageUrl(),
-                        ImageLoader.getImageListener(holder.mIvImage, 0, 0));
+        Picasso.with(mContext)
+                .load(item.getImageUrl())
+                .noFade()
+                .into(holder.mIvImage);
     }
 
     @Override
