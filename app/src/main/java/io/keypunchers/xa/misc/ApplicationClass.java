@@ -9,6 +9,7 @@ import com.google.android.gms.analytics.Tracker;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.models.UserProfile;
+import android.support.multidex.MultiDex;
 
 public class ApplicationClass extends Application {
 	private Tracker mTracker;
@@ -16,17 +17,17 @@ public class ApplicationClass extends Application {
     @Override
     public void onCreate(){
         super.onCreate();
-
+		MultiDex.install(this);
         VolleySingleton.instantiate(this);
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		
-		boolean hasCredentials = prefs.contains("XA_USERNAME") && prefs.contains("XA_PASSWORD");
+		boolean hasCredentials = prefs.contains(getString(R.string.XA_PASSWORD)) && prefs.contains(getString(R.string.XA_PASSWORD));
 		
 		if (hasCredentials) {
 			UserProfile profile = new UserProfile();
-			profile.setUsername(prefs.getString("XA_USERNAME", null));
-			profile.setPassword(prefs.getString("XA_PASSWORD", null));
+			profile.setUsername(prefs.getString(getString(R.string.XA_USERNAME), null));
+			profile.setPassword(prefs.getString(getString(R.string.XA_PASSWORD), null));
 			
 			Singleton.getInstance().setUserProfile(profile);
 		}
