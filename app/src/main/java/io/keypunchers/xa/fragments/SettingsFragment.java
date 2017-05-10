@@ -30,6 +30,20 @@ import io.keypunchers.xa.R;
 import io.keypunchers.xa.misc.ApplicationClass;
 import io.keypunchers.xa.misc.Singleton;
 import io.keypunchers.xa.models.UserProfile;
+import android.content.pm.PackageManager;
+import android.support.design.widget.Snackbar;
+import com.android.volley.RequestQueue;
+import io.keypunchers.xa.misc.VolleySingleton;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import org.json.JSONObject;
+import com.android.volley.VolleyError;
+import android.widget.Toast;
+import io.keypunchers.xa.misc.Common;
+import android.graphics.Color;
+import android.content.Intent;
+import android.net.Uri;
 
 public class SettingsFragment extends Fragment {
     private Spinner mPlatformSpinner;
@@ -46,6 +60,9 @@ public class SettingsFragment extends Fragment {
     private String XA_USERNAME;
     private String XA_PASSWORD;
     private Tracker mTracker;
+	private Snackbar mSnackbar;
+
+	private LinearLayout mLlCheckUpdates;
 
     public SettingsFragment() {
     }
@@ -86,6 +103,7 @@ public class SettingsFragment extends Fragment {
         mHighImageQuality.setChecked(mPrefs.getBoolean(HIGH_RES_IMAGE_SETTING_TAG, true));
 
         mLlCredentials = (LinearLayout) view.findViewById(R.id.ll_credentials);
+		mLlCheckUpdates = (LinearLayout) view.findViewById(R.id.ll_check_updates);
     }
 
     @Override
@@ -106,6 +124,8 @@ public class SettingsFragment extends Fragment {
         setupHighImageQuality();
 
         setupUserCredentials();
+		
+		setupCheckUpdates();
     }
 
     @Override
@@ -287,6 +307,60 @@ public class SettingsFragment extends Fragment {
             }
         });
     }
+	
+	public void setupCheckUpdates(){
+		try {
+            final int versionCode = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionCode;
+            
+			mLlCheckUpdates.setOnClickListener(new OnClickListener(){
+					@Override
+					public void onClick(final View view) {
+						mSnackbar = Common.makeSnackbar(getActivity(), view, "Check Updates...", Snackbar.LENGTH_INDEFINITE);
+						mSnackbar.show();
+						
+						RequestQueue mQueue = VolleySingleton.getRequestQueque();
+						JsonObjectRequest mRequest = new JsonObjectRequest(Request.Method.GET, "http://www.keypunchers.io/api/android/xa/version", null,
+							new Response.Listener<JSONObject>() {
+								@Override
+								public void onResponse(final JSONObject response) {
+									try {
+										final int code = response.getInt("version_code");
+										final String url = response.getString("download_url");
+										
+										if (code > versionCode){
+											mSnackbar.setText("Update available");
+											mSnackbar.setDuration(Snackbar.LENGTH_INDEFINITE);
+											mSnackbar.setActionTextColor(Color.WHITE);
+											mSnackbar.setAction("Download", new OnClickListener(){
+													@Override
+													public void onClick(View v) {
+														Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+														getActivity().startActivity(mIntent);
+													}
+												});
+										} else {
+											mSnackbar.setText("No update available");
+											mSnackbar.setDuration(Snackbar.LENGTH_LONG);
+											mSnackbar.show();
+										}
+									} catch (Exception ex){
+										ex.printStackTrace();
+									}
+								}
+							},
+							new Response.ErrorListener() {
+								@Override
+								public void onErrorResponse(VolleyError error) {
+									Snackbar.make(view, "Error: Cannot retrieve latest version", Snackbar.LENGTH_LONG).show();
+								}
+							});
+							
+							mQueue.add(mRequest);
+					}
+				});
+        } catch (PackageManager.NameNotFoundException e) {
+        }
+	}
 
     public void resetToDefault() {
         mPrefs.edit().clear().apply();
