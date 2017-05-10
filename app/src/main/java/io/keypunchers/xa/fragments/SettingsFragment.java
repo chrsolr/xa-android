@@ -352,7 +352,9 @@ public class SettingsFragment extends Fragment {
 							new Response.ErrorListener() {
 								@Override
 								public void onErrorResponse(VolleyError error) {
-									Snackbar.make(view, "Error: Cannot retrieve latest version", Snackbar.LENGTH_LONG).show();
+									mSnackbar.setText("Error: Cannot retrieve latest version");
+									mSnackbar.setDuration(Snackbar.LENGTH_LONG);
+									mSnackbar.show();
 								}
 							});
 
