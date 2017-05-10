@@ -85,7 +85,7 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<LatestAc
             }
 
         } catch (Exception ex) {
-            Log.e(LatestAchievement.class.getSimpleName(), ex.getMessage());
+            ex.printStackTrace();
             return null;
         }
         return null;

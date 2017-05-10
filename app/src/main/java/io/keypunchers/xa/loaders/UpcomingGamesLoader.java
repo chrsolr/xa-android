@@ -63,7 +63,7 @@ public class UpcomingGamesLoader extends AsyncTaskLoader<ArrayList<UpcomingGame>
 
             return mData;
         } catch (Exception e) {
-            Log.e("Upcoming Games Loader", e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }

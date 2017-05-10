@@ -147,7 +147,7 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
 
             return mData;
         } catch (Exception e) {
-            Log.e(GameDetails.class.getSimpleName(), e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }

@@ -68,7 +68,7 @@ public class ArticleListLoader extends AsyncTaskLoader<ArrayList<ArticleListItem
 
             return mData;
         } catch (Exception ex) {
-            Log.e("Article Loader", ex.getMessage());
+            ex.printStackTrace();
             return null;
         }
     }

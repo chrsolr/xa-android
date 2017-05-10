@@ -81,7 +81,7 @@ public class AchievementCommentsLoader extends AsyncTaskLoader<ArrayList<Comment
 
             return mData;
         } catch (Exception e) {
-            Log.e(AchievementCommentsLoader.class.getSimpleName(), e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }

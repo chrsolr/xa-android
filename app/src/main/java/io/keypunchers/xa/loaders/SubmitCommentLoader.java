@@ -108,6 +108,7 @@ public class SubmitCommentLoader extends AsyncTaskLoader<Pair<Boolean, String>> 
 
             return Pair.create(true, null);
         } catch (Exception ex) {
+            ex.printStackTrace();
             return Pair.create(false, ex.getMessage());
         }
     }

@@ -65,7 +65,7 @@ public class LatestScreenshotsLoader extends AsyncTaskLoader<ArrayList<LatestScr
 
             return mData;
         } catch (Exception ex) {
-            Log.e(LatestScreenshotsLoader.class.getSimpleName(), ex.getMessage());
+            ex.printStackTrace();
             return null;
         }
     }

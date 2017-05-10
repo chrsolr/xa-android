@@ -68,7 +68,7 @@ public class GamesListLoader extends AsyncTaskLoader<ArrayList<Game>> {
 
             return mData;
         } catch (Exception ex) {
-            Log.e(GamesListLoader.class.getSimpleName(), ex.getMessage());
+            ex.printStackTrace();
             return null;
         }
     }

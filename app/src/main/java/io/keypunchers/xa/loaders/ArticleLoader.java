@@ -137,7 +137,7 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
 
             return article;
         } catch (Exception ex) {
-            Log.e("ArticleListItem Loader", ex.getMessage());
+            ex.printStackTrace();
             return null;
         }
     }
