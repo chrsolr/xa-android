@@ -37,7 +37,7 @@ public class ImageListFragment extends Fragment {
 
         setRetainInstance(true);
 
-        ImageListAdapter mAdapter = new ImageListAdapter(getActivity(), mData);
+        ImageListAdapter mAdapter = new ImageListAdapter(mData);
         RecyclerView mRvContent = (RecyclerView) view.findViewById(R.id.rv_image_list);
         mRvContent.setAdapter(mAdapter);
         mRvContent.setLayoutManager(new LinearLayoutManager(getActivity()));

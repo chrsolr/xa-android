@@ -9,21 +9,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.android.volley.toolbox.ImageLoader;
 
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.app.ArticleActivity;
+import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.ArticleListItem;
 
 
 public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.ViewHolder> {
-    private Context mContext;
     private ArrayList<ArticleListItem> mData;
 
-    public ArticleListAdapter(Context context, ArrayList<ArticleListItem> data) {
-        mContext = context;
+    public ArticleListAdapter(ArrayList<ArticleListItem> data) {
         mData = data;
     }
 
@@ -44,15 +43,20 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
         holder.mTvTitle.setText(item.getTitle());
         holder.mTvSubTitle.setText(item.getDesc());
 
-        Picasso.with(mContext)
-                .load(item.getImageUrl())
-                .noFade()
-                .into(holder.mIvImage);
+        VolleySingleton
+                .getImageLoader()
+                .get(item.getImageUrl(),
+                        ImageLoader.getImageListener(holder.mIvImage, 0, 0));
     }
 
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

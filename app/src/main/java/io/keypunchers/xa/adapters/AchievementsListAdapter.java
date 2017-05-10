@@ -8,25 +8,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.android.volley.toolbox.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.app.AchievementCommentsActivity;
+import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.Achievement;
 import io.keypunchers.xa.views.ScaledImageView;
 
 public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsListAdapter.ViewHolder> {
-    private Context mContext;
     private ArrayList<Achievement> mData;
     private int mResId = R.layout.row_achievements_wide;
 
-    public AchievementsListAdapter(Context context, ArrayList<Achievement> data, int layoutId) {
+    public AchievementsListAdapter(ArrayList<Achievement> data, int layoutId) {
         mData = data;
         mResId = layoutId;
-        mContext = context;
     }
 
     @Override
@@ -48,11 +47,10 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
         holder.mTvAchComments.setText(String.format(Locale.US, "%s %s", item.getCommentAmount(), holder.mTvAchComments.getText()).trim());
         holder.mTvAchGamerscore.setText(item.getGamescoreAmount());
 
-        Picasso.with(mContext)
-                .load(item.getImageUrl())
-                .noFade()
-                .error(R.drawable.promo_banner)
-                .into(holder.mIvAchImage);
+        VolleySingleton
+                .getImageLoader()
+                .get(item.getImageUrl(),
+                        ImageLoader.getImageListener(holder.mIvAchImage, 0, R.drawable.promo_banner));
     }
 
     @Override

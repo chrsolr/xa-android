@@ -9,22 +9,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.android.volley.toolbox.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.app.AchievementsActivity;
+import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.Game;
 
 
 public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHolder> {
-    private Context mContext;
     private ArrayList<Game> mData;
 
-    public GameListAdapter(Context context, ArrayList<Game> data) {
-        mContext = context;
+    public GameListAdapter(ArrayList<Game> data) {
         mData = data;
     }
 
@@ -46,15 +45,20 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
         holder.mTvAchCount.setText(String.format(Locale.US, "%s achievements", item.getAchCount()));
         holder.mTvGsCount.setText(String.format(Locale.US, "%s points", item.getGsCount()));
 
-        Picasso.with(mContext)
-                .load(item.getArtwork())
-                .noFade()
-                .into(holder.mIvImage);
+        VolleySingleton
+                .getImageLoader()
+                .get(item.getArtwork(),
+                        ImageLoader.getImageListener(holder.mIvImage, 0, 0));
     }
 
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

@@ -9,21 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.android.volley.toolbox.ImageLoader;
 
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.LatestScreenshot;
 import io.keypunchers.xa.views.ScaledImageView;
 
 
 public class LatestScreenshotsAdapter extends RecyclerView.Adapter<LatestScreenshotsAdapter.ViewHolder> {
-    private Context mContext;
     private ArrayList<LatestScreenshot> mData;
 
-    public LatestScreenshotsAdapter(Context context, ArrayList<LatestScreenshot> data) {
-        mContext = context;
+    public LatestScreenshotsAdapter(ArrayList<LatestScreenshot> data) {
         mData = data;
     }
 
@@ -44,15 +43,19 @@ public class LatestScreenshotsAdapter extends RecyclerView.Adapter<LatestScreens
         holder.mTvTitle.setText(item.getTitle());
         holder.mTvSubTitle.setText(item.getDateAdded());
 
-        Picasso.with(mContext)
-                .load(item.getImageUrl())
-                .noFade()
-                .into(holder.mIvScreenshot);
+        VolleySingleton.getImageLoader()
+                .get(item.getImageUrl(),
+                        ImageLoader.getImageListener(holder.mIvScreenshot, 0, 0));
     }
 
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

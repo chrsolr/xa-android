@@ -16,9 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -28,6 +28,7 @@ import io.keypunchers.xa.adapters.ArticleListAdapter;
 import io.keypunchers.xa.loaders.ArticleListLoader;
 import io.keypunchers.xa.misc.ApplicationClass;
 import io.keypunchers.xa.misc.EndlessRecyclerViewScrollListener;
+import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.ArticleListItem;
 
 public class ArticleListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<ArticleListItem>> {
@@ -58,7 +59,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
         mIvBanner = (ImageView) view.findViewById(R.id.iv_banner);
 
-        mAdapter = new ArticleListAdapter(getActivity(), mData);
+        mAdapter = new ArticleListAdapter(mData);
 
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         EndlessRecyclerViewScrollListener mScroller = new EndlessRecyclerViewScrollListener(mLinearLayoutManager) {
@@ -94,10 +95,10 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
             if (((AppCompatActivity) getActivity()).getSupportActionBar() != null)
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(AB_TITLE);
 
-            Picasso.with(getActivity())
-                    .load(mHeaderImageUrl)
-                    .noFade()
-                    .into(mIvBanner);
+            VolleySingleton
+                    .getImageLoader()
+                    .get(mHeaderImageUrl,
+                            ImageLoader.getImageListener(mIvBanner, 0, 0));
         }
 
         if (mData.isEmpty()) {

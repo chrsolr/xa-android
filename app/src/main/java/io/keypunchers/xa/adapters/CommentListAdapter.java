@@ -8,20 +8,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.android.volley.toolbox.ImageLoader;
 
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.Comment;
 
 
 public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.ViewHolder> {
-    private Context mContext;
     private ArrayList<Comment> mData;
 
-    public CommentListAdapter(Context context, ArrayList<Comment> data) {
-        mContext = context;
+    public CommentListAdapter(ArrayList<Comment> data) {
         mData = data;
     }
 
@@ -43,17 +42,20 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
         holder.mDate.setText(item.getDate());
         holder.mText.setText(item.getText());
 
-        Picasso.with(mContext)
-                .load(item.getImageUrl())
-                .noFade()
-                .placeholder(R.drawable.x360a_comments_notag)
-                .error(R.drawable.x360a_comments_notag)
-                .into(holder.mIvImage);
+        VolleySingleton
+                .getImageLoader()
+                .get(item.getImageUrl(),
+                        ImageLoader.getImageListener(holder.mIvImage, R.drawable.x360a_comments_notag, R.drawable.x360a_comments_notag));
     }
 
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

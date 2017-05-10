@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
+import com.android.volley.toolbox.ImageLoader;
 
 import java.util.ArrayList;
 
@@ -33,6 +33,7 @@ import io.keypunchers.xa.fragments.LatestScreenshotsFragment;
 import io.keypunchers.xa.fragments.SettingsFragment;
 import io.keypunchers.xa.fragments.UpcomingGamesFragment;
 import io.keypunchers.xa.loaders.LatestScreenshotsLoader;
+import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.LatestScreenshot;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<ArrayList<LatestScreenshot>> {
@@ -144,10 +145,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     public void onLoadFinished(Loader<ArrayList<LatestScreenshot>> loader, ArrayList<LatestScreenshot> data) {
         mBanners = data;
 
-        Picasso.with(this)
-                .load(mBanners.get(0).getImageUrl())
-                .noFade()
-                .into((ImageView) findViewById(R.id.iv_drawer_banner));
+        VolleySingleton
+                .getImageLoader()
+                .get(mBanners.get(0).getImageUrl(),
+                        ImageLoader.getImageListener((ImageView) findViewById(R.id.iv_drawer_banner), 0, 0));
 
         TextView mTvTitle = (TextView) findViewById(R.id.tv_banner_title);
         mTvTitle.setText(mBanners.get(0).getTitle());

@@ -43,7 +43,7 @@ public class LatestScreenshotsFragment extends Fragment implements LoaderManager
 
         setRetainInstance(true);
 
-        mAdapter = new LatestScreenshotsAdapter(getActivity(), mData);
+        mAdapter = new LatestScreenshotsAdapter(mData);
         RecyclerView mRvContent = (RecyclerView) view.findViewById(R.id.rv_latest_screenshot);
         mRvContent.setAdapter(mAdapter);
         mRvContent.setLayoutManager(new LinearLayoutManager(getActivity()));

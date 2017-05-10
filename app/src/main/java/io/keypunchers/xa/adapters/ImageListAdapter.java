@@ -8,20 +8,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.squareup.picasso.Picasso;
+import com.android.volley.toolbox.ImageLoader;
 
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.views.ScaledImageView;
 
 
 public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.ViewHolder> {
-    private Context mContext;
     private ArrayList<String> mData;
 
-    public ImageListAdapter(Context context, ArrayList<String> data) {
-        mContext = context;
+    public ImageListAdapter(ArrayList<String> data) {
         mData = data;
     }
 
@@ -49,10 +48,9 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         String item = mData.get(position);
 
-        Picasso.with(mContext)
-                .load(item)
-                .noFade()
-                .into(holder.mIvImage);
+        VolleySingleton
+                .getImageLoader()
+                .get(item, ImageLoader.getImageListener(holder.mIvImage, 0, 0));
     }
 
     @Override

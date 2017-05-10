@@ -70,7 +70,7 @@ public class ScreenshotsFragment extends Fragment implements LoaderManager.Loade
             GAME_PERMALINK = getArguments().getString("game_permalink");
         }
 
-        mAdapter = new ImageListAdapter(getActivity(), mData);
+        mAdapter = new ImageListAdapter(mData);
         mRvContent.setAdapter(mAdapter);
 
         if (mData.isEmpty()) {

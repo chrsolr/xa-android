@@ -9,12 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
+import com.android.volley.toolbox.ImageLoader;
 
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.misc.Common;
+import io.keypunchers.xa.misc.VolleySingleton;
 
 public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.ViewHolder> {
     private Context mContext;
@@ -42,10 +43,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         final String url = Common.getHighResYouTubeImage(item);
         final String yt_watch_link = Common.getYouTubeWatchLink(item);
 
-        Picasso.with(mContext)
-                .load(url)
-                .noFade()
-                .into(holder.mIvImage);
+        VolleySingleton.getImageLoader()
+                .get(url, ImageLoader.getImageListener(holder.mIvImage, 0, 0));
 
         holder.mIvPlayIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +70,11 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

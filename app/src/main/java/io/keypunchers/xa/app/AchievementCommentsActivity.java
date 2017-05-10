@@ -20,9 +20,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -35,6 +35,7 @@ import io.keypunchers.xa.misc.ApplicationClass;
 import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.misc.Enums;
 import io.keypunchers.xa.misc.Singleton;
+import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.Achievement;
 import io.keypunchers.xa.models.Comment;
 
@@ -67,10 +68,8 @@ public class AchievementCommentsActivity extends AppCompatActivity {
 
         ImageView mIvBanner = (ImageView) findViewById(R.id.iv_banner);
 
-        Picasso.with(this)
-                .load(mAchievement.getImageUrl())
-                .noFade()
-                .into(mIvBanner);
+        VolleySingleton.getImageLoader()
+                .get(mAchievement.getImageUrl(), ImageLoader.getImageListener(mIvBanner, 0, 0));
 
         TextView mTvAchTitle = (TextView) findViewById(R.id.tv_achievement_title);
         mTvAchTitle.setText(mAchievement.getTitle());
@@ -166,7 +165,7 @@ public class AchievementCommentsActivity extends AppCompatActivity {
 
             @Override
             public void onLoadFinished(Loader<ArrayList<Comment>> loader, ArrayList<Comment> data) {
-                mAdapter = new CommentListAdapter(getApplicationContext(), data);
+                mAdapter = new CommentListAdapter(data);
                 mRvContent.setAdapter(mAdapter);
             }
 

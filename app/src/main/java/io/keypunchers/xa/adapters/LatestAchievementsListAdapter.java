@@ -9,22 +9,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.android.volley.toolbox.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.app.AchievementsActivity;
+import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.LatestAchievement;
 
 
 public class LatestAchievementsListAdapter extends RecyclerView.Adapter<LatestAchievementsListAdapter.ViewHolder> {
-    private Context mContext;
     private ArrayList<LatestAchievement> mData;
 
-    public LatestAchievementsListAdapter(Context context, ArrayList<LatestAchievement> data) {
-        mContext = context;
+    public LatestAchievementsListAdapter(ArrayList<LatestAchievement> data) {
         mData = data;
     }
 
@@ -47,15 +46,20 @@ public class LatestAchievementsListAdapter extends RecyclerView.Adapter<LatestAc
         holder.mTvGsCount.setText(item.getGamerscoreCount());
         holder.mTvSubmittedBy.setText(String.format(Locale.US, "Submitted By: %s", item.getSubmittedBy()));
 
-        Picasso.with(mContext)
-                .load(item.getImageUrl())
-                .noFade()
-                .into(holder.mIvCover);
+        VolleySingleton
+                .getImageLoader()
+                .get(item.getImageUrl(),
+                        ImageLoader.getImageListener(holder.mIvCover, 0, 0));
     }
 
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

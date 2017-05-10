@@ -70,7 +70,7 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
 
         setupSlidingPane(view);
 
-        mAdapter = new GameListAdapter(getActivity(), mData);
+        mAdapter = new GameListAdapter(mData);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         EndlessRecyclerViewScrollListener mScroller = new EndlessRecyclerViewScrollListener(mLayoutManager) {

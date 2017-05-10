@@ -8,18 +8,21 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 
 import org.xml.sax.XMLReader;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.Article;
 
 public class ArticleFragment extends Fragment {
@@ -47,22 +50,30 @@ public class ArticleFragment extends Fragment {
 
         if (!mData.getImageUrls().isEmpty()) {
 
-            Picasso.with(getActivity())
-                    .load(mData.getImageUrls().get(0))
-                    .noFade()
-                    .error(R.drawable.promo_banner)
-                    .into(((ImageView) view.findViewById(R.id.iv_article_banner)));
-        }
+            VolleySingleton.getImageLoader().get(mData.getImageUrls().get(0), new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                    ImageView mIvBanner = (ImageView) view.findViewById(R.id.iv_article_banner);
+                    mIvBanner.setImageBitmap(response.getBitmap());
 
-        setupUI(view);
+                    setupUI(view);
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e(ArticleFragment.class.getSimpleName(), error.getMessage());
+                }
+            });
+        } else {
+            setupUI(view);
+        }
     }
 
     private void setupUI(View view) {
 
-        Picasso.with(getActivity())
-                .load(mData.getAuthorProfileImageUrl())
-                .noFade()
-                .into(((CircleImageView) view.findViewById(R.id.iv_article_author_avatar)));
+        VolleySingleton.getImageLoader()
+                .get(mData.getAuthorProfileImageUrl(),
+                        ImageLoader.getImageListener(((CircleImageView) view.findViewById(R.id.iv_article_author_avatar)), 0, 0));
 
         ((TextView) view.findViewById(R.id.tv_article_title))
                 .setText(mData.getHeaderTitle());

@@ -1,7 +1,6 @@
 package io.keypunchers.xa.fragments;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,8 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -24,6 +23,7 @@ import java.util.Locale;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.AchievementsListAdapter;
+import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.Achievement;
 import io.keypunchers.xa.models.GameDetails;
 import io.keypunchers.xa.views.ScaledImageView;
@@ -36,7 +36,6 @@ public class AchievementsFragment extends Fragment {
     private TextView mTvGameGenres;
     private TextView mTvAchAmount;
     private RecyclerView mRvContent;
-    private Target mTarget;
 
     public AchievementsFragment() {
     }
@@ -82,19 +81,12 @@ public class AchievementsFragment extends Fragment {
 
     private void setupUI() {
         if (mData.getBanner() != null)
-            Picasso.with(getActivity())
-                    .load(mData.getBanner())
-                    .noFade()
-                    .error(R.drawable.promo_banner)
-                    .into(mIvBanner);
+            VolleySingleton.getImageLoader().get(mData.getBanner(), ImageLoader.getImageListener(mIvBanner, 0, 0));
         else
             mIvBanner.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.promo_banner));
 
         if (mData.getImageUrl() != null)
-            Picasso.with(getActivity())
-                    .load(mData.getImageUrl())
-                    .noFade()
-                    .into(mIvGameCover);
+            VolleySingleton.getImageLoader().get(mData.getImageUrl(), ImageLoader.getImageListener(mIvGameCover, 0, 0));
         else
             mIvGameCover.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.promo_banner));
 
@@ -114,16 +106,18 @@ public class AchievementsFragment extends Fragment {
             }
         });
 
-        mTarget = new Target() {
+        VolleySingleton.getImageLoader().get(mData.getAchievements().get(0).getImageUrl(), new ImageLoader.ImageListener() {
             @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                Bitmap bitmap = response.getBitmap();
+
                 if (bitmap != null) {
                     AchievementsListAdapter mAdapter;
 
                     if (bitmap.getWidth() < 100)
-                        mAdapter = new AchievementsListAdapter(getActivity(), mData.getAchievements(), R.layout.row_achievements_square);
+                        mAdapter = new AchievementsListAdapter(mData.getAchievements(), R.layout.row_achievements_square);
                     else
-                        mAdapter = new AchievementsListAdapter(getActivity(), mData.getAchievements(), R.layout.row_achievements_wide);
+                        mAdapter = new AchievementsListAdapter(mData.getAchievements(), R.layout.row_achievements_wide);
 
                     mRvContent.setAdapter(mAdapter);
                     mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), mData.getAchievements().size());
@@ -131,19 +125,11 @@ public class AchievementsFragment extends Fragment {
             }
 
             @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
+            public void onErrorResponse(VolleyError e) {
+                e.printStackTrace();
 
+                mRvContent.setAdapter(new AchievementsListAdapter(mData.getAchievements(), R.layout.row_achievements_wide));
             }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-        };
-
-        Picasso.with(getActivity())
-                .load(mData.getAchievements().get(0).getImageUrl())
-                .noFade()
-                .into(mTarget);
+        });
     }
 }

@@ -19,11 +19,11 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         return mFragmentList.get(position);
     }
 
-	@Override
-	public int getItemPosition(Object object) {
-		return POSITION_NONE;
-	}
-	
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
+
     @Override
     public int getCount() {
         return mFragmentList.size();
