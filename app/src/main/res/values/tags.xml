@@ -9,4 +9,5 @@
     <string name="DRAWER_LEARNED_TAG">DRAWER_LEARNED</string>
 	<string name="XA_USERNAME">XA_USERNAME</string>
 	<string name="XA_PASSWORD">XA_PASSWORD</string>
+	<string name="COMMENT_SIGNATURE">COMMENT_SIGNATURE</string>
 </resources>

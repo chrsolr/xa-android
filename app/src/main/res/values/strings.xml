@@ -45,5 +45,6 @@
         This application it is not affiliated with XboxAchievements.com and it is an unofficial application.
         If you will like to report an issue, please use the Google Play Store or feel free to sent me an email.
     </string>
+	<string name="default_signature">Send via Unofficial XboxAchievements Android App</string>
 
 </resources>

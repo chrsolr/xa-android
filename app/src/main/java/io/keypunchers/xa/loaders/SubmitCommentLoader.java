@@ -81,12 +81,11 @@ public class SubmitCommentLoader extends AsyncTaskLoader<Pair<Boolean, String>> 
             Map<String, String> cookies = response.cookies();
 
             mComment = String.format(Locale.US,
-                    "%s%s%sVia XA Android App%s%s",
+                    "%s%s%s%s",
                     mComment,
                     System.getProperty("line.separator"),
                     System.getProperty("line.separator"),
-                    System.getProperty("line.separator"),
-                    mThread);
+					profile.getSignature());
 
             if (mPostType == Enums.PostType.ARTICLE) {
                 Jsoup.connect(Common.getSubmitCommentUrl(mPostType))

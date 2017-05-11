@@ -27,6 +27,7 @@ public class ApplicationClass extends Application {
 			UserProfile profile = new UserProfile();
 			profile.setUsername(prefs.getString(getString(R.string.XA_USERNAME), null));
 			profile.setPassword(prefs.getString(getString(R.string.XA_PASSWORD), null));
+			profile.setSignature(prefs.getString(getString(R.string.COMMENT_SIGNATURE), getString(R.string.default_signature)));
 			
 			Singleton.getInstance().setUserProfile(profile);
 		}

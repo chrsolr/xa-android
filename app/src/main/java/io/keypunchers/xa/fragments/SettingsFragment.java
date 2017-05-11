@@ -60,10 +60,13 @@ public class SettingsFragment extends Fragment {
     private String ENDLESS_SCROLLER_MAX_ITEMS_POSITION_TAG;
     private String XA_USERNAME;
     private String XA_PASSWORD;
+	private String COMMENT_SIGNATURE;
     private Tracker mTracker;
     private Snackbar mSnackbar;
 
     private LinearLayout mLlCheckUpdates;
+
+	private LinearLayout mLlChangeSignature;
 
     public SettingsFragment() {
     }
@@ -88,6 +91,7 @@ public class SettingsFragment extends Fragment {
         ENDLESS_SCROLLER_MAX_ITEMS_POSITION_TAG = mResources.getString(R.string.ENDLESS_SCROLLER_MAX_ITEMS_POSITION_TAG);
         XA_USERNAME = mResources.getString(R.string.XA_USERNAME);
         XA_PASSWORD = mResources.getString(R.string.XA_PASSWORD);
+		COMMENT_SIGNATURE = mResources.getString(R.string.COMMENT_SIGNATURE);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
@@ -105,6 +109,7 @@ public class SettingsFragment extends Fragment {
 
         mLlCredentials = (LinearLayout) view.findViewById(R.id.ll_credentials);
         mLlCheckUpdates = (LinearLayout) view.findViewById(R.id.ll_check_updates);
+		mLlChangeSignature = (LinearLayout) view.findViewById(R.id.ll_signature);
     }
 
     @Override
@@ -127,6 +132,8 @@ public class SettingsFragment extends Fragment {
         setupUserCredentials();
 
         setupCheckUpdates();
+
+		setupChangeSignature();
     }
 
     @Override
@@ -161,152 +168,152 @@ public class SettingsFragment extends Fragment {
 
     private void setupEndlessScrollerMaxItemsSpinner() {
         mEndlessScrollerMaxSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int max = Integer.parseInt(mEndlessScrollerMaxSpinner.getAdapter().getItem(position).toString());
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+					int max = Integer.parseInt(mEndlessScrollerMaxSpinner.getAdapter().getItem(position).toString());
 
-                mPrefs.edit()
+					mPrefs.edit()
                         .putInt(getString(R.string.ENDLESS_SCROLLER_MAX_ITEMS_TAG), max)
                         .putInt(ENDLESS_SCROLLER_MAX_ITEMS_POSITION_TAG, position)
                         .apply();
-            }
+				}
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+				@Override
+				public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
+				}
+			});
     }
 
     private void setupDefaultHomeSpinner() {
         mDefaultHomeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mPrefs.edit()
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+					mPrefs.edit()
                         .putInt(DEFAULT_HOME_POSITION_TAG, position)
                         .apply();
-            }
+				}
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+				@Override
+				public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
+				}
+			});
     }
 
     private void setupPlatformSpinner() {
         mPlatformSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String platform = null;
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+					String platform = null;
 
-                switch (position) {
-                    case 0:
-                        platform = "xbox-one";
-                        break;
-                    case 1:
-                        platform = "retail";
-                        break;
-                    case 2:
-                        platform = "arcade";
-                        break;
-                    case 3:
-                        platform = "japanese";
-                        break;
-                    case 4:
-                        platform = "win8";
-                        break;
-                    case 5:
-                        platform = "wp7";
-                        break;
-                    case 6:
-                        platform = "pc";
-                        break;
-                }
+					switch (position) {
+						case 0:
+							platform = "xbox-one";
+							break;
+						case 1:
+							platform = "retail";
+							break;
+						case 2:
+							platform = "arcade";
+							break;
+						case 3:
+							platform = "japanese";
+							break;
+						case 4:
+							platform = "win8";
+							break;
+						case 5:
+							platform = "wp7";
+							break;
+						case 6:
+							platform = "pc";
+							break;
+					}
 
-                mPrefs.edit()
+					mPrefs.edit()
                         .putString(getString(R.string.DEFAULT_PLATFORM_TAG), platform)
                         .putInt(DEFAULT_PLATFORM_POSITION_TAG, position)
                         .apply();
-            }
+				}
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+				@Override
+				public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
+				}
+			});
     }
 
     private void setupHighImageQuality() {
         mHighImageQuality.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPrefs.edit().putBoolean(HIGH_RES_IMAGE_SETTING_TAG, mHighImageQuality.isChecked()).apply();
-            }
-        });
+				@Override
+				public void onClick(View v) {
+					mPrefs.edit().putBoolean(HIGH_RES_IMAGE_SETTING_TAG, mHighImageQuality.isChecked()).apply();
+				}
+			});
     }
 
     private void setupUserCredentials() {
         final UserProfile profile = Singleton.getInstance().getUserProfile();
 
         mLlCredentials.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setCancelable(true);
+				@Override
+				public void onClick(final View view) {
+					AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+					builder.setCancelable(true);
 
-                View layout = getActivity().getLayoutInflater().inflate(R.layout.dialog_credentials, null, false);
+					View layout = getActivity().getLayoutInflater().inflate(R.layout.dialog_credentials, null, false);
 
-                final EditText mInputUsername = (EditText) layout.findViewById(R.id.et_username);
-                final EditText mInputPassword = (EditText) layout.findViewById(R.id.et_password);
+					final EditText mInputUsername = (EditText) layout.findViewById(R.id.et_username);
+					final EditText mInputPassword = (EditText) layout.findViewById(R.id.et_password);
 
-                mInputUsername.setText(profile.getUsername());
-                mInputPassword.setText(profile.getPassword());
+					mInputUsername.setText(profile.getUsername());
+					mInputPassword.setText(profile.getPassword());
 
-                builder.setView(layout);
-                builder.setPositiveButton("Save",
+					builder.setView(layout);
+					builder.setPositiveButton("Save",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                             }
                         });
 
-                builder.setNegativeButton("Cancel",
+					builder.setNegativeButton("Cancel",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
                             }
                         });
 
-                final AlertDialog dialog = builder.create();
-                dialog.show();
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String username = mInputUsername.getText().toString();
-                        String password = mInputPassword.getText().toString();
+					final AlertDialog dialog = builder.create();
+					dialog.show();
+					dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new OnClickListener() {
+							@Override
+							public void onClick(View view) {
+								String username = mInputUsername.getText().toString();
+								String password = mInputPassword.getText().toString();
 
-                        if (username.equals(""))
-                            mInputUsername.setError("Username cannot be empty");
-                        else if (password.equals(""))
-                            mInputPassword.setError("Password cannot be empty");
-                        else {
-                            mPrefs.edit()
-                                    .putString(XA_USERNAME, username)
-                                    .putString(XA_PASSWORD, password)
-                                    .apply();
+								if (username.equals(""))
+									mInputUsername.setError("Username cannot be empty");
+								else if (password.equals(""))
+									mInputPassword.setError("Password cannot be empty");
+								else {
+									mPrefs.edit()
+										.putString(XA_USERNAME, username)
+										.putString(XA_PASSWORD, password)
+										.apply();
 
-                            profile.setUsername(username);
-                            profile.setPassword(password);
+									profile.setUsername(username);
+									profile.setPassword(password);
 
-                            Singleton.getInstance().setUserProfile(profile);
+									Singleton.getInstance().setUserProfile(profile);
 
-                            dialog.dismiss();
-                        }
+									dialog.dismiss();
+								}
 
-                    }
-                });
-            }
-        });
+							}
+						});
+				}
+			});
     }
 
     public void setupCheckUpdates() {
@@ -314,13 +321,13 @@ public class SettingsFragment extends Fragment {
             final int versionCode = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionCode;
 
             mLlCheckUpdates.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(final View view) {
-                    mSnackbar = Common.makeSnackbar(getActivity(), "Checking for Updates...", Snackbar.LENGTH_INDEFINITE);
-                    mSnackbar.show();
+					@Override
+					public void onClick(final View view) {
+						mSnackbar = Common.makeSnackbar(getActivity(), "Checking for Updates...", Snackbar.LENGTH_INDEFINITE);
+						mSnackbar.show();
 
-                    RequestQueue mQueue = VolleySingleton.getRequestQueque();
-                    JsonObjectRequest mRequest = new JsonObjectRequest(Request.Method.GET, "http://www.keypunchers.io/api/android/xa/version", null,
+						RequestQueue mQueue = VolleySingleton.getRequestQueque();
+						JsonObjectRequest mRequest = new JsonObjectRequest(Request.Method.GET, "http://www.keypunchers.io/api/android/xa/version", null,
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(final JSONObject response) {
@@ -333,12 +340,12 @@ public class SettingsFragment extends Fragment {
                                             mSnackbar.setDuration(Snackbar.LENGTH_INDEFINITE);
                                             mSnackbar.setActionTextColor(Color.WHITE);
                                             mSnackbar.setAction("Download", new OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                                                    getActivity().startActivity(mIntent);
-                                                }
-                                            });
+													@Override
+													public void onClick(View v) {
+														Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+														getActivity().startActivity(mIntent);
+													}
+												});
                                         } else {
                                             mSnackbar.setText("No update available");
                                             mSnackbar.setDuration(Snackbar.LENGTH_LONG);
@@ -358,18 +365,71 @@ public class SettingsFragment extends Fragment {
                                 }
                             });
 
-                    mRequest.setRetryPolicy(new DefaultRetryPolicy(
-                            5000,
-                            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+						mRequest.setRetryPolicy(new DefaultRetryPolicy(
+													5000,
+													DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+													DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-                    mQueue.add(mRequest);
-                }
-            });
+						mQueue.add(mRequest);
+					}
+				});
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
     }
+
+	public void setupChangeSignature() {
+		mLlChangeSignature.setOnClickListener(new OnClickListener(){
+
+				@Override
+				public void onClick(View view) {
+					AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+					builder.setCancelable(true);
+
+					View layout = getActivity().getLayoutInflater().inflate(R.layout.dialog_signature, null, false);
+					
+					final String mDefaultSignature = getActivity().getResources().getString(R.string.default_signature);
+
+					final EditText mInputSignature = (EditText) layout.findViewById(R.id.et_signature);
+
+					mInputSignature.setText(mPrefs.getString(COMMENT_SIGNATURE, mDefaultSignature));
+
+					builder.setView(layout);
+					builder.setPositiveButton("Save",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+
+					builder.setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+					final AlertDialog dialog = builder.create();
+					dialog.show();
+					dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new OnClickListener() {
+							@Override
+							public void onClick(View view) {
+								String signature = mInputSignature.getText().toString().trim();
+
+								if (signature.equals(""))
+									signature = mDefaultSignature;
+
+								mPrefs.edit()
+									.putString(COMMENT_SIGNATURE, signature)
+									.apply();
+									
+								Singleton.getInstance().getUserProfile().setSignature(signature);
+
+								dialog.dismiss();
+							}
+						});
+				}
+			});
+	}
 
     public void resetToDefault() {
         mPrefs.edit().clear().apply();
