@@ -61,6 +61,7 @@
         android:layout_below="@+id/view_divider"
         android:autoLink="web"
         android:clickable="true"
+		android:textIsSelectable="true"
         android:lineSpacingExtra="3dp"
         android:textAppearance="@style/AppTheme.TextStyle.Normal" />
 </RelativeLayout>
