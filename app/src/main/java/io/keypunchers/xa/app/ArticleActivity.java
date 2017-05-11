@@ -114,6 +114,12 @@ public class ArticleActivity extends AppCompatActivity {
                             mSnackbar.setText("Submitting...");
                             mSnackbar.show();
                         }
+						
+						mTracker.send(new HitBuilders.EventBuilder()
+									  .setCategory("Article Comment")
+									  .setAction("Post Comment")
+									  .setLabel(mData.getHeaderTitle())
+									  .build());
                     }
                 });
             }

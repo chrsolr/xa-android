@@ -121,6 +121,12 @@ public class AchievementCommentsActivity extends AppCompatActivity {
                             mSnackbar.setText("Submitting...");
                             mSnackbar.show();
                         }
+						
+						mTracker.send(new HitBuilders.EventBuilder()
+									  .setCategory("Achievement Comment")
+									  .setAction("Post Comment")
+									  .setLabel(mAchievement.getGameTitle())
+									  .build());
                     }
                 });
             }

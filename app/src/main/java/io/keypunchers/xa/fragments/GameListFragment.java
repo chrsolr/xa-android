@@ -127,7 +127,9 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+		String mAnalitysLabel = "";
+		String mAnalitysCategory = "";
+		
         int id = item.getItemId();
 
         switch (id) {
@@ -136,54 +138,64 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
                     mSlidingPane.closePane();
                 else
                     mSlidingPane.openPane();
+				mAnalitysCategory = "browse";
+				mAnalitysLabel = "Browse Menu";
                 break;
             case R.id.menu_browse_games_xone:
                 mSelectedPlatform = "xbox-one";
                 mCurrentSelectedLetter = "a";
                 mActionBar.setTitle("Xbox One");
+				mAnalitysLabel = "Xbox One";
                 cleanFetch();
                 break;
             case R.id.menu_browse_games_x360:
                 mSelectedPlatform = "retail";
                 mCurrentSelectedLetter = "a";
                 mActionBar.setTitle("Xbox 360");
+				mAnalitysLabel = "Xbox 360";
                 cleanFetch();
                 break;
             case R.id.menu_browse_games_arcade:
                 mSelectedPlatform = "arcade";
                 mCurrentSelectedLetter = "a";
                 mActionBar.setTitle("Arcade");
+				mAnalitysLabel = "Arcade";
                 cleanFetch();
                 break;
             case R.id.menu_browse_games_japanese:
                 mSelectedPlatform = "japanese";
                 mCurrentSelectedLetter = "a";
                 mActionBar.setTitle("Japanese");
+				mAnalitysLabel = "Japanese";
                 cleanFetch();
                 break;
             case R.id.menu_browse_games_gfwl:
                 mSelectedPlatform = "pc";
                 mCurrentSelectedLetter = "a";
                 mActionBar.setTitle("GFWL");
+				mAnalitysLabel = "GFWL";
                 cleanFetch();
                 break;
             case R.id.menu_browse_games_mobile:
                 mSelectedPlatform = "wp7";
                 mCurrentSelectedLetter = "a";
                 mActionBar.setTitle("Mobile");
+				mAnalitysLabel = "Mobile";
                 cleanFetch();
                 break;
             case R.id.menu_browse_games_win8:
                 mSelectedPlatform = "win8";
                 mCurrentSelectedLetter = "a";
                 mActionBar.setTitle("Windows 8");
+				mAnalitysLabel = "Windows 8";
                 cleanFetch();
                 break;
         }
-
+		
         mTracker.send(new HitBuilders.EventBuilder()
                 .setCategory("Platform Selection")
-                .setAction(mSelectedPlatform)
+                .setAction(mAnalitysCategory.equals("") ? mSelectedPlatform : mAnalitysCategory)
+				.setLabel(mAnalitysLabel)
                 .build());
 
         return super.onOptionsItemSelected(item);
