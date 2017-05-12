@@ -9,7 +9,6 @@ import com.google.android.gms.analytics.Tracker;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.models.UserProfile;
-import android.support.multidex.MultiDex;
 
 public class ApplicationClass extends Application {
 	private Tracker mTracker;
@@ -17,7 +16,7 @@ public class ApplicationClass extends Application {
     @Override
     public void onCreate(){
         super.onCreate();
-		MultiDex.install(this);
+
 		VolleySingleton.instantiate(this);
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		
