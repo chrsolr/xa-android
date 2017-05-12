@@ -4,39 +4,27 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
-
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.models.UserProfile;
 
 public class ApplicationClass extends Application {
-	private Tracker mTracker;
 
     @Override
-    public void onCreate(){
+    public void onCreate() {
         super.onCreate();
 
-		VolleySingleton.instantiate(this);
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		
-		boolean hasCredentials = prefs.contains(getString(R.string.XA_PASSWORD)) && prefs.contains(getString(R.string.XA_PASSWORD));
-		
-		if (hasCredentials) {
-			UserProfile profile = new UserProfile();
-			profile.setUsername(prefs.getString(getString(R.string.XA_USERNAME), null));
-			profile.setPassword(prefs.getString(getString(R.string.XA_PASSWORD), null));
-			profile.setSignature(prefs.getString(getString(R.string.COMMENT_SIGNATURE), getString(R.string.default_signature)));
-			
-			Singleton.getInstance().setUserProfile(profile);
-		}
-    }
+        VolleySingleton.instantiate(this);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-	synchronized public Tracker getDefaultTracker() {
-		if (mTracker == null) {
-			GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-			mTracker = analytics.newTracker(R.xml.global_tracker);
-		}
-		return mTracker;
-	}
+        boolean hasCredentials = prefs.contains(getString(R.string.XA_PASSWORD)) && prefs.contains(getString(R.string.XA_PASSWORD));
+
+        if (hasCredentials) {
+            UserProfile profile = new UserProfile();
+            profile.setUsername(prefs.getString(getString(R.string.XA_USERNAME), null));
+            profile.setPassword(prefs.getString(getString(R.string.XA_PASSWORD), null));
+            profile.setSignature(prefs.getString(getString(R.string.COMMENT_SIGNATURE), getString(R.string.default_signature)));
+
+            Singleton.getInstance().setUserProfile(profile);
+        }
+    }
 }

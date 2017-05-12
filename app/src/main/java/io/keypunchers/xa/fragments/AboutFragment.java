@@ -11,14 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import io.keypunchers.xa.R;
-import io.keypunchers.xa.misc.ApplicationClass;
 
 public class AboutFragment extends Fragment {
-    private Tracker mTracker;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public AboutFragment() {
     }
@@ -38,6 +36,7 @@ public class AboutFragment extends Fragment {
             TextView mTvVersionName = (TextView) view.findViewById(R.id.tv_about_app_version_name);
             mTvVersionName.setText(versionName);
         } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -45,8 +44,7 @@ public class AboutFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ApplicationClass application = (ApplicationClass) getActivity().getApplication();
-        mTracker = application.getDefaultTracker();
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.ab_about_title);
     }
@@ -54,7 +52,9 @@ public class AboutFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mTracker.setScreenName(AboutFragment.class.getSimpleName());
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
+        Bundle bundle = new Bundle();
+        bundle.putString("LOCATION", AboutFragment.class.getSimpleName());
+        mFirebaseAnalytics.logEvent("SCREEN", bundle);
     }
 }

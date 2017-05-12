@@ -15,8 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +24,6 @@ import java.util.Map;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.ViewPagerAdapter;
 import io.keypunchers.xa.loaders.UpcomingGamesLoader;
-import io.keypunchers.xa.misc.ApplicationClass;
 import io.keypunchers.xa.models.UpcomingGame;
 
 public class UpcomingGamesFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<UpcomingGame>> {
@@ -34,7 +32,7 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
     private ViewPagerAdapter mAdapter;
     private Map<String, ArrayList<UpcomingGame>> mData = new HashMap<>();
     private int mLoaderCounter = 0;
-    private Tracker mTracker;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public UpcomingGamesFragment() {
     }
@@ -62,8 +60,7 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ApplicationClass application = (ApplicationClass) getActivity().getApplication();
-        mTracker = application.getDefaultTracker();
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getActivity().findViewById(R.id.apl_main).setElevation(0);
@@ -89,8 +86,9 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
     @Override
     public void onResume() {
         super.onResume();
-        mTracker.setScreenName(UpcomingGamesFragment.class.getSimpleName());
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        Bundle bundle = new Bundle();
+        bundle.putString("LOCATION", UpcomingGamesFragment.class.getSimpleName());
+        mFirebaseAnalytics.logEvent("SCREEN", bundle);
     }
 
     @Override

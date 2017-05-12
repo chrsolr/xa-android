@@ -24,8 +24,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,11 +35,11 @@ import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.GameListAdapter;
 import io.keypunchers.xa.adapters.GenericAdapter;
 import io.keypunchers.xa.loaders.GamesListLoader;
-import io.keypunchers.xa.misc.ApplicationClass;
 import io.keypunchers.xa.misc.EndlessRecyclerViewScrollListener;
 import io.keypunchers.xa.models.Game;
 
 public class GameListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<Game>> {
+    private FirebaseAnalytics mFirebaseAnalytics;
     private String BASE_URL;
     private ArrayList<Game> mData = new ArrayList<>();
     private GameListAdapter mAdapter;
@@ -52,7 +51,6 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
     private String[] mAlphabetTitles;
 
     private ActionBar mActionBar;
-    private Tracker mTracker;
 
     public GameListFragment() {
     }
@@ -91,8 +89,7 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ApplicationClass application = (ApplicationClass) getActivity().getApplication();
-        mTracker = application.getDefaultTracker();
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
 
         setHasOptionsMenu(true);
 
@@ -127,9 +124,9 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-		String mAnalitysLabel = "";
-		String mAnalitysCategory = "";
-		
+        String mAnalitysLabel = "";
+        String mAnalitysCategory = "";
+
         int id = item.getItemId();
 
         switch (id) {
@@ -138,65 +135,64 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
                     mSlidingPane.closePane();
                 else
                     mSlidingPane.openPane();
-				mAnalitysCategory = "browse";
-				mAnalitysLabel = "Browse Menu";
+                mAnalitysCategory = "browse";
+                mAnalitysLabel = "Browse Menu";
                 break;
             case R.id.menu_browse_games_xone:
                 mSelectedPlatform = "xbox-one";
                 mCurrentSelectedLetter = "a";
                 mActionBar.setTitle("Xbox One");
-				mAnalitysLabel = "Xbox One";
+                mAnalitysLabel = "Xbox One";
                 cleanFetch();
                 break;
             case R.id.menu_browse_games_x360:
                 mSelectedPlatform = "retail";
                 mCurrentSelectedLetter = "a";
                 mActionBar.setTitle("Xbox 360");
-				mAnalitysLabel = "Xbox 360";
+                mAnalitysLabel = "Xbox 360";
                 cleanFetch();
                 break;
             case R.id.menu_browse_games_arcade:
                 mSelectedPlatform = "arcade";
                 mCurrentSelectedLetter = "a";
                 mActionBar.setTitle("Arcade");
-				mAnalitysLabel = "Arcade";
+                mAnalitysLabel = "Arcade";
                 cleanFetch();
                 break;
             case R.id.menu_browse_games_japanese:
                 mSelectedPlatform = "japanese";
                 mCurrentSelectedLetter = "a";
                 mActionBar.setTitle("Japanese");
-				mAnalitysLabel = "Japanese";
+                mAnalitysLabel = "Japanese";
                 cleanFetch();
                 break;
             case R.id.menu_browse_games_gfwl:
                 mSelectedPlatform = "pc";
                 mCurrentSelectedLetter = "a";
                 mActionBar.setTitle("GFWL");
-				mAnalitysLabel = "GFWL";
+                mAnalitysLabel = "GFWL";
                 cleanFetch();
                 break;
             case R.id.menu_browse_games_mobile:
                 mSelectedPlatform = "wp7";
                 mCurrentSelectedLetter = "a";
                 mActionBar.setTitle("Mobile");
-				mAnalitysLabel = "Mobile";
+                mAnalitysLabel = "Mobile";
                 cleanFetch();
                 break;
             case R.id.menu_browse_games_win8:
                 mSelectedPlatform = "win8";
                 mCurrentSelectedLetter = "a";
                 mActionBar.setTitle("Windows 8");
-				mAnalitysLabel = "Windows 8";
+                mAnalitysLabel = "Windows 8";
                 cleanFetch();
                 break;
         }
-		
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Platform Selection")
-                .setAction(mAnalitysCategory.equals("") ? mSelectedPlatform : mAnalitysCategory)
-				.setLabel(mAnalitysLabel)
-                .build());
+
+        Bundle bundle = new Bundle();
+        bundle.putString("PLATFORM_SELECTION", mAnalitysCategory.equals("") ? mSelectedPlatform : mAnalitysCategory);
+        bundle.putString("PLATFORM_SELECTION_LABEL", mAnalitysLabel);
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
         return super.onOptionsItemSelected(item);
     }
@@ -204,8 +200,9 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onResume() {
         super.onResume();
-        mTracker.setScreenName(GameListFragment.class.getSimpleName());
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        Bundle bundle = new Bundle();
+        bundle.putString("LOCATION", GameListFragment.class.getSimpleName());
+        mFirebaseAnalytics.logEvent("SCREEN", bundle);
     }
 
     @Override

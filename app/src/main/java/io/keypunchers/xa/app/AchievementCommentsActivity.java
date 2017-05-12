@@ -21,8 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -31,7 +30,6 @@ import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.CommentListAdapter;
 import io.keypunchers.xa.loaders.AchievementCommentsLoader;
 import io.keypunchers.xa.loaders.SubmitCommentLoader;
-import io.keypunchers.xa.misc.ApplicationClass;
 import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.misc.Enums;
 import io.keypunchers.xa.misc.Singleton;
@@ -40,11 +38,11 @@ import io.keypunchers.xa.models.Achievement;
 import io.keypunchers.xa.models.Comment;
 
 public class AchievementCommentsActivity extends AppCompatActivity {
+    private FirebaseAnalytics mFirebaseAnalytics;
     private Achievement mAchievement;
     private CommentListAdapter mAdapter;
     private RecyclerView mRvContent;
     private Snackbar mSnackbar;
-    private Tracker mTracker;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,8 +52,7 @@ public class AchievementCommentsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ApplicationClass application = (ApplicationClass) getApplication();
-        mTracker = application.getDefaultTracker();
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         if (getIntent().getExtras() != null) {
             mAchievement = getIntent().getExtras().getParcelable("ACHIEVEMENT");
@@ -71,7 +68,7 @@ public class AchievementCommentsActivity extends AppCompatActivity {
         VolleySingleton.getImageLoader()
                 .get(mAchievement.getImageUrl(), ImageLoader.getImageListener(mIvBanner, 0, 0));
 
-        TextView mTvAchTitle = (TextView) findViewById(R.id.tv_achievement_title);
+        final TextView mTvAchTitle = (TextView) findViewById(R.id.tv_achievement_title);
         mTvAchTitle.setText(mAchievement.getTitle());
 
         TextView mTvAchDesc = (TextView) findViewById(R.id.tv_achievement_desc);
@@ -121,12 +118,11 @@ public class AchievementCommentsActivity extends AppCompatActivity {
                             mSnackbar.setText("Submitting...");
                             mSnackbar.show();
                         }
-						
-						mTracker.send(new HitBuilders.EventBuilder()
-									  .setCategory("Achievement Comment")
-									  .setAction("Post Comment")
-									  .setLabel(mAchievement.getGameTitle())
-									  .build());
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("ACH_COMMENT", Singleton.getInstance().getUserProfile().getUsername());
+                        bundle.putString("ACH_COMMENT_LABEL", mTvAchTitle.getText().toString());
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                     }
                 });
             }
@@ -157,8 +153,10 @@ public class AchievementCommentsActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        mTracker.setScreenName(AchievementCommentsActivity.class.getSimpleName());
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
+        Bundle bundle = new Bundle();
+        bundle.putString("LOCATION", AchievementCommentsActivity.class.getSimpleName());
+        mFirebaseAnalytics.logEvent("SCREEN", bundle);
     }
 
     private void getAchievementComments() {

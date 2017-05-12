@@ -17,27 +17,25 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.adapters.LatestAchievementsListAdapter;
 import io.keypunchers.xa.loaders.LatestAchievementsLoader;
-import io.keypunchers.xa.misc.ApplicationClass;
 import io.keypunchers.xa.misc.EndlessRecyclerViewScrollListener;
 import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.LatestAchievement;
 
 public class LatestAchievementFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<LatestAchievement>> {
+    private FirebaseAnalytics mFirebaseAnalytics;
     private ArrayList<LatestAchievement> mData = new ArrayList<>();
     private String BASE_URL;
     private LatestAchievementsListAdapter mAdapter;
     private ImageView mIvBanner;
     private int LOADER_ID;
     private int mCurrentPage = 1;
-    private Tracker mTracker;
 
     public LatestAchievementFragment() {
     }
@@ -81,8 +79,7 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ApplicationClass application = (ApplicationClass) getActivity().getApplication();
-        mTracker = application.getDefaultTracker();
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
 
         LOADER_ID = getActivity().getResources().getInteger(R.integer.latest_achievements_loader_id);
 
@@ -107,8 +104,10 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
     @Override
     public void onResume() {
         super.onResume();
-        mTracker.setScreenName(LatestAchievementFragment.class.getSimpleName());
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
+        Bundle bundle = new Bundle();
+        bundle.putString("LOCATION", LatestAchievementFragment.class.getSimpleName());
+        mFirebaseAnalytics.logEvent("SCREEN", bundle);
     }
 
     @Override

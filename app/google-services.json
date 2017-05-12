@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "663174103865",
-    "project_id": "xa-android"
+    "firebase_url": "https://xa-android.firebaseio.com",
+    "project_id": "xa-android",
+    "storage_bucket": "xa-android.appspot.com"
   },
   "client": [
     {
@@ -11,7 +13,24 @@
           "package_name": "io.keypunchers.xa"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "663174103865-sujs3g45d4br3vqrapgh1m4ed49m48kr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.keypunchers.xa",
+            "certificate_hash": "dacfebec08458a83fba6e982d1fcaf6cac6ecaa7"
+          }
+        },
+        {
+          "client_id": "663174103865-a8ic3mlfm3v82l6307uh3ga01g9b07ls.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "663174103865-5ltnjq67kqftrnfa3v57rv90spd2ccqs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDUO0d0mW8pmxCAL81sDLUhinsfmETIA_M"
@@ -29,7 +48,7 @@
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }
