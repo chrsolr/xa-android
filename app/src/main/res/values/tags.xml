@@ -10,4 +10,12 @@
 	<string name="XA_USERNAME">XA_USERNAME</string>
 	<string name="XA_PASSWORD">XA_PASSWORD</string>
 	<string name="COMMENT_SIGNATURE">COMMENT_SIGNATURE</string>
+	
+	<!-- Analytics TAGs-->
+	<string name="POST_COMMENT">POST_COMMENT</string>
+	<string name="CHECK_UPDATE">CHECK_UPDATE</string>
+	<string name="SCREEN">SCREEN</string>
+	<string name="ACTION">ACTION</string>
+	<string name="LOCATION">LOCATION</string>
+	<string name="PLATFORM_SELECTION">PLATFORM_SELECTION</string>
 </resources>

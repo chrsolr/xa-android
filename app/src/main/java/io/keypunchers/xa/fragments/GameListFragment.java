@@ -190,9 +190,8 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
         }
 
         Bundle bundle = new Bundle();
-        bundle.putString("PLATFORM_SELECTION", mAnalitysCategory.equals("") ? mSelectedPlatform : mAnalitysCategory);
-        bundle.putString("PLATFORM_SELECTION_LABEL", mAnalitysLabel);
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        bundle.putString(getString(R.string.PLATFORM_SELECTION), mAnalitysCategory.equals("") ? mSelectedPlatform : mAnalitysCategory);
+        mFirebaseAnalytics.logEvent(getString(R.string.ACTION), bundle);
 
         return super.onOptionsItemSelected(item);
     }
@@ -201,8 +200,8 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
     public void onResume() {
         super.onResume();
         Bundle bundle = new Bundle();
-        bundle.putString("LOCATION", GameListFragment.class.getSimpleName());
-        mFirebaseAnalytics.logEvent("SCREEN", bundle);
+        bundle.putString(getString(R.string.LOCATION), GameListFragment.class.getSimpleName());
+        mFirebaseAnalytics.logEvent(getString(R.string.SCREEN), bundle);
     }
 
     @Override

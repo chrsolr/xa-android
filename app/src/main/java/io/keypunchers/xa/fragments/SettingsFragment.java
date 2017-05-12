@@ -43,6 +43,7 @@ import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.misc.Singleton;
 import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.UserProfile;
+import java.util.Locale;
 
 public class SettingsFragment extends Fragment {
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -161,8 +162,8 @@ public class SettingsFragment extends Fragment {
         super.onResume();
 
         Bundle bundle = new Bundle();
-        bundle.putString("LOCATION", SettingsFragment.class.getSimpleName());
-        mFirebaseAnalytics.logEvent("SCREEN", bundle);
+        bundle.putString(getString(R.string.LOCATION), SettingsFragment.class.getSimpleName());
+        mFirebaseAnalytics.logEvent(getString(R.string.SCREEN), bundle);
     }
 
     private void setupEndlessScrollerMaxItemsSpinner() {
@@ -370,6 +371,10 @@ public class SettingsFragment extends Fragment {
                             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
                     mQueue.add(mRequest);
+					
+					Bundle bundle = new Bundle();
+					bundle.putString(getString(R.string.CHECK_UPDATE), String.format(Locale.US, "Current App Version: %s", versionCode));
+					mFirebaseAnalytics.logEvent(getString(R.string.ACTION), bundle);
                 }
             });
         } catch (PackageManager.NameNotFoundException e) {

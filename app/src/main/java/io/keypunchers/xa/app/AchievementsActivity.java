@@ -94,8 +94,8 @@ public class AchievementsActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         Bundle bundle = new Bundle();
-        bundle.putString("LOCATION", AchievementsActivity.class.getSimpleName());
-        mFirebaseAnalytics.logEvent("SCREEN", bundle);
+        bundle.putString(getString(R.string.LOCATION), AchievementsActivity.class.getSimpleName());
+        mFirebaseAnalytics.logEvent(getString(R.string.SCREEN), bundle);
     }
 
     private void getGameAchievements() {

@@ -120,9 +120,8 @@ public class AchievementCommentsActivity extends AppCompatActivity {
                         }
 
                         Bundle bundle = new Bundle();
-                        bundle.putString("ACH_COMMENT", Singleton.getInstance().getUserProfile().getUsername());
-                        bundle.putString("ACH_COMMENT_LABEL", mTvAchTitle.getText().toString());
-                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                        bundle.putString(getString(R.string.POST_COMMENT), Singleton.getInstance().getUserProfile().getUsername());
+                        mFirebaseAnalytics.logEvent(getString(R.string.ACTION), bundle);
                     }
                 });
             }
@@ -155,8 +154,8 @@ public class AchievementCommentsActivity extends AppCompatActivity {
         super.onResume();
 
         Bundle bundle = new Bundle();
-        bundle.putString("LOCATION", AchievementCommentsActivity.class.getSimpleName());
-        mFirebaseAnalytics.logEvent("SCREEN", bundle);
+        bundle.putString(getString(R.string.LOCATION), AchievementCommentsActivity.class.getSimpleName());
+        mFirebaseAnalytics.logEvent(getString(R.string.SCREEN), bundle);
     }
 
     private void getAchievementComments() {

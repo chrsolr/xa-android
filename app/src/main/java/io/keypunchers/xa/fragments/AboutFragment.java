@@ -54,7 +54,7 @@ public class AboutFragment extends Fragment {
         super.onResume();
 
         Bundle bundle = new Bundle();
-        bundle.putString("LOCATION", AboutFragment.class.getSimpleName());
-        mFirebaseAnalytics.logEvent("SCREEN", bundle);
+        bundle.putString(getString(R.string.LOCATION), AboutFragment.class.getSimpleName());
+        mFirebaseAnalytics.logEvent(getString(R.string.SCREEN), bundle);
     }
 }

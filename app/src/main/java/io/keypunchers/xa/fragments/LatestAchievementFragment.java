@@ -106,8 +106,8 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
         super.onResume();
 
         Bundle bundle = new Bundle();
-        bundle.putString("LOCATION", LatestAchievementFragment.class.getSimpleName());
-        mFirebaseAnalytics.logEvent("SCREEN", bundle);
+        bundle.putString(getString(R.string.LOCATION), LatestAchievementFragment.class.getSimpleName());
+        mFirebaseAnalytics.logEvent(getString(R.string.SCREEN), bundle);
     }
 
     @Override

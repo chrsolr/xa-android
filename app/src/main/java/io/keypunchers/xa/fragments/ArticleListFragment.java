@@ -108,8 +108,8 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
         super.onResume();
 
         Bundle bundle = new Bundle();
-        bundle.putString("LOCATION", ArticleListFragment.class.getSimpleName());
-        mFirebaseAnalytics.logEvent("SCREEN", bundle);
+        bundle.putString(getString(R.string.LOCATION), ArticleListFragment.class.getSimpleName());
+        mFirebaseAnalytics.logEvent(getString(R.string.SCREEN), bundle);
     }
 
     @Override

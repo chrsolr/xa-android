@@ -69,8 +69,8 @@ public class LatestScreenshotsFragment extends Fragment implements LoaderManager
     public void onResume() {
         super.onResume();
         Bundle bundle = new Bundle();
-        bundle.putString("LOCATION", LatestScreenshot.class.getSimpleName());
-        mFirebaseAnalytics.logEvent("SCREEN", bundle);
+        bundle.putString(getString(R.string.LOCATION), LatestScreenshotsFragment.class.getSimpleName());
+        mFirebaseAnalytics.logEvent(getString(R.string.SCREEN), bundle);
     }
 
     @Override

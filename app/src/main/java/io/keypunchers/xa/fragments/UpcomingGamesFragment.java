@@ -87,8 +87,8 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
     public void onResume() {
         super.onResume();
         Bundle bundle = new Bundle();
-        bundle.putString("LOCATION", UpcomingGamesFragment.class.getSimpleName());
-        mFirebaseAnalytics.logEvent("SCREEN", bundle);
+        bundle.putString(getString(R.string.LOCATION), UpcomingGamesFragment.class.getSimpleName());
+        mFirebaseAnalytics.logEvent(getString(R.string.SCREEN), bundle);
     }
 
     @Override

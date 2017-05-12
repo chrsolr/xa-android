@@ -113,9 +113,8 @@ public class ArticleActivity extends AppCompatActivity {
                         }
 
                         Bundle bundle = new Bundle();
-                        bundle.putString("ACH_COMMENT", Singleton.getInstance().getUserProfile().getUsername());
-                        bundle.putString("ACH_COMMENT_LABEL", mData.getHeaderTitle());
-                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                        bundle.putString(getString(R.string.POST_COMMENT), Singleton.getInstance().getUserProfile().getUsername());
+                        mFirebaseAnalytics.logEvent(getString(R.string.ACTION), bundle);
                     }
                 });
             }
@@ -170,8 +169,8 @@ public class ArticleActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         Bundle bundle = new Bundle();
-        bundle.putString("LOCATION", ArticleActivity.class.getSimpleName());
-        mFirebaseAnalytics.logEvent("SCREEN", bundle);
+        bundle.putString(getString(R.string.LOCATION), ArticleActivity.class.getSimpleName());
+        mFirebaseAnalytics.logEvent(getString(R.string.SCREEN), bundle);
     }
 
     private void setupUI() {
