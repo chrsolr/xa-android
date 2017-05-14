@@ -49,9 +49,9 @@ public class MainActivity extends BaseActivity {
                                 final String url = response.getString("download_url");
                                 final String version = response.getString("version_name");
 
-                                //if (code > versionCode) {
+                                if (code > versionCode) {
                                     alertUpdateAvailable(url, version);
-                                //}
+                                }
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
