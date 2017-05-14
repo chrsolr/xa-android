@@ -118,6 +118,48 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoLink="web"
+            android:text="http://www.keypunchers.io/xa/tos"
+            android:textAppearance="@style/AppTheme.TextStyle.Normal" />
+		
+		<View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="@dimen/margin_level_2"
+            android:layout_marginTop="@dimen/margin_level_2"
+            android:background="@color/divider" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="XDA Thread"
+            android:textAppearance="@style/AppTheme.TextStyle.Title"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:text="@string/xda_thread"
+            android:textAppearance="@style/AppTheme.TextStyle.Normal" />
+		
+		<View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="@dimen/margin_level_2"
+            android:layout_marginTop="@dimen/margin_level_2"
+            android:background="@color/divider" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Blog"
+            android:textAppearance="@style/AppTheme.TextStyle.Title"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
             android:text="http://www.keypunchers.io/blogs"
             android:textAppearance="@style/AppTheme.TextStyle.Normal" />
 

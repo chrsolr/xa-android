@@ -43,8 +43,9 @@
     <string name="view_comments">View Comments</string>
     <string name="about_disclaimer">
         This application it is not affiliated with XboxAchievements.com and it is an unofficial application.
-        If you will like to report an issue, please use the Google Play Store or feel free to sent me an email.
+        If you will like to report an issue, please use the XDA Thread or feel free to sent me an email.
     </string>
+	<string name="xda_thread">https://forum.xda-developers.com/android/apps-games/app-xa-unofficial-xboxachievements-com-t3600450</string>
 	<string name="default_signature">Sent via Unofficial XboxAchievements Android App</string>
 
 </resources>
