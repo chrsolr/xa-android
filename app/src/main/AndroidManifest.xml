@@ -24,7 +24,7 @@
 		android:value="2.1"/>
 
         <activity
-            android:name=".app.BaseActivity"
+            android:name=".app.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
