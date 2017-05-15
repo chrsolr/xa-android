@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<!-- Theme Main Colors -->
-    <color name="color_primary">#ffffff</color>
-    <color name="color_primary_dark">#6F6F6F</color>
+    <color name="color_primary">#107c10</color>
+    <color name="color_primary_dark">#1b5e20</color>
     <color name="color_primary_accent">#e64a19</color>
 	
 	<!-- Fonts Colors -->
@@ -11,8 +11,8 @@
     <color name="primary_text_small_light">#D0D0D0</color>
 	
 	<!-- Theme Control Colors -->
-	<color name="color_control_normal">#ffffff</color>
-	<color name="color_control_activated">#6F6F6F</color>
+	<color name="color_control_normal">#107c10</color>
+	<color name="color_control_activated">#1b5e20</color>
 	<color name="color_control_highlight">#e64a19</color>
 	
 	<!-- Regular Colors -->
