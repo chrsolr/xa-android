@@ -75,8 +75,9 @@ public class ArticleFragment extends Fragment {
                 .get(mData.getAuthorProfileImageUrl(),
                         ImageLoader.getImageListener(((CircleImageView) view.findViewById(R.id.iv_article_author_avatar)), 0, 0));
 
-        ((TextView) view.findViewById(R.id.tv_article_title))
-                .setText(mData.getHeaderTitle());
+        TextView mTitle = (TextView) view.findViewById(R.id.tv_article_title);
+		mTitle.setText(mData.getHeaderTitle());
+		mTitle.setAllCaps(true);
 
         ((TextView) view.findViewById(R.id.tv_article_author_firstname))
                 .setText(mData.getAuthorFirstName());

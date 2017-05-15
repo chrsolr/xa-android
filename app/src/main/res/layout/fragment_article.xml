@@ -96,6 +96,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_level_4"
             android:layout_marginTop="@dimen/margin_level_2"
+			android:textSize="20dp"
+			android:textStyle="bold"
             android:paddingLeft="@dimen/padding_level_2"
             android:paddingRight="@dimen/padding_level_2"
             android:textAppearance="@style/AppTheme.TextStyle.Title" />
