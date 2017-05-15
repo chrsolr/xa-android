@@ -39,6 +39,7 @@
             android:layout_height="@dimen/video_icon_size"
             android:layout_weight="0.1"
             android:gravity="start"
+			android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_play_circle_filled_24dp"
             android:tint="@color/color_white"
             tools:ignore="ContentDescription" />
@@ -54,6 +55,7 @@
             android:layout_height="@dimen/video_icon_size"
             android:layout_weight="0.1"
             android:gravity="end"
+			android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_share_24dp"
             android:tint="@color/color_white"
             tools:ignore="ContentDescription" />

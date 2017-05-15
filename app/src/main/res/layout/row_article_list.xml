@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:clipToPadding="false"
     android:orientation="vertical"
+	android:background="?attr/selectableItemBackgroundBorderless"
     android:paddingBottom="@dimen/padding_level_1"
     android:paddingTop="@dimen/padding_level_1">
 

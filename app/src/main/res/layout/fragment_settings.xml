@@ -44,9 +44,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:background="@null"
+                
                 android:entries="@array/spinner_home"
                 android:gravity="end"
+				android:background="?attr/selectableItemBackgroundBorderless"
                 android:textAlignment="textEnd"
                 android:theme="@style/AppTheme.Spinner"
                 tools:ignore="UnusedAttribute" />
@@ -91,9 +92,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:background="@null"
+                
                 android:entries="@array/spinner_platforms"
                 android:gravity="end"
+				android:background="?attr/selectableItemBackgroundBorderless"
                 android:textAlignment="textEnd"
                 android:theme="@style/AppTheme.Spinner"
                 tools:ignore="UnusedAttribute" />
@@ -138,9 +140,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:background="@null"
+                
                 android:entries="@array/spinner_max_scroller_items"
                 android:gravity="end"
+				android:background="?attr/selectableItemBackgroundBorderless"
                 android:textAlignment="textEnd"
                 android:theme="@style/AppTheme.Spinner"
                 tools:ignore="UnusedAttribute" />
@@ -185,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:background="@null"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:entries="@array/spinner_max_scroller_items"
                 android:gravity="end"
                 android:textAlignment="textEnd"
@@ -216,6 +219,7 @@
 			android:id="@+id/ll_credentials"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:background="?attr/selectableItemBackgroundBorderless"
 			android:orientation="vertical">
 			
 			<TextView
@@ -247,6 +251,7 @@
 			android:id="@+id/ll_signature"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:background="?attr/selectableItemBackgroundBorderless"
 			android:orientation="vertical">
 
 			<TextView
@@ -278,6 +283,7 @@
 			android:id="@+id/ll_check_updates"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:background="?attr/selectableItemBackgroundBorderless"
 			android:orientation="vertical">
 
 			<TextView
