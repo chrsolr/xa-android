@@ -12,6 +12,9 @@
     <color name="primary_text_light">#A6A6A6</color>
     <color name="primary_text_small_light">#D0D0D0</color>
 	
+	<!-- CardView -->
+	<color name="cardview_background">@color/color_white</color>
+	
 	<!-- Theme Control Colors -->
 	<color name="color_control_normal">#107c10</color>
 	<color name="color_control_activated">#1b5e20</color>

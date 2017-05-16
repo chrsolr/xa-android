@@ -24,6 +24,10 @@
     <dimen name="padding_level_7">64dp</dimen>
     <dimen name="padding_level_8">72dp</dimen>
     <dimen name="padding_level_9">80dp</dimen>
+	
+	<!-- CardView -->
+	<dimen name="cardview_corner_radius">4dp</dimen>
+	<dimen name="cardview_elevation">8dp</dimen>
 
     <!-- Margins -->
     <dimen name="margin_level_0">4dp</dimen>
@@ -41,7 +45,7 @@
     <dimen name="screenshot_item_height">250dp</dimen>
     <dimen name="la_artwork_size">125dp</dimen>
     <dimen name="image_min_height">200dp</dimen>
-    <dimen name="news_artwork_size">75dp</dimen>
+    <dimen name="news_artwork_size">100dp</dimen>
     <dimen name="ach_artwork_square_size">75dp</dimen>
     <dimen name="video_icon_size">24dp</dimen>
 
