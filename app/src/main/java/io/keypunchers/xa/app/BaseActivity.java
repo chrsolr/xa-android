@@ -235,7 +235,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         if (position == 4 && fragment == null) {
             bundle.putString("url", "http://www.xboxachievements.com/archive/achievements/");
             bundle.putString("ab_title", getResources().getString(R.string.ab_latest_achievements_title));
-            bundle.putString("header_image_url", mBanners.get(4).getImageUrl());
+            bundle.putParcelable("header", mBanners.get(4));
 
             fragment = new LatestAchievementFragment();
             fragment.setArguments(bundle);
