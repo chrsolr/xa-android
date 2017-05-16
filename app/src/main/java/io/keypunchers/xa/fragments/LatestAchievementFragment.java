@@ -27,6 +27,8 @@ import io.keypunchers.xa.loaders.LatestAchievementsLoader;
 import io.keypunchers.xa.misc.EndlessRecyclerViewScrollListener;
 import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.LatestAchievement;
+import io.keypunchers.xa.models.LatestScreenshot;
+import android.widget.TextView;
 
 public class LatestAchievementFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<LatestAchievement>> {
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -35,7 +37,7 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
     private String BASE_URL;
     private LatestAchievementsListAdapter mAdapter;
     private ImageView mIvBanner;
-    private TextView mTvBannerTitle
+    private TextView mTvBannerTitle;
     private int LOADER_ID;
     private int mCurrentPage = 1;
 
@@ -56,7 +58,7 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         final int mMaxItems = mPrefs.getInt(getString(R.string.ENDLESS_SCROLLER_MAX_ITEMS_TAG), 50);
 
-        mIvBanner = (ImageView) view.findViewById(R.id.iv_la_banner);
+        mIvBanner = (ImageView) view.findViewById(R.id.iv_banner);
         mTvBannerTitle = (TextView) view.findViewById(R.id.tv_banner_title);
 
         mAdapter = new LatestAchievementsListAdapter(mData);
