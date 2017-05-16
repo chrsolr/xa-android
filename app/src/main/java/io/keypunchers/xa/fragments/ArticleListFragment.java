@@ -38,10 +38,9 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
     private ArrayList<ArticleListItem> mData = new ArrayList<>();
     private ArticleListAdapter mAdapter;
     private ImageView mIvBanner;
+	private TextView mTvBannerTitle;
     private int LOADER_ID;
     private int mCurrentPage = 1;
-
-	private TextView mTvBannerTitle;
 
     public ArticleListFragment() {
     }
@@ -91,10 +90,9 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
         LOADER_ID = getActivity().getResources().getInteger(R.integer.news_loader_id);
 
         if (getArguments() != null) {
+			String AB_TITLE = getArguments().getString("ab_title");
             BASE_URL = getArguments().getString("url");
-            String AB_TITLE = getArguments().getString("ab_title");
-			
-			mBanner = getArguments().getParcelable("header");
+            mBanner = getArguments().getParcelable("header");
 
             if (((AppCompatActivity) getActivity()).getSupportActionBar() != null)
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(AB_TITLE);
