@@ -99,6 +99,8 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 				
 			mTvBannerTitle.setText(mBanner.getTitle());
 			mTvBannerTitle.setAllCaps(true);
+			
+			 ObjectAnimator.ofFloat(mTvBannerTitle, "translationY", 200, 0).setDuration(2000).start();
 
             VolleySingleton
                     .getImageLoader()
