@@ -200,7 +200,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         if (position == 0 && fragment == null) {
             bundle.putString("url", "http://www.xboxachievements.com/archive/gaming-news/");
             bundle.putString("ab_title", getResources().getString(R.string.ab_news_title));
-            bundle.putString("header_image_url", mBanners.get(1).getImageUrl());
+            bundle.putParcelable("header", mBanners.get(1));
 
             fragment = new ArticleListFragment();
             fragment.setArguments(bundle);
@@ -209,7 +209,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         if (position == 1 && fragment == null) {
             bundle.putString("url", "http://www.xboxachievements.com/news/previews/");
             bundle.putString("ab_title", getResources().getString(R.string.ab_previews_title));
-            bundle.putString("header_image_url", mBanners.get(2).getImageUrl());
+            bundle.putParcelable("header", mBanners.get(2));
 
             fragment = new ArticleListFragment();
             fragment.setArguments(bundle);
@@ -218,7 +218,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         if (position == 2 && fragment == null) {
             bundle.putString("url", "http://www.xboxachievements.com/news/interviews/");
             bundle.putString("ab_title", getResources().getString(R.string.ab_interviews_title));
-            bundle.putString("header_image_url", mBanners.get(3).getImageUrl());
+            bundle.putParcelable("header", mBanners.get(3));
 
             fragment = new ArticleListFragment();
             fragment.setArguments(bundle);

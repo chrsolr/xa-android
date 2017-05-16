@@ -28,15 +28,20 @@ import io.keypunchers.xa.loaders.ArticleListLoader;
 import io.keypunchers.xa.misc.EndlessRecyclerViewScrollListener;
 import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.ArticleListItem;
+import io.keypunchers.xa.models.LatestScreenshot;
+import android.widget.TextView;
 
 public class ArticleListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<ArticleListItem>> {
     private FirebaseAnalytics mFirebaseAnalytics;
+	private LatestScreenshot mBanner;
     private String BASE_URL;
     private ArrayList<ArticleListItem> mData = new ArrayList<>();
     private ArticleListAdapter mAdapter;
     private ImageView mIvBanner;
     private int LOADER_ID;
     private int mCurrentPage = 1;
+
+	private TextView mTvBannerTitle;
 
     public ArticleListFragment() {
     }
@@ -56,6 +61,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
         final int mMaxItems = mPrefs.getInt(getString(R.string.ENDLESS_SCROLLER_MAX_ITEMS_TAG), 50);
 
         mIvBanner = (ImageView) view.findViewById(R.id.iv_banner);
+		mTvBannerTitle = (TextView) view.findViewById(R.id.tv_banner_title);
 
         mAdapter = new ArticleListAdapter(mData);
 
@@ -87,14 +93,18 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
         if (getArguments() != null) {
             BASE_URL = getArguments().getString("url");
             String AB_TITLE = getArguments().getString("ab_title");
-            String mHeaderImageUrl = getArguments().getString("header_image_url");
+			
+			mBanner = getArguments().getParcelable("header");
 
             if (((AppCompatActivity) getActivity()).getSupportActionBar() != null)
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(AB_TITLE);
+				
+			mTvBannerTitle.setText(mBanner.getTitle());
+			mTvBannerTitle.setAllCaps(true);
 
             VolleySingleton
                     .getImageLoader()
-                    .get(mHeaderImageUrl,
+                    .get(mBanner.getImageUrl(),
                             ImageLoader.getImageListener(mIvBanner, 0, 0));
         }
 

@@ -47,12 +47,11 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:maxLines="1"
-					android:text="INJUSTICE 2"
 					android:gravity="center"
-					android:layout_marginBottom="16dp"
-					android:textSize="24dp"
+					android:paddingBottom="@dimen/padding_level_1"
+					android:textSize="28dp"
+					android:fontFamily="sans-serif-light"
 					android:layout_alignParentBottom="true"
-			
 					android:textAppearance="@style/AppTheme.TextStyle.Title.Light" />
 			
 				</RelativeLayout>
