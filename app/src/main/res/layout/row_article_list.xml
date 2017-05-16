@@ -17,7 +17,7 @@
 		android:layout_height="wrap_content"
 		android:clipToPadding="false"
 		android:background="?attr/selectableItemBackgroundBorderless"
-		android:padding="@dimen/margin_level_1"
+		android:padding="@dimen/margin_level_2"
 		android:orientation="vertical">
 
 		<ImageView
@@ -35,8 +35,8 @@
 			android:layout_width="match_parent" 
 			android:layout_height="wrap_content"
 			android:orientation="vertical"
-			android:layout_marginLeft="@dimen/margin_level_1"
-			android:layout_marginStart="@dimen/margin_level_1"
+			android:layout_marginLeft="@dimen/margin_level_2"
+			android:layout_marginStart="@dimen/margin_level_2"
 			android:layout_toEndOf="@+id/iv_news_image"
 			android:layout_toRightOf="@+id/iv_news_image" >
 
