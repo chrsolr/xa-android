@@ -17,10 +17,7 @@
 		android:layout_height="wrap_content"
 		android:clipToPadding="false"
 		android:background="?attr/selectableItemBackgroundBorderless"
-		android:paddingTop="@dimen/margin_level_1"
-		android:paddingBottom="@dimen/margin_level_1"
-		android:paddingLeft="@dimen/margin_level_2"
-		android:paddingRight="@dimen/margin_level_2"
+		android:padding="@dimen/margin_level_2"
 		android:orientation="vertical">
 
 		<ImageView
