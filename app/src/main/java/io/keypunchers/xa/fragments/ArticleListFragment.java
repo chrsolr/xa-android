@@ -30,6 +30,7 @@ import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.ArticleListItem;
 import io.keypunchers.xa.models.LatestScreenshot;
 import android.widget.TextView;
+import android.animation.ObjectAnimator;
 
 public class ArticleListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<ArticleListItem>> {
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -100,7 +101,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 			mTvBannerTitle.setText(mBanner.getTitle());
 			mTvBannerTitle.setAllCaps(true);
 			
-			 ObjectAnimator.ofFloat(mTvBannerTitle, "translationY", 200, 0).setDuration(2000).start();
+			ObjectAnimator.ofFloat(mTvBannerTitle, "translationY", 200, 0).setDuration(1000).start();
 
             VolleySingleton
                     .getImageLoader()
