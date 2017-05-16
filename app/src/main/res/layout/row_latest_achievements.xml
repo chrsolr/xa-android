@@ -1,65 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+	xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-	android:background="?attr/selectableItemBackgroundBorderless"
-    android:paddingBottom="@dimen/padding_level_1"
-    android:paddingTop="@dimen/padding_level_1">
+	xmlns:cardview="http://schemas.android.com/apk/res-auto"
+	android:layout_gravity="center"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	cardview:cardBackgroundColor="@color/cardview_background"
+	cardview:cardCornerRadius="@dimen/cardview_corner_radius"
+	cardview:cardElevation="@dimen/cardview_elevation"
+	cardview:cardUseCompatPadding="true"
+	cardview:contentPadding="0dp">
+	
+	<RelativeLayout 
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:clipToPadding="false"
+		android:background="?attr/selectableItemBackgroundBorderless"
+		android:padding="@dimen/margin_level_1"
+		android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/iv_la_cover"
-        android:layout_width="@dimen/la_artwork_size"
-        android:layout_height="@dimen/la_artwork_size"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@color/color_black"
-        android:scaleType="centerCrop"
-        tools:ignore="ContentDescription" />
+		<ImageView
+			android:id="@+id/iv_la_cover"
+			android:layout_width="@dimen/la_artwork_size"
+			android:layout_height="@dimen/la_artwork_size"
+			android:layout_alignParentLeft="true"
+			android:layout_alignParentStart="true"
+			android:layout_alignParentTop="true"
+			android:elevation="4dp"
+			android:background="@color/color_white"
+			android:scaleType="centerCrop"
+			tools:ignore="ContentDescription" />
 
-    <TextView
-        android:id="@+id/tv_la_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tv_la_ach_count"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/tv_la_ach_count"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:textAppearance="@style/AppTheme.TextStyle.Title" />
+		<TextView
+			android:id="@+id/tv_la_title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignLeft="@+id/tv_la_ach_count"
+			android:layout_alignParentTop="true"
+			android:layout_alignStart="@+id/tv_la_ach_count"
+			android:ellipsize="end"
+			android:maxLines="2"
+			android:textAppearance="@style/AppTheme.TextStyle.Title" />
 
-    <TextView
-        android:id="@+id/tv_la_ach_count"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_la_title"
-        android:layout_marginLeft="@dimen/margin_level_1"
-        android:layout_marginStart="@dimen/margin_level_1"
-        android:layout_toEndOf="@+id/iv_la_cover"
-        android:layout_toRightOf="@+id/iv_la_cover"
-        android:textAppearance="@style/AppTheme.TextStyle.Subtitle" />
+		<TextView
+			android:id="@+id/tv_la_ach_count"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/tv_la_title"
+			android:layout_marginLeft="@dimen/margin_level_1"
+			android:layout_marginStart="@dimen/margin_level_1"
+			android:layout_toEndOf="@+id/iv_la_cover"
+			android:layout_toRightOf="@+id/iv_la_cover"
+			android:textAppearance="@style/AppTheme.TextStyle.Subtitle" />
 
-    <TextView
-        android:id="@+id/tv_la_gs_count"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_la_ach_count"
-        android:layout_marginLeft="@dimen/margin_level_1"
-        android:layout_marginStart="@dimen/margin_level_1"
-        android:layout_toEndOf="@+id/iv_la_cover"
-        android:layout_toRightOf="@+id/iv_la_cover"
-        android:textAppearance="@style/AppTheme.TextStyle.Subtitle" />
+		<TextView
+			android:id="@+id/tv_la_gs_count"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/tv_la_ach_count"
+			android:layout_marginLeft="@dimen/margin_level_1"
+			android:layout_marginStart="@dimen/margin_level_1"
+			android:layout_toEndOf="@+id/iv_la_cover"
+			android:layout_toRightOf="@+id/iv_la_cover"
+			android:textAppearance="@style/AppTheme.TextStyle.Subtitle" />
 
-    <TextView
-        android:id="@+id/tv_la_submitted_by"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_la_gs_count"
-        android:layout_marginLeft="@dimen/margin_level_1"
-        android:layout_marginStart="@dimen/margin_level_1"
-        android:layout_toEndOf="@+id/iv_la_cover"
-        android:layout_toRightOf="@+id/iv_la_cover"
-        android:textAppearance="@style/AppTheme.TextStyle.Subtitle" />
+		<TextView
+			android:id="@+id/tv_la_submitted_by"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/tv_la_gs_count"
+			android:layout_marginLeft="@dimen/margin_level_1"
+			android:layout_marginStart="@dimen/margin_level_1"
+			android:layout_toEndOf="@+id/iv_la_cover"
+			android:layout_toRightOf="@+id/iv_la_cover"
+			android:textAppearance="@style/AppTheme.TextStyle.Subtitle" />
 
-</RelativeLayout>
+	</RelativeLayout>
+</android.support.v7.widget.CardView>
