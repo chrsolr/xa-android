@@ -11,6 +11,7 @@
         android:id="@+id/ll_article"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
@@ -18,7 +19,7 @@
             android:layout_height="wrap_content"
             app:cardElevation="12dp"
             app:cardUseCompatPadding="false"
-            app:contentPadding="0dp">
+            app:contentPadding="1dp">
 
             <io.keypunchers.xa.views.ScaledImageView
                 android:id="@+id/iv_article_banner"
