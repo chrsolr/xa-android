@@ -1,69 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-	xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-	xmlns:cardview="http://schemas.android.com/apk/res-auto"
-	android:layout_gravity="center"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	cardview:cardBackgroundColor="@color/cardview_background"
-	cardview:cardCornerRadius="@dimen/cardview_corner_radius"
-	cardview:cardElevation="@dimen/cardview_elevation"
-	cardview:cardUseCompatPadding="true"
-	cardview:contentPadding="0dp">
-	
-	<RelativeLayout 
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:clipToPadding="false"
-		android:background="?attr/selectableItemBackgroundBorderless"
-		android:padding="@dimen/margin_level_2"
-		android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    cardview:cardBackgroundColor="@color/cardview_background"
+    cardview:cardCornerRadius="@dimen/cardview_corner_radius"
+    cardview:cardElevation="@dimen/cardview_elevation"
+    cardview:cardUseCompatPadding="true"
+    cardview:contentPadding="0dp">
 
-		<android.support.v7.widget.CardView
-			android:id="@+id/cv_news_image"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			cardview:contentPadding="0dp"
-			cardview:cardElevation="4dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_level_2">
 
-		<ImageView
-			android:id="@+id/iv_news_image"
-			android:layout_width="@dimen/news_artwork_size"
-			android:layout_height="@dimen/news_artwork_size"
-			android:layout_alignParentLeft="true"
-			android:layout_alignParentStart="true"
-			android:layout_alignParentTop="true"
-			android:background="@color/color_white"
-			tools:ignore="ContentDescription" />
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_news_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            cardview:cardElevation="4dp"
+            cardview:cardUseCompatPadding="false"
+            cardview:contentPadding="0dp">
 
-		</android.support.v7.widget.CardView>
+            <ImageView
+                android:id="@+id/iv_news_image"
+                android:layout_width="@dimen/news_artwork_size"
+                android:layout_height="@dimen/news_artwork_size"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/color_white"
+                tools:ignore="ContentDescription" />
 
-		<LinearLayout
-			android:layout_width="match_parent" 
-			android:layout_height="wrap_content"
-			android:orientation="vertical"
-			android:layout_marginLeft="@dimen/margin_level_2"
-			android:layout_marginStart="@dimen/margin_level_2"
-			android:layout_toEndOf="@+id/cv_news_image"
-			android:layout_toRightOf="@+id/cv_news_image" >
+        </android.support.v7.widget.CardView>
 
-			<TextView
-				android:id="@+id/tv_news_title"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:ellipsize="end"
-				android:maxLines="3"
-				android:textAppearance="@style/AppTheme.TextStyle.Title" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_level_2"
+            android:layout_marginStart="@dimen/margin_level_2"
+            android:layout_toEndOf="@+id/cv_news_image"
+            android:layout_toRightOf="@+id/cv_news_image"
+            android:orientation="vertical">
 
-			<TextView
-				android:id="@+id/tv_news_subtitle"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:ellipsize="end"
-				android:maxLines="1"
-				android:textAppearance="@style/AppTheme.TextStyle.Subtitle" />
+            <TextView
+                android:id="@+id/tv_news_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:textAppearance="@style/AppTheme.TextStyle.Title" />
 
-		</LinearLayout>
-	</RelativeLayout>
+            <TextView
+                android:id="@+id/tv_news_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@style/AppTheme.TextStyle.Subtitle" />
+
+        </LinearLayout>
+    </RelativeLayout>
 </android.support.v7.widget.CardView>
