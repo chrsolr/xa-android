@@ -29,6 +29,7 @@
                 android:id="@+id/iv_latest_screenshot_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="@dimen/image_min_height"
                 android:background="@color/color_white" />
 
         </android.support.v7.widget.CardView>
