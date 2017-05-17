@@ -5,8 +5,4 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:scrollbars="none"
-	android:paddingLeft="@dimen/padding_level_2"
-	android:paddingRight="@dimen/padding_level_2"
-	android:paddingTop="@dimen/padding_level_1"
-	android:paddingBottom="@dimen/padding_level_1"
     tools:context="io.keypunchers.xa.fragments.LatestScreenshotsFragment" />
