@@ -32,8 +32,8 @@
 
 				<ImageView
 					android:id="@+id/iv_comment_image"
-					android:layout_width="150dp"
-					android:layout_height="75dp"
+					android:layout_width="125dp"
+					android:layout_height="65dp"
 					android:background="@color/color_white"
 				 	tools:ignore="ContentDescription" />
 
@@ -51,18 +51,24 @@
 					android:id="@+id/tv_comment_title"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
+					android:maxLines="1"
+					android:ellipsize="end"
 					android:textAppearance="@style/AppTheme.TextStyle.Title" />
 
 				<TextView
 					android:id="@+id/tv_comment_date"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
+					android:maxLines="1"
+					android:ellipsize="end"
 					android:textAppearance="@style/AppTheme.TextStyle.Subtitle" />
 				
 				<TextView
 					android:id="@+id/tv_comment_count"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
+					android:maxLines="1"
+					android:ellipsize="end"
 					android:textAppearance="@style/AppTheme.TextStyle.Subtitle" />
 			</LinearLayout>
 		</LinearLayout>
