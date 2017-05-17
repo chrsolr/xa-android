@@ -15,11 +15,13 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 	    android:padding="@dimen/padding_level_2"
+		android:clipToPadding="false"
 		orientation="vertical" >
 		
 		<RelativeLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
 	
 			<android.support.v7.widget.CardView
 				android:id="@+id/cv_comment_image"
