@@ -31,9 +31,6 @@
                 android:id="@+id/iv_news_image"
                 android:layout_width="@dimen/news_artwork_size"
                 android:layout_height="@dimen/news_artwork_size"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:background="@color/color_white"
                 tools:ignore="ContentDescription" />
 
