@@ -28,7 +28,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				cardview:cardElevation="4dp"
-				cardview:cardUseCompatPadding="false"
+				cardview:cardUseCompatPadding="true"
 				cardview:contentPadding="0dp">
 
 				<io.keypunchers.xa.views.ScaledImageView
