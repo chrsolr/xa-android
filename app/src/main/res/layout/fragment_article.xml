@@ -10,26 +10,16 @@
         android:id="@+id/ll_article"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
 		android:clipToPadding="false"
-=======
-        android:clipToPadding="false"
->>>>>>> branch 'development' of https://github.com/iamrelos/xa-android.git
-        android:orientation="vertical">
+		android:orientation="vertical">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-<<<<<<< HEAD
 			android:layout_margin="@dimen/margin_level_1"
             app:cardElevation="8dp"
             app:cardUseCompatPadding="true"
             app:contentPadding="0dp">
-=======
-            app:cardElevation="12dp"
-            app:cardUseCompatPadding="false"
-            app:contentPadding="1dp">
->>>>>>> branch 'development' of https://github.com/iamrelos/xa-android.git
 
             <io.keypunchers.xa.views.ScaledImageView
                 android:id="@+id/iv_article_banner"
