@@ -57,7 +57,7 @@ public class LatestScreenshotsFragment extends Fragment implements LoaderManager
 
         if (mData.isEmpty() && getArguments() != null) {
             String AB_TITLE = getArguments().getString("ab_title");
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(AB_TITLE);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
         }
 
         if (mData.isEmpty()) {
