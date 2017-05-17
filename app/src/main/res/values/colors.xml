@@ -8,9 +8,9 @@
 	<color name="color_bg_secondary">#f1f1f1</color>
 	
 	<!-- Fonts Colors -->
-	<color name="primary_text_dark">#6F6F6F</color>
-    <color name="primary_text_light">#A6A6A6</color>
-    <color name="primary_text_small_light">#D0D0D0</color>
+	<color name="primary_text_dark">#3E434B</color>
+    <color name="primary_text_light">#D1D1D1</color>
+    <color name="primary_text_small_light">#D1D1D1</color>
 	
 	<!-- CardView -->
 	<color name="cardview_background">@color/color_white</color>
@@ -21,7 +21,7 @@
 	<color name="color_control_highlight">#e64a19</color>
 	
 	<!-- Regular Colors -->
-    <color name="color_light_gray">#D0D0D0</color>
+    <color name="color_light_gray">#D1D1D1</color>
     <color name="color_white">#ffffff</color>
     <color name="color_black">#000000</color>
 	<color name="color_transparent">#00000000</color>
