@@ -101,8 +101,7 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
 
                     image_url = image_url.replaceAll("\\s", "%20");
 					
-					title = title.substring(title.indexOf("by "), title.length());
-					title = title.substring(2, title.lenght()).trim();
+					title = title.substring(title.indexOf("by ") + 3, title.length()).trim();
 					
 					List<TextNode> text_nodes = comments_rows.get(i + 1).select("td").first().textNodes();
 					for (int j = 0, nodes_size = text_nodes.size(); j < nodes_size; j++){

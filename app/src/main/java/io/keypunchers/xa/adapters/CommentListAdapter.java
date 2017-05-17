@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.Comment;
+import java.util.Locale;
 
 
 public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.ViewHolder> {
@@ -41,6 +42,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
         holder.mTitle.setText(item.getTitle());
         holder.mDate.setText(item.getDate());
         holder.mText.setText(item.getText());
+		holder.mCount.setText(String.format(Locale.US, "Comment #%s", position + 1));
 
         VolleySingleton
                 .getImageLoader()
@@ -62,14 +64,16 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
         ImageView mIvImage;
         TextView mTitle;
         TextView mDate;
+		TextView mCount;
         TextView mText;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            mIvImage = (ImageView) itemView.findViewById(R.id.iv_comment_list);
+            mIvImage = (ImageView) itemView.findViewById(R.id.iv_comment_image);
             mTitle = (TextView) itemView.findViewById(R.id.tv_comment_title);
             mDate = (TextView) itemView.findViewById(R.id.tv_comment_date);
+			mCount = (TextView) itemView.findViewById(R.id.tv_comment_count);
             mText = (TextView) itemView.findViewById(R.id.tv_comment_text);
         }
     }
