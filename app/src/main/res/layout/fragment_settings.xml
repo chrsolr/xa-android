@@ -22,7 +22,8 @@
             android:fontFamily="sans-serif-bold"
             android:text="Settings"
             android:textAppearance="@style/AppTheme.TextStyle.Title"
-            android:textColor="@color/color_primary_accent" />
+            android:textColor="@color/color_primary_accent"
+            android:textStyle="bold" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -34,7 +35,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-bold"
                 android:text="Home"
-                android:textAppearance="@style/AppTheme.TextStyle.Title" />
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
+                android:textColor="@null"
+                android:textStyle="bold" />
 
             <Spinner
                 android:id="@+id/spinner_settings_default_home"
@@ -42,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
+
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:entries="@array/spinner_home"
                 android:gravity="end"
@@ -57,7 +61,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tv_settings_default_home_title"
                 android:text="Section to load when opening application."
-                android:textAppearance="@style/AppTheme.TextStyle.Small" />
+                android:textAppearance="@style/AppTheme.TextStyle.Small"
+                android:textColor="@null" />
 
         </RelativeLayout>
 
@@ -78,7 +83,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-bold"
                 android:text="Browse Game Platform"
-                android:textAppearance="@style/AppTheme.TextStyle.Title" />
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
+                android:textColor="@null"
+                android:textStyle="bold" />
 
             <Spinner
                 android:id="@+id/spinner_settings_default_platform"
@@ -86,6 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
+
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:entries="@array/spinner_platforms"
                 android:gravity="end"
@@ -101,7 +109,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tv_settings_default_platform_title"
                 android:text="Default platform to loading in browse games."
-                android:textAppearance="@style/AppTheme.TextStyle.Small" />
+                android:textAppearance="@style/AppTheme.TextStyle.Small"
+                android:textColor="@null" />
 
         </RelativeLayout>
 
@@ -122,7 +131,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-bold"
                 android:text="Infinite Loading"
-                android:textAppearance="@style/AppTheme.TextStyle.Title" />
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
+                android:textColor="@null"
+                android:textStyle="bold" />
 
             <Spinner
                 android:id="@+id/spinner_settings_scroll_max_items"
@@ -130,6 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
+
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:entries="@array/spinner_max_scroller_items"
                 android:gravity="end"
@@ -145,7 +157,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tv_settings_scroll_max_items_title"
                 android:text="The max item allow to load (Excluding Browse Games, Comments, Achievements and Screenshots)."
-                android:textAppearance="@style/AppTheme.TextStyle.Small" />
+                android:textAppearance="@style/AppTheme.TextStyle.Small"
+                android:textColor="@null" />
 
         </RelativeLayout>
 
@@ -166,7 +179,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-bold"
                 android:text="High-Res Images"
-                android:textAppearance="@style/AppTheme.TextStyle.Title" />
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
+                android:textColor="@null"
+                android:textStyle="bold" />
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/sw_settings_image_quality"
@@ -189,7 +204,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tv_settings_image_quality_title"
                 android:text="High-Res images will use more data and be slower to display."
-                android:textAppearance="@style/AppTheme.TextStyle.Small" />
+                android:textAppearance="@style/AppTheme.TextStyle.Small"
+                android:textColor="@null" />
 
         </RelativeLayout>
 
@@ -212,13 +228,16 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-bold"
                 android:text="Credentials"
-                android:textAppearance="@style/AppTheme.TextStyle.Title" />
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
+                android:textColor="@null"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Set credentials for XboxAchievements.com."
-                android:textAppearance="@style/AppTheme.TextStyle.Small" />
+                android:textAppearance="@style/AppTheme.TextStyle.Small"
+                android:textColor="@null" />
 
         </LinearLayout>
 
@@ -241,13 +260,16 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-bold"
                 android:text="Change Signature"
-                android:textAppearance="@style/AppTheme.TextStyle.Title" />
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
+                android:textColor="@null"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Change comments signature"
-                android:textAppearance="@style/AppTheme.TextStyle.Small" />
+                android:textAppearance="@style/AppTheme.TextStyle.Small"
+                android:textColor="@null" />
 
         </LinearLayout>
 
@@ -270,13 +292,16 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-bold"
                 android:text="Check Updates"
-                android:textAppearance="@style/AppTheme.TextStyle.Title" />
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
+                android:textColor="@null"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Check if an update is available."
-                android:textAppearance="@style/AppTheme.TextStyle.Small" />
+                android:textAppearance="@style/AppTheme.TextStyle.Small"
+                android:textColor="@null" />
 
         </LinearLayout>
 
