@@ -11,12 +11,30 @@
     cardview:cardUseCompatPadding="true"
     cardview:contentPadding="0dp">
 
-    <io.keypunchers.xa.views.ScaledImageView
-        android:id="@+id/iv_image_list"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_level_2"
-        android:background="@color/color_white"
-        android:minHeight="@dimen/image_min_height" />
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_level_2">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            cardview:cardElevation="4dp"
+            cardview:cardUseCompatPadding="false"
+            cardview:contentPadding="0dp">
+
+            <io.keypunchers.xa.views.ScaledImageView
+                android:id="@+id/iv_image_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:minHeight="@dimen/image_min_height" />
+
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>
