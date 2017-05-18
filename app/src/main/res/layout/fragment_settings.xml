@@ -2,17 +2,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipToPadding="false"
     android:orientation="vertical"
     android:padding="@dimen/padding_level_2"
-	android:clipToPadding="false"
-	android:scrollbars="none"
+    android:scrollbars="none"
     tools:context="io.keypunchers.xa.fragments.SettingsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:weightSum="1">
+        android:weightSum="1"
+        tools:ignore="HardcodedText">
 
         <TextView
             android:layout_width="match_parent"
@@ -21,8 +22,7 @@
             android:fontFamily="sans-serif-bold"
             android:text="Settings"
             android:textAppearance="@style/AppTheme.TextStyle.Title"
-            android:textColor="@color/color_primary_accent"
-            android:textStyle="bold" />
+            android:textColor="@color/color_primary_accent" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -34,9 +34,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-bold"
                 android:text="Home"
-                android:textAppearance="@style/AppTheme.TextStyle.Title"
-                android:textColor="@null"
-                android:textStyle="bold" />
+                android:textAppearance="@style/AppTheme.TextStyle.Title" />
 
             <Spinner
                 android:id="@+id/spinner_settings_default_home"
@@ -44,10 +42,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:entries="@array/spinner_home"
                 android:gravity="end"
-				android:background="?attr/selectableItemBackgroundBorderless"
                 android:textAlignment="textEnd"
                 android:theme="@style/AppTheme.Spinner"
                 tools:ignore="UnusedAttribute" />
@@ -60,8 +57,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tv_settings_default_home_title"
                 android:text="Section to load when opening application."
-                android:textAppearance="@style/AppTheme.TextStyle.Small"
-                android:textColor="@null" />
+                android:textAppearance="@style/AppTheme.TextStyle.Small" />
 
         </RelativeLayout>
 
@@ -82,9 +78,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-bold"
                 android:text="Browse Game Platform"
-                android:textAppearance="@style/AppTheme.TextStyle.Title"
-                android:textColor="@null"
-                android:textStyle="bold" />
+                android:textAppearance="@style/AppTheme.TextStyle.Title" />
 
             <Spinner
                 android:id="@+id/spinner_settings_default_platform"
@@ -92,10 +86,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:entries="@array/spinner_platforms"
                 android:gravity="end"
-				android:background="?attr/selectableItemBackgroundBorderless"
                 android:textAlignment="textEnd"
                 android:theme="@style/AppTheme.Spinner"
                 tools:ignore="UnusedAttribute" />
@@ -108,8 +101,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tv_settings_default_platform_title"
                 android:text="Default platform to loading in browse games."
-                android:textAppearance="@style/AppTheme.TextStyle.Small"
-                android:textColor="@null" />
+                android:textAppearance="@style/AppTheme.TextStyle.Small" />
 
         </RelativeLayout>
 
@@ -130,9 +122,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-bold"
                 android:text="Infinite Loading"
-                android:textAppearance="@style/AppTheme.TextStyle.Title"
-                android:textColor="@null"
-                android:textStyle="bold" />
+                android:textAppearance="@style/AppTheme.TextStyle.Title" />
 
             <Spinner
                 android:id="@+id/spinner_settings_scroll_max_items"
@@ -140,10 +130,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:entries="@array/spinner_max_scroller_items"
                 android:gravity="end"
-				android:background="?attr/selectableItemBackgroundBorderless"
                 android:textAlignment="textEnd"
                 android:theme="@style/AppTheme.Spinner"
                 tools:ignore="UnusedAttribute" />
@@ -156,8 +145,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tv_settings_scroll_max_items_title"
                 android:text="The max item allow to load (Excluding Browse Games, Comments, Achievements and Screenshots)."
-                android:textAppearance="@style/AppTheme.TextStyle.Small"
-                android:textColor="@null" />
+                android:textAppearance="@style/AppTheme.TextStyle.Small" />
 
         </RelativeLayout>
 
@@ -178,9 +166,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-bold"
                 android:text="High-Res Images"
-                android:textAppearance="@style/AppTheme.TextStyle.Title"
-                android:textColor="@null"
-                android:textStyle="bold" />
+                android:textAppearance="@style/AppTheme.TextStyle.Title" />
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/sw_settings_image_quality"
@@ -203,106 +189,96 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tv_settings_image_quality_title"
                 android:text="High-Res images will use more data and be slower to display."
-                android:textAppearance="@style/AppTheme.TextStyle.Small"
-                android:textColor="@null" />
+                android:textAppearance="@style/AppTheme.TextStyle.Small" />
 
         </RelativeLayout>
-		
-		<View
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="@dimen/margin_level_2"
             android:layout_marginTop="@dimen/margin_level_2"
             android:background="@color/divider" />
-		
-		<LinearLayout
-			android:id="@+id/ll_credentials"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:background="?attr/selectableItemBackgroundBorderless"
-			android:orientation="vertical">
-			
-			<TextView
+
+        <LinearLayout
+            android:id="@+id/ll_credentials"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:orientation="vertical">
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-bold"
                 android:text="Credentials"
-                android:textAppearance="@style/AppTheme.TextStyle.Title"
-                android:textColor="@null"
-                android:textStyle="bold" />
-			
-			<TextView
+                android:textAppearance="@style/AppTheme.TextStyle.Title" />
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Set credentials for XboxAchievements.com."
-                android:textAppearance="@style/AppTheme.TextStyle.Small"
-                android:textColor="@null" />
-				
-		</LinearLayout>
-		
-		<View
+                android:textAppearance="@style/AppTheme.TextStyle.Small" />
+
+        </LinearLayout>
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="@dimen/margin_level_2"
             android:layout_marginTop="@dimen/margin_level_2"
             android:background="@color/divider" />
-		
-		<LinearLayout
-			android:id="@+id/ll_signature"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:background="?attr/selectableItemBackgroundBorderless"
-			android:orientation="vertical">
 
-			<TextView
+        <LinearLayout
+            android:id="@+id/ll_signature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:orientation="vertical">
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-bold"
                 android:text="Change Signature"
-                android:textAppearance="@style/AppTheme.TextStyle.Title"
-                android:textColor="@null"
-                android:textStyle="bold" />
+                android:textAppearance="@style/AppTheme.TextStyle.Title" />
 
-			<TextView
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Change comments signature"
-                android:textAppearance="@style/AppTheme.TextStyle.Small"
-                android:textColor="@null" />
+                android:textAppearance="@style/AppTheme.TextStyle.Small" />
 
-		</LinearLayout>
+        </LinearLayout>
 
-		<View
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="@dimen/margin_level_2"
             android:layout_marginTop="@dimen/margin_level_2"
             android:background="@color/divider" />
 
-		<LinearLayout
-			android:id="@+id/ll_check_updates"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:background="?attr/selectableItemBackgroundBorderless"
-			android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/ll_check_updates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:orientation="vertical">
 
-			<TextView
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-bold"
                 android:text="Check Updates"
-                android:textAppearance="@style/AppTheme.TextStyle.Title"
-                android:textColor="@null"
-                android:textStyle="bold" />
+                android:textAppearance="@style/AppTheme.TextStyle.Title" />
 
-			<TextView
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Check if an update is available."
-                android:textAppearance="@style/AppTheme.TextStyle.Small"
-                android:textColor="@null" />
+                android:textAppearance="@style/AppTheme.TextStyle.Small" />
 
-		</LinearLayout>
-		
+        </LinearLayout>
+
     </LinearLayout>
 </ScrollView>
