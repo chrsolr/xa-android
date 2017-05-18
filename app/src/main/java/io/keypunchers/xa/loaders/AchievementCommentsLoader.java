@@ -60,6 +60,8 @@ public class AchievementCommentsLoader extends AsyncTaskLoader<ArrayList<Comment
                 String content = "";
 
                 image_url = image_url.replaceAll("\\s", "%20");
+				
+				title = title.substring(title.indexOf("by ") + 3, title.length()).trim();
 
 				List<TextNode> text_nodes = element.select("td:eq(1)").first().textNodes();
 				for (int j = 0, nodes_size = text_nodes.size(); j < nodes_size; j++){
