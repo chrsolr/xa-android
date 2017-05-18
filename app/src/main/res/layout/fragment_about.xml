@@ -18,17 +18,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_level_4"
+            android:fontFamily="sans-serif-bold"
             android:text="About Me"
             android:textAppearance="@style/AppTheme.TextStyle.Title"
-            android:textColor="@color/color_primary_accent"
-            android:textStyle="bold" />
+            android:textColor="@color/color_primary_accent" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-bold"
             android:text="Developer"
-            android:textAppearance="@style/AppTheme.TextStyle.Title"
-            android:textStyle="bold" />
+            android:textAppearance="@style/AppTheme.TextStyle.Title" />
 
         <TextView
             android:layout_width="match_parent"
@@ -46,9 +46,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-bold"
             android:text="Email"
-            android:textAppearance="@style/AppTheme.TextStyle.Title"
-            android:textStyle="bold" />
+            android:textAppearance="@style/AppTheme.TextStyle.Title" />
 
         <TextView
             android:layout_width="match_parent"
@@ -67,9 +67,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-bold"
             android:text="Twitter"
-            android:textAppearance="@style/AppTheme.TextStyle.Title"
-            android:textStyle="bold" />
+            android:textAppearance="@style/AppTheme.TextStyle.Title" />
 
         <TextView
             android:layout_width="match_parent"
@@ -82,10 +82,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_level_4"
             android:layout_marginTop="@dimen/margin_level_4"
+            android:fontFamily="sans-serif-bold"
             android:text="About Application"
             android:textAppearance="@style/AppTheme.TextStyle.Title"
-            android:textColor="@color/color_primary_accent"
-            android:textStyle="bold" />
+            android:textColor="@color/color_primary_accent" />
 
         <TextView
             android:layout_width="match_parent"
@@ -110,9 +110,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-bold"
             android:text="Terms of Service"
-            android:textAppearance="@style/AppTheme.TextStyle.Title"
-            android:textStyle="bold" />
+            android:textAppearance="@style/AppTheme.TextStyle.Title" />
 
         <TextView
             android:layout_width="match_parent"
@@ -120,8 +120,8 @@
             android:autoLink="web"
             android:text="http://www.keypunchers.io/xa/tos"
             android:textAppearance="@style/AppTheme.TextStyle.Normal" />
-		
-		<View
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="@dimen/margin_level_2"
@@ -131,9 +131,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-bold"
             android:text="XDA Thread"
-            android:textAppearance="@style/AppTheme.TextStyle.Title"
-            android:textStyle="bold" />
+            android:textAppearance="@style/AppTheme.TextStyle.Title" />
 
         <TextView
             android:layout_width="match_parent"
@@ -141,8 +141,8 @@
             android:autoLink="web"
             android:text="@string/xda_thread"
             android:textAppearance="@style/AppTheme.TextStyle.Normal" />
-		
-		<View
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="@dimen/margin_level_2"
@@ -152,9 +152,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-bold"
             android:text="Blog"
-            android:textAppearance="@style/AppTheme.TextStyle.Title"
-            android:textStyle="bold" />
+            android:textAppearance="@style/AppTheme.TextStyle.Title" />
 
         <TextView
             android:layout_width="match_parent"
@@ -173,9 +173,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-bold"
             android:text="Disclaimer"
-            android:textAppearance="@style/AppTheme.TextStyle.Title"
-            android:textStyle="bold" />
+            android:textAppearance="@style/AppTheme.TextStyle.Title" />
 
         <TextView
             android:layout_width="match_parent"
