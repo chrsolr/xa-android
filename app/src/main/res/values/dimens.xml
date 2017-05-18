@@ -48,6 +48,7 @@
 	<dimen name="news_artwork_size">100dp</dimen>
     <dimen name="ach_artwork_square_size">75dp</dimen>
 	<dimen name="la_artwork_size">125dp</dimen>
+	<dimen name="article_author_size">65dp</dimen>
     <dimen name="screenshot_item_height">250dp</dimen>
     <dimen name="video_icon_size">32dp</dimen>
 
