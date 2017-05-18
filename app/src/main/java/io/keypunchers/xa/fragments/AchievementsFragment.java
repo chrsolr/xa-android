@@ -94,17 +94,7 @@ public class AchievementsFragment extends Fragment {
         mTvGameGenres.setText(TextUtils.join("/", mData.getGenres()));
         mTvAchAmount.setText(String.format(Locale.US, "%s achievements", mData.getAchievements().size()));
 
-        mRvContent.setLayoutManager(new LinearLayoutManager(getActivity()) {
-            @Override
-            public boolean canScrollHorizontally() {
-                return false;
-            }
-
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        });
+        mRvContent.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         VolleySingleton.getImageLoader().get(mData.getAchievements().get(0).getImageUrl(), new ImageLoader.ImageListener() {
             @Override
