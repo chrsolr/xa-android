@@ -99,6 +99,7 @@
             android:src="@drawable/ic_create_24dp"
             android:clickable="true"
             android:theme="@style/AppTheme.FAB"
+			app:borderWidth="0dp"
             app:layout_anchor="@id/rv_ach_comments"
             app:layout_anchorGravity="bottom|right|end"
 			app:layout_behavior="io.keypunchers.xa.misc.ScrollAwareFabBehavior"
