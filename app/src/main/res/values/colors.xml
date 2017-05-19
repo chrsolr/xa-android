@@ -9,8 +9,8 @@
 	
 	<!-- Fonts Colors -->
 	<color name="primary_text_dark">#3E434B</color>
-    <color name="primary_text_light">#D1D1D1</color>
-    <color name="primary_text_small_light">#D1D1D1</color>
+    <color name="primary_text_light">#BDBDBD</color>
+    <color name="primary_text_small_light">#BDBDBD</color>
 	
 	<!-- CardView -->
 	<color name="cardview_background">@color/color_white</color>
