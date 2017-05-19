@@ -90,6 +90,7 @@
             android:id="@+id/tv_article_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+			android:lineSpacingExtra="2dp"
             android:layout_marginBottom="@dimen/margin_level_3"
             android:layout_marginLeft="@dimen/margin_level_2"
             android:layout_marginRight="@dimen/margin_level_2"

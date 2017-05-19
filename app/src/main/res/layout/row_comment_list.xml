@@ -89,7 +89,7 @@
             android:layout_marginTop="@dimen/margin_level_2"
             android:autoLink="web"
             android:clickable="true"
-            android:lineSpacingExtra="3dp"
+            android:lineSpacingExtra="2dp"
             android:textAppearance="@style/AppTheme.TextStyle.Normal"
             android:textIsSelectable="true"
             app:layout_constraintLeft_toLeftOf="parent"
