@@ -51,5 +51,9 @@
 	<dimen name="article_author_size">65dp</dimen>
     <dimen name="screenshot_item_height">250dp</dimen>
     <dimen name="video_icon_size">32dp</dimen>
+	
+	<!-- Line Space -->
+	<dimen name="line_level_1">2dp</dimen>
+	<dimen name="line_level_2">4dp</dimen>
 
 </resources>
