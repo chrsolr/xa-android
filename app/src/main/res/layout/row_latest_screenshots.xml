@@ -20,11 +20,17 @@
 
         <android.support.v7.widget.CardView
             android:id="@+id/cv_latest_screenshot_image"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="0dp"
             app:cardElevation="4dp"
             app:cardUseCompatPadding="false"
-            app:contentPadding="0dp">
+            app:contentPadding="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <io.keypunchers.xa.views.ScaledImageView
                 android:id="@+id/iv_latest_screenshot_image"
@@ -37,20 +43,27 @@
 
         <TextView
             android:id="@+id/tv_latest_screenshot_title"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
             android:layout_marginTop="@dimen/margin_level_2"
             android:textAppearance="@style/AppTheme.TextStyle.Title"
-            app:layout_constraintLeft_toLeftOf="@+id/cv_latest_screenshot_image"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="@+id/cv_latest_screenshot_image"
             app:layout_constraintTop_toBottomOf="@+id/cv_latest_screenshot_image" />
 
         <TextView
             android:id="@+id/tv_latest_screenshot_subtitle"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="@dimen/margin_level_0"
             android:textAppearance="@style/AppTheme.TextStyle.Subtitle"
             app:layout_constraintLeft_toLeftOf="@+id/tv_latest_screenshot_title"
+            app:layout_constraintRight_toRightOf="@+id/tv_latest_screenshot_title"
             app:layout_constraintStart_toStartOf="@+id/tv_latest_screenshot_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_latest_screenshot_title" />
 

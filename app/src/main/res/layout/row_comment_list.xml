@@ -1,88 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    cardview:cardBackgroundColor="@color/cardview_background"
-    cardview:cardCornerRadius="@dimen/cardview_corner_radius"
-    cardview:cardElevation="@dimen/cardview_elevation"
-    cardview:cardUseCompatPadding="true"
-    cardview:contentPadding="0dp">
+    app:cardBackgroundColor="@color/cardview_background"
+    app:cardCornerRadius="@dimen/cardview_corner_radius"
+    app:cardElevation="@dimen/cardview_elevation"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="0dp">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:orientation="vertical"
         android:padding="@dimen/padding_level_2">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true"
+            app:contentPadding="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <android.support.v7.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                cardview:cardElevation="4dp"
-                cardview:cardUseCompatPadding="true"
-                cardview:contentPadding="0dp">
+            <ImageView
+                android:id="@+id/iv_comment_image"
+                android:layout_width="125dp"
+                android:layout_height="65dp"
+                android:background="@color/color_white"
+                tools:ignore="ContentDescription" />
 
-                <ImageView
-                    android:id="@+id/iv_comment_image"
-                    android:layout_width="125dp"
-                    android:layout_height="65dp"
-                    android:background="@color/color_white"
-                    tools:ignore="ContentDescription" />
+        </android.support.v7.widget.CardView>
 
-            </android.support.v7.widget.CardView>
+        <TextView
+            android:id="@+id/tv_comment_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_level_2"
+            android:layout_marginRight="0dp"
+            android:layout_marginStart="@dimen/margin_level_2"
+            android:layout_marginTop="0dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/AppTheme.TextStyle.Title"
+            app:layout_constraintLeft_toRightOf="@+id/cardView"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_level_1"
-                android:layout_marginRight="@dimen/margin_level_1"
-                android:layout_marginTop="@dimen/margin_level_0"
-                android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_comment_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="@dimen/margin_level_0"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/AppTheme.TextStyle.Subtitle"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_comment_title"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_comment_title" />
 
-                <TextView
-                    android:id="@+id/tv_comment_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textAppearance="@style/AppTheme.TextStyle.Title" />
-
-                <TextView
-                    android:id="@+id/tv_comment_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textAppearance="@style/AppTheme.TextStyle.Subtitle" />
-
-                <TextView
-                    android:id="@+id/tv_comment_count"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textAppearance="@style/AppTheme.TextStyle.Subtitle" />
-            </LinearLayout>
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_comment_count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="@dimen/margin_level_0"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/AppTheme.TextStyle.Subtitle"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_comment_date"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_comment_date" />
 
         <TextView
             android:id="@+id/tv_comment_text"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
             android:layout_marginTop="@dimen/margin_level_2"
             android:autoLink="web"
             android:clickable="true"
             android:lineSpacingExtra="3dp"
             android:textAppearance="@style/AppTheme.TextStyle.Normal"
-            android:textIsSelectable="true" />
+            android:textIsSelectable="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

@@ -25,9 +25,7 @@
             android:layout_height="wrap_content"
             app:cardElevation="4dp"
             app:cardUseCompatPadding="false"
-            app:contentPadding="0dp"
-            tools:layout_editor_absoluteY="248dp"
-            tools:layout_editor_absoluteX="16dp">
+            app:contentPadding="0dp">
 
             <ImageView
                 android:id="@+id/iv_la_cover"
@@ -43,8 +41,10 @@
             android:id="@+id/tv_la_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginLeft="@dimen/margin_level_2"
             android:layout_marginRight="0dp"
+            android:layout_marginStart="@dimen/margin_level_2"
             android:layout_marginTop="0dp"
             android:ellipsize="end"
             android:maxLines="2"
