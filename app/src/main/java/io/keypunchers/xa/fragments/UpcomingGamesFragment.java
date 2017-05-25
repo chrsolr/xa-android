@@ -1,7 +1,6 @@
 package io.keypunchers.xa.fragments;
 
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -10,7 +9,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,24 +60,11 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getActivity().findViewById(R.id.apl_main).setElevation(0);
-        }
-
         if (mData.isEmpty() && getArguments() != null) {
             BASE_URL = getArguments().getString("url");
         }
 
         makeNetworkCall();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getActivity().findViewById(R.id.apl_main).setElevation(12);
-        }
     }
 
     @Override
