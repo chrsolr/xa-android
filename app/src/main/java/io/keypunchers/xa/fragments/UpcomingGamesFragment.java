@@ -48,7 +48,7 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
 
         mViewPager = (ViewPager) view.findViewById(R.id.vp_upcoming_games);
 
-        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tl_upcoming_games);
+        TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tl_upcoming_games);
         tabLayout.setupWithViewPager(mViewPager);
 
         mAdapter = new ViewPagerAdapter(getChildFragmentManager());

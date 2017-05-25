@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
@@ -20,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +56,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     private CollapsingToolbarLayout mCollapsingToolbar;
     private ImageView mIvBanner;
     private AppBarLayout mAppBarLayout;
+    private TabLayout mTabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.ctl_main);
         mAppBarLayout = (AppBarLayout) findViewById(R.id.apl_main);
+        mTabLayout = (TabLayout) findViewById(R.id.tl_upcoming_games);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         mIsDrawerLearned = mPrefs.getBoolean(getString(R.string.DRAWER_LEARNED_TAG), false);
@@ -279,7 +283,15 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 .get(mBanners.get(randomNum).getImageUrl(),
                         ImageLoader.getImageListener(mIvBanner, 0, 0));
 
-        mAppBarLayout.setExpanded(true);
+        if (position == 6) {
+            mTabLayout.setVisibility(View.VISIBLE);
+            mAppBarLayout.setExpanded(false);
+        } else {
+            mTabLayout.setVisibility(View.GONE);
+            mAppBarLayout.setExpanded(true);
+        }
+
+
 
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
