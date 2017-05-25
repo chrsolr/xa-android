@@ -40,6 +40,10 @@
 		<item name="tabMode">fixed</item>
     </style>
 
+    <style name="TransparentText" parent="@android:style/TextAppearance">
+        <item name="android:textColor">#00000000</item>
+    </style>
+
     <style name="AppTheme.FAB">
         <item name="android:backgroundTint">@color/color_white</item>
         <item name="android:tint">@color/primary_text_dark</item>

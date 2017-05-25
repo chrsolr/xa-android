@@ -1,9 +1,11 @@
 package io.keypunchers.xa.app;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -51,6 +53,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("NEWS");
+
         setSupportActionBar(mToolbar);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
