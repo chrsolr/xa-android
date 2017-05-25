@@ -56,4 +56,16 @@
         <item>500</item>
         <item>1000</item>
     </string-array>
+
+    <string-array name="drawer_titles">
+        <item>News</item>
+        <item>Previews</item>
+        <item>Interviews</item>
+        <item>Browse Games</item>
+        <item>Latest Achievements</item>
+        <item>Latest Screenshots</item>
+        <item>Upcoming Games</item>
+        <item>Settings</item>
+        <item>About</item>
+    </string-array>
 </resources>

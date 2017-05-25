@@ -15,8 +15,9 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="@color/color_scrim"
-            app:expandedTitleGravity="center"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+            app:expandedTitleTextAppearance="@style/AppTheme.CollapsingToolbar.Expanded"
+            app:collapsedTitleTextAppearance="@style/AppTheme.CollapsingToolbar.Collapsed"
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed|snap">
 
             <!-- scroll|enterAlways|enterAlwaysCollapsed|exitUntilCollapsed -->
 

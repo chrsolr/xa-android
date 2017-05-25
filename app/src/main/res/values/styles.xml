@@ -40,8 +40,15 @@
 		<item name="tabMode">fixed</item>
     </style>
 
-    <style name="TransparentText" parent="@android:style/TextAppearance">
-        <item name="android:textColor">#00000000</item>
+    <style name="AppTheme.CollapsingToolbar.Expanded" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/color_white</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="AppTheme.CollapsingToolbar.Collapsed" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/color_white</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="AppTheme.FAB">

@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -46,6 +47,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout mDrawer;
     private SharedPreferences mPrefs;
     private ArrayList<LatestScreenshot> mBanners = new ArrayList<>();
+    private String[] mDrawerTitles;
+    private CollapsingToolbarLayout mCollapsingToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +56,14 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle("NEWS");
-
         setSupportActionBar(mToolbar);
+
+        mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.ctl_main);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         mIsDrawerLearned = mPrefs.getBoolean(getString(R.string.DRAWER_LEARNED_TAG), false);
+
+        mDrawerTitles = getResources().getStringArray(R.array.drawer_titles);
 
         mDrawerCurrentSelectedPosition = mPrefs.getInt(getString(R.string.DEFAULT_HOME_POSITION_TAG), 0);
 
@@ -268,6 +273,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             fragment = new AboutFragment();
             fragment.setArguments(bundle);
         }
+
+        mCollapsingToolbar.setTitle(mDrawerTitles[position]);
 
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
