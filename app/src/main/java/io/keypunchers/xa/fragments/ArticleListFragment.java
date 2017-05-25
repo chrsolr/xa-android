@@ -60,8 +60,8 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         final int mMaxItems = mPrefs.getInt(getString(R.string.ENDLESS_SCROLLER_MAX_ITEMS_TAG), 50);
 
-        mIvBanner = (ImageView) view.findViewById(R.id.iv_banner);
-		mTvBannerTitle = (TextView) view.findViewById(R.id.tv_banner_title);
+        mIvBanner = (ImageView) getActivity().findViewById(R.id.iv_banner_image);
+		mTvBannerTitle = (TextView) getActivity().findViewById(R.id.tv_banner_title);
 
         mAdapter = new ArticleListAdapter(mData);
 
