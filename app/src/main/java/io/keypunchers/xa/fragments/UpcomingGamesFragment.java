@@ -68,7 +68,6 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
 
         if (mData.isEmpty() && getArguments() != null) {
             BASE_URL = getArguments().getString("url");
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getArguments().getString("ab_title"));
         }
 
         makeNetworkCall();

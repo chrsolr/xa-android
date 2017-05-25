@@ -45,8 +45,6 @@ public class AboutFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
-
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.ab_about_title);
     }
 
     @Override

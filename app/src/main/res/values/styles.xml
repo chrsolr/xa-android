@@ -33,7 +33,7 @@
 	<style name="AppTheme.AppTabLayout" parent="Widget.Design.TabLayout">
 		<item name="android:background">?attr/colorPrimary</item>
         <item name="tabGravity">fill</item>
-        <item name="tabIndicatorColor">@color/tab_strip</item>
+        <item name="tabIndicatorColor">@color/color_light_gray</item>
         <item name="tabIndicatorHeight">4dp</item>
         <item name="tabTextColor">@color/color_light_gray</item>
         <item name="tabSelectedTextColor">@color/tab_strip</item>

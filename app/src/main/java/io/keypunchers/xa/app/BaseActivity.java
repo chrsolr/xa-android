@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.android.volley.toolbox.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import io.keypunchers.xa.R;
 import io.keypunchers.xa.fragments.AboutFragment;
@@ -49,6 +50,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     private ArrayList<LatestScreenshot> mBanners = new ArrayList<>();
     private String[] mDrawerTitles;
     private CollapsingToolbarLayout mCollapsingToolbar;
+    private ImageView mIvBanner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         mDrawerTitles = getResources().getStringArray(R.array.drawer_titles);
 
         mDrawerCurrentSelectedPosition = mPrefs.getInt(getString(R.string.DEFAULT_HOME_POSITION_TAG), 0);
+
+        mIvBanner = (ImageView) findViewById(R.id.iv_banner_image);
 
         if (savedInstanceState != null) {
             mDrawerCurrentSelectedPosition = savedInstanceState.getInt("current_selected_position");
@@ -208,8 +212,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         if (position == 0 && fragment == null) {
             bundle.putString("url", "http://www.xboxachievements.com/archive/gaming-news/");
-            bundle.putString("ab_title", getResources().getString(R.string.ab_news_title));
-            bundle.putParcelable("header", mBanners.get(1));
 
             fragment = new ArticleListFragment();
             fragment.setArguments(bundle);
@@ -217,8 +219,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         if (position == 1 && fragment == null) {
             bundle.putString("url", "http://www.xboxachievements.com/news/previews/");
-            bundle.putString("ab_title", getResources().getString(R.string.ab_previews_title));
-            bundle.putParcelable("header", mBanners.get(2));
 
             fragment = new ArticleListFragment();
             fragment.setArguments(bundle);
@@ -226,8 +226,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         if (position == 2 && fragment == null) {
             bundle.putString("url", "http://www.xboxachievements.com/news/interviews/");
-            bundle.putString("ab_title", getResources().getString(R.string.ab_interviews_title));
-            bundle.putParcelable("header", mBanners.get(3));
 
             fragment = new ArticleListFragment();
             fragment.setArguments(bundle);
@@ -235,7 +233,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         if (position == 3 && fragment == null) {
             bundle.putString("url", "http://www.xboxachievements.com/browsegames/");
-            bundle.putString("ab_title", getResources().getString(R.string.ab_games_title));
 
             fragment = new GameListFragment();
             fragment.setArguments(bundle);
@@ -243,23 +240,18 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         if (position == 4 && fragment == null) {
             bundle.putString("url", "http://www.xboxachievements.com/archive/achievements/");
-            bundle.putString("ab_title", getResources().getString(R.string.ab_latest_achievements_title));
-            bundle.putParcelable("header", mBanners.get(4));
 
             fragment = new LatestAchievementFragment();
             fragment.setArguments(bundle);
         }
 
         if (position == 5 && fragment == null) {
-            bundle.putString("ab_title", getResources().getString(R.string.ab_latest_screenshots_title));
-
             fragment = new LatestScreenshotsFragment();
             fragment.setArguments(bundle);
         }
 
         if (position == 6 && fragment == null) {
             bundle.putString("url", "http://www.xboxachievements.com/upcoming/");
-            bundle.putString("ab_title", getResources().getString(R.string.ab_upcoming_games_title));
 
             fragment = new UpcomingGamesFragment();
             fragment.setArguments(bundle);
@@ -275,6 +267,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
 
         mCollapsingToolbar.setTitle(mDrawerTitles[position]);
+
+        int randomNum = new Random().nextInt((mBanners.size()));
+
+        VolleySingleton
+                .getImageLoader()
+                .get(mBanners.get(randomNum).getImageUrl(),
+                        ImageLoader.getImageListener(mIvBanner, 0, 0));
 
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 

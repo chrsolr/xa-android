@@ -49,7 +49,6 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
     private int mCurrentPage = 1;
     private int LOADER_ID;
     private String[] mAlphabetTitles;
-
     private ActionBar mActionBar;
 
     public GameListFragment() {

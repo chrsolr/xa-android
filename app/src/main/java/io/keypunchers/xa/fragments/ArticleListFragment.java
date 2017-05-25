@@ -34,11 +34,9 @@ import android.animation.ObjectAnimator;
 
 public class ArticleListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<ArticleListItem>> {
     private FirebaseAnalytics mFirebaseAnalytics;
-	private LatestScreenshot mBanner;
     private String BASE_URL;
     private ArrayList<ArticleListItem> mData = new ArrayList<>();
     private ArticleListAdapter mAdapter;
-    private ImageView mIvBanner;
     private int LOADER_ID;
     private int mCurrentPage = 1;
 
@@ -58,8 +56,6 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         final int mMaxItems = mPrefs.getInt(getString(R.string.ENDLESS_SCROLLER_MAX_ITEMS_TAG), 50);
-
-        mIvBanner = (ImageView) getActivity().findViewById(R.id.iv_banner_image);
 
         mAdapter = new ArticleListAdapter(mData);
 
@@ -89,17 +85,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
         LOADER_ID = getActivity().getResources().getInteger(R.integer.news_loader_id);
 
         if (getArguments() != null) {
-			String AB_TITLE = getArguments().getString("ab_title");
             BASE_URL = getArguments().getString("url");
-            mBanner = getArguments().getParcelable("header");
-
-            if (((AppCompatActivity) getActivity()).getSupportActionBar() != null)
-                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(AB_TITLE);
-
-            VolleySingleton
-                    .getImageLoader()
-                    .get(mBanner.getImageUrl(),
-                            ImageLoader.getImageListener(mIvBanner, 0, 0));
         }
 
         if (mData.isEmpty()) {

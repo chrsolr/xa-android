@@ -117,8 +117,6 @@ public class SettingsFragment extends Fragment {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.ab_settings_title);
-
         setupPlatformSpinner();
 
         setupDefaultHomeSpinner();
