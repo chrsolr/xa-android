@@ -47,14 +47,13 @@
             android:id="@+id/tv_achievement_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="0dp"
+            android:layout_marginEnd="@dimen/margin_level_1"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="@dimen/margin_level_2"
-            android:layout_weight="0.90"
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="@style/AppTheme.TextStyle.Title"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.695"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/tv_achievement_gs"
             app:layout_constraintTop_toBottomOf="@+id/cardView2" />
@@ -63,19 +62,20 @@
             android:id="@+id/tv_achievement_gs"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="0dp"
+            android:layout_marginEnd="0dp"
             android:layout_marginTop="0dp"
-			android:textStyle="italic"
             android:textAppearance="@style/AppTheme.TextStyle.Title"
             android:textColor="@color/primary_text_dark"
+            android:textStyle="italic"
             app:layout_constraintRight_toLeftOf="@+id/textView"
-            app:layout_constraintTop_toTopOf="@+id/textView" />
+            app:layout_constraintTop_toTopOf="@+id/textView"
+            tools:layout_width="8dp" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="0dp"
+            android:layout_marginEnd="0dp"
             android:layout_marginTop="@dimen/margin_level_2"
             android:text="G"
             android:textAppearance="@style/AppTheme.TextStyle.Title"
@@ -90,13 +90,13 @@
             android:id="@+id/tv_achievement_desc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="0dp"
+            android:layout_marginEnd="@dimen/margin_level_1"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="@dimen/margin_level_0"
-            android:layout_weight="0.90"
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="@style/AppTheme.TextStyle.Subtitle"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="@+id/tv_achievement_title"
             app:layout_constraintRight_toLeftOf="@+id/tv_achievement_comments"
             app:layout_constraintTop_toBottomOf="@+id/tv_achievement_title" />
@@ -106,13 +106,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
-            android:layout_marginRight="0dp"
+            android:layout_marginEnd="0dp"
             android:layout_marginTop="@dimen/margin_level_0"
-            android:layout_weight="0.10"
-            android:gravity="end|bottom"
             android:textAppearance="@style/AppTheme.TextStyle.Subtitle"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_achievement_title" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_achievement_title"
+            tools:layout_width="8dp" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
