@@ -33,9 +33,12 @@ import android.animation.ObjectAnimator;
 
 public class LatestAchievementFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<LatestAchievement>> {
     private FirebaseAnalytics mFirebaseAnalytics;
+    private LatestScreenshot mBanner;
     private ArrayList<LatestAchievement> mData = new ArrayList<>();
     private String BASE_URL;
     private LatestAchievementsListAdapter mAdapter;
+    private ImageView mIvBanner;
+    private TextView mTvBannerTitle;
     private int LOADER_ID;
     private int mCurrentPage = 1;
 
@@ -55,6 +58,9 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
 
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         final int mMaxItems = mPrefs.getInt(getString(R.string.ENDLESS_SCROLLER_MAX_ITEMS_TAG), 50);
+
+        mIvBanner = (ImageView) view.findViewById(R.id.iv_banner);
+        mTvBannerTitle = (TextView) view.findViewById(R.id.tv_banner_title);
 
         mAdapter = new LatestAchievementsListAdapter(mData);
 
@@ -84,7 +90,22 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
         LOADER_ID = getActivity().getResources().getInteger(R.integer.latest_achievements_loader_id);
 
         if (getArguments() != null) {
+            String AB_TITLE = getArguments().getString("ab_title");
             BASE_URL = getArguments().getString("url");
+            mBanner = getArguments().getParcelable("header");
+
+            if (((AppCompatActivity) getActivity()).getSupportActionBar() != null)
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(AB_TITLE);
+
+            mTvBannerTitle.setText(mBanner.getTitle());
+            mTvBannerTitle.setAllCaps(true);
+
+            ObjectAnimator.ofFloat(mTvBannerTitle, "translationY", 200, 0).setDuration(1000).start();
+
+            VolleySingleton
+                    .getImageLoader()
+                    .get(mBanner.getImageUrl(),
+                            ImageLoader.getImageListener(mIvBanner, 0, 0));
         }
 
         if (mData.isEmpty()) {

@@ -117,6 +117,8 @@ public class SettingsFragment extends Fragment {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
 
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.ab_settings_title);
+
         setupPlatformSpinner();
 
         setupDefaultHomeSpinner();
@@ -369,10 +371,10 @@ public class SettingsFragment extends Fragment {
                             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
                     mQueue.add(mRequest);
-					
-					Bundle bundle = new Bundle();
-					bundle.putString(getString(R.string.CHECK_UPDATE), String.format(Locale.US, "Current App Version: %s", versionCode));
-					mFirebaseAnalytics.logEvent(getString(R.string.ACTION), bundle);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString(getString(R.string.CHECK_UPDATE), String.format(Locale.US, "Current App Version: %s", versionCode));
+                    mFirebaseAnalytics.logEvent(getString(R.string.ACTION), bundle);
                 }
             });
         } catch (PackageManager.NameNotFoundException e) {

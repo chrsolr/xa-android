@@ -1,6 +1,7 @@
 package io.keypunchers.xa.fragments;
 
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -9,6 +10,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +50,7 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
 
         mViewPager = (ViewPager) view.findViewById(R.id.vp_upcoming_games);
 
-        TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tl_upcoming_games);
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tl_upcoming_games);
         tabLayout.setupWithViewPager(mViewPager);
 
         mAdapter = new ViewPagerAdapter(getChildFragmentManager());
@@ -60,11 +62,25 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getActivity().findViewById(R.id.apl_main).setElevation(0);
+        }
+
         if (mData.isEmpty() && getArguments() != null) {
             BASE_URL = getArguments().getString("url");
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getArguments().getString("ab_title"));
         }
 
         makeNetworkCall();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getActivity().findViewById(R.id.apl_main).setElevation(12);
+        }
     }
 
     @Override
