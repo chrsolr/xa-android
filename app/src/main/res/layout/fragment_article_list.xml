@@ -19,7 +19,7 @@
             app:contentScrim="@color/color_scrim"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed|snap">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -38,7 +38,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/img_gradient_height"
                     android:layout_alignBottom="@+id/iv_banner"
-                    android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:background="@drawable/primary_gradient_bottom" />
 
@@ -53,7 +52,7 @@
                     android:maxLines="1"
                     android:padding="@dimen/padding_level_2"
                     android:textAppearance="@style/AppTheme.TextStyle.Title.Light"
-                    android:textSize="28sp" />
+                    android:textSize="@dimen/banner_title_size" />
 
             </RelativeLayout>
 

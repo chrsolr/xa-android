@@ -12,6 +12,7 @@
 
     <!-- TextView sizes -->
     <dimen name="drawer_title_size">20sp</dimen>
+    <dimen name="banner_title_size">24sp</dimen>
 
     <!-- Padding -->
     <dimen name="padding_level_0">4dp</dimen>
