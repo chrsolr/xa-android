@@ -8,6 +8,7 @@
     android:contentInsetLeft="0dp"
     android:contentInsetRight="0dp"
     android:contentInsetStart="0dp"
+	android:elevation="4dp"
     android:theme="@style/AppTheme.AppBarOverlay"
     app:contentInsetEnd="0dp"
     app:contentInsetLeft="0dp"
