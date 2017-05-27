@@ -32,7 +32,7 @@
                     android:id="@+id/iv_banner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/color_primary_accent"/>
+                    android:background="@color/color_primary_accent" />
 
                 <View
                     android:id="@+id/view"
@@ -47,13 +47,14 @@
                     android:id="@+id/tv_banner_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:gravity="center"
-                    android:paddingBottom="@dimen/padding_level_1"
-                    android:textSize="28dp"
-                    android:fontFamily="sans-serif-light"
                     android:layout_alignParentBottom="true"
-                    android:textAppearance="@style/AppTheme.TextStyle.Title.Light" />
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:paddingBottom="@dimen/padding_level_2"
+                    android:textAppearance="@style/AppTheme.TextStyle.Title.Light"
+                    android:textSize="28sp" />
 
             </RelativeLayout>
 
