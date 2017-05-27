@@ -2,7 +2,7 @@
 <resources>
 	<!-- Theme Main Colors -->
     <color name="color_primary">#ffffff</color>
-    <color name="color_primary_dark">#6F6F6F</color>
+    <color name="color_primary_dark">#f1f1f1</color>
     <color name="color_primary_accent">#e64a19</color>
 	<color name="color_bg_primary">#ffffff</color>
 	<color name="color_bg_secondary">#f1f1f1</color>

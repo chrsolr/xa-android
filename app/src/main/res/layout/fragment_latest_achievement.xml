@@ -52,7 +52,7 @@
                     android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:maxLines="1"
-                    android:paddingBottom="@dimen/padding_level_2"
+                    android:padding="@dimen/padding_level_2"
                     android:textAppearance="@style/AppTheme.TextStyle.Title.Light"
                     android:textSize="28sp" />
 
