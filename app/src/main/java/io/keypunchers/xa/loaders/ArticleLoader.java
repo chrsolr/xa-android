@@ -56,12 +56,15 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
             Elements header_root = document.getElementsByClass("bl_la_main").first().getElementsByTag("td");
             Element body_root = document.getElementsByClass("bl_la_main").first().select("span[itemprop=articleBody]").first();
             Elements comments_rows = comments_doc.select("tr");
+			Element authorElement = header_root.first().select("img").first();
 
-            String profile_image = Common.getHighResArticleAuthorImage(header_root.first().select("img").first().attr("abs:src"), getContext());
+            String profile_image = authorElement != null 
+					? Common.getHighResArticleAuthorImage(header_root.first().select("img").first().attr("abs:src"), getContext())
+				: "http://www.xboxachievements.com/images/news/general/xba-news.png";
+				
             String header_title = header_root.get(1).select(".newsTitle").first().text();
             String header_date = header_root.get(1).select(".newsNFO").text().split("By ")[0].replace("Written ", "").trim();
             String header_author_name = header_root.get(1).select(".newsNFO").text().split("By ")[1];
-            String author_profile_url = header_root.get(1).select("a").first().attr("abs:href");
             String author_first_name = header_author_name.split(" ")[0];
             String author_last_name = header_author_name.split(" ")[1];
 
@@ -128,11 +131,9 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
             article.setAuthorProfileImageUrl(profile_image);
             article.setHeaderTitle(header_title);
             article.setHeaderDate(header_date);
-            article.setAuthorProfileUrl(author_profile_url);
             article.setAuthorFirstName(author_first_name);
             article.setAuthorLastName(author_last_name);
             article.setBodyText(article_contents.toString());
-
             article.setImageUrls(images);
             article.setVideoUrls(videos);
             article.setComments(comments);
@@ -140,6 +141,7 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
             return article;
         } catch (Exception ex) {
             ex.printStackTrace();
+			Log.i("*****", ex.getMessage());
             return null;
         }
     }
