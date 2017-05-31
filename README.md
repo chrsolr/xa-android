@@ -30,5 +30,8 @@ An unofficial app for XboxAchievements.com where you can view News, Achievements
 * (Settings) Check Update
 * (Settings) Post Comments Signature
 
+#### Download
+[XDA Store Link](https://labs.XDA-developers.com/store/app/io.keypunchers.xa)
+
 #### Changelog
 [Link](CHANGELOG.md)
