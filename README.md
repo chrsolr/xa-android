@@ -31,8 +31,8 @@ An unofficial app for XboxAchievements.com where you can view News, Achievements
 * (Settings) Post Comments Signature
 
 #### Links
-* [XDA Store Link](https://labs.XDA-developers.com/store/app/io.keypunchers.xa)
 * [Changelog Link](CHANGELOG.md)
+* [XDA Store Link](https://labs.XDA-developers.com/store/app/io.keypunchers.xa)
 * [XDA Forum Thread](https://forum.xda-developers.com/android/apps-games/app-xa-unofficial-xboxachievements-com-t3600450)
 * [Donate Link](https://www.paypal.com/donate/?token=Y_xgt6iDudFG07_Ccw6t2OzU5Kkfj-92C3bmTqIxz7G-TteXXUcXog4-EHTbNeNn7Geq9G)
 * [My Blog](http://www.keypunchers.io/blogs)
