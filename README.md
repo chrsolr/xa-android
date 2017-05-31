@@ -31,4 +31,4 @@ An unofficial app for XboxAchievements.com where you can view News, Achievements
 * (Settings) Post Comments Signature
 
 #### Changelog
-Coming Soon
+[Link](CHANGELOG.md)
