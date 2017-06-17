@@ -9,11 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import io.keypunchers.xa.R;
+import io.keypunchers.xa.misc.VolleySingleton;
 
 public class AboutFragment extends Fragment {
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -33,8 +36,20 @@ public class AboutFragment extends Fragment {
 
         try {
             String versionName = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
+
             TextView mTvVersionName = (TextView) view.findViewById(R.id.tv_about_app_version_name);
             mTvVersionName.setText(versionName);
+
+            ImageView mIvBanner = (ImageView) view.findViewById(R.id.iv_about_banner);
+            VolleySingleton.getImageLoader()
+                    .get("http://i.imgur.com/OQ7AgPN.jpg",
+                            ImageLoader.getImageListener(mIvBanner, 0, 0));
+
+            ImageView mIvAvatar = (ImageView) view.findViewById(R.id.iv_about_avatar);
+            VolleySingleton.getImageLoader()
+                    .get("http://i.imgur.com/SUvzIVJ.jpg",
+                            ImageLoader.getImageListener(mIvAvatar, 0, 0));
+
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

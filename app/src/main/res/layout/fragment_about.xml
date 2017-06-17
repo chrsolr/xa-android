@@ -5,185 +5,224 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:orientation="vertical"
-    android:padding="@dimen/padding_level_2"
     android:scrollbars="none"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="io.keypunchers.xa.fragments.AboutFragment"
     tools:ignore="HardcodedText">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context="io.keypunchers.xa.fragments.AboutFragment">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="match_parent"
+        <FrameLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_level_4"
-            android:text="About Me"
-            android:textAppearance="@style/AppTheme.TextStyle.Title"
-            android:textColor="@color/color_primary_accent"
-            android:textStyle="bold" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="0dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:id="@+id/frameLayout"
+            app:layout_constraintHorizontal_bias="0.0">
 
-        <TextView
-            android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/iv_about_banner"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_about_avatar"
+                android:layout_width="@dimen/article_author_size"
+                android:layout_height="@dimen/article_author_size"
+                app:civ_border_color="@color/primary_text_dark"
+                app:civ_border_width="1dp" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Developer"
-            android:textAppearance="@style/AppTheme.TextStyle.Title"
-            android:textStyle="bold" />
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="16dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Christian Soler"
-            android:textAppearance="@style/AppTheme.TextStyle.Normal" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_level_4"
+                android:text="About Me"
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
+                android:textColor="@color/color_primary_accent"
+                android:textStyle="bold" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/margin_level_2"
-            android:layout_marginTop="@dimen/margin_level_2"
-            android:background="@color/divider" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Developer"
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Email"
-            android:textAppearance="@style/AppTheme.TextStyle.Title"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Christian Soler"
+                android:textAppearance="@style/AppTheme.TextStyle.Normal" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autoLink="email"
-            android:text="iamrelos@gmail.com"
-            android:textAppearance="@style/AppTheme.TextStyle.Normal" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/margin_level_2"
+                android:layout_marginTop="@dimen/margin_level_2"
+                android:background="@color/divider" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/margin_level_2"
-            android:layout_marginTop="@dimen/margin_level_2"
-            android:background="@color/divider" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Twitter"
-            android:textAppearance="@style/AppTheme.TextStyle.Title"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="email"
+                android:text="iamrelos@gmail.com"
+                android:textAppearance="@style/AppTheme.TextStyle.Normal" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="iamrelos"
-            android:textAppearance="@style/AppTheme.TextStyle.Normal" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/margin_level_2"
+                android:layout_marginTop="@dimen/margin_level_2"
+                android:background="@color/divider" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_level_4"
-            android:layout_marginTop="@dimen/margin_level_4"
-            android:text="About Application"
-            android:textAppearance="@style/AppTheme.TextStyle.Title"
-            android:textColor="@color/color_primary_accent"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Twitter"
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Version"
-            android:textAppearance="@style/AppTheme.TextStyle.Title"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="iamrelos"
+                android:textAppearance="@style/AppTheme.TextStyle.Normal" />
 
-        <TextView
-            android:id="@+id/tv_about_app_version_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/AppTheme.TextStyle.Normal" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_level_4"
+                android:layout_marginTop="@dimen/margin_level_4"
+                android:text="About Application"
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
+                android:textColor="@color/color_primary_accent"
+                android:textStyle="bold" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/margin_level_2"
-            android:layout_marginTop="@dimen/margin_level_2"
-            android:background="@color/divider" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Version"
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Terms of Service"
-            android:textAppearance="@style/AppTheme.TextStyle.Title"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_about_app_version_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/AppTheme.TextStyle.Normal" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autoLink="web"
-            android:text="http://www.keypunchers.io/xa/tos"
-            android:textAppearance="@style/AppTheme.TextStyle.Normal" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/margin_level_2"
+                android:layout_marginTop="@dimen/margin_level_2"
+                android:background="@color/divider" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/margin_level_2"
-            android:layout_marginTop="@dimen/margin_level_2"
-            android:background="@color/divider" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Terms of Service"
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="XDA Thread"
-            android:textAppearance="@style/AppTheme.TextStyle.Title"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:text="http://www.keypunchers.io/xa/tos"
+                android:textAppearance="@style/AppTheme.TextStyle.Normal" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autoLink="web"
-            android:text="@string/xda_thread"
-            android:textAppearance="@style/AppTheme.TextStyle.Normal" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/margin_level_2"
+                android:layout_marginTop="@dimen/margin_level_2"
+                android:background="@color/divider" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/margin_level_2"
-            android:layout_marginTop="@dimen/margin_level_2"
-            android:background="@color/divider" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="XDA Thread"
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Blog"
-            android:textAppearance="@style/AppTheme.TextStyle.Title"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:text="@string/xda_thread"
+                android:textAppearance="@style/AppTheme.TextStyle.Normal" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autoLink="web"
-            android:text="http://www.keypunchers.io/blogs"
-            android:textAppearance="@style/AppTheme.TextStyle.Normal" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/margin_level_2"
+                android:layout_marginTop="@dimen/margin_level_2"
+                android:background="@color/divider" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/margin_level_2"
-            android:layout_marginTop="@dimen/margin_level_2"
-            android:background="@color/divider" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Blog"
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Disclaimer"
-            android:textAppearance="@style/AppTheme.TextStyle.Title"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:text="http://www.keypunchers.io/blogs"
+                android:textAppearance="@style/AppTheme.TextStyle.Normal" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/about_disclaimer"
-            android:textAppearance="@style/AppTheme.TextStyle.Normal"
-            android:textStyle="italic" />
-    </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/margin_level_2"
+                android:layout_marginTop="@dimen/margin_level_2"
+                android:background="@color/divider" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Disclaimer"
+                android:textAppearance="@style/AppTheme.TextStyle.Title"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_disclaimer"
+                android:textAppearance="@style/AppTheme.TextStyle.Normal"
+                android:textStyle="italic" />
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>
