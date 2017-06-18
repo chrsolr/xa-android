@@ -41,12 +41,6 @@
 		<item name="tabMode">fixed</item>
     </style>
 
-    <style name="AppTheme.CollapsingToolbar.Expanded" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/color_white</item>
-        <item name="android:textSize">24sp</item>
-        <item name="android:textAllCaps">true</item>
-    </style>
-
     <style name="AppTheme.CollapsingToolbar.Collapsed" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/primary_text_dark</item>
         
