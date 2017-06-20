@@ -47,7 +47,7 @@ public class AboutFragment extends Fragment {
 
             ImageView mIvAvatar = (ImageView) view.findViewById(R.id.iv_about_avatar);
             VolleySingleton.getImageLoader()
-                    .get("http://i.imgur.com/SUvzIVJ.jpg",
+                    .get("http://i.imgur.com/C7sR3GQ.jpg",
                             ImageLoader.getImageListener(mIvAvatar, 0, 0));
 
         } catch (PackageManager.NameNotFoundException e) {
