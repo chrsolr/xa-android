@@ -10,6 +10,7 @@ import org.jsoup.Jsoup;
 import java.util.Locale;
 import java.util.Map;
 
+import io.keypunchers.xa.R;
 import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.misc.Enums;
 import io.keypunchers.xa.misc.Singleton;
@@ -85,7 +86,9 @@ public class SubmitCommentLoader extends AsyncTaskLoader<Pair<Boolean, String>> 
                     mComment,
                     System.getProperty("line.separator"),
                     System.getProperty("line.separator"),
-					profile.getSignature());
+					profile.getSignature() != null
+                            ? profile.getSignature()
+                            : getContext().getResources().getString(R.string.default_signature));
 
             if (mPostType == Enums.PostType.ARTICLE) {
                 Jsoup.connect(Common.getSubmitCommentUrl(mPostType))
