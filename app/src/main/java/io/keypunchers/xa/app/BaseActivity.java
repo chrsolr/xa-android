@@ -35,6 +35,8 @@ import io.keypunchers.xa.fragments.UpcomingGamesFragment;
 import io.keypunchers.xa.loaders.LatestScreenshotsLoader;
 import io.keypunchers.xa.misc.VolleySingleton;
 import io.keypunchers.xa.models.LatestScreenshot;
+import java.util.*;
+import io.keypunchers.xa.misc.*;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<ArrayList<LatestScreenshot>> {
     private int mDrawerCurrentSelectedPosition = 0;
@@ -198,7 +200,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 
         if (position == 0 && fragment == null) {
-            bundle.putString("url", "http://www.xboxachievements.com/archive/gaming-news/");
+            bundle.putString("url", Common.BASE_URL + "/archive/gaming-news/");
             bundle.putString("ab_title", getResources().getString(R.string.ab_news_title));
             bundle.putParcelable("header", mBanners.get(1));
 
@@ -207,7 +209,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
 
         if (position == 1 && fragment == null) {
-            bundle.putString("url", "http://www.xboxachievements.com/news/previews/");
+            bundle.putString("url", Common.BASE_URL + "/news/previews/");
             bundle.putString("ab_title", getResources().getString(R.string.ab_previews_title));
             bundle.putParcelable("header", mBanners.get(2));
 
@@ -216,7 +218,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
 
         if (position == 2 && fragment == null) {
-            bundle.putString("url", "http://www.xboxachievements.com/news/interviews/");
+            bundle.putString("url", Common.BASE_URL + "/news/interviews/");
             bundle.putString("ab_title", getResources().getString(R.string.ab_interviews_title));
             bundle.putParcelable("header", mBanners.get(3));
 
@@ -225,7 +227,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
 
         if (position == 3 && fragment == null) {
-            bundle.putString("url", "http://www.xboxachievements.com/browsegames/");
+            bundle.putString("url", Common.BASE_URL + "/browsegames/");
             bundle.putString("ab_title", getResources().getString(R.string.ab_games_title));
 
             fragment = new GameListFragment();
@@ -233,7 +235,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
 
         if (position == 4 && fragment == null) {
-            bundle.putString("url", "http://www.xboxachievements.com/archive/achievements/");
+            bundle.putString("url", Common.BASE_URL + "/archive/achievements/");
             bundle.putString("ab_title", getResources().getString(R.string.ab_latest_achievements_title));
             bundle.putParcelable("header", mBanners.get(4));
 
@@ -249,7 +251,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
 
         if (position == 6 && fragment == null) {
-            bundle.putString("url", "http://www.xboxachievements.com/upcoming/");
+            bundle.putString("url", Common.BASE_URL + "/upcoming/");
             bundle.putString("ab_title", getResources().getString(R.string.ab_upcoming_games_title));
 
             fragment = new UpcomingGamesFragment();

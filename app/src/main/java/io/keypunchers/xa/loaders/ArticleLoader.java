@@ -83,7 +83,7 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
                 if (Common.isImageBlacklisted(src))
                     continue;
 
-                images.add(Common.getHighResScreenshotImage(src, getContext()));
+                images.add(Common.getHighResScreenshotImage(src, getContext(), true));
             }
 
             ArrayList<String> videos = new ArrayList<>();

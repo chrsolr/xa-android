@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.models.Game;
+import android.widget.*;
 
 public class GamesListLoader extends AsyncTaskLoader<ArrayList<Game>> {
     private final String BASE_URL;

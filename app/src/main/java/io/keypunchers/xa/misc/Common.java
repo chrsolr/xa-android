@@ -18,8 +18,8 @@ import io.keypunchers.xa.misc.Enums.UrlType;
 import android.view.View;
 
 public class Common extends Application {
-    public static final String BASE_URL = "http://www.xboxachievements.com";
-    public static final String NEWS_COMMENTS_URL = "http://www.xboxachievements.com/news2-loadcomments.php";
+    public static final String BASE_URL = "https://www.xboxachievements.com";
+    public static final String NEWS_COMMENTS_URL = "https://www.xboxachievements.com/news2-loadcomments.php";
 
     public static int convertDpToPx(int dp, Context context) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
@@ -35,7 +35,7 @@ public class Common extends Application {
         return url;
     }
 
-    public static String getHighResScreenshotImage(String url, Context context) {
+    public static String getHighResScreenshotImage(String url, Context context, boolean isHttps) {
         final String HIGH_RES_IMAGE_SETTING = context.getResources().getString(R.string.HIGH_RES_IMAGE_SETTING_TAG);
         boolean high_res = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(HIGH_RES_IMAGE_SETTING, true);
 
@@ -44,6 +44,9 @@ public class Common extends Application {
         else if (url != null)
             url = url.replace("med_", "thu_").replaceAll("\\s", "%20");
 
+		if (!url.contains("https") && isHttps)
+			url = url.replace("http", "https");
+			
         return url;
     }
 

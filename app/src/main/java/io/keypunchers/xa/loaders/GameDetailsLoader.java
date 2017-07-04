@@ -141,7 +141,7 @@ public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
             mData.setPublisher(game_publisher);
             mData.setGenres(game_genres);
             mData.setReleaseDates(game_release_dates);
-            mData.setBanner(Common.getHighResScreenshotImage(game_banner, getContext()));
+            mData.setBanner(Common.getHighResScreenshotImage(game_banner, getContext(), false));
             mData.setAchievements(achievements);
             mData.setHasScreenshots(has_screenshots != null);
 

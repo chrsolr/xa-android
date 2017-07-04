@@ -61,7 +61,10 @@ public class ArticleFragment extends Fragment {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.e(ArticleFragment.class.getSimpleName(), error.getMessage());
+                    error.printStackTrace();
+					ImageView mIvBanner = (ImageView) view.findViewById(R.id.iv_article_banner);
+                    mIvBanner.setImageDrawable(getActivity().getDrawable(R.drawable.promo_banner));
+					setupUI(view);
                 }
             });
         } else {
