@@ -44,7 +44,7 @@ public class Common extends Application {
         else if (url != null)
             url = url.replace("med_", "thu_").replaceAll("\\s", "%20");
 
-		if (!url.contains("https") && isHttps)
+		if ((url != null && !url.contains("https")) && isHttps)
 			url = url.replace("http", "https");
 			
         return url;
@@ -151,10 +151,10 @@ public class Common extends Application {
 
         switch (postType) {
             case ARTICLE:
-                url = "http://www.xboxachievements.com/postComment.php?type=360news";
+                url = Common.BASE_URL + "/postComment.php?type=360news";
                 break;
             case ACHIEVEMENTS:
-                url = "http://www.xboxachievements.com/postCommentAch.php?achID=";
+                url = Common.BASE_URL + "/postCommentAch.php?achID=";
                 break;
         }
 
