@@ -61,10 +61,7 @@ public class SettingsFragment extends Fragment {
     private String XA_USERNAME;
     private String XA_PASSWORD;
     private String COMMENT_SIGNATURE;
-    private Snackbar mSnackbar;
-
-    private LinearLayout mLlCheckUpdates;
-
+   
     private LinearLayout mLlChangeSignature;
 
     public SettingsFragment() {
@@ -107,7 +104,6 @@ public class SettingsFragment extends Fragment {
         mHighImageQuality.setChecked(mPrefs.getBoolean(HIGH_RES_IMAGE_SETTING_TAG, true));
 
         mLlCredentials = (LinearLayout) view.findViewById(R.id.ll_credentials);
-        mLlCheckUpdates = (LinearLayout) view.findViewById(R.id.ll_check_updates);
         mLlChangeSignature = (LinearLayout) view.findViewById(R.id.ll_signature);
     }
 
@@ -128,8 +124,6 @@ public class SettingsFragment extends Fragment {
         setupHighImageQuality();
 
         setupUserCredentials();
-
-        setupCheckUpdates();
 
         setupChangeSignature();
     }
@@ -314,72 +308,6 @@ public class SettingsFragment extends Fragment {
                 });
             }
         });
-    }
-
-    public void setupCheckUpdates() {
-        try {
-            final int versionCode = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionCode;
-
-            mLlCheckUpdates.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(final View view) {
-                    mSnackbar = Common.makeSnackbar(getActivity(), "Checking for Updates...", Snackbar.LENGTH_INDEFINITE);
-                    mSnackbar.show();
-
-                    RequestQueue mQueue = VolleySingleton.getRequestQueque();
-                    JsonObjectRequest mRequest = new JsonObjectRequest(Request.Method.GET, "http://www.keypunchers.io/api/android/xa/version", null,
-                            new Response.Listener<JSONObject>() {
-                                @Override
-                                public void onResponse(final JSONObject response) {
-                                    try {
-                                        final int code = response.getInt("version_code");
-                                        final String url = response.getString("download_url");
-
-                                        if (code > versionCode) {
-                                            mSnackbar.setText("Update available");
-                                            mSnackbar.setDuration(Snackbar.LENGTH_INDEFINITE);
-                                            mSnackbar.setActionTextColor(Color.WHITE);
-                                            mSnackbar.setAction("Download", new OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                                                    getActivity().startActivity(mIntent);
-                                                }
-                                            });
-                                        } else {
-                                            mSnackbar.setText("No update available");
-                                            mSnackbar.setDuration(Snackbar.LENGTH_LONG);
-                                            mSnackbar.show();
-                                        }
-                                    } catch (Exception ex) {
-                                        ex.printStackTrace();
-                                    }
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    mSnackbar.setText("Error: Cannot retrieve latest version");
-                                    mSnackbar.setDuration(Snackbar.LENGTH_LONG);
-                                    mSnackbar.show();
-                                }
-                            });
-
-                    mRequest.setRetryPolicy(new DefaultRetryPolicy(
-                            5000,
-                            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-                    mQueue.add(mRequest);
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString(getString(R.string.CHECK_UPDATE), String.format(Locale.US, "Current App Version: %s", versionCode));
-                    mFirebaseAnalytics.logEvent(getString(R.string.ACTION), bundle);
-                }
-            });
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     public void setupChangeSignature() {

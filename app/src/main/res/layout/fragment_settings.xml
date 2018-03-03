@@ -275,37 +275,5 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/margin_level_2"
-            android:layout_marginTop="@dimen/margin_level_2"
-            android:background="@color/divider" />
-
-        <LinearLayout
-            android:id="@+id/ll_check_updates"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-bold"
-                android:text="Check Updates"
-                android:textAppearance="@style/AppTheme.TextStyle.Title"
-                android:textColor="@null"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Check if an update is available."
-                android:textAppearance="@style/AppTheme.TextStyle.Small"
-                android:textColor="@null" />
-
-        </LinearLayout>
-
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
