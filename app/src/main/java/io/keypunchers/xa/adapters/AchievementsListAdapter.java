@@ -44,8 +44,8 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
 
         holder.mTvAchTitle.setText(item.getTitle());
         holder.mTvAchDesc.setText(item.getDescription());
-        holder.mTvAchComments.setText(String.format(Locale.US, "%s %s", item.getCommentAmount(), holder.mTvAchComments.getText()).trim());
         holder.mTvAchGamerscore.setText(item.getGamescoreAmount());
+		holder.mTvAchComments.setText(String.format(Locale.US, "%s", item.getCommentAmount()).trim());
 
         VolleySingleton
                 .getImageLoader()

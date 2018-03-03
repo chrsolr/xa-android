@@ -104,10 +104,20 @@
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
             android:layout_marginTop="@dimen/margin_level_0"
-            android:text="Comments"
+            android:text="(0)"
             android:textAppearance="@style/AppTheme.TextStyle.Subtitle"
             app:layout_constraintLeft_toLeftOf="@+id/tv_achievement_desc"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_achievement_desc" />
+		
+		<TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_level_0"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="@dimen/margin_level_0"
+            android:text="Comments"
+            android:textAppearance="@style/AppTheme.TextStyle.Subtitle"
+            app:layout_constraintLeft_toRightOf="@+id/tv_achievement_comments"
             app:layout_constraintTop_toBottomOf="@+id/tv_achievement_desc" />
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
