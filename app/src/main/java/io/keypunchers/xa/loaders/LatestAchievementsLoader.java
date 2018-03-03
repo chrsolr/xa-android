@@ -68,7 +68,7 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<LatestAc
                     }
 
                     LatestAchievement item = new LatestAchievement();
-                    item.setImageUrl(Common.getHighResCoverImage(image_url, getContext()));
+                    item.setImageUrl(Common.getCoverImage(image_url));
                     item.setTitle(title);
                     item.setAchievementsCount(subtitle.split(", ")[0].trim());
                     item.setGamerscoreCount(subtitle.split(", ")[1].replace(".", "").trim());

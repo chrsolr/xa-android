@@ -51,7 +51,6 @@ public class SettingsFragment extends Fragment {
     private SharedPreferences mPrefs;
     private Spinner mDefaultHomeSpinner;
     private Spinner mEndlessScrollerMaxSpinner;
-    private SwitchCompat mHighImageQuality;
     private LinearLayout mLlCredentials;
 
     private String HIGH_RES_IMAGE_SETTING_TAG;
@@ -100,9 +99,6 @@ public class SettingsFragment extends Fragment {
         mEndlessScrollerMaxSpinner = (Spinner) view.findViewById(R.id.spinner_settings_scroll_max_items);
         mEndlessScrollerMaxSpinner.setSelection(mPrefs.getInt(ENDLESS_SCROLLER_MAX_ITEMS_POSITION_TAG, 0));
 
-        mHighImageQuality = (SwitchCompat) view.findViewById(R.id.sw_settings_image_quality);
-        mHighImageQuality.setChecked(mPrefs.getBoolean(HIGH_RES_IMAGE_SETTING_TAG, true));
-
         mLlCredentials = (LinearLayout) view.findViewById(R.id.ll_credentials);
         mLlChangeSignature = (LinearLayout) view.findViewById(R.id.ll_signature);
     }
@@ -120,8 +116,6 @@ public class SettingsFragment extends Fragment {
         setupDefaultHomeSpinner();
 
         setupEndlessScrollerMaxItemsSpinner();
-
-        setupHighImageQuality();
 
         setupUserCredentials();
 
@@ -234,15 +228,6 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
-    }
-
-    private void setupHighImageQuality() {
-        mHighImageQuality.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPrefs.edit().putBoolean(HIGH_RES_IMAGE_SETTING_TAG, mHighImageQuality.isChecked()).apply();
             }
         });
     }
@@ -369,7 +354,7 @@ public class SettingsFragment extends Fragment {
         mPlatformSpinner.setSelection(0);
         mDefaultHomeSpinner.setSelection(0);
         mEndlessScrollerMaxSpinner.setSelection(0);
-        mHighImageQuality.setChecked(true);
+  
         Singleton.getInstance().destroyUserProfile();
     }
 }

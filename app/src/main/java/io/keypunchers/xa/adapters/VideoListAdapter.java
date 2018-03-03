@@ -40,7 +40,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final String item = mData.get(position);
 
-        final String url = Common.getHighResYouTubeImage(item);
+        final String url = Common.getYouTubeImage(item);
         final String yt_watch_link = Common.getYouTubeWatchLink(item);
 
         VolleySingleton.getImageLoader()

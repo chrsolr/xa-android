@@ -59,7 +59,7 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
 			Element authorElement = header_root.first().select("img").first();
 
             String profile_image = authorElement != null 
-					? Common.getHighResArticleAuthorImage(header_root.first().select("img").first().attr("abs:src"), getContext())
+					? Common.getArticleAuthorImage(header_root.first().select("img").first().attr("abs:src"))
 				: "http://www.xboxachievements.com/images/news/general/xba-news.png";
 				
             String header_title = header_root.get(1).select(".newsTitle").first().text();
@@ -83,7 +83,7 @@ public class ArticleLoader extends AsyncTaskLoader<Article> {
                 if (Common.isImageBlacklisted(src))
                     continue;
 
-                images.add(Common.getHighResScreenshotImage(src, getContext(), true));
+                images.add(Common.getScreenshotImage(src, true));
             }
 
             ArrayList<String> videos = new ArrayList<>();

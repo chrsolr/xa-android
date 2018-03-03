@@ -25,56 +25,38 @@ public class Common extends Application {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
     }
 	
-	public static String getHighResArticleAuthorImage(String url, Context context) {
-        final String HIGH_RES_IMAGE_SETTING = context.getResources().getString(R.string.HIGH_RES_IMAGE_SETTING_TAG);
-        boolean high_res = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(HIGH_RES_IMAGE_SETTING, true);
-
-        if (url != null && high_res)
+	public static String getArticleAuthorImage(String url) {
+        if (url != null)
             url = url.replace(".png", "-la.png").replace(".jpg", "-la.jpg");
 
         return url;
     }
 
-    public static String getHighResScreenshotImage(String url, Context context, boolean isHttps) {
-        final String HIGH_RES_IMAGE_SETTING = context.getResources().getString(R.string.HIGH_RES_IMAGE_SETTING_TAG);
-        boolean high_res = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(HIGH_RES_IMAGE_SETTING, true);
-
-        if (url != null && high_res)
+    public static String getScreenshotImage(String url, boolean isHttps) {
+        if (url != null)
             url = url.replace("thu_", "med_").replaceAll("\\s", "%20");
-        else if (url != null)
-            url = url.replace("med_", "thu_").replaceAll("\\s", "%20");
-
+        
 		if ((url != null && !url.contains("https")) && isHttps)
 			url = url.replace("http", "https");
 			
         return url;
     }
 
-    public static String getHighResCoverImage(String url, Context context) {
-        final String HIGH_RES_IMAGE_SETTING = context.getResources().getString(R.string.HIGH_RES_IMAGE_SETTING_TAG);
-        boolean high_res = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(HIGH_RES_IMAGE_SETTING, true);
-
-        if (url != null && high_res)
+    public static String getCoverImage(String url) {
+        if (url != null)
             url = url.replace("/game/", "/achievements/").replaceAll("\\s", "%20");
-        else if (url != null)
-            url = url.replace("/achievements/", "/game/").replaceAll("\\s", "%20");
-
+        
         return url;
     }
 
-    public static String getHighResAchImage(String url, Context context) {
-        final String HIGH_RES_IMAGE_SETTING = context.getResources().getString(R.string.HIGH_RES_IMAGE_SETTING_TAG);
-        boolean high_res = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(HIGH_RES_IMAGE_SETTING, true);
-
-        if (url != null && high_res)
+    public static String getAchievementImage(String url) {
+        if (url != null)
             url = url.replace("lo.", "hi.").replaceAll("\\s", "%20");
-        else if (url != null)
-            url = url.replace("hi.", "lo.").replaceAll("\\s", "%20");
-
+        
         return url;
     }
 
-    public static String getHighResYouTubeImage(String url) {
+    public static String getYouTubeImage(String url) {
 
         if (url.contains("?")) {
             url = url.substring(0, url.indexOf("?"));
