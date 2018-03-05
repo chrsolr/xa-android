@@ -90,17 +90,15 @@ public class Common extends Application {
     }
 
     public static String createPermalink(String url, UrlType type) {
-        String permalink = null;
-
         if (type == UrlType.BROWSE_GAMES || type == UrlType.LATEST_ACHIEVEMENTS) {
-            permalink = url.replace("/game/", "").replace("/achievements/", "");
+            return url.replace("/game/", "").replace("/achievements/", "");
         }
 
         if (type == UrlType.LATEST_SCREENSHOTS) {
-            permalink = url.replace("/game/", "").replace("/screenshots/", "");
+            return url.replace("/game/", "").replace("/screenshots/", "");
         }
-
-        return permalink;
+		
+		return url;
     }
 
     public static String getNewsCommentstId(String url) {
