@@ -21,6 +21,7 @@ import io.keypunchers.xa.fragments.ScreenshotsFragment;
 import io.keypunchers.xa.loaders.GameDetailsLoader;
 import io.keypunchers.xa.misc.Common;
 import io.keypunchers.xa.models.GameDetails;
+import android.support.design.widget.*;
 
 public class AchievementsActivity extends AppCompatActivity {
     private GameDetails mData;
@@ -62,7 +63,7 @@ public class AchievementsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_article, menu);
+        getMenuInflater().inflate(R.menu.menu_game, menu);
         return true;
     }
 
@@ -85,6 +86,10 @@ public class AchievementsActivity extends AppCompatActivity {
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Check it out!");
                 intent.putExtra(Intent.EXTRA_TEXT, "Check it out! " + mData.getTitle() + "\n\n" + Common.getGameAchievementsUrlByPermalink(GAME_PERMALINK) + "\n\n" + "Shared via XA App.");
                 startActivity(Intent.createChooser(intent, "Share"));
+				break;
+			case R.id.menu_item_add_to_favorites:
+				Common.makeSnackbar(this, "Added to favorites!!!", Snackbar.LENGTH_SHORT).show();
+				break;
         }
 
         return super.onOptionsItemSelected(item);
