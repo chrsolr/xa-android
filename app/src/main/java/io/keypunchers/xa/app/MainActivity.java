@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity {
             final int versionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
 
             RequestQueue mQueue = VolleySingleton.getRequestQueque();
-            JsonObjectRequest mRequest = new JsonObjectRequest(Request.Method.GET, "http://www.keypunchers.io/api/android/xa/version", null,
+            JsonObjectRequest mRequest = new JsonObjectRequest(Request.Method.GET, "http://www.christiansoler.me/api/android/xa/version", null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(final JSONObject response) {
