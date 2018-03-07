@@ -1,0 +1,153 @@
+package me.christiansoler.xa.loaders;
+
+import android.content.Context;
+import android.support.v4.content.AsyncTaskLoader;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import me.christiansoler.xa.misc.Common;
+import me.christiansoler.xa.misc.Enums;
+import me.christiansoler.xa.models.Achievement;
+import me.christiansoler.xa.models.GameDetails;
+
+public class GameDetailsLoader extends AsyncTaskLoader<GameDetails> {
+    private GameDetails mData;
+    private String BASE_URL;
+
+    public GameDetailsLoader(Context context, String url) {
+        super(context);
+        BASE_URL = url;
+    }
+
+    @Override
+    protected void onStartLoading() {
+        super.onStartLoading();
+
+        if (mData != null)
+            super.deliverResult(mData);
+        else
+            forceLoad();
+    }
+
+    @Override
+    public void deliverResult(GameDetails data) {
+        mData = data;
+        if (isStarted() && mData != null) {
+            super.deliverResult(mData);
+        }
+    }
+
+    @Override
+    public GameDetails loadInBackground() {
+        try {
+            mData = new GameDetails();
+
+            Document document = Jsoup.connect(BASE_URL).get();
+
+
+            Element navbar_root = document.getElementsByClass("pt3")
+                    .first();
+
+            Element has_screenshots = navbar_root.select("a:containsOwn(Screen)").first();
+
+            Element game_details_root = document.getElementsByClass("men_h_content")
+                    .first()
+                    .select("tr")
+                    .first();
+
+            Elements game_achievements_rows = document.getElementsByClass("bl_la_main")
+                    .first()
+                    .select("tr:has(td.ac1), tr:has(td.ac3)");
+
+            String game_banner = null;
+            Element banner = document.getElementsByClass("blr_main")
+                    .eq(1)
+                    .select("img")
+                    .first();
+
+            if (banner != null)
+                game_banner = banner.attr("abs:src");
+
+            String game_title = document.getElementsByClass("tt")
+                    .first()
+                    .text()
+                    .trim();
+
+            String game_image_url = game_details_root.select("td:eq(0) > img")
+                    .attr("abs:src");
+
+            String game_developer = game_details_root.select("td:eq(1) > div:eq(0) > a")
+                    .text()
+                    .trim();
+
+            String game_publisher = game_details_root.select("td:eq(1) > div:eq(1) > a")
+                    .text()
+                    .trim();
+
+            ArrayList<String> game_genres = new ArrayList<>();
+            Elements genres = game_details_root.select("td:eq(1) > div:eq(3) > a");
+
+            for (Element element : genres)
+                game_genres.add(element.text().trim());
+
+            Map<Enums.Country, String> game_release_dates = new HashMap<>();
+            Elements release_dates = game_details_root.select("td:eq(1) > div:eq(4) > img");
+
+            for (Element element : release_dates) {
+                if (element.attr("alt").equals("US"))
+                    game_release_dates.put(Enums.Country.US, element.nextSibling().toString().trim());
+                if (element.attr("alt").equals("Europe"))
+                    game_release_dates.put(Enums.Country.EUROPE, element.nextSibling().toString().trim());
+                if (element.attr("alt").equals("Japan"))
+                    game_release_dates.put(Enums.Country.JAPAN, element.nextSibling().toString().trim());
+            }
+
+            ArrayList<Achievement> achievements = new ArrayList<>();
+            for (int i = 0; i < game_achievements_rows.size(); i++) {
+                String ach_image_url = game_achievements_rows.get(i).select("td.ac1 img").attr("abs:src");
+                String ach_title = game_achievements_rows.get(i).select("td.ac2 b").first().text().trim();
+                String ach_gamerscore = game_achievements_rows.get(i).select("td.ac4 strong").first().text().trim();
+                String ach_desc = game_achievements_rows.get(i + 1).select("td.ac3:eq(0)").first().text().trim();
+                String ach_comments_amount = game_achievements_rows.get(i + 1).select("td.ac3:eq(1) a").first().text().trim();
+                String ach_page_url = game_achievements_rows.get(i).select("td.ac1 a").first().attr("href");
+                boolean ach_is_secret = game_achievements_rows.get(i).hasClass("secret");
+
+                Achievement ach = new Achievement();
+                ach.setImageUrl(Common.getAchievementImage(ach_image_url));
+                ach.setTitle(ach_title);
+                ach.setGamescoreAmount(ach_gamerscore);
+                ach.setDescription(ach_desc);
+                ach.setCommentAmount(ach_comments_amount.equals("") ? "(0)" : ach_comments_amount);
+                ach.setIsSecret(ach_is_secret);
+                ach.setCommentsPageUrl(ach_page_url);
+                ach.setGameTitle(game_title);
+
+                achievements.add(ach);
+
+                i += 1;
+            }
+
+            mData.setTitle(game_title);
+            mData.setImageUrl(Common.getCoverImage(game_image_url));
+            mData.setDeveloper(game_developer);
+            mData.setPublisher(game_publisher);
+            mData.setGenres(game_genres);
+            mData.setReleaseDates(game_release_dates);
+            mData.setBanner(Common.getScreenshotImage(game_banner, false));
+            mData.setAchievements(achievements);
+            mData.setHasScreenshots(has_screenshots != null);
+
+            return mData;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+}

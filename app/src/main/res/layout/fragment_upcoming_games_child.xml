@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="io.keypunchers.xa.fragments.UpcomingGamesChildFragment">
+    tools:context="me.christiansoler.xa.fragments.UpcomingGamesChildFragment">
 
     <ListView
         android:id="@+id/lv_upcoming_games_child"

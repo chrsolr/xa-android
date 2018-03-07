@@ -32,7 +32,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <io.keypunchers.xa.views.ScaledImageView
+            <me.christiansoler.xa.views.ScaledImageView
                 android:id="@+id/iv_latest_screenshot_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -22,7 +22,7 @@
             app:cardUseCompatPadding="true"
             app:contentPadding="0dp">
 
-            <io.keypunchers.xa.views.ScaledImageView
+            <me.christiansoler.xa.views.ScaledImageView
                 android:id="@+id/iv_article_banner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:663174103865:android:d941a283b7d18d09",
         "android_client_info": {
-          "package_name": "io.keypunchers.xa"
+          "package_name": "me.christiansoler.xa"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "663174103865-sujs3g45d4br3vqrapgh1m4ed49m48kr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "io.keypunchers.xa",
+            "package_name": "me.christiansoler.xa",
             "certificate_hash": "dacfebec08458a83fba6e982d1fcaf6cac6ecaa7"
           }
         },

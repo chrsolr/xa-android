@@ -5,7 +5,7 @@
     android:layout_height="@dimen/nav_header_height"
     android:background="@color/color_primary">
 
-    <io.keypunchers.xa.views.ScaledImageView
+    <me.christiansoler.xa.views.ScaledImageView
         android:id="@+id/iv_drawer_banner"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

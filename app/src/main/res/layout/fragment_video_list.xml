@@ -5,4 +5,4 @@
     android:layout_height="wrap_content"
     android:clipToPadding="false"
     android:scrollbars="none"
-    tools:context="io.keypunchers.xa.fragments.VideoListFragment" />
+    tools:context="me.christiansoler.xa.fragments.VideoListFragment" />
