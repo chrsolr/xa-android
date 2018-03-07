@@ -79,11 +79,11 @@ public class AchievementsListAdapter extends RecyclerView.Adapter<AchievementsLi
             mData = data;
             mContext = context;
 
-            mIvAchImage = itemView.findViewById(R.id.iv_achievement_image);
-            mTvAchTitle = itemView.findViewById(R.id.tv_achievement_title);
-            mTvAchDesc = itemView.findViewById(R.id.tv_achievement_desc);
-            mTvAchComments = itemView.findViewById(R.id.tv_achievement_comments);
-            mTvAchGamerscore = itemView.findViewById(R.id.tv_achievement_gs);
+            mIvAchImage = (ScaledImageView) itemView.findViewById(R.id.iv_achievement_image);
+            mTvAchTitle = (TextView) itemView.findViewById(R.id.tv_achievement_title);
+            mTvAchDesc = (TextView) itemView.findViewById(R.id.tv_achievement_desc);
+            mTvAchComments = (TextView) itemView.findViewById(R.id.tv_achievement_comments);
+            mTvAchGamerscore = (TextView) itemView.findViewById(R.id.tv_achievement_gs);
 
             itemView.setOnClickListener(this);
         }
