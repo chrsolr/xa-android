@@ -30,6 +30,9 @@ repositories {
 }
 
 dependencies {
+	compile 'com.google.firebase:firebase-core:+'
+	compile 'com.android.support:cardview-v7:+'
+	compile 'com.android.support:design:+'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:design:27.1.0'
     compile 'com.android.support:appcompat-v7:27.1.0'
