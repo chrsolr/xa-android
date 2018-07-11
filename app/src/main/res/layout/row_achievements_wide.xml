@@ -66,7 +66,6 @@
             android:layout_marginTop="0dp"
             android:textAppearance="@style/AppTheme.TextStyle.Title"
             android:textColor="@color/primary_text_dark"
-            android:textStyle="italic"
             app:layout_constraintRight_toLeftOf="@+id/textView"
             app:layout_constraintTop_toTopOf="@+id/textView"
             tools:layout_width="8dp" />
@@ -80,7 +79,7 @@
             android:text="G"
             android:textAppearance="@style/AppTheme.TextStyle.Title"
             android:textColor="@color/primary_text_dark"
-            android:textStyle="italic|bold"
+            android:textStyle="bold"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView2"
             tools:ignore="HardcodedText" />
