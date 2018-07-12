@@ -65,7 +65,6 @@ public class UpcomingGame implements Parcelable {
     }
 
     public void setGamePermalink(String url) {
-        Enums.UrlType UrlType = null;
 		this.mGamePermalink = Common.createPermalink(url, UrlType.UPCOMING_GAMES);
     }
 }
