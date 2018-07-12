@@ -2,6 +2,8 @@ package me.christiansoler.xa.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import me.christiansoler.xa.misc.*;
+import me.christiansoler.xa.misc.Enums.*;
 
 
 public class UpcomingGame implements Parcelable {
@@ -63,6 +65,7 @@ public class UpcomingGame implements Parcelable {
     }
 
     public void setGamePermalink(String url) {
-        this.mGamePermalink = url.replace("/game/", "").replace("/overview/", "");
+        Enums.UrlType UrlType = null;
+		this.mGamePermalink = Common.createPermalink(url, UrlType.UPCOMING_GAMES);
     }
 }

@@ -5,7 +5,8 @@ public class Enums {
 	public enum UrlType {
 		BROWSE_GAMES,
 		LATEST_ACHIEVEMENTS,
-		LATEST_SCREENSHOTS
+		LATEST_SCREENSHOTS,
+		UPCOMING_GAMES
 	}
 	
 	public enum Platform {
