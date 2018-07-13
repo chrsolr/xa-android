@@ -11,8 +11,7 @@ public class VolleySingleton {
     private static ImageLoader mImageLoader;
     private static BitmapLruCache mBitmapLruCache;
 
-    private VolleySingleton() {
-    }
+    private VolleySingleton() {}
 
     static void instantiate(Context context) {
         mBitmapLruCache = new BitmapLruCache();
@@ -21,19 +20,22 @@ public class VolleySingleton {
     }
 
     public static ImageLoader getImageLoader() {
-        if (mImageLoader != null) return mImageLoader;
+        if (mImageLoader != null) 
+			return mImageLoader;
 
         throw new IllegalStateException("ImageLoader not instantiated");
     }
 
     public static RequestQueue getRequestQueque() {
-        if (mRequestQueue != null) return mRequestQueue;
+        if (mRequestQueue != null) 
+			return mRequestQueue;
 
         throw new IllegalStateException("RequestQueue not instantiated");
     }
 
     public static BitmapLruCache getBitmapLruCache() {
-        if (mBitmapLruCache != null) return mBitmapLruCache;
+        if (mBitmapLruCache != null) 
+			return mBitmapLruCache;
 
         throw new IllegalStateException("BitmapLruCache not instantiated");
     }

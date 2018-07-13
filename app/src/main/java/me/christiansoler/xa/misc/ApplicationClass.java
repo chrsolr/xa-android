@@ -14,7 +14,12 @@ public class ApplicationClass extends Application {
         super.onCreate();
 
         VolleySingleton.instantiate(this);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+		instantiateCredentials();
+    }
+
+	private void instantiateCredentials() {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         boolean hasCredentials = prefs.contains(getString(R.string.XA_PASSWORD)) && prefs.contains(getString(R.string.XA_PASSWORD));
 
@@ -26,5 +31,5 @@ public class ApplicationClass extends Application {
 
             Singleton.getInstance().setUserProfile(profile);
         }
-    }
+	}
 }
