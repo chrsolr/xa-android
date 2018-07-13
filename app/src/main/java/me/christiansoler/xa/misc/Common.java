@@ -56,7 +56,6 @@ public class Common extends Application {
     }
 
     public static String getYouTubeImage(String url) {
-
         if (url.contains("?")) {
             url = url.substring(0, url.indexOf("?"));
         }
@@ -105,28 +104,25 @@ public class Common extends Application {
     }
 
     public static String getNewsCommentstId(String url) {
-        String nID = url.substring(url.indexOf("-") + 1, url.length() - 1);
+        String id = url.substring(url.indexOf("-") + 1, url.length() - 1);
 
-        if (nID.contains("-"))
-            nID = nID.substring(0, nID.indexOf("-"));
+        if (id.contains("-"))
+            id = id.substring(0, id.indexOf("-"));
 
-        return nID;
+        return id;
     }
 
     public static String getAchievementId(String url) {
-        String nID = url.substring(url.indexOf("achievement/") + 12, url.length() - 1);
+        String id = url.substring(url.indexOf("achievement/") + 12, url.length() - 1);
 
-        if (nID.contains("-"))
-            nID = nID.substring(0, nID.indexOf("-"));
+        if (id.contains("-"))
+            id = id.substring(0, id.indexOf("-"));
 
-        return nID;
+        return id;
     }
 
     public static boolean isImageBlacklisted(String url) {
-        if (url.contains("interview-divider.png"))
-            return true;
-
-        return false;
+        return (url.contains("interview-divider.png")) ? true : false;
     }
 
     public static String getSubmitCommentUrl(Enums.PostType postType) {
@@ -149,7 +145,7 @@ public class Common extends Application {
         Snackbar snackBarView = Snackbar.make(((AppCompatActivity) context).getWindow().getDecorView().findViewById(android.R.id.content), text, duration);
         snackBarView.getView().setBackgroundColor(ContextCompat.getColor(context, R.color.color_primary_accent));
 
-        TextView tv = (TextView) snackBarView.getView().findViewById(android.support.design.R.id.snackbar_text);
+        TextView tv = snackBarView.getView().findViewById(android.support.design.R.id.snackbar_text);
         tv.setTextColor(Color.WHITE);
 
         return snackBarView;
@@ -160,7 +156,7 @@ public class Common extends Application {
         Snackbar snackBarView = Snackbar.make(view, text, duration);
         snackBarView.getView().setBackgroundColor(ContextCompat.getColor(context, R.color.color_primary_accent));
 
-        TextView tv = (TextView) snackBarView.getView().findViewById(android.support.design.R.id.snackbar_text);
+        TextView tv = snackBarView.getView().findViewById(android.support.design.R.id.snackbar_text);
         tv.setTextColor(Color.WHITE);
 
         return snackBarView;
