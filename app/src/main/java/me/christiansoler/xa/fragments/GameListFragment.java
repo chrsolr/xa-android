@@ -115,9 +115,6 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_browse_games, menu);
-
-        menu.removeItem(R.id.main_menu_donate);
-
         super.onCreateOptionsMenu(menu, inflater);
     }
 

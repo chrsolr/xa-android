@@ -34,14 +34,11 @@ public class SettingsFragment extends Fragment {
     private SharedPreferences mPrefs;
     private Spinner mDefaultHomeSpinner;
     private Spinner mEndlessScrollerMaxSpinner;
-    private LinearLayout mLlCredentials;
 
     private String HIGH_RES_IMAGE_SETTING_TAG;
     private String DEFAULT_PLATFORM_POSITION_TAG;
     private String DEFAULT_HOME_POSITION_TAG;
     private String ENDLESS_SCROLLER_MAX_ITEMS_POSITION_TAG;
-    private String XA_USERNAME;
-    private String XA_PASSWORD;
     private String COMMENT_SIGNATURE;
    
     private LinearLayout mLlChangeSignature;
@@ -67,8 +64,6 @@ public class SettingsFragment extends Fragment {
         DEFAULT_PLATFORM_POSITION_TAG = mResources.getString(R.string.DEFAULT_PLATFORM_POSITION_TAG);
         DEFAULT_HOME_POSITION_TAG = mResources.getString(R.string.DEFAULT_HOME_POSITION_TAG);
         ENDLESS_SCROLLER_MAX_ITEMS_POSITION_TAG = mResources.getString(R.string.ENDLESS_SCROLLER_MAX_ITEMS_POSITION_TAG);
-        XA_USERNAME = mResources.getString(R.string.XA_USERNAME);
-        XA_PASSWORD = mResources.getString(R.string.XA_PASSWORD);
         COMMENT_SIGNATURE = mResources.getString(R.string.COMMENT_SIGNATURE);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -82,7 +77,6 @@ public class SettingsFragment extends Fragment {
         mEndlessScrollerMaxSpinner = (Spinner) view.findViewById(R.id.spinner_settings_scroll_max_items);
         mEndlessScrollerMaxSpinner.setSelection(mPrefs.getInt(ENDLESS_SCROLLER_MAX_ITEMS_POSITION_TAG, 0));
 
-        mLlCredentials = (LinearLayout) view.findViewById(R.id.ll_credentials);
         mLlChangeSignature = (LinearLayout) view.findViewById(R.id.ll_signature);
     }
 
@@ -95,22 +89,14 @@ public class SettingsFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.ab_settings_title);
 
         setupPlatformSpinner();
-
         setupDefaultHomeSpinner();
-
         setupEndlessScrollerMaxItemsSpinner();
-
-        setupUserCredentials();
-
         setupChangeSignature();
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_settings, menu);
-
-        menu.removeItem(R.id.main_menu_donate);
-
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -211,69 +197,6 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
-    }
-
-    private void setupUserCredentials() {
-        final UserProfile profile = Singleton.getInstance().getUserProfile();
-
-        mLlCredentials.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setCancelable(true);
-
-                View layout = getActivity().getLayoutInflater().inflate(R.layout.dialog_credentials, null, false);
-
-                final EditText mInputUsername = (EditText) layout.findViewById(R.id.et_username);
-                final EditText mInputPassword = (EditText) layout.findViewById(R.id.et_password);
-
-                mInputUsername.setText(profile.getUsername());
-                mInputPassword.setText(profile.getPassword());
-
-                builder.setView(layout);
-                builder.setPositiveButton("Save",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        });
-
-                builder.setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-
-                final AlertDialog dialog = builder.create();
-                dialog.show();
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String username = mInputUsername.getText().toString();
-                        String password = mInputPassword.getText().toString();
-
-                        if (username.equals(""))
-                            mInputUsername.setError("Username cannot be empty");
-                        else if (password.equals(""))
-                            mInputPassword.setError("Password cannot be empty");
-                        else {
-                            mPrefs.edit()
-                                    .putString(XA_USERNAME, username)
-                                    .putString(XA_PASSWORD, password)
-                                    .apply();
-
-                            profile.setUsername(username);
-                            profile.setPassword(password);
-
-                            Singleton.getInstance().setUserProfile(profile);
-
-                            dialog.dismiss();
-                        }
-
-                    }
-                });
             }
         });
     }

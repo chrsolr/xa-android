@@ -36,6 +36,13 @@ import me.christiansoler.xa.loaders.LatestScreenshotsLoader;
 import me.christiansoler.xa.misc.VolleySingleton;
 import me.christiansoler.xa.models.LatestScreenshot;
 import me.christiansoler.xa.misc.*;
+import me.christiansoler.xa.models.*;
+import android.support.v7.app.*;
+import android.view.*;
+import android.widget.*;
+import android.content.*;
+import android.view.View.*;
+import android.content.res.*;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<ArrayList<LatestScreenshot>> {
     private int mDrawerCurrentSelectedPosition = 0;
@@ -111,17 +118,31 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        menu.removeItem(R.id.main_menu_donate);
+		getMenuInflater().inflate(R.menu.main_menu, menu);
+		
+		MenuItem login = menu.findItem(R.id.main_menu_login);
+		MenuItem logout = menu.findItem(R.id.main_menu_logout);
+		
+		boolean isLoggedIn = Singleton.getInstance().getUserProfile().isLogged();
+		
+		login.setVisible(!isLoggedIn);
+		logout.setVisible(isLoggedIn);
+	
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        if (id == R.id.main_menu_donate) {
-            Toast.makeText(this, "Donate Clicked", Toast.LENGTH_SHORT).show();
+		
+		if (id == R.id.main_menu_login) {
+            setupUserCredentials();
+            return true;
+        }
+		
+		if (id == R.id.main_menu_logout) {
+            Singleton.getInstance().destroyUserProfile();
+			invalidateOptionsMenu();
             return true;
         }
 
@@ -265,13 +286,15 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             fragment = new AboutFragment();
             fragment.setArguments(bundle);
         }
+		
+		if (fragment != null) {
+			getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
-        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
-        getSupportFragmentManager()
+			getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_layout, fragment, FRAGMENT_TAG)
                 .commit();
+		}
 
         if (mIsDrawerLearned) {
             mDrawer.closeDrawer(GravityCompat.START);
@@ -284,5 +307,70 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
 
         mDrawerCurrentSelectedPosition = position;
+    }
+	
+	private void setupUserCredentials() {
+        final UserProfile profile = Singleton.getInstance().getUserProfile();
+		Resources mResources = this.getResources();
+		final String XA_USERNAME = mResources.getString(R.string.XA_USERNAME);
+        final String XA_PASSWORD = mResources.getString(R.string.XA_PASSWORD);
+		
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setCancelable(true);
+
+		View layout = this.getLayoutInflater().inflate(R.layout.dialog_credentials, null, false);
+
+		final EditText mInputUsername = (EditText) layout.findViewById(R.id.et_username);
+		final EditText mInputPassword = (EditText) layout.findViewById(R.id.et_password);
+
+		mInputUsername.setText(profile.getUsername());
+		mInputPassword.setText(profile.getPassword());
+
+		builder.setView(layout);
+		
+		builder.setPositiveButton("Save",
+			new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+				}
+			});
+
+		builder.setNegativeButton("Cancel",
+			new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.cancel();
+				}
+			});
+
+		final AlertDialog dialog = builder.create();
+		dialog.show();
+		dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					String username = mInputUsername.getText().toString();
+					String password = mInputPassword.getText().toString();
+
+					if (username.equals(""))
+						mInputUsername.setError("Username cannot be empty");
+					else if (password.equals(""))
+						mInputPassword.setError("Password cannot be empty");
+					else {
+						mPrefs.edit()
+							.putString(XA_USERNAME, username)
+							.putString(XA_PASSWORD, password)
+							.apply();
+
+						profile.setUsername(username);
+						profile.setPassword(password);
+
+						Singleton.getInstance().setUserProfile(profile);
+
+						invalidateOptionsMenu();
+						
+						dialog.dismiss();
+					}
+
+				}
+			});
+
     }
 }
