@@ -47,6 +47,7 @@ import android.content.res.*;
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<ArrayList<LatestScreenshot>> {
     private int mDrawerCurrentSelectedPosition = 0;
     private boolean mIsDrawerLearned;
+	private boolean isLoggedIn = Singleton.getInstance().getUserProfile().isLogged();
     private Toolbar mToolbar;
     private NavigationView mNavigationView;
     private DrawerLayout mDrawer;
@@ -111,7 +112,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_about:
                 selectDrawerItem(8);
                 break;
+			case R.id.nav_login:
+                selectDrawerItem(9);
+				item.setTitle(isLoggedIn ? "Logout" : "Login");
+                break;
         }
+		
+		invalidateOptionsMenu();
 
         return true;
     }
@@ -119,33 +126,11 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main_menu, menu);
-		
-		MenuItem login = menu.findItem(R.id.main_menu_login);
-		MenuItem logout = menu.findItem(R.id.main_menu_logout);
-		
-		boolean isLoggedIn = Singleton.getInstance().getUserProfile().isLogged();
-		
-		login.setVisible(!isLoggedIn);
-		logout.setVisible(isLoggedIn);
-	
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-		
-		if (id == R.id.main_menu_login) {
-            setupUserCredentials();
-            return true;
-        }
-		
-		if (id == R.id.main_menu_logout) {
-            Singleton.getInstance().destroyUserProfile();
-			invalidateOptionsMenu();
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -201,6 +186,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+		
+		Menu menu = mNavigationView.getMenu();
+		MenuItem nav_login = menu.findItem(R.id.nav_login);
+		nav_login.setTitle(isLoggedIn ? "Logout" : "Login");
+		
+		
+		
         mNavigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -287,6 +279,15 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             fragment.setArguments(bundle);
         }
 		
+		if (position == 9) {
+			if (isLoggedIn) {
+				Singleton.getInstance().destroyUserProfile();
+				isLoggedIn = false;
+			} else {
+				setupUserCredentials();
+			}
+		}
+		
 		if (fragment != null) {
 			getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
@@ -301,9 +302,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
 
         if (!mIsDrawerLearned) {
-            mDrawer.openDrawer(GravityCompat.START);
             mIsDrawerLearned = true;
             mPrefs.edit().putBoolean(getString(R.string.DRAWER_LEARNED_TAG), true).apply();
+			mDrawer.openDrawer(GravityCompat.START);
         }
 
         mDrawerCurrentSelectedPosition = position;
@@ -363,8 +364,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 						profile.setPassword(password);
 
 						Singleton.getInstance().setUserProfile(profile);
+						
+						isLoggedIn = true;
 
-						invalidateOptionsMenu();
+						Menu menu = mNavigationView.getMenu();
+						MenuItem nav_login = menu.findItem(R.id.nav_login);
+						nav_login.setTitle(isLoggedIn ? "Logout" : "Login");
+						
 						
 						dialog.dismiss();
 					}
