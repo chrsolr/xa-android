@@ -27,3 +27,4 @@
 #-keep class com.android.** {*;}
 #-keep class com.google.** {*;}
 -keep class org.** {*;}
+-keep class android.support.v7.widget.SearchView { *; }

@@ -1,6 +1,8 @@
 package me.christiansoler.xa.app;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -10,12 +12,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,12 +44,7 @@ import me.christiansoler.xa.misc.VolleySingleton;
 import me.christiansoler.xa.models.LatestScreenshot;
 import me.christiansoler.xa.misc.*;
 import me.christiansoler.xa.models.*;
-import android.support.v7.app.*;
-import android.view.*;
-import android.widget.*;
-import android.content.*;
-import android.view.View.*;
-import android.content.res.*;
+
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<ArrayList<LatestScreenshot>> {
     private int mDrawerCurrentSelectedPosition = 0;
@@ -126,6 +128,21 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main_menu, menu);
+
+		MenuItem searchItem = menu.findItem(R.id.menu_item_search);
+		SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         return true;
     }
 
@@ -315,7 +332,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 		Resources mResources = this.getResources();
 		final String XA_USERNAME = mResources.getString(R.string.XA_USERNAME);
         final String XA_PASSWORD = mResources.getString(R.string.XA_PASSWORD);
-		
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setCancelable(true);
 
@@ -344,7 +361,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
 		final AlertDialog dialog = builder.create();
 		dialog.show();
-		dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new OnClickListener() {
+		dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
 					String username = mInputUsername.getText().toString();
