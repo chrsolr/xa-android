@@ -13,8 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
-
 import java.util.ArrayList;
 
 import me.christiansoler.xa.R;
@@ -25,7 +23,6 @@ import me.christiansoler.xa.models.LatestScreenshot;
 public class LatestScreenshotsFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<LatestScreenshot>> {
     private ArrayList<LatestScreenshot> mData = new ArrayList<>();
     private LatestScreenshotsAdapter mAdapter;
-    private FirebaseAnalytics mFirebaseAnalytics;
 
     public LatestScreenshotsFragment() {
     }
@@ -51,8 +48,6 @@ public class LatestScreenshotsFragment extends Fragment implements LoaderManager
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
-
         int LOADER_ID = getActivity().getResources().getInteger(R.integer.latest_screenshots_loader_id);
 
         if (mData.isEmpty() && getArguments() != null) {
@@ -70,7 +65,6 @@ public class LatestScreenshotsFragment extends Fragment implements LoaderManager
         super.onResume();
         Bundle bundle = new Bundle();
         bundle.putString(getString(R.string.LOCATION), LatestScreenshotsFragment.class.getSimpleName());
-        mFirebaseAnalytics.logEvent(getString(R.string.SCREEN), bundle);
     }
 
     @Override

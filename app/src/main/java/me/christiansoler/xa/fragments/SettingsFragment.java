@@ -22,14 +22,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
-
 import me.christiansoler.xa.R;
 import me.christiansoler.xa.misc.Singleton;
 import me.christiansoler.xa.models.UserProfile;
 
 public class SettingsFragment extends Fragment {
-    private FirebaseAnalytics mFirebaseAnalytics;
     private Spinner mPlatformSpinner;
     private SharedPreferences mPrefs;
     private Spinner mDefaultHomeSpinner;
@@ -84,8 +81,6 @@ public class SettingsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
-
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.ab_settings_title);
 
         setupPlatformSpinner();
@@ -120,7 +115,6 @@ public class SettingsFragment extends Fragment {
 
         Bundle bundle = new Bundle();
         bundle.putString(getString(R.string.LOCATION), SettingsFragment.class.getSimpleName());
-        mFirebaseAnalytics.logEvent(getString(R.string.SCREEN), bundle);
     }
 
     private void setupEndlessScrollerMaxItemsSpinner() {

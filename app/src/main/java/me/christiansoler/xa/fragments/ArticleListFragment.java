@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -33,7 +32,6 @@ import android.widget.TextView;
 import android.animation.ObjectAnimator;
 
 public class ArticleListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<ArticleListItem>> {
-    private FirebaseAnalytics mFirebaseAnalytics;
     private LatestScreenshot mBanner;
     private String BASE_URL;
     private ArrayList<ArticleListItem> mData = new ArrayList<>();
@@ -86,8 +84,6 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
-
         LOADER_ID = getActivity().getResources().getInteger(R.integer.news_loader_id);
 
         if (getArguments() != null) {
@@ -120,7 +116,6 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
         Bundle bundle = new Bundle();
         bundle.putString(getString(R.string.LOCATION), ArticleListFragment.class.getSimpleName());
-        mFirebaseAnalytics.logEvent(getString(R.string.SCREEN), bundle);
     }
 
     @Override

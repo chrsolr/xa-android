@@ -15,8 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +30,6 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
     private ViewPagerAdapter mAdapter;
     private Map<String, ArrayList<UpcomingGame>> mData = new HashMap<>();
     private int mLoaderCounter = 0;
-    private FirebaseAnalytics mFirebaseAnalytics;
 
     public UpcomingGamesFragment() {
     }
@@ -60,8 +57,6 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getActivity().findViewById(R.id.apl_main).setElevation(0);
         }
@@ -88,7 +83,6 @@ public class UpcomingGamesFragment extends Fragment implements LoaderManager.Loa
         super.onResume();
         Bundle bundle = new Bundle();
         bundle.putString(getString(R.string.LOCATION), UpcomingGamesFragment.class.getSimpleName());
-        mFirebaseAnalytics.logEvent(getString(R.string.SCREEN), bundle);
     }
 
     @Override

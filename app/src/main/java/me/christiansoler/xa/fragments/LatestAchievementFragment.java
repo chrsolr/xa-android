@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 
@@ -32,7 +31,6 @@ import android.widget.TextView;
 import android.animation.ObjectAnimator;
 
 public class LatestAchievementFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<LatestAchievement>> {
-    private FirebaseAnalytics mFirebaseAnalytics;
     private LatestScreenshot mBanner;
     private ArrayList<LatestAchievement> mData = new ArrayList<>();
     private String BASE_URL;
@@ -85,8 +83,6 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
-
         LOADER_ID = getActivity().getResources().getInteger(R.integer.latest_achievements_loader_id);
 
         if (getArguments() != null) {
@@ -119,7 +115,6 @@ public class LatestAchievementFragment extends Fragment implements LoaderManager
 
         Bundle bundle = new Bundle();
         bundle.putString(getString(R.string.LOCATION), LatestAchievementFragment.class.getSimpleName());
-        mFirebaseAnalytics.logEvent(getString(R.string.SCREEN), bundle);
     }
 
     @Override

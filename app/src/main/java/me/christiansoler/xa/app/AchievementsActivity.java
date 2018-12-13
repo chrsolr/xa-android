@@ -12,8 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
-
 import me.christiansoler.xa.R;
 import me.christiansoler.xa.adapters.ViewPagerAdapter;
 import me.christiansoler.xa.fragments.AchievementsFragment;
@@ -28,7 +26,6 @@ public class AchievementsActivity extends AppCompatActivity {
     private String BASE_URL;
     private String GAME_PERMALINK;
     private ViewPagerAdapter mAdapter;
-    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +34,6 @@ public class AchievementsActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         ViewPager mViewPager = (ViewPager) findViewById(R.id.vp_achievements);
         mAdapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -100,7 +95,6 @@ public class AchievementsActivity extends AppCompatActivity {
         super.onResume();
         Bundle bundle = new Bundle();
         bundle.putString(getString(R.string.LOCATION), AchievementsActivity.class.getSimpleName());
-        mFirebaseAnalytics.logEvent(getString(R.string.SCREEN), bundle);
     }
 
     private void getGameAchievements() {

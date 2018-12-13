@@ -13,14 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.google.firebase.analytics.FirebaseAnalytics;
 
 import me.christiansoler.xa.R;
 import me.christiansoler.xa.misc.VolleySingleton;
 
 public class AboutFragment extends Fragment {
-    private FirebaseAnalytics mFirebaseAnalytics;
-
     public AboutFragment() {
     }
 
@@ -59,8 +56,6 @@ public class AboutFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
-
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.ab_about_title);
     }
 
@@ -70,6 +65,5 @@ public class AboutFragment extends Fragment {
 
         Bundle bundle = new Bundle();
         bundle.putString(getString(R.string.LOCATION), AboutFragment.class.getSimpleName());
-        mFirebaseAnalytics.logEvent(getString(R.string.SCREEN), bundle);
     }
 }

@@ -24,8 +24,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +37,6 @@ import me.christiansoler.xa.misc.EndlessRecyclerViewScrollListener;
 import me.christiansoler.xa.models.Game;
 
 public class GameListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<Game>> {
-    private FirebaseAnalytics mFirebaseAnalytics;
     private String BASE_URL;
     private ArrayList<Game> mData = new ArrayList<>();
     private GameListAdapter mAdapter;
@@ -87,8 +84,6 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
 
         setHasOptionsMenu(true);
 
@@ -187,7 +182,6 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
 
         Bundle bundle = new Bundle();
         bundle.putString(getString(R.string.PLATFORM_SELECTION), mAnalitysCategory.equals("") ? mSelectedPlatform : mAnalitysCategory);
-        mFirebaseAnalytics.logEvent(getString(R.string.ACTION), bundle);
 
         return super.onOptionsItemSelected(item);
     }
@@ -197,7 +191,6 @@ public class GameListFragment extends Fragment implements LoaderManager.LoaderCa
         super.onResume();
         Bundle bundle = new Bundle();
         bundle.putString(getString(R.string.LOCATION), GameListFragment.class.getSimpleName());
-        mFirebaseAnalytics.logEvent(getString(R.string.SCREEN), bundle);
     }
 
     @Override

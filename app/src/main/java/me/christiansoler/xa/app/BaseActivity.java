@@ -47,6 +47,7 @@ import me.christiansoler.xa.misc.VolleySingleton;
 import me.christiansoler.xa.models.LatestScreenshot;
 import me.christiansoler.xa.misc.*;
 import me.christiansoler.xa.models.*;
+import android.text.*;
 
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<ArrayList<LatestScreenshot>> {

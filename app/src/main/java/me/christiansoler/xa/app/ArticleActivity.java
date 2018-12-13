@@ -23,8 +23,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
-
 import me.christiansoler.xa.R;
 import me.christiansoler.xa.adapters.ViewPagerAdapter;
 import me.christiansoler.xa.fragments.ArticleFragment;
@@ -45,7 +43,6 @@ public class ArticleActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private ViewPagerAdapter mAdapter;
     private Snackbar mSnackbar;
-    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,8 +51,6 @@ public class ArticleActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         mAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
@@ -114,7 +109,6 @@ public class ArticleActivity extends AppCompatActivity {
 
                         Bundle bundle = new Bundle();
                         bundle.putString(getString(R.string.POST_COMMENT), Singleton.getInstance().getUserProfile().getUsername());
-                        mFirebaseAnalytics.logEvent(getString(R.string.ACTION), bundle);
                     }
                 });
             }
@@ -170,7 +164,6 @@ public class ArticleActivity extends AppCompatActivity {
         super.onResume();
         Bundle bundle = new Bundle();
         bundle.putString(getString(R.string.LOCATION), ArticleActivity.class.getSimpleName());
-        mFirebaseAnalytics.logEvent(getString(R.string.SCREEN), bundle);
     }
 
     private void setupUI() {

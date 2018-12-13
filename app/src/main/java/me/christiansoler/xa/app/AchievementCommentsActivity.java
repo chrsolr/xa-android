@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -38,7 +37,6 @@ import me.christiansoler.xa.models.Achievement;
 import me.christiansoler.xa.models.Comment;
 
 public class AchievementCommentsActivity extends AppCompatActivity {
-    private FirebaseAnalytics mFirebaseAnalytics;
     private Achievement mAchievement;
     private CommentListAdapter mAdapter;
     private RecyclerView mRvContent;
@@ -51,8 +49,6 @@ public class AchievementCommentsActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         if (getIntent().getExtras() != null) {
             mAchievement = getIntent().getExtras().getParcelable("ACHIEVEMENT");
@@ -121,7 +117,6 @@ public class AchievementCommentsActivity extends AppCompatActivity {
 
                         Bundle bundle = new Bundle();
                         bundle.putString(getString(R.string.POST_COMMENT), Singleton.getInstance().getUserProfile().getUsername());
-                        mFirebaseAnalytics.logEvent(getString(R.string.ACTION), bundle);
                     }
                 });
             }
@@ -155,7 +150,6 @@ public class AchievementCommentsActivity extends AppCompatActivity {
 
         Bundle bundle = new Bundle();
         bundle.putString(getString(R.string.LOCATION), AchievementCommentsActivity.class.getSimpleName());
-        mFirebaseAnalytics.logEvent(getString(R.string.SCREEN), bundle);
     }
 
     private void getAchievementComments() {
