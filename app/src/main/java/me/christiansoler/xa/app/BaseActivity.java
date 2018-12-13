@@ -48,6 +48,7 @@ import me.christiansoler.xa.models.LatestScreenshot;
 import me.christiansoler.xa.misc.*;
 import me.christiansoler.xa.models.*;
 import android.text.*;
+import me.christiansoler.xa.fragments.*;
 
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<ArrayList<LatestScreenshot>> {
@@ -130,21 +131,38 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
 		getMenuInflater().inflate(R.menu.main_menu, menu);
 
 		MenuItem searchItem = menu.findItem(R.id.menu_item_search);
-		SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        ComponentName componentName = new ComponentName(getApplicationContext(), SearchableActivity.class);
-
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
+		final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+		searchView.setQueryHint("Search Games");
 
 		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+				String FRAGMENT_TAG = "FRAGMENT_TAG_SEARCH";
+				Bundle bundle = new Bundle();
+				Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 
+				if (fragment == null) {
+					bundle.putString("search_query", query);
+					bundle.putString("ab_title", "Search Result");
+					fragment = new SearchResultFragment();
+					fragment.setArguments(bundle);
+				}
+				
+				if (fragment != null) {
+					getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+					getSupportFragmentManager()
+						.beginTransaction()
+						.replace(R.id.main_layout, fragment, FRAGMENT_TAG)
+						.addToBackStack(null)
+						.commit();
+				}
+				
+				(menu.findItem(R.id.menu_item_search)).collapseActionView();
+				
                 return false;
             }
 

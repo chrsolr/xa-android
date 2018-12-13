@@ -13,15 +13,19 @@ import java.util.ArrayList;
 
 import me.christiansoler.xa.misc.Common;
 import me.christiansoler.xa.models.Game;
+import org.jsoup.*;
+import android.util.*;
 import me.christiansoler.xa.misc.Enums.*;
 
-public class GamesListLoader extends AsyncTaskLoader<ArrayList<Game>> {
+public class SearchResultLoader extends AsyncTaskLoader<ArrayList<Game>> {
     private final String BASE_URL;
+	private final String QUERY;
     private ArrayList<Game> mData = new ArrayList<>();
 
-    public GamesListLoader(Context context, String base_url) {
+    public SearchResultLoader(Context context, String base_url, String query) {
         super(context);
         BASE_URL = base_url;
+		QUERY = query;
     }
 
     @Override
@@ -45,28 +49,39 @@ public class GamesListLoader extends AsyncTaskLoader<ArrayList<Game>> {
     @Override
     public ArrayList<Game> loadInBackground() {
         try {
-            Document document = Jsoup.parse(new URL(BASE_URL).openStream(), "UTF-8", BASE_URL);
-
-            Elements rows = document.select(".bl_la_main .divtext table tr[class~=(trA1|trA2)]");
-
-            for (Element element : rows) {
+			Connection.Response response = Jsoup.connect(BASE_URL)
+			.data("search", QUERY)
+			.method(Connection.Method.POST)
+			.followRedirects(true)
+			.execute();
+			
+			Document document = response.parse();
+			
+			Elements rows = document.select(".bl_la_main .divtext table tr[class~=(trA1|trA2)]");
+			
+			rows.remove(0);
+			
+			for (Element element : rows) {
                 String artwork = element.select("img:eq(0)").attr("abs:src").replace("ico", "cover");
-                String title = element.select("strong:eq(0)").text().trim();
-                String ach_count = element.select("td:eq(2)").text().trim();
-                String gs_count = element.select("td:eq(3)").text().trim();
-                String page_url = element.select("td:eq(1) a").attr("href");
+                String title = element.select("td:eq(1) a:eq(0)").text().trim();
+				String platform = element.select("td:eq(3)").text().trim();
+                String ach_gs_count = element.select("td:eq(2)").text().trim();
+                String page_url = element.select("a:eq(0)").attr("href");
 
+				String test[] = ach_gs_count.split(" / ");
+				
                 Game game = new Game();
                 game.setArtwork(Common.getCoverImage(artwork));
                 game.setTitle(title);
-                game.setAchCount(ach_count);
-                game.setGsCount(gs_count);
-                game.setGamePermalink(page_url, UrlType.BROWSE_GAMES);
-
+                game.setAchCount(test[0]);
+                game.setGsCount(test[1]);
+				game.setPlatform(platform);
+                game.setGamePermalink(page_url, UrlType.SEARCH_GAMES);
+				
                 mData.add(game);
             }
-
-            return mData;
+			
+			return mData;
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;

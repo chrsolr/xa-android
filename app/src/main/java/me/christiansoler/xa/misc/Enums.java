@@ -6,7 +6,8 @@ public class Enums {
 		BROWSE_GAMES,
 		LATEST_ACHIEVEMENTS,
 		LATEST_SCREENSHOTS,
-		UPCOMING_GAMES
+		UPCOMING_GAMES,
+		SEARCH_GAMES
 	}
 	
 	public enum Platform {

@@ -9,6 +9,7 @@ public class Game {
     private String achCount;
     private String gsCount;
     private String gamePermalink;
+	private String platform;
 
     public String getArtwork() {
         return artwork;
@@ -41,12 +42,20 @@ public class Game {
     public void setGsCount(String gsCount) {
         this.gsCount = gsCount;
     }
+	
+	public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
 
     public String getGamePermalink() {
         return gamePermalink;
     }
 
-    public void setGamePermalink(String url) {
-        this.gamePermalink = Common.createPermalink(url, UrlType.BROWSE_GAMES);
+    public void setGamePermalink(String url, UrlType urlType) {
+        this.gamePermalink = Common.createPermalink(url, urlType);
     }
 }

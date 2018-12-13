@@ -44,6 +44,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
         holder.mTvTitle.setText(item.getTitle());
         holder.mTvAchCount.setText(String.format(Locale.US, "%s achievements", item.getAchCount()));
         holder.mTvGsCount.setText(String.format(Locale.US, "%s points", item.getGsCount()));
+		holder.mTvPlatform.setText(String.format(Locale.US, "%s", item.getPlatform()));
 
         VolleySingleton
                 .getImageLoader()
@@ -66,6 +67,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
         TextView mTvTitle;
         TextView mTvAchCount;
         TextView mTvGsCount;
+		TextView mTvPlatform;
         private Context mContext;
         private ArrayList<Game> mData;
 
@@ -79,6 +81,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
             mTvTitle = (TextView) itemView.findViewById(R.id.tv_games_title);
             mTvAchCount = (TextView) itemView.findViewById(R.id.tv_games_ach);
             mTvGsCount = (TextView) itemView.findViewById(R.id.tv_games_gs_count);
+			mTvPlatform = (TextView) itemView.findViewById(R.id.tv_games_platform);
 
             itemView.setOnClickListener(this);
         }

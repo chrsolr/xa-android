@@ -79,6 +79,18 @@
             app:layout_constraintLeft_toLeftOf="@+id/tv_games_ach"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_games_ach" />
+		
+		<TextView
+            android:id="@+id/tv_games_platform"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="@dimen/line_level_1"
+            android:textAppearance="@style/AppTheme.TextStyle.Subtitle"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_games_ach"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_games_gs_count" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

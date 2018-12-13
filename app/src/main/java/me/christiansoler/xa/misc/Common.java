@@ -96,7 +96,7 @@ public class Common extends Application {
             return url.replace("/game/", "").replace("/screenshots/", "");
         }
 		
-		if (type == UrlType.UPCOMING_GAMES) {
+		if (type == UrlType.UPCOMING_GAMES || type == UrlType.SEARCH_GAMES) {
 			return url.replace("/game/", "").replace("/overview/", "");
 		}
 		
