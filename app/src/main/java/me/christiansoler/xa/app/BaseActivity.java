@@ -1,5 +1,8 @@
 package me.christiansoler.xa.app;
 
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -132,9 +135,15 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 		MenuItem searchItem = menu.findItem(R.id.menu_item_search);
 		SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        ComponentName componentName = new ComponentName(getApplicationContext(), SearchableActivity.class);
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
+
 		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+
                 return false;
             }
 

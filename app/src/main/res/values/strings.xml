@@ -52,5 +52,6 @@
 	<string name="xda_thread">https://forum.xda-developers.com/android/apps-games/app-xa-unofficial-xboxachievements-com-t3600450</string>
 	<string name="default_signature">Sent via Unofficial XboxAchievements Android App</string>
     <string name="menu_item_search">Search</string>
+    <string name="search_hint">Search Games</string>
 
 </resources>
