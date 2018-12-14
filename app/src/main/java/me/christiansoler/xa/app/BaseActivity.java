@@ -136,33 +136,17 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
 		MenuItem searchItem = menu.findItem(R.id.menu_item_search);
 		final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-		searchView.setQueryHint("Search Games");
+		// searchView.setQueryHint("Search Games");
+		
+		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+		ComponentName componentName = new ComponentName(getApplicationContext(), SearchableActivity.class);
+		
+		searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
 
 		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-				String FRAGMENT_TAG = "FRAGMENT_TAG_SEARCH";
-				Bundle bundle = new Bundle();
-				Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-
-				if (fragment == null) {
-					bundle.putString("search_query", query);
-					bundle.putString("ab_title", "Search Result");
-					fragment = new SearchResultFragment();
-					fragment.setArguments(bundle);
-				}
-				
-				if (fragment != null) {
-					getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-					getSupportFragmentManager()
-						.beginTransaction()
-						.replace(R.id.main_layout, fragment, FRAGMENT_TAG)
-						.addToBackStack(null)
-						.commit();
-				}
-				
 				(menu.findItem(R.id.menu_item_search)).collapseActionView();
-				
                 return false;
             }
 
