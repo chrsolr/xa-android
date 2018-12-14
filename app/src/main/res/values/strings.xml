@@ -53,5 +53,6 @@
 	<string name="default_signature">Sent via Unofficial XboxAchievements Android App</string>
     <string name="menu_item_search">Search</string>
     <string name="search_hint">Search Games</string>
+    <string name="ab_search_result">Search Result</string>
 
 </resources>

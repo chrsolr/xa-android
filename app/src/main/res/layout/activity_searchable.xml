@@ -2,20 +2,25 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_white"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="false">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_search_list"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <include layout="@layout/toolbar" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_search_result_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:fitsSystemWindows="true"
-        android:scrollbars="none"
-        tools:context="me.christiansoler.xa.app.SearchableActivity" />
+        android:paddingBottom="@dimen/padding_level_1" />
 
 </android.support.design.widget.CoordinatorLayout>
-
