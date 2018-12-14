@@ -41,10 +41,12 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final Game item = mData.get(position);
 
+		String platform = item.getPlatform() == null ? "" : item.getPlatform();
+		
         holder.mTvTitle.setText(item.getTitle());
         holder.mTvAchCount.setText(String.format(Locale.US, "%s achievements", item.getAchCount()));
         holder.mTvGsCount.setText(String.format(Locale.US, "%s points", item.getGsCount()));
-		holder.mTvPlatform.setText(String.format(Locale.US, "%s", item.getPlatform()));
+		holder.mTvPlatform.setText(String.format(Locale.US, "%s", platform));
 
         VolleySingleton
                 .getImageLoader()
