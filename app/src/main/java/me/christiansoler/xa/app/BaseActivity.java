@@ -113,10 +113,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_upcoming_games:
                 selectDrawerItem(6);
                 break;
-            case R.id.nav_setting:
+            case R.id.nav_about:
                 selectDrawerItem(7);
                 break;
-            case R.id.nav_about:
+            case R.id.nav_setting:
                 selectDrawerItem(8);
                 break;
 			case R.id.nav_login:
@@ -300,12 +300,12 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
 
         if (position == 7 && fragment == null) {
-            fragment = new SettingsFragment();
-        }
-
-        if (position == 8 && fragment == null) {
             fragment = new AboutFragment();
             fragment.setArguments(bundle);
+        }
+		
+		if (position == 8 && fragment == null) {
+            fragment = new SettingsFragment();
         }
 		
 		if (position == 9) {

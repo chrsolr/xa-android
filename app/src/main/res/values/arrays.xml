@@ -65,7 +65,7 @@
         <item>Latest Achievements</item>
         <item>Latest Screenshots</item>
         <item>Upcoming Games</item>
-        <item>Settings</item>
         <item>About</item>
+		<item>Settings</item>
     </string-array>
 </resources>
