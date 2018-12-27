@@ -63,14 +63,21 @@ public class LatestAchievementsLoader extends AsyncTaskLoader<ArrayList<LatestAc
                         submitted_by = rows.get(i + 1).select("td:eq(1) > strong").eq(0).text().trim();
                     } else {
                         subtitle = rows.get(i + 1).select("td:eq(1) > p").get(0).textNodes().get(0).text().trim();
-                        submitted_by = rows.get(i + 1).select("td:eq(1) > p > strong").eq(0).text().trim();
+						
+						if (!rows.get(i + 1).select("td:eq(1) > p > strong").isEmpty()) {
+							submitted_by = rows.get(i + 1).select("td:eq(1) > p > strong").eq(0).text().trim();
+						} else {
+                        	submitted_by = "[UNKNOWN]";
+						}
                     }
+					
+					String[] data = subtitle.trim().replace(".", "").split(", ");
 
                     LatestAchievement item = new LatestAchievement();
                     item.setImageUrl(Common.getCoverImage(image_url));
                     item.setTitle(title);
-                    item.setAchievementsCount(subtitle.split(", ")[0].trim());
-                    item.setGamerscoreCount(subtitle.split(", ")[1].replace(".", "").trim());
+                    item.setAchievementsCount(data.length > 1 ? data[0].trim() : "[UNKNOWN]");
+                    item.setGamerscoreCount(data.length > 1 ? data[1].trim() : "[UNKNOWN]");
                     item.setSubmittedBy(submitted_by);
                     item.setDateAdded(date_added);
                     item.setGamePermalink(ach_page_url);

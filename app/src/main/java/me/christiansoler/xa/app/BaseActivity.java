@@ -66,7 +66,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -136,7 +136,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
 		MenuItem searchItem = menu.findItem(R.id.menu_item_search);
 		final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-		// searchView.setQueryHint("Search Games");
 		
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 		ComponentName componentName = new ComponentName(getApplicationContext(), SearchableActivity.class);
@@ -186,7 +185,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 .get(mBanners.get(0).getImageUrl(),
                         ImageLoader.getImageListener((ImageView) findViewById(R.id.iv_drawer_banner), 0, 0));
 
-        TextView mTvTitle = (TextView) findViewById(R.id.tv_banner_title);
+        TextView mTvTitle = findViewById(R.id.tv_banner_title);
         mTvTitle.setText(mBanners.get(0).getTitle());
 
         new Handler().post(new Runnable() {
@@ -208,13 +207,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setupUI() {
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer = findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        mNavigationView = findViewById(R.id.nav_view);
 		
 		Menu menu = mNavigationView.getMenu();
 		MenuItem nav_login = menu.findItem(R.id.nav_login);
@@ -350,8 +349,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
 		View layout = this.getLayoutInflater().inflate(R.layout.dialog_credentials, null, false);
 
-		final EditText mInputUsername = (EditText) layout.findViewById(R.id.et_username);
-		final EditText mInputPassword = (EditText) layout.findViewById(R.id.et_password);
+		final EditText mInputUsername = layout.findViewById(R.id.et_username);
+		final EditText mInputPassword = layout.findViewById(R.id.et_password);
 
 		mInputUsername.setText(profile.getUsername());
 		mInputPassword.setText(profile.getPassword());
@@ -360,7 +359,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 		
 		builder.setPositiveButton("Save",
 			new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
+				public void onClick(DialogInterface doialog, int which) {
 				}
 			});
 
